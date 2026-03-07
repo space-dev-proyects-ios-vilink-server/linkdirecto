@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Descarga 1.120.1 — Link Directo</title>
+
+  <!-- Onclick ad (kept) -->
+  <script src="https://fpyf8.com/88/tag.min.js" data-zone="183074" async data-cfasync="false"></script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --accent:        #E8340A;
+      --accent-2:      #FF6B35;
+      --accent-glow:   rgba(232, 52, 10, 0.18);
+      --radius:        18px;
+      --radius-sm:     12px;
+      --font-display:  'Bebas Neue', sans-serif;
+      --font-body:     'Outfit', sans-serif;
+      --transition:    0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+      --bg:            #F2F0EC;
+      --bg2:           #E8E5DF;
+      --text:          #111110;
+      --text-muted:    #6B6760;
+      --card-bg:       rgba(0,0,0,0.04);
+      --card-border:   rgba(0,0,0,0.08);
+      --shadow:        0 8px 32px rgba(0,0,0,0.10);
+      --success:       #25D366;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg:          #0E0E0E;
+        --bg2:         #161616;
+        --text:        #F0EDE8;
+        --text-muted:  #888580;
+        --card-bg:     rgba(255,255,255,0.04);
+        --card-border: rgba(255,255,255,0.08);
+        --shadow:      0 8px 40px rgba(0,0,0,0.50);
+      }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      padding-bottom: 48px;
+    }
+
+    /* GRAIN */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ─── HEADER ─────────────────────────────────────────── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      background: color-mix(in srgb, var(--bg) 80%, transparent);
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo em { color: var(--accent); font-style: normal; }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      background: none;
+      color: var(--text-muted);
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .back-btn:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: var(--accent-glow);
+    }
+
+    /* ─── MAIN WRAPPER ───────────────────────────────────── */
+    .main {
+      position: relative;
+      z-index: 1;
+      max-width: 520px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ─── HERO BLOCK ─────────────────────────────────────── */
+    .hero-block {
+      text-align: center;
+      padding: 40px 0 28px;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .version-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      border-radius: 100px;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 12vw, 4.5rem);
+      letter-spacing: 0.04em;
+      line-height: 0.95;
+      margin-bottom: 12px;
+    }
+
+    .hero-title em { color: var(--accent); font-style: normal; }
+
+    .hero-sub {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 300;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-divider {
+      width: 40px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      border-radius: 2px;
+      margin: 14px auto 0;
+    }
+
+    /* ─── ALERT ──────────────────────────────────────────── */
+    .alert-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      background: color-mix(in srgb, #FFC107 10%, var(--card-bg));
+      border: 1px solid color-mix(in srgb, #FFC107 35%, transparent);
+      border-radius: var(--radius-sm);
+      margin-bottom: 20px;
+      animation: fadeUp 0.5s 0.1s ease both;
+    }
+
+    .alert-bar i { color: #F57C00; font-size: 1rem; flex-shrink: 0; }
+    .alert-bar span { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+    .alert-bar strong { color: var(--text); }
+
+    /* ─── SECTION LABEL ──────────────────────────────────── */
+    .sec-label {
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    /* ─── CARD BASE ──────────────────────────────────────── */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 24px 22px;
+      margin-bottom: 16px;
+      transition: var(--transition);
+    }
+
+    /* ─── VERIFICATION CARD ──────────────────────────────── */
+    .verify-card {
+      animation: fadeUp 0.5s 0.15s ease both;
+    }
+
+    .verify-card.verified {
+      border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+      background: color-mix(in srgb, var(--accent) 4%, var(--card-bg));
+    }
+
+    .verify-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .verify-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--accent-glow);
+      border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+      display: grid;
+      place-items: center;
+      color: var(--accent);
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .verify-header-text h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .verify-header-text p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    /* SLIDER */
+    .slider-wrapper {
+      position: relative;
+      width: 100%;
+      height: 60px;
+      background: color-mix(in srgb, var(--bg2) 80%, transparent);
+      border-radius: 30px;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+      margin-bottom: 16px;
+    }
+
+    .slider-progress {
+      position: absolute;
+      left: 0; top: 0;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transition: width 0.08s ease;
+      border-radius: 30px;
+      opacity: 0.25;
+    }
+
+    .slider-label {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+      pointer-events: none;
+      z-index: 1;
+      transition: opacity 0.3s;
+    }
+
+    .slider-label.hidden { opacity: 0; }
+
+    .slider-thumb {
+      position: absolute;
+      left: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: grid;
+      place-items: center;
+      color: white;
+      font-size: 1.1rem;
+      cursor: grab;
+      z-index: 10;
+      box-shadow: 0 4px 16px rgba(232,52,10,0.35);
+      user-select: none;
+      touch-action: none;
+      transition: box-shadow 0.3s;
+    }
+
+    .slider-thumb:active {
+      cursor: grabbing;
+      box-shadow: 0 6px 24px rgba(232,52,10,0.5);
+    }
+
+    .verify-success {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .verify-success.show { display: flex; }
+    .verify-success i { font-size: 1.1rem; }
+
+    /* ─── COMPAT CARD ────────────────────────────────────── */
+    .compat-card {
+      display: flex;
+      gap: 14px;
+      animation: fadeUp 0.5s 0.2s ease both;
+    }
+
+    .compat-card .ci {
+      color: var(--accent);
+      font-size: 1.1rem;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .compat-title {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+
+    .compat-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 300;
+      margin-bottom: 10px;
+    }
+
+    .device-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    .device-tag {
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+      background: var(--accent-glow);
+      border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+    }
+
+    /* ─── ENGAGEMENT SECTION (replaces ad-native) ────────── */
+    .engage-section {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      margin-bottom: 16px;
+    }
+
+    .engage-section.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .feature-card {
+      padding: 18px 14px;
+      text-align: center;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+      cursor: default;
+    }
+
+    .feature-card:hover {
+      border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+      background: var(--accent-glow);
+      transform: translateY(-3px);
+    }
+
+    .feature-icon {
+      font-size: 1.5rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .feature-name {
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+
+    .feature-desc {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    /* ─── STATUS BAR ─────────────────────────────────────── */
+    .status-bar {
+      text-align: center;
+      padding: 14px 18px;
+      margin-bottom: 16px;
+      border-radius: var(--radius-sm);
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 400;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .status-bar.active {
+      border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+      background: var(--accent-glow);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .status-bar span { color: var(--accent); font-weight: 700; }
+
+    /* ─── DOWNLOAD SECTION ───────────────────────────────── */
+    .download-section {
+      opacity: 0.35;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+
+    .download-section.enabled {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .download-card {
+      animation: fadeUp 0.5s 0.25s ease both;
+    }
+
+    .platform-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .platform-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .platform-icon-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 11px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      display: grid;
+      place-items: center;
+      font-size: 1.4rem;
+      color: var(--text);
+    }
+
+    .platform-name-text {
+      font-weight: 700;
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+
+    .platform-version-text {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    .platform-badge {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      padding: 5px 12px;
+      border-radius: 100px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: white;
+    }
+
+    /* DOWNLOAD BUTTON */
+    .download-btn {
+      width: 100%;
+      height: 68px;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: white;
+      box-shadow: 0 6px 24px rgba(232,52,10,0.35);
+    }
+
+    .download-btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.55;
+      box-shadow: none;
+    }
+
+    .download-btn:not(:disabled):hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 32px rgba(232,52,10,0.5);
+    }
+
+    .download-btn:not(:disabled):active { transform: translateY(0); }
+
+    /* progress bar inside button */
+    .download-btn::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 3px;
+      width: 0%;
+      background: rgba(255,255,255,0.6);
+      transition: width 15s linear;
+    }
+
+    .download-btn.timing::after { width: 100%; }
+
+    /* file info row */
+    .file-info {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--card-border);
+    }
+
+    .info-item { text-align: center; }
+
+    .info-label {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+
+    .info-value {
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    /* ─── INSTALL GUIDE ──────────────────────────────────── */
+    .guide-card {
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: opacity 0.5s ease, max-height 0.6s ease;
+      margin-bottom: 0;
+    }
+
+    .guide-card.show {
+      opacity: 1;
+      max-height: 900px;
+      margin-bottom: 16px;
+    }
+
+    .guide-title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      margin-bottom: 18px;
+    }
+
+    .guide-title-row i { color: var(--accent); }
+
+    .guide-step {
+      display: flex;
+      gap: 14px;
+      padding: 14px 16px;
+      border-radius: var(--radius-sm);
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      margin-bottom: 8px;
+      transition: var(--transition);
+    }
+
+    .guide-step:hover {
+      border-color: color-mix(in srgb, var(--accent) 30%, transparent);
+      transform: translateX(4px);
+    }
+
+    .step-num {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-size: 0.75rem;
+    }
+
+    .step-body { flex: 1; }
+
+    .step-title-text {
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+
+    .step-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 300;
+      line-height: 1.5;
+    }
+
+    /* ─── YOUTUBE SECTION ────────────────────────────────── */
+    .yt-section {
+      text-align: center;
+      margin-top: 8px;
+      margin-bottom: 24px;
+      animation: fadeUp 0.5s 0.3s ease both;
+    }
+
+    .yt-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 28px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+
+    .yt-btn i { color: #FF0000; font-size: 1.3rem; }
+
+    .yt-btn:hover {
+      border-color: rgba(255,0,0,0.35);
+      background: rgba(255,0,0,0.06);
+      transform: translateY(-2px);
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────────── */
+    footer {
+      position: relative;
+      z-index: 1;
+      margin-top: auto;
+      padding: 18px 24px;
+      text-align: center;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      border-top: 1px solid var(--card-border);
+    }
+
+    footer span { color: var(--accent); }
+
+    /* ─── CONFIRM OVERLAY ────────────────────────────────── */
+    .confirm-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(6px);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .confirm-overlay.show { display: flex; }
+
+    .confirm-box {
+      background: var(--bg2);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      max-width: 380px;
+      width: 100%;
+      box-shadow: var(--shadow);
+      animation: popIn 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.88); opacity: 0; }
+      to   { transform: scale(1);    opacity: 1; }
+    }
+
+    .confirm-ico {
+      text-align: center;
+      font-size: 2.6rem;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .confirm-title {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      letter-spacing: 0.06em;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .confirm-msg {
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      font-weight: 300;
+      margin-bottom: 24px;
+    }
+
+    .confirm-actions { display: flex; gap: 10px; }
+
+    .confirm-btn {
+      flex: 1;
+      padding: 13px;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .confirm-btn.primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: white;
+    }
+
+    .confirm-btn.secondary {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+    }
+
+    .confirm-btn:hover { transform: translateY(-2px); }
+
+    /* ─── ANIMATIONS ─────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── ENGAGEMENT TIMER RING ──────────────────────────── */
+    .timer-ring-wrap {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .timer-ring-wrap.show { display: flex; }
+
+    .timer-ring {
+      position: relative;
+      width: 36px;
+      height: 36px;
+    }
+
+    .timer-ring svg {
+      transform: rotate(-90deg);
+    }
+
+    .timer-ring circle {
+      fill: none;
+      stroke-width: 3;
+    }
+
+    .timer-ring .bg { stroke: var(--card-border); }
+    .timer-ring .fg {
+      stroke: var(--accent);
+      stroke-linecap: round;
+      stroke-dasharray: 88;
+      stroke-dashoffset: 88;
+      transition: stroke-dashoffset 1s linear;
+    }
+
+    .timer-num {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    @media (max-width: 480px) {
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <a class="logo" href="../index.html">LINK <em>DIRECTO</em></a>
+    <a class="back-btn" href="../index.html">
+      <i class="fa-solid fa-arrow-left"></i> Volver
+    </a>
+  </header>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- HERO -->
+    <div class="hero-block">
+      <div class="version-pill">
+        <i class="fa-solid fa-download"></i> v1.120.1
+      </div>
+      <h1 class="hero-title">DESCARGA<br /><em>SEGURA</em></h1>
+      <p class="hero-sub">Verificación requerida antes de continuar</p>
+      <div class="hero-divider"></div>
+    </div>
+
+    <!-- ALERT -->
+    <div class="alert-bar">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <span><strong>Versión más reciente.</strong> Verifica que el video desde el que llegaste esté actualizado.</span>
+    </div>
+
+    <!-- VERIFICATION -->
+    <p class="sec-label">Paso 1 — Verificación</p>
+    <div class="card verify-card" id="verificationCard">
+      <div class="verify-header">
+        <div class="verify-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <div class="verify-header-text">
+          <h3>Confirma que eres humano</h3>
+          <p>Desliza completamente hacia la derecha</p>
+        </div>
+      </div>
+
+      <div class="slider-wrapper" id="sliderWrapper">
+        <div class="slider-progress" id="sliderProgress"></div>
+        <div class="slider-label" id="sliderLabel">Desliza →</div>
+        <div class="slider-thumb" id="sliderThumb">
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </div>
+
+      <div class="verify-success" id="verificationSuccess">
+        <i class="fa-solid fa-circle-check"></i>
+        <span>Verificado correctamente</span>
+      </div>
+    </div>
+
+    <!-- COMPAT -->
+    <div class="card compat-card">
+      <i class="fa-solid fa-mobile-screen-button ci"></i>
+      <div>
+        <div class="compat-title">Compatible con iOS 11 – 26+</div>
+        <div class="compat-sub">Funciona en todos los modelos actuales</div>
+        <div class="device-tags">
+          <span class="device-tag">iPhone</span>
+          <span class="device-tag">iPad</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FEATURES (engagement) -->
+    <div class="engage-section" id="featuresSection">
+      <p class="sec-label">Características</p>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fa-solid fa-bolt"></i></div>
+          <div class="feature-name">Rendimiento</div>
+          <div class="feature-desc">Optimizado para iOS</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fa-solid fa-lock"></i></div>
+          <div class="feature-name">Sin jailbreak</div>
+          <div class="feature-desc">100% seguro</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fa-solid fa-rotate"></i></div>
+          <div class="feature-name">Actualizaciones</div>
+          <div class="feature-desc">Soporte continuo</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fa-solid fa-palette"></i></div>
+          <div class="feature-name">Interfaz</div>
+          <div class="feature-desc">Diseño nativo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATUS -->
+    <div class="status-bar" id="statusBar">
+      Completa la verificación para continuar
+    </div>
+
+    <!-- DOWNLOAD -->
+    <div class="download-section" id="downloadSection">
+      <p class="sec-label">Paso 2 — Descarga</p>
+
+      <div class="card download-card">
+        <div class="platform-header">
+          <div class="platform-title">
+            <div class="platform-icon-wrap">
+              <i class="fa-brands fa-apple"></i>
+            </div>
+            <div>
+              <div class="platform-name-text">iOS</div>
+              <div class="platform-version-text">Configuración móvil</div>
+            </div>
+          </div>
+          <div class="platform-badge">CM</div>
+        </div>
+
+        <!-- Timer ring -->
+        <div class="timer-ring-wrap" id="timerRingWrap">
+          <div class="timer-ring">
+            <svg width="36" height="36" viewBox="0 0 36 36">
+              <circle class="bg" cx="18" cy="18" r="14"/>
+              <circle class="fg" id="timerCircle" cx="18" cy="18" r="14"/>
+            </svg>
+            <div class="timer-num" id="timerNum">15</div>
+          </div>
+          <span id="timerLabel">Preparando descarga…</span>
+        </div>
+
+        <button class="download-btn" id="iosBtn" disabled>
+          <i class="fa-brands fa-apple"></i>
+          <span id="iosText">Descargar para iOS</span>
+        </button>
+
+        <div class="file-info">
+          <div class="info-item">
+            <div class="info-label">Tipo</div>
+            <div class="info-value">.mobileconfig</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Tamaño</div>
+            <div class="info-value">2.1 MB</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Versión</div>
+            <div class="info-value">1.120.1</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INSTALL GUIDE -->
+    <div class="card guide-card" id="iosGuide">
+      <div class="guide-title-row">
+        <i class="fa-solid fa-book-open"></i> GUÍA DE INSTALACIÓN
+      </div>
+
+      <div class="guide-step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title-text">Descarga el archivo</div>
+          <div class="step-desc">Toca el botón y espera a que se complete</div>
+        </div>
+      </div>
+
+      <div class="guide-step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title-text">Abre Ajustes</div>
+          <div class="step-desc">Ve a Ajustes → General → VPN y administración de dispositivos</div>
+        </div>
+      </div>
+
+      <div class="guide-step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title-text">Instala el perfil</div>
+          <div class="step-desc">Selecciona el perfil descargado y sigue las instrucciones</div>
+        </div>
+      </div>
+
+      <div class="guide-step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title-text">Confirma</div>
+          <div class="step-desc">Introduce tu código de acceso si se solicita y confirma</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- YOUTUBE -->
+    <div class="yt-section">
+      <a href="https://youtube.com/@jexeregedit?si=iZOBRg4PZtZ0NKbP" class="yt-btn" target="_blank" rel="noopener">
+        <i class="fa-brands fa-youtube"></i>
+        <span>Canal oficial — @jexeregedit</span>
+        <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:0.75rem;color:var(--text-muted)"></i>
+      </a>
+    </div>
+
+  </div><!-- /main -->
+
+  <!-- FOOTER -->
+  <footer>© <span>jexe</span> 2026</footer>
+
+  <!-- CONFIRM OVERLAY -->
+  <div class="confirm-overlay" id="confirmOverlay">
+    <div class="confirm-box">
+      <div class="confirm-ico"><i class="fa-brands fa-apple"></i></div>
+      <h3 class="confirm-title">¿INICIAR DESCARGA?</h3>
+      <p class="confirm-msg">El archivo .mobileconfig se descargará. Luego ve a Ajustes para instalar el perfil.</p>
+      <div class="confirm-actions">
+        <button class="confirm-btn secondary" id="cancelBtn">Cancelar</button>
+        <button class="confirm-btn primary" id="proceedBtn">Descargar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ─── BEHAVIOR TRACKER ────────────────────────────────── */
+    const BehaviorTracker = {
+      data: { mouseMovements:0, touches:0, scrolls:0, timeOnPage:0,
+              sliderInteractions:0, buttonHovers:0, focusChanges:0, featureViews:0 },
+      init() {
+        this.startTime = Date.now();
+        this.trackMouseMovement(); this.trackTouchEvents();
+        this.trackScrolling(); this.trackFocus(); this.trackTime(); this.trackVisibility();
+      },
+      trackMouseMovement() {
+        let mc = 0;
+        document.addEventListener('mousemove', () => { if (++mc % 10 === 0) this.data.mouseMovements++; });
+      },
+      trackTouchEvents() {
+        document.addEventListener('touchmove', () => { this.data.touches++; });
+      },
+      trackScrolling() {
+        let sc = 0;
+        window.addEventListener('scroll', () => {
+          if (++sc % 5 === 0) this.data.scrolls++;
+          this.checkElementsInView();
+        });
+      },
+      trackFocus() {
+        window.addEventListener('blur',  () => this.data.focusChanges++);
+        window.addEventListener('focus', () => this.data.focusChanges++);
+      },
+      trackTime() {
+        setInterval(() => {
+          this.data.timeOnPage = Math.floor((Date.now() - this.startTime) / 1000);
+        }, 1000);
+      },
+      trackVisibility() {
+        const obs = new IntersectionObserver(entries => {
+          entries.forEach(e => { if (e.isIntersecting) this.data.featureViews++; });
+        }, { threshold: 0.5 });
+        document.querySelectorAll('.feature-card, .guide-step').forEach(el => obs.observe(el));
+      },
+      checkElementsInView() {
+        const fs = document.getElementById('featuresSection');
+        if (fs && this.isInViewport(fs)) fs.classList.add('show');
+      },
+      isInViewport(el) {
+        const r = el.getBoundingClientRect();
+        return r.top >= 0 && r.bottom <= (window.innerHeight || document.documentElement.clientHeight);
+      },
+      isHumanLikely() {
+        return this.data.mouseMovements > 3 || this.data.touches > 2 ||
+               this.data.scrolls > 0 || this.data.sliderInteractions > 0;
+      }
+    };
+    BehaviorTracker.init();
+
+    /* ─── VERIFICATION SYSTEM ─────────────────────────────── */
+    const VerificationSystem = {
+      verified: false,
+      init() {
+        const thumb    = document.getElementById('sliderThumb');
+        const wrapper  = document.getElementById('sliderWrapper');
+        const progress = document.getElementById('sliderProgress');
+        const label    = document.getElementById('sliderLabel');
+        let dragging = false, startX = 0, currentLeft = 0;
+
+        const maxDrag = () => wrapper.offsetWidth - thumb.offsetWidth - 12;
+
+        const onStart = e => {
+          if (this.verified) return;
+          dragging = true;
+          startX = e.touches ? e.touches[0].clientX : e.clientX;
+          currentLeft = parseInt(thumb.style.left || '6');
+          BehaviorTracker.data.sliderInteractions++;
+          e.preventDefault();
+        };
+
+        const onMove = e => {
+          if (!dragging || this.verified) return;
+          const cx = e.touches ? e.touches[0].clientX : e.clientX;
+          const max = maxDrag();
+          let newL = Math.max(6, Math.min(currentLeft + (cx - startX), max));
+          thumb.style.left = newL + 'px';
+          progress.style.width = ((newL - 6) / max * 100) + '%';
+          if ((newL - 6) / max > 0.95) this.complete();
+          BehaviorTracker.data.sliderInteractions++;
+        };
+
+        const onEnd = () => {
+          if (!dragging || this.verified) return;
+          dragging = false;
+          const l = parseInt(thumb.style.left || '6');
+          const max = maxDrag();
+          if ((l - 6) / max < 0.95) {
+            thumb.style.transition = 'left .3s ease';
+            progress.style.transition = 'width .3s ease';
+            thumb.style.left = '6px';
+            progress.style.width = '0%';
+            setTimeout(() => { thumb.style.transition = ''; progress.style.transition = ''; }, 320);
+          }
+        };
+
+        thumb.addEventListener('mousedown',  onStart);
+        thumb.addEventListener('touchstart', onStart, { passive: false });
+        document.addEventListener('mousemove',  onMove);
+        document.addEventListener('touchmove',  onMove, { passive: false });
+        document.addEventListener('mouseup',  onEnd);
+        document.addEventListener('touchend', onEnd);
+      },
+
+      complete() {
+        if (this.verified) return;
+        this.verified = true;
+        const thumb = document.getElementById('sliderThumb');
+        thumb.innerHTML = '<i class="fa-solid fa-check"></i>';
+        document.getElementById('sliderLabel').classList.add('hidden');
+        document.getElementById('verificationSuccess').classList.add('show');
+        document.getElementById('verificationCard').classList.add('verified');
+
+        setTimeout(() => {
+          document.getElementById('downloadSection').classList.add('enabled');
+          document.getElementById('iosBtn').disabled = false;
+          document.getElementById('iosGuide').classList.add('show');
+          document.getElementById('featuresSection').classList.add('show');
+          const sb = document.getElementById('statusBar');
+          sb.classList.add('active');
+          sb.innerHTML = '✓ OnlyRed. <span>.mobileconfig</span>';
+        }, 500);
+      }
+    };
+
+    /* ─── DOWNLOAD SYSTEM ─────────────────────────────────── */
+    const DownloadSystem = {
+      iosUrl: "https://www.mediafire.com/file/bkv3icqpjrqlbtc/iOS99%2525AIM.mobileconfig/file?dkey=ovpmkjud9b8&r=18",
+      timer: null,
+
+      init() {
+        const btn = document.getElementById('iosBtn');
+        btn.addEventListener('click', () => this.startDownload());
+        btn.addEventListener('mouseenter', () => { BehaviorTracker.data.buttonHovers++; });
+      },
+
+      startDownload() {
+        if (!VerificationSystem.verified || this.timer) return;
+        const btn      = document.getElementById('iosBtn');
+        const textSpan = document.getElementById('iosText');
+        const ringWrap = document.getElementById('timerRingWrap');
+        const circle   = document.getElementById('timerCircle');
+        const numEl    = document.getElementById('timerNum');
+        const labelEl  = document.getElementById('timerLabel');
+        const sb       = document.getElementById('statusBar');
+
+        const total = 15;
+        const circumference = 88; // 2π × r(14)
+        let timeLeft = total;
+
+        btn.disabled = true;
+        btn.classList.add('timing');
+        ringWrap.classList.add('show');
+        textSpan.textContent = `Espera ${timeLeft}s`;
+        sb.innerHTML = `Preparando descarga… <span>${timeLeft}s</span>`;
+
+        const updateRing = () => {
+          const offset = circumference - (circumference * (total - timeLeft) / total);
+          circle.style.strokeDashoffset = offset;
+          numEl.textContent = timeLeft;
+        };
+        updateRing();
+
+        this.timer = setInterval(() => {
+          timeLeft--;
+          textSpan.textContent = `Espera ${timeLeft}s`;
+          sb.innerHTML = `Preparando descarga… <span>${timeLeft}s</span>`;
+          labelEl.textContent = `Preparando descarga…`;
+          updateRing();
+
+          if (timeLeft <= 0) {
+            clearInterval(this.timer);
+            this.timer = null;
+            ringWrap.classList.remove('show');
+            btn.classList.remove('timing');
+            btn.disabled = false;
+            textSpan.textContent = '¡Listo para descargar!';
+            sb.innerHTML = '<span>¡Listo!</span> Toca el botón para continuar';
+            btn.onclick = () => this.showConfirmation();
+          }
+        }, 1000);
+      },
+
+      showConfirmation() {
+        document.getElementById('confirmOverlay').classList.add('show');
+        document.getElementById('proceedBtn').onclick = () => {
+          document.getElementById('confirmOverlay').classList.remove('show');
+          this.proceedDownload();
+        };
+        document.getElementById('cancelBtn').onclick = () => {
+          document.getElementById('confirmOverlay').classList.remove('show');
+          this.resetButton();
+        };
+      },
+
+      proceedDownload() {
+        window.location.href = this.iosUrl;
+        const sb = document.getElementById('statusBar');
+        sb.innerHTML = '<span>Descarga iniciada.</span> Ve a Ajustes para instalar el perfil';
+        setTimeout(() => this.resetButton(), 3000);
+      },
+
+      resetButton() {
+        const btn = document.getElementById('iosBtn');
+        const textSpan = document.getElementById('iosText');
+        btn.onclick = null;
+        textSpan.textContent = 'Descargar para iOS';
+        const sb = document.getElementById('statusBar');
+        sb.innerHTML = '✓ OnlyRed. <span>.mobileconfig</span>';
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      VerificationSystem.init();
+      DownloadSystem.init();
+      setTimeout(() => BehaviorTracker.checkElementsInView(), 1800);
+    });
+  </script>
+</body>
+</html>
