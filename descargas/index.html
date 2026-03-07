@@ -509,7 +509,7 @@
           const sb=document.getElementById('statusBar');
           sb.classList.add('active');
           // ── CHANGED: status text references Shortcut, not mobileconfig
-          sb.innerHTML='✓ OnlyRed. <span>Atajo listo</span>';
+          sb.innerHTML='✓ shell52. <span>shortcut</span>';
         },500);
       }
     };
@@ -553,7 +553,7 @@
             clearInterval(this.timer);this.timer=null;
             ringWrap.classList.remove('show');btn.classList.remove('timing');btn.disabled=false;
             textSpan.textContent='¡Agregar Atajo!';
-            sb.innerHTML='<span>¡Listo!</span> Toca el botón para abrir Atajos';
+            sb.innerHTML='<span>Listo</span>';
             btn.onclick=()=>this.showConfirmation();
           }
         },1000);
@@ -580,7 +580,7 @@
         const btn=document.getElementById('iosBtn');
         const textSpan=document.getElementById('iosText');
         btn.onclick=null;textSpan.textContent='Agregar Atajo a iOS';
-        document.getElementById('statusBar').innerHTML='✓ OnlyRed. <span>Atajo listo</span>';
+        document.getElementById('statusBar').innerHTML='✓ shell52. <span>shortcut</span>';
       }
     };
 
