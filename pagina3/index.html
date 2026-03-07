@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="color-scheme" content="light dark"/>
+  <title>Vault Game — Link Directo</title>
+
+  <!-- Onclick ad (kept) -->
+  <script src="https://fpyf8.com/88/tag.min.js" data-zone="183074" async data-cfasync="false"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <style>
+    /* ═══════════════════════════════════════════════
+       TOKENS
+    ═══════════════════════════════════════════════ */
+    :root {
+      --accent:      #E8340A;
+      --accent-2:    #FF6B35;
+      --gold:        #F4B942;
+      --gold-dim:    #C9902A;
+      --green:       #25C25E;
+      --radius:      18px;
+      --radius-sm:   12px;
+      --font-d:      'Bebas Neue', sans-serif;
+      --font-b:      'Outfit', sans-serif;
+      --font-mono:   'Share Tech Mono', monospace;
+      --tr:          0.28s cubic-bezier(0.4,0,0.2,1);
+
+      --bg:          #0E0E0E;
+      --bg2:         #161616;
+      --bg3:         #1E1E1E;
+      --text:        #F0EDE8;
+      --muted:       #888580;
+      --card:        rgba(255,255,255,0.04);
+      --border:      rgba(255,255,255,0.08);
+      --shadow:      0 8px 40px rgba(0,0,0,0.5);
+    }
+
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:var(--font-b);
+      background:var(--bg);
+      color:var(--text);
+      min-height:100dvh;
+      display:flex;
+      flex-direction:column;
+      overflow-x:hidden;
+      padding-bottom:60px;
+    }
+
+    /* GRAIN */
+    body::before{
+      content:'';
+      position:fixed;inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events:none;z-index:0;opacity:0.5;
+    }
+
+    /* ═══ HEADER ═══════════════════════════════════ */
+    header{
+      position:sticky;top:0;z-index:100;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 20px;
+      backdrop-filter:blur(20px) saturate(180%);
+      -webkit-backdrop-filter:blur(20px) saturate(180%);
+      background:color-mix(in srgb,var(--bg) 85%,transparent);
+      border-bottom:1px solid var(--border);
+    }
+    .logo{font-family:var(--font-d);font-size:1.4rem;letter-spacing:.08em;color:var(--text);text-decoration:none}
+    .logo em{color:var(--accent);font-style:normal}
+    .back-btn{
+      display:flex;align-items:center;gap:7px;padding:7px 13px;
+      border:1px solid var(--border);border-radius:10px;background:none;
+      color:var(--muted);font-family:var(--font-b);font-size:.76rem;font-weight:500;
+      cursor:pointer;text-decoration:none;transition:var(--tr);
+    }
+    .back-btn:hover{color:var(--accent);border-color:var(--accent);background:rgba(232,52,10,.1)}
+
+    /* ═══ MAIN ══════════════════════════════════════ */
+    .main{
+      position:relative;z-index:1;
+      max-width:520px;width:100%;margin:0 auto;padding:0 16px;
+    }
+
+    /* ═══ SECTION LABEL ════════════════════════════ */
+    .sec-label{
+      font-family:var(--font-d);font-size:.65rem;letter-spacing:.2em;
+      color:var(--muted);text-transform:uppercase;margin-bottom:8px;
+    }
+
+    /* ═══ CARD ══════════════════════════════════════ */
+    .card{
+      background:var(--card);border:1px solid var(--border);
+      border-radius:var(--radius);padding:20px 18px;margin-bottom:14px;
+    }
+
+    /* ═══ WALLET ════════════════════════════════════ */
+    .wallet-hero{
+      text-align:center;padding:28px 0 16px;
+      animation:fadeUp .5s ease both;
+    }
+    .wallet-credits{
+      font-family:var(--font-d);font-size:clamp(3rem,14vw,5rem);
+      letter-spacing:.04em;line-height:1;color:var(--gold);
+      text-shadow:0 0 40px rgba(244,185,66,.35);
+    }
+    .wallet-usd{
+      font-size:.95rem;font-weight:300;color:var(--muted);margin-top:4px;
+    }
+    .wallet-usd span{color:var(--green);font-weight:600}
+
+    /* Progress bar */
+    .progress-section{animation:fadeUp .5s .05s ease both}
+    .progress-targets{display:flex;flex-direction:column;gap:8px}
+    .progress-row{display:flex;align-items:center;gap:10px}
+    .progress-label{font-size:.72rem;font-weight:600;color:var(--muted);width:38px;text-align:right;flex-shrink:0}
+    .progress-bar-wrap{flex:1;height:8px;background:var(--bg3);border-radius:100px;overflow:hidden;border:1px solid var(--border)}
+    .progress-bar-fill{height:100%;border-radius:100px;transition:width .6s cubic-bezier(.4,0,.2,1);background:linear-gradient(90deg,var(--accent),var(--gold))}
+    .progress-pct{font-size:.68rem;color:var(--muted);width:32px;text-align:right;flex-shrink:0;font-family:var(--font-mono)}
+
+    /* ═══ DAILY STATUS ══════════════════════════════ */
+    .daily-card{animation:fadeUp .5s .1s ease both}
+    .daily-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+    .daily-title{font-family:var(--font-d);font-size:.9rem;letter-spacing:.1em;color:var(--text)}
+    .daily-attempts{
+      display:flex;align-items:center;gap:6px;
+      font-family:var(--font-mono);font-size:.85rem;font-weight:700;
+    }
+    .attempt-dot{
+      width:10px;height:10px;border-radius:50%;
+      background:var(--green);transition:background .3s;
+    }
+    .attempt-dot.used{background:var(--bg3);border:1px solid var(--border)}
+    .attempt-dot.bonus{background:var(--gold)}
+
+    .daily-earned{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:10px 14px;background:var(--bg3);border-radius:var(--radius-sm);
+      border:1px solid var(--border);
+    }
+    .daily-earned-label{font-size:.75rem;color:var(--muted)}
+    .daily-earned-val{font-family:var(--font-mono);font-size:.85rem;font-weight:700;color:var(--gold)}
+
+    /* ═══ COUNTDOWN ═════════════════════════════════ */
+    #countdownSection{display:none;animation:fadeUp .4s ease both}
+    #countdownSection.show{display:block}
+    .countdown-card{
+      text-align:center;padding:28px 20px;
+      border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);
+      background:color-mix(in srgb,var(--accent) 5%,var(--card));
+    }
+    .countdown-title{font-family:var(--font-d);font-size:1.1rem;letter-spacing:.1em;color:var(--accent);margin-bottom:8px}
+    .countdown-sub{font-size:.78rem;color:var(--muted);margin-bottom:20px;font-weight:300}
+    .countdown-time{
+      font-family:var(--font-mono);font-size:clamp(2rem,10vw,3.2rem);
+      color:var(--text);letter-spacing:.1em;
+      text-shadow:0 0 30px rgba(232,52,10,.3);
+    }
+    .countdown-time span{color:var(--accent)}
+
+    /* ═══ GAME BOARD ════════════════════════════════ */
+    #gameSection{animation:fadeUp .5s .15s ease both}
+    .game-board{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+      margin:12px 0;
+    }
+    .box{
+      aspect-ratio:1;border-radius:var(--radius-sm);
+      background:var(--bg2);border:2px solid var(--border);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      cursor:pointer;user-select:none;
+      transition:transform .2s, border-color .2s, background .2s;
+      position:relative;overflow:hidden;
+    }
+    .box:not(.flipped):not(.disabled):hover{
+      transform:scale(1.04);
+      border-color:color-mix(in srgb,var(--gold) 50%,transparent);
+      background:var(--bg3);
+    }
+    .box.disabled{cursor:default;opacity:.5}
+    .box.flipped{cursor:default}
+
+    .box-front, .box-back{
+      position:absolute;inset:0;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      transition:opacity .3s;
+      gap:6px;
+    }
+    .box-back{opacity:0}
+    .box.flipped .box-front{opacity:0}
+    .box.flipped .box-back{opacity:1}
+
+    .box-icon{font-size:1.8rem;color:var(--muted)}
+    .box-number{font-family:var(--font-mono);font-size:.65rem;color:var(--muted);letter-spacing:.1em}
+
+    /* prize states */
+    .box.win-25  .box-back{background:color-mix(in srgb,var(--green) 15%,var(--bg2))}
+    .box.win-50  .box-back{background:color-mix(in srgb,var(--gold) 15%,var(--bg2))}
+    .box.win-100 .box-back{background:color-mix(in srgb,var(--accent) 15%,var(--bg2))}
+    .box.win-25  {border-color:var(--green)!important}
+    .box.win-50  {border-color:var(--gold)!important}
+    .box.win-100 {border-color:var(--accent)!important}
+    .box.empty   {border-color:var(--border)!important;opacity:.65}
+    .box.empty   .box-back{background:var(--bg3)}
+
+    .box-prize-val{
+      font-family:var(--font-d);font-size:1.5rem;letter-spacing:.06em;
+      line-height:1;
+    }
+    .box.win-25  .box-prize-val{color:var(--green)}
+    .box.win-50  .box-prize-val{color:var(--gold)}
+    .box.win-100 .box-prize-val{color:var(--accent)}
+    .box.empty   .box-prize-val{color:var(--muted);font-size:1.1rem}
+
+    .box-prize-label{font-size:.65rem;color:var(--muted);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+
+    /* spin btn */
+    .spin-btn{
+      width:100%;height:62px;border:none;border-radius:var(--radius-sm);
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;
+      font-family:var(--font-d);font-size:1.3rem;letter-spacing:.1em;
+      cursor:pointer;box-shadow:0 6px 24px rgba(232,52,10,.35);
+      transition:var(--tr);display:flex;align-items:center;justify-content:center;gap:10px;
+    }
+    .spin-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 10px 32px rgba(232,52,10,.5)}
+    .spin-btn:active:not(:disabled){transform:translateY(0)}
+    .spin-btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+
+    /* round result */
+    .round-result{
+      text-align:center;min-height:36px;display:flex;align-items:center;
+      justify-content:center;font-size:.88rem;font-weight:600;
+      margin:6px 0;transition:all .3s;
+    }
+    .round-result.win{color:var(--green)}
+    .round-result.big-win{color:var(--gold)}
+    .round-result.mega-win{color:var(--accent)}
+    .round-result.loss{color:var(--muted)}
+    .round-result.bonus{color:var(--gold)}
+
+    /* ═══ WALLET CARD ═══════════════════════════════ */
+    .wallet-card{animation:fadeUp .5s .2s ease both}
+    .wallet-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .wallet-stat{
+      padding:14px 12px;background:var(--bg3);border-radius:var(--radius-sm);
+      border:1px solid var(--border);text-align:center;
+    }
+    .wallet-stat-label{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+    .wallet-stat-value{font-family:var(--font-mono);font-size:.95rem;font-weight:700;color:var(--text)}
+    .wallet-stat-value.gold{color:var(--gold)}
+    .wallet-stat-value.green{color:var(--green)}
+
+    /* ═══ WITHDRAW ══════════════════════════════════ */
+    .withdraw-card{animation:fadeUp .5s .25s ease both}
+    .withdraw-amounts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+    .amount-btn{
+      padding:10px 4px;border-radius:10px;border:2px solid var(--border);
+      background:var(--bg3);color:var(--muted);font-family:var(--font-b);font-size:.78rem;
+      font-weight:600;cursor:pointer;text-align:center;transition:var(--tr);
+    }
+    .amount-btn:hover:not(:disabled):not(.locked){border-color:color-mix(in srgb,var(--gold) 50%,transparent);color:var(--text)}
+    .amount-btn.selected{border-color:var(--gold);color:var(--gold);background:var(--gold-glow,rgba(244,185,66,.1))}
+    .amount-btn:disabled,.amount-btn.locked{opacity:.35;cursor:not-allowed}
+    .amount-btn .req{font-size:.62rem;font-weight:300;color:var(--muted);display:block;margin-top:2px}
+
+    .method-select{
+      width:100%;padding:12px 16px;border-radius:var(--radius-sm);
+      background:var(--bg3);border:1px solid var(--border);color:var(--text);
+      font-family:var(--font-b);font-size:.85rem;font-weight:500;
+      appearance:none;cursor:pointer;margin-bottom:12px;transition:var(--tr);
+    }
+    .method-select:focus{outline:none;border-color:var(--gold)}
+
+    .withdraw-btn{
+      width:100%;height:56px;border:none;border-radius:var(--radius-sm);
+      background:linear-gradient(135deg,var(--gold-dim),var(--gold));color:#000;
+      font-family:var(--font-d);font-size:1.2rem;letter-spacing:.08em;
+      cursor:pointer;transition:var(--tr);font-weight:700;
+      box-shadow:0 4px 20px rgba(244,185,66,.3);
+    }
+    .withdraw-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 28px rgba(244,185,66,.45)}
+    .withdraw-btn:disabled{opacity:.35;cursor:not-allowed;box-shadow:none}
+
+    /* ═══ HISTORY ═══════════════════════════════════ */
+    .history-card{animation:fadeUp .5s .3s ease both}
+    .history-empty{text-align:center;padding:20px;font-size:.8rem;color:var(--muted);font-weight:300}
+    .history-list{display:flex;flex-direction:column;gap:6px}
+    .history-item{
+      display:flex;align-items:center;gap:12px;padding:12px 14px;
+      background:var(--bg3);border-radius:var(--radius-sm);border:1px solid var(--border);
+    }
+    .history-icon{font-size:1.1rem;color:var(--gold);flex-shrink:0}
+    .history-info{flex:1}
+    .history-amount{font-size:.88rem;font-weight:700;color:var(--gold)}
+    .history-method{font-size:.72rem;color:var(--muted);font-weight:300}
+    .history-date{font-size:.68rem;color:var(--muted);font-family:var(--font-mono);text-align:right;line-height:1.5}
+
+    /* ═══ FIRST PLAY BADGE ══════════════════════════ */
+    .firstplay-badge{
+      display:flex;align-items:center;gap:10px;padding:10px 14px;
+      background:var(--bg3);border-radius:var(--radius-sm);border:1px solid var(--border);
+      margin-bottom:10px;font-size:.75rem;color:var(--muted);
+    }
+    .firstplay-badge i{color:var(--accent);font-size:.9rem}
+    .firstplay-date{font-family:var(--font-mono);color:var(--text);font-size:.8rem}
+
+    /* ═══ OVERLAY / POPUP ═══════════════════════════ */
+    .overlay{
+      display:none;position:fixed;inset:0;
+      background:rgba(0,0,0,.75);backdrop-filter:blur(8px);
+      z-index:300;align-items:center;justify-content:center;padding:20px;
+    }
+    .overlay.show{display:flex}
+    .popup{
+      background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);
+      padding:28px 24px;max-width:400px;width:100%;
+      box-shadow:0 20px 60px rgba(0,0,0,.7);
+      animation:popIn .35s cubic-bezier(.34,1.56,.64,1) both;
+    }
+    .popup-icon{text-align:center;font-size:2.5rem;margin-bottom:14px}
+    .popup-title{font-family:var(--font-d);font-size:1.3rem;letter-spacing:.08em;text-align:center;margin-bottom:8px}
+    .popup-sub{font-size:.78rem;color:var(--muted);text-align:center;line-height:1.6;margin-bottom:20px;font-weight:300}
+
+    /* Code display */
+    .code-box{
+      background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);
+      padding:16px;text-align:center;margin-bottom:12px;
+    }
+    .code-string{
+      font-family:var(--font-mono);font-size:1.15rem;letter-spacing:.12em;
+      color:var(--gold);word-break:break-all;line-height:1.4;
+    }
+    .code-warning{
+      display:flex;align-items:flex-start;gap:8px;padding:10px 12px;
+      background:color-mix(in srgb,var(--accent) 10%,var(--bg3));
+      border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);
+      border-radius:var(--radius-sm);font-size:.73rem;color:var(--muted);line-height:1.5;
+      margin-bottom:14px;
+    }
+    .code-warning i{color:var(--accent);flex-shrink:0;margin-top:1px}
+    .code-detail{
+      font-size:.75rem;color:var(--muted);text-align:center;margin-bottom:16px;font-weight:300;line-height:1.6;
+    }
+    .code-detail strong{color:var(--text)}
+
+    .popup-btn{
+      width:100%;height:52px;border:none;border-radius:var(--radius-sm);
+      font-family:var(--font-d);font-size:1.1rem;letter-spacing:.08em;
+      cursor:pointer;transition:var(--tr);margin-bottom:8px;
+    }
+    .popup-btn.primary{
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;
+      box-shadow:0 4px 20px rgba(232,52,10,.3);
+      display:flex;align-items:center;justify-content:center;gap:10px;
+      text-decoration:none;
+    }
+    .popup-btn.primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(232,52,10,.45)}
+    .popup-btn.secondary{background:var(--bg3);border:1px solid var(--border);color:var(--muted)}
+    .popup-btn.secondary:hover{color:var(--text)}
+
+    /* ═══ ANIMATIONS ════════════════════════════════ */
+    @keyframes fadeUp{
+      from{opacity:0;transform:translateY(18px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+    @keyframes popIn{
+      from{transform:scale(.88);opacity:0}
+      to{transform:scale(1);opacity:1}
+    }
+    @keyframes pulse{
+      0%,100%{transform:scale(1)}
+      50%{transform:scale(1.06)}
+    }
+    @keyframes shake{
+      0%,100%{transform:translateX(0)}
+      25%{transform:translateX(-6px)}
+      75%{transform:translateX(6px)}
+    }
+    @keyframes glow{
+      0%,100%{box-shadow:0 0 12px rgba(244,185,66,.3)}
+      50%{box-shadow:0 0 28px rgba(244,185,66,.7)}
+    }
+    .pulse{animation:pulse .6s ease}
+    .shake{animation:shake .4s ease}
+    .glow{animation:glow 1.5s ease infinite}
+
+    /* mobile */
+    @media(max-width:400px){
+      .wallet-credits{font-size:3rem}
+      .withdraw-amounts{grid-template-columns:repeat(2,1fr)}
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a class="logo" href="../index.html">LINK <em>DIRECTO</em></a>
+  <a class="back-btn" href="../index.html"><i class="fa-solid fa-arrow-left"></i> Volver</a>
+</header>
+
+<div class="main">
+
+  <!-- WALLET HERO -->
+  <div class="wallet-hero">
+    <p class="sec-label" style="text-align:center">Tus créditos acumulados</p>
+    <div class="wallet-credits" id="totalCredits">0</div>
+    <div class="wallet-usd">≈ <span id="totalUSD">$0.0000</span> USD</div>
+  </div>
+
+  <!-- FIRST PLAY INFO -->
+  <div class="firstplay-badge" id="firstPlayBadge" style="display:none">
+    <i class="fa-solid fa-calendar-check"></i>
+    <span>Primer juego:</span>
+    <span class="firstplay-date" id="firstPlayDate">—</span>
+  </div>
+
+  <!-- PROGRESS BARS -->
+  <p class="sec-label">Progreso hacia retiro</p>
+  <div class="card progress-section">
+    <div class="progress-targets" id="progressBars"></div>
+  </div>
+
+  <!-- DAILY STATUS -->
+  <p class="sec-label">Intentos de hoy</p>
+  <div class="card daily-card">
+    <div class="daily-header">
+      <span class="daily-title">INTENTOS DISPONIBLES</span>
+      <div class="daily-attempts" id="attemptDots"></div>
+    </div>
+    <div class="daily-earned">
+      <span class="daily-earned-label">Ganado hoy</span>
+      <span class="daily-earned-val" id="dailyEarned">0 créditos</span>
+    </div>
+  </div>
+
+  <!-- COUNTDOWN (shown when no attempts left) -->
+  <div id="countdownSection">
+    <div class="card countdown-card">
+      <div class="countdown-title"><i class="fa-solid fa-lock"></i> VUELVE MAÑANA</div>
+      <div class="countdown-sub">Agotaste tus intentos de hoy. Tu progreso está guardado.</div>
+      <div class="countdown-time" id="countdownDisplay">00<span>:</span>00<span>:</span>00</div>
+    </div>
+  </div>
+
+  <!-- GAME BOARD -->
+  <div id="gameSection">
+    <p class="sec-label">Selecciona 3 cajas</p>
+    <div class="card" style="padding:16px 14px">
+      <div class="game-board" id="gameBoard"></div>
+      <div class="round-result" id="roundResult"></div>
+      <button class="spin-btn" id="spinBtn" disabled>
+        <i class="fa-solid fa-box-open"></i>
+        <span id="spinBtnText">SELECCIONA 3 CAJAS</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- WALLET STATS -->
+  <p class="sec-label">Tu cartera</p>
+  <div class="card wallet-card">
+    <div class="wallet-grid" id="walletGrid"></div>
+  </div>
+
+  <!-- WITHDRAW -->
+  <p class="sec-label">Retirar ganancias</p>
+  <div class="card withdraw-card">
+    <div class="withdraw-amounts" id="withdrawAmounts"></div>
+    <select class="method-select" id="withdrawMethod">
+      <option value="">— Método de pago —</option>
+      <option value="PayPal"> PayPal</option>
+      <option value="Nequi"> Nequi</option>
+      <option value="Binance"> Binance Pay</option>
+      <option value="AstroPay"> AstroPay</option>
+      <option value="FreeFire" data-min="1"> Diamantes Free Fire ($1, $5, $10 únicamente)</option>
+    </select>
+    <button class="withdraw-btn" id="withdrawBtn" disabled>
+      <i class="fa-solid fa-coins"></i> RETIRAR
+    </button>
+  </div>
+
+  <!-- HISTORY -->
+  <p class="sec-label">Historial de retiros</p>
+  <div class="card history-card">
+    <div id="historyContainer">
+      <div class="history-empty">Sin retiros registrados</div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<footer style="position:relative;z-index:1;margin-top:25px;padding:16px 24px;text-align:center;font-size:.72rem;color:var(--muted);font-weight:300;letter-spacing:.05em;border-top:1px solid var(--border)">
+  © <span style="color:var(--accent)">jexe</span> 2026
+</footer>
+
+<!-- WITHDRAW POPUP -->
+<div class="overlay" id="withdrawOverlay">
+  <div class="popup">
+    <div class="popup-icon">🏆</div>
+    <h3 class="popup-title">CÓDIGO DE RETIRO</h3>
+    <div class="popup-sub" id="popupSubtitle">Generado exitosamente</div>
+    <div class="code-box">
+      <div class="code-string" id="popupCode">—</div>
+    </div>
+    <div class="code-warning">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <span>Este código es de <strong>uso único</strong>. Toma una captura de pantalla y envíala junto al mensaje a WhatsApp para verificar tu retiro.</span>
+    </div>
+    <div class="code-detail" id="popupDetail"></div>
+    <a class="popup-btn primary" id="popupWhatsApp" href="#" target="_blank" rel="noopener">
+      <i class="fa-brands fa-whatsapp"></i> ENVIAR A WHATSAPP
+    </a>
+    <button class="popup-btn secondary" id="popupClose">Cancelar</button>
+  </div>
+</div>
+
+<!-- BONUS POPUP -->
+<div class="overlay" id="bonusOverlay">
+  <div class="popup" style="text-align:center">
+    <div class="popup-icon" style="animation:pulse 1s ease infinite">⚡</div>
+    <h3 class="popup-title" style="color:var(--gold)">INTENTO EXTRA</h3>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:20px;font-weight:300;line-height:1.6">
+      No ganaste esta vez, pero te damos <strong style="color:var(--gold)">1 intento extra</strong> ¡para que sigas intentando!
+    </p>
+    <button class="popup-btn primary" id="bonusClose">
+      <i class="fa-solid fa-bolt"></i> ¡USAR INTENTO EXTRA!
+    </button>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   VAULT GAME — CORE ENGINE
+   Storage: localStorage
+   Anti-cheat: server-time emulation via stored offsets + drift detection
+═══════════════════════════════════════════════════════════════ */
+
+// ── CONSTANTS ──────────────────────────────────────────────────
+const MAX_CREDITS      = 100000;
+const MAX_DAILY        = 1000;
+const DAILY_ATTEMPTS   = 10;
+const CREDITS_PER_CENT = 100;   // 100 credits = $0.01
+const WHATSAPP_NUM     = '12147255380';
+const WITHDRAW_TARGETS = [
+  { usd: 0.50, credits: 5000  },
+  { usd: 1.00, credits: 10000 },
+  { usd: 5.00, credits: 50000 },
+  { usd:10.00, credits: 100000}
+];
+const PRIZE_MAP = [25, 50, 100]; // positions 0,1,2 in 3 winning boxes
+
+// ── STATE ──────────────────────────────────────────────────────
+let STATE = {
+  totalCredits: 0,
+  firstPlayDate: null,       // ISO string
+  firstPlayTS: null,         // timestamp ms (actual)
+  dailyDate: '',             // 'YYYY-MM-DD' based on real date
+  dailyAttempts: DAILY_ATTEMPTS,
+  dailyEarned: 0,
+  bonusAvailable: false,     // one-time bonus per session reset
+  history: [],               // array of {date, amount, method, code}
+  // anti-cheat
+  storedDateCheck: null,     // last known date string
+};
+
+// ── PERSIST ────────────────────────────────────────────────────
+const STORE_KEY = 'vaultgame_v2';
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (raw) STATE = { ...STATE, ...JSON.parse(raw) };
+  } catch(e) {}
+}
+function saveState() {
+  localStorage.setItem(STORE_KEY, JSON.stringify(STATE));
+}
+
+// ── DATE UTILITIES ─────────────────────────────────────────────
+function todayStr() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function nowTS() { return Date.now(); }
+
+// Anti-cheat: detect if date rolled back
+function detectDateTampering() {
+  const today = todayStr();
+  // If stored date is "in the future" relative to device, possible tamper
+  if (STATE.storedDateCheck) {
+    if (STATE.storedDateCheck > today) {
+      // Device date was rolled back — don't reset attempts
+      return true;
+    }
+  }
+  return false;
+}
+
+function checkDailyReset() {
+  const today = todayStr();
+  const tampered = detectDateTampering();
+  if (!tampered && STATE.dailyDate !== today) {
+    STATE.dailyDate = today;
+    STATE.dailyAttempts = DAILY_ATTEMPTS;
+    STATE.dailyEarned = 0;
+    STATE.bonusAvailable = false;
+    STATE.storedDateCheck = today;
+    saveState();
+  } else if (tampered) {
+    // Do NOT reset — keep current attempts
+  }
+}
+
+// ── CODE GENERATOR ─────────────────────────────────────────────
+// Format: 4 uppercase + 4 lowercase + 4 digits + day(2) + month(2)
+// Total: 16 chars
+function generateCode() {
+  const upper  = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+  const lower  = 'abcdefghjkmnpqrstuvwxyz';
+  const digits = '0123456789';
+  const rand = (s) => s[Math.floor(Math.random() * s.length)];
+
+  let u4 = Array.from({length:4}, () => rand(upper));
+  let l4 = Array.from({length:4}, () => rand(lower));
+  let d4 = Array.from({length:4}, () => rand(digits));
+
+  // Shuffle u4+l4+d4 for first 12 chars
+  let mid = [...u4, ...l4, ...d4];
+  for (let i = mid.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i+1));
+    [mid[i], mid[j]] = [mid[j], mid[i]];
+  }
+
+  // Last 4: day(2 digits) + month(2 digits)
+  const now = new Date();
+  const day   = String(now.getDate()).padStart(2,'0');
+  const month = String(now.getMonth()+1).padStart(2,'0');
+  const suffix = `${day}${month}`;
+
+  return mid.join('') + suffix; // 12 + 4 = 16
+}
+
+// ── BOARD LOGIC ────────────────────────────────────────────────
+let selectedBoxes = [];
+let boardPrizes   = [];
+let revealed      = false;
+let inRound       = false;
+let bonusActive   = false;
+
+function buildPrizes() {
+  // 3 prizes randomly placed in 9 boxes
+  let prizes = [25, 50, 100, 0, 0, 0, 0, 0, 0];
+  for (let i = prizes.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i+1));
+    [prizes[i], prizes[j]] = [prizes[j], prizes[i]];
+  }
+  return prizes;
+}
+
+function renderBoard() {
+  const board = document.getElementById('gameBoard');
+  board.innerHTML = '';
+  selectedBoxes = [];
+  boardPrizes = buildPrizes();
+  revealed = false;
+  inRound = false;
+
+  for (let i = 0; i < 9; i++) {
+    const box = document.createElement('div');
+    box.className = 'box';
+    box.dataset.index = i;
+    box.innerHTML = `
+      <div class="box-front">
+        <div class="box-icon"><i class="fa-solid fa-box"></i></div>
+        <div class="box-number">CAJA ${String(i+1).padStart(2,'0')}</div>
+      </div>
+      <div class="box-back">
+        <div class="box-prize-val">—</div>
+        <div class="box-prize-label">—</div>
+      </div>
+    `;
+    box.addEventListener('click', () => handleBoxClick(box, i));
+    board.appendChild(box);
+  }
+  updateSpinBtn();
+  document.getElementById('roundResult').textContent = '';
+  document.getElementById('roundResult').className = 'round-result';
+}
+
+function handleBoxClick(box, idx) {
+  if (revealed || inRound) return;
+  if (STATE.dailyAttempts <= 0 && !bonusActive) return;
+
+  if (box.classList.contains('selected-pending')) {
+    box.classList.remove('selected-pending');
+    selectedBoxes = selectedBoxes.filter(i => i !== idx);
+  } else {
+    if (selectedBoxes.length >= 3) return;
+    box.classList.add('selected-pending');
+    selectedBoxes.push(idx);
+  }
+  updateSpinBtn();
+}
+
+function updateSpinBtn() {
+  const btn = document.getElementById('spinBtn');
+  const txt = document.getElementById('spinBtnText');
+  const hasAttempts = STATE.dailyAttempts > 0 || bonusActive;
+  const canSpin = selectedBoxes.length === 3 && hasAttempts && !revealed && !inRound;
+  btn.disabled = !canSpin;
+  if (selectedBoxes.length < 3) {
+    txt.textContent = `SELECCIONA ${3 - selectedBoxes.length} MÁS`;
+  } else {
+    txt.textContent = 'REVELAR CAJAS';
+  }
+}
+
+function revealBoxes() {
+  if (inRound || selectedBoxes.length !== 3) return;
+  inRound = true;
+  revealed = true;
+
+  // Deduct attempt
+  if (bonusActive) {
+    bonusActive = false;
+  } else {
+    STATE.dailyAttempts = Math.max(0, STATE.dailyAttempts - 1);
+  }
+  saveState();
+
+  const boxes = document.querySelectorAll('.box');
+
+  // Reveal selected boxes one by one
+  let totalWon = 0;
+  let delay = 0;
+
+  selectedBoxes.forEach((idx, i) => {
+    setTimeout(() => {
+      const box = boxes[idx];
+      const prize = boardPrizes[idx];
+      const back = box.querySelector('.box-back');
+
+      box.classList.remove('selected-pending');
+      box.classList.add('flipped');
+
+      if (prize === 25) {
+        box.classList.add('win-25');
+        back.querySelector('.box-prize-val').textContent = '+25';
+        back.querySelector('.box-prize-label').textContent = 'créditos';
+        totalWon += 25;
+      } else if (prize === 50) {
+        box.classList.add('win-50');
+        back.querySelector('.box-prize-val').textContent = '+50';
+        back.querySelector('.box-prize-label').textContent = 'créditos';
+        totalWon += 50;
+      } else if (prize === 100) {
+        box.classList.add('win-100');
+        back.querySelector('.box-prize-val').textContent = '+100';
+        back.querySelector('.box-prize-label').textContent = 'créditos';
+        totalWon += 100;
+      } else {
+        box.classList.add('empty');
+        back.querySelector('.box-prize-val').textContent = '✗';
+        back.querySelector('.box-prize-label').textContent = 'sin premio';
+      }
+
+      if (i === selectedBoxes.length - 1) {
+        // All revealed
+        setTimeout(() => finishRound(totalWon), 400);
+      }
+    }, delay);
+    delay += 350;
+  });
+
+  // Disable remaining boxes
+  setTimeout(() => {
+    boxes.forEach((b, idx) => {
+      if (!selectedBoxes.includes(idx)) b.classList.add('disabled');
+    });
+  }, 50);
+}
+
+function finishRound(won) {
+  const result = document.getElementById('roundResult');
+  const canAddMore = STATE.dailyEarned + won <= MAX_DAILY;
+  const actualWon  = canAddMore ? won : Math.max(0, MAX_DAILY - STATE.dailyEarned);
+
+  if (actualWon > 0) {
+    const add = Math.min(actualWon, MAX_CREDITS - STATE.totalCredits);
+    STATE.totalCredits = Math.min(MAX_CREDITS, STATE.totalCredits + add);
+    STATE.dailyEarned  = Math.min(MAX_DAILY, STATE.dailyEarned + add);
+  }
+
+  // First play
+  if (!STATE.firstPlayDate) {
+    STATE.firstPlayDate = new Date().toLocaleString('es-MX', {
+      year:'numeric', month:'long', day:'numeric',
+      hour:'2-digit', minute:'2-digit'
+    });
+    STATE.firstPlayTS = nowTS();
+    renderFirstPlay();
+  }
+
+  saveState();
+  updateUI();
+
+  if (won === 0) {
+    result.className = 'round-result loss';
+    result.textContent = '📦 Sin premio esta vez...';
+    // Offer bonus if not already given today and no attempts left
+    if (!STATE.bonusAvailable) {
+      STATE.bonusAvailable = true;
+      saveState();
+      setTimeout(() => showBonusPopup(), 800);
+    }
+  } else if (won <= 25) {
+    result.className = 'round-result win';
+    result.textContent = `✅ Ganaste ${won} créditos`;
+  } else if (won <= 75) {
+    result.className = 'round-result big-win';
+    result.textContent = `🏅 +${won} créditos ¡bien jugado!`;
+  } else {
+    result.className = 'round-result mega-win';
+    result.textContent = `🔥 +${won} créditos ¡INCREÍBLE!`;
+    document.getElementById('spinBtn').classList.add('glow');
+  }
+
+  // Re-enable spin for next round
+  setTimeout(() => {
+    if (STATE.dailyAttempts > 0) {
+      renderBoard();
+      renderAttemptDots();
+    } else {
+      renderBoard();
+      renderAttemptDots();
+      startCountdown();
+    }
+    document.getElementById('spinBtn').classList.remove('glow');
+  }, 2200);
+}
+
+function showBonusPopup() {
+  document.getElementById('bonusOverlay').classList.add('show');
+}
+
+document.getElementById('bonusClose').addEventListener('click', () => {
+  document.getElementById('bonusOverlay').classList.remove('show');
+  bonusActive = true;
+  updateSpinBtn();
+});
+
+// ── COUNTDOWN ──────────────────────────────────────────────────
+let countdownInterval = null;
+
+function getMsUntilMidnight() {
+  const now = new Date();
+  const midnight = new Date(now);
+  midnight.setHours(24, 0, 0, 0);
+  return midnight - now;
+}
+
+function startCountdown() {
+  document.getElementById('countdownSection').classList.add('show');
+  document.getElementById('gameSection').style.opacity = '0.3';
+  document.getElementById('gameSection').style.pointerEvents = 'none';
+  document.getElementById('spinBtn').disabled = true;
+
+  if (countdownInterval) clearInterval(countdownInterval);
+
+  function tick() {
+    const ms = getMsUntilMidnight();
+    if (ms <= 0) {
+      clearInterval(countdownInterval);
+      checkDailyReset();
+      unlockGame();
+      return;
+    }
+    const h = String(Math.floor(ms/3600000)).padStart(2,'0');
+    const m = String(Math.floor((ms%3600000)/60000)).padStart(2,'0');
+    const s = String(Math.floor((ms%60000)/1000)).padStart(2,'0');
+    document.getElementById('countdownDisplay').innerHTML =
+      `${h}<span>:</span>${m}<span>:</span>${s}`;
+  }
+  tick();
+  countdownInterval = setInterval(tick, 1000);
+}
+
+function unlockGame() {
+  document.getElementById('countdownSection').classList.remove('show');
+  document.getElementById('gameSection').style.opacity = '';
+  document.getElementById('gameSection').style.pointerEvents = '';
+  renderBoard();
+  renderAttemptDots();
+  updateUI();
+}
+
+// ── WITHDRAW ───────────────────────────────────────────────────
+let selectedWithdrawAmount = null;
+
+function renderWithdrawAmounts() {
+  const container = document.getElementById('withdrawAmounts');
+  container.innerHTML = '';
+  WITHDRAW_TARGETS.forEach(target => {
+    const btn = document.createElement('button');
+    btn.className = 'amount-btn';
+    const hasEnough = STATE.totalCredits >= target.credits;
+    if (!hasEnough) btn.classList.add('locked');
+    btn.innerHTML = `$${target.usd.toFixed(2)}<span class="req">${target.credits.toLocaleString()}cr</span>`;
+    btn.addEventListener('click', () => {
+      if (!hasEnough) return;
+      selectedWithdrawAmount = target;
+      document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      validateWithdraw();
+    });
+    container.appendChild(btn);
+  });
+}
+
+function validateWithdraw() {
+  const method = document.getElementById('withdrawMethod').value;
+  const btn = document.getElementById('withdrawBtn');
+  if (!selectedWithdrawAmount || !method) { btn.disabled = true; return; }
+  // FreeFire only for $1, $5, $10
+  if (method === 'FreeFire' && selectedWithdrawAmount.usd < 1) {
+    btn.disabled = true;
+    return;
+  }
+  btn.disabled = false;
+}
+
+document.getElementById('withdrawMethod').addEventListener('change', validateWithdraw);
+
+document.getElementById('withdrawBtn').addEventListener('click', () => {
+  if (!selectedWithdrawAmount) return;
+  const method = document.getElementById('withdrawMethod').value;
+  if (!method) return;
+
+  const code    = generateCode();
+  const now     = new Date();
+  const dateStr = now.toLocaleString('es-MX', {
+    year:'numeric', month:'long', day:'numeric',
+    hour:'2-digit', minute:'2-digit', second:'2-digit'
+  });
+
+  // Build popup
+  document.getElementById('popupCode').textContent = code;
+  document.getElementById('popupSubtitle').textContent =
+    `$${selectedWithdrawAmount.usd.toFixed(2)} USD vía ${method}`;
+  document.getElementById('popupDetail').innerHTML =
+    `<strong>Monto:</strong> $${selectedWithdrawAmount.usd.toFixed(2)} USD
+     &nbsp;·&nbsp; <strong>Método:</strong> ${method}<br/>
+     <strong>Créditos:</strong> ${selectedWithdrawAmount.credits.toLocaleString()}
+     &nbsp;·&nbsp; <strong>Fecha:</strong> ${dateStr}`;
+
+  // WhatsApp message
+  const msg = encodeURIComponent(
+    `Hola buen día, quiero solicitar un retiro.\n\n` +
+    `💰 *Monto:* $${selectedWithdrawAmount.usd.toFixed(2)} USD\n` +
+    `💳 *Método de pago:* ${method}\n` +
+    `🔑 *Código de retiro:* ${code}\n` +
+    `📅 *Fecha de solicitud:* ${dateStr}\n` +
+    `🎮 *Primer juego registrado:* ${STATE.firstPlayDate || 'N/A'}\n\n` +
+    `Adjunto captura de pantalla del código generado.`
+  );
+  document.getElementById('popupWhatsApp').href = `https://wa.me/${WHATSAPP_NUM}?text=${msg}`;
+
+  // Save to history and deduct credits
+  STATE.history.unshift({
+    amount:  `$${selectedWithdrawAmount.usd.toFixed(2)}`,
+    credits: selectedWithdrawAmount.credits,
+    method,
+    code,
+    date: dateStr
+  });
+
+  // Deduct credits
+  STATE.totalCredits = Math.max(0, STATE.totalCredits - selectedWithdrawAmount.credits);
+
+  // Reset selection
+  selectedWithdrawAmount = null;
+  document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
+  document.getElementById('withdrawMethod').value = '';
+  document.getElementById('withdrawBtn').disabled = true;
+
+  saveState();
+  updateUI();
+
+  document.getElementById('withdrawOverlay').classList.add('show');
+});
+
+document.getElementById('popupWhatsApp').addEventListener('click', () => {
+  // Close overlay after a moment
+  setTimeout(() => {
+    document.getElementById('withdrawOverlay').classList.remove('show');
+    renderHistory();
+  }, 500);
+});
+
+document.getElementById('popupClose').addEventListener('click', () => {
+  document.getElementById('withdrawOverlay').classList.remove('show');
+});
+
+// ── UI RENDERS ─────────────────────────────────────────────────
+function renderAttemptDots() {
+  const container = document.getElementById('attemptDots');
+  container.innerHTML = '';
+  for (let i = 0; i < DAILY_ATTEMPTS; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'attempt-dot' + (i >= STATE.dailyAttempts ? ' used' : '');
+    container.appendChild(dot);
+  }
+  if (bonusActive) {
+    const bonus = document.createElement('div');
+    bonus.className = 'attempt-dot bonus';
+    bonus.title = 'Intento extra';
+    container.appendChild(bonus);
+  }
+}
+
+function renderProgressBars() {
+  const container = document.getElementById('progressBars');
+  container.innerHTML = '';
+  WITHDRAW_TARGETS.forEach(target => {
+    const pct = Math.min(100, (STATE.totalCredits / target.credits) * 100);
+    const row = document.createElement('div');
+    row.className = 'progress-row';
+    row.innerHTML = `
+      <span class="progress-label">$${target.usd.toFixed(2)}</span>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" style="width:${pct}%"></div>
+      </div>
+      <span class="progress-pct">${Math.floor(pct)}%</span>
+    `;
+    container.appendChild(row);
+  });
+}
+
+function renderWalletGrid() {
+  const usd = STATE.totalCredits / CREDITS_PER_CENT / 100;
+  // Calc remaining for each target
+  const grid = document.getElementById('walletGrid');
+  grid.innerHTML = '';
+  const stats = [
+    { label:'Créditos totales', val: STATE.totalCredits.toLocaleString(), cls:'gold' },
+    { label:'Equivalente USD', val: `$${usd.toFixed(4)}`, cls:'green' },
+    { label:'Ganados hoy', val: STATE.dailyEarned.toLocaleString() + ' cr', cls:'' },
+    { label:'Máximo diario', val: `${MAX_DAILY.toLocaleString()} cr`, cls:'' },
+  ];
+  stats.forEach(s => {
+    const el = document.createElement('div');
+    el.className = 'wallet-stat';
+    el.innerHTML = `
+      <div class="wallet-stat-label">${s.label}</div>
+      <div class="wallet-stat-value ${s.cls}">${s.val}</div>
+    `;
+    grid.appendChild(el);
+  });
+}
+
+function renderFirstPlay() {
+  const badge = document.getElementById('firstPlayBadge');
+  const dateEl = document.getElementById('firstPlayDate');
+  if (STATE.firstPlayDate) {
+    badge.style.display = 'flex';
+    dateEl.textContent = STATE.firstPlayDate;
+  }
+}
+
+function renderHistory() {
+  const container = document.getElementById('historyContainer');
+  if (!STATE.history || STATE.history.length === 0) {
+    container.innerHTML = '<div class="history-empty">Sin retiros registrados</div>';
+    return;
+  }
+  const list = document.createElement('div');
+  list.className = 'history-list';
+  STATE.history.slice(0, 20).forEach(item => {
+    const el = document.createElement('div');
+    el.className = 'history-item';
+    el.innerHTML = `
+      <div class="history-icon"><i class="fa-solid fa-coins"></i></div>
+      <div class="history-info">
+        <div class="history-amount">${item.amount} — ${item.method}</div>
+        <div class="history-method" style="font-family:var(--font-mono);font-size:.65rem">${item.code}</div>
+      </div>
+      <div class="history-date">${item.date}</div>
+    `;
+    list.appendChild(el);
+  });
+  container.innerHTML = '';
+  container.appendChild(list);
+}
+
+function updateCreditsDisplay() {
+  const usd = STATE.totalCredits / CREDITS_PER_CENT / 100;
+  document.getElementById('totalCredits').textContent = STATE.totalCredits.toLocaleString();
+  document.getElementById('totalUSD').textContent = `$${usd.toFixed(4)}`;
+  document.getElementById('dailyEarned').textContent = STATE.dailyEarned.toLocaleString() + ' créditos';
+}
+
+function updateUI() {
+  updateCreditsDisplay();
+  renderProgressBars();
+  renderAttemptDots();
+  renderWalletGrid();
+  renderWithdrawAmounts();
+  renderFirstPlay();
+  renderHistory();
+}
+
+// ── SPIN BUTTON ────────────────────────────────────────────────
+document.getElementById('spinBtn').addEventListener('click', () => {
+  if (selectedBoxes.length === 3 && !revealed && !inRound) {
+    revealBoxes();
+  }
+});
+
+// ── INIT ───────────────────────────────────────────────────────
+function init() {
+  loadState();
+  checkDailyReset();
+  updateUI();
+  renderBoard();
+
+  if (STATE.dailyAttempts <= 0 && !bonusActive) {
+    startCountdown();
+  }
+}
+
+init();
+</script>
+</body>
+</html>
