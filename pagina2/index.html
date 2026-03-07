@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="color-scheme" content="light dark"/>
+  <title>Comprar — JEXE Regedit Premium Edition</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <style>
+    :root {
+      --accent:      #E8340A;
+      --accent-2:    #FF6B35;
+      --accent-glow: rgba(232,52,10,0.14);
+      --gold:        #F4B942;
+      --gold-glow:   rgba(244,185,66,0.15);
+      --radius:      18px;
+      --radius-sm:   12px;
+      --font-d:      'Bebas Neue', sans-serif;
+      --font-b:      'Outfit', sans-serif;
+      --tr:          0.28s cubic-bezier(0.4,0,0.2,1);
+
+      --bg:          #F2F0EC;
+      --bg2:         #E8E5DF;
+      --text:        #111110;
+      --muted:       #6B6760;
+      --card:        rgba(0,0,0,0.04);
+      --border:      rgba(0,0,0,0.08);
+      --shadow:      0 8px 32px rgba(0,0,0,0.10);
+    }
+    @media(prefers-color-scheme:dark){:root{
+      --bg:#0E0E0E; --bg2:#161616; --text:#F0EDE8;
+      --muted:#888580; --card:rgba(255,255,255,0.04);
+      --border:rgba(255,255,255,0.08); --shadow:0 8px 40px rgba(0,0,0,0.5);
+    }}
+
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height:100dvh;display:flex;flex-direction:column;overflow-x:hidden;padding-bottom:56px}
+
+    body::before{content:'';position:fixed;inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events:none;z-index:0;opacity:0.4}
+
+    /* ── HEADER ───────────────────────────────── */
+    header{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 24px;
+      backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);
+      background:color-mix(in srgb,var(--bg) 80%,transparent);border-bottom:1px solid var(--border)}
+    .logo{font-family:var(--font-d);font-size:1.5rem;letter-spacing:.08em;color:var(--text);text-decoration:none}
+    .logo em{color:var(--accent);font-style:normal}
+    .back-btn{display:flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--border);border-radius:10px;
+      background:none;color:var(--muted);font-family:var(--font-b);font-size:.78rem;font-weight:500;letter-spacing:.05em;
+      cursor:pointer;text-decoration:none;transition:var(--tr)}
+    .back-btn:hover{color:var(--accent);border-color:var(--accent);background:var(--accent-glow)}
+
+    /* ── MAIN ─────────────────────────────────── */
+    .main{position:relative;z-index:1;max-width:560px;width:100%;margin:0 auto;padding:0 20px}
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero{text-align:center;padding:36px 0 24px;animation:fadeUp .5s ease both}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 18px;border-radius:100px;
+      background:color-mix(in srgb,var(--accent) 12%,transparent);border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);
+      font-family:var(--font-d);font-size:1rem;letter-spacing:.12em;color:var(--accent);margin-bottom:14px}
+    .hero-title{font-family:var(--font-d);font-size:clamp(2.6rem,11vw,4.2rem);letter-spacing:.04em;line-height:.95;margin-bottom:6px}
+    .hero-title em{color:var(--accent);font-style:normal}
+    .hero-sub{font-size:.83rem;color:var(--muted);font-weight:300;letter-spacing:.04em}
+    .hero-div{width:40px;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:2px;margin:12px auto 0}
+
+    /* ── SECTION LABEL ────────────────────────── */
+    .sec-label{font-family:var(--font-d);font-size:.65rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-bottom:10px}
+
+    /* ── CARD ─────────────────────────────────── */
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:22px 20px;margin-bottom:16px}
+
+    /* ── VIDEO PLAYER ─────────────────────────── */
+    .video-wrap{position:relative;border-radius:var(--radius);overflow:hidden;background:#000;margin-bottom:16px;
+      border:1px solid var(--border);animation:fadeUp .5s .05s ease both}
+    .video-wrap video{width:100%;display:block;max-height:300px;object-fit:cover}
+    .video-label{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);
+      border-radius:8px;padding:5px 12px;font-size:.72rem;font-weight:600;color:#fff;letter-spacing:.06em;
+      display:flex;align-items:center;gap:6px}
+    .video-label i{color:var(--accent)}
+
+    /* ── PRODUCT CARD ─────────────────────────── */
+    .product-card{animation:fadeUp .5s .1s ease both}
+    .compat-row{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+    .compat-pill{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:100px;
+      background:rgba(0,180,80,.10);border:1px solid rgba(0,180,80,.25);font-size:.75rem;font-weight:600;color:#00b450}
+    .compat-pill i{font-size:.75rem}
+    .benefits-title{font-family:var(--font-d);font-size:.85rem;letter-spacing:.12em;color:var(--muted);margin-bottom:10px}
+    .benefits-list{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;margin-bottom:20px}
+    .benefit-item{display:flex;align-items:center;gap:8px;font-size:.82rem;font-weight:400}
+    .benefit-item i{color:var(--accent);font-size:.75rem;flex-shrink:0}
+
+    /* ── PLANS ────────────────────────────────── */
+    .plans-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:0}
+    .plan{border-radius:var(--radius-sm);padding:20px 16px;text-align:center;border:2px solid var(--border);
+      transition:var(--tr);cursor:default;position:relative;overflow:hidden}
+    .plan.monthly{background:var(--card)}
+    .plan.permanent{background:color-mix(in srgb,var(--gold) 8%,var(--card));border-color:color-mix(in srgb,var(--gold) 35%,transparent)}
+    .plan-badge{display:inline-block;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+      padding:3px 10px;border-radius:100px;margin-bottom:10px}
+    .plan.monthly .plan-badge{background:var(--accent-glow);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 30%,transparent)}
+    .plan.permanent .plan-badge{background:var(--gold-glow);color:var(--gold);border:1px solid color-mix(in srgb,var(--gold) 35%,transparent)}
+    .plan-price{font-family:var(--font-d);font-size:2.4rem;letter-spacing:.04em;line-height:1}
+    .plan.monthly .plan-price{color:var(--accent)}
+    .plan.permanent .plan-price{color:var(--gold)}
+    .plan-currency{font-size:.8rem;font-weight:700;vertical-align:super;line-height:1}
+    .plan-period{font-size:.75rem;color:var(--muted);font-weight:300;margin-top:4px}
+    .plan-best{position:absolute;top:8px;right:8px;font-size:.6rem;font-weight:700;
+      padding:2px 8px;border-radius:100px;background:var(--gold);color:#000;letter-spacing:.08em}
+
+    /* ── SOCIAL PROOF ─────────────────────────── */
+    .proof-card{animation:fadeUp .5s .15s ease both}
+    .proof-inner{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--text);transition:var(--tr)}
+    .proof-inner:hover{transform:translateX(3px)}
+    .proof-icon{width:48px;height:48px;border-radius:12px;background:rgba(255,0,0,.10);
+      border:1px solid rgba(255,0,0,.2);display:grid;place-items:center;font-size:1.4rem;color:#FF0000;flex-shrink:0}
+    .proof-text strong{display:block;font-size:.92rem;font-weight:700;margin-bottom:2px}
+    .proof-text span{font-size:.78rem;color:var(--muted);font-weight:300}
+    .proof-cta{margin-left:auto;display:flex;align-items:center;gap:5px;font-size:.75rem;font-weight:600;
+      color:var(--accent);padding:7px 12px;border-radius:8px;border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);
+      background:var(--accent-glow);white-space:nowrap}
+
+    /* ── COUNTRY SELECTOR ─────────────────────── */
+    .country-card{animation:fadeUp .5s .2s ease both}
+    .select-wrap{position:relative;margin-bottom:14px}
+    .select-wrap select{width:100%;padding:14px 44px 14px 16px;border-radius:var(--radius-sm);
+      background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:var(--font-b);
+      font-size:.88rem;font-weight:500;appearance:none;-webkit-appearance:none;cursor:pointer;transition:var(--tr)}
+    .select-wrap select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+    .select-wrap::after{content:'\f107';font-family:'Font Awesome 6 Free';font-weight:900;
+      position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+
+    /* ── PAYMENT METHODS ──────────────────────── */
+    .methods-wrap{display:none;animation:fadeUp .4s ease both}
+    .methods-wrap.show{display:block}
+    .method-list{display:flex;flex-direction:column;gap:8px}
+    .method-item{display:flex;align-items:center;gap:14px;padding:14px 16px;
+      background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);transition:var(--tr)}
+    .method-item:hover{border-color:color-mix(in srgb,var(--accent) 30%,transparent);transform:translateX(3px)}
+    .method-logo{width:44px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;
+      flex-shrink:0;font-size:1.2rem;overflow:hidden}
+    .method-logo img{width:100%;height:100%;object-fit:contain}
+    .method-info{flex:1}
+    .method-name{font-size:.88rem;font-weight:600;margin-bottom:2px}
+    .method-desc{font-size:.72rem;color:var(--muted);font-weight:300;line-height:1.4}
+    .method-tag{font-size:.65rem;font-weight:700;letter-spacing:.08em;padding:2px 8px;border-radius:100px;
+      background:var(--accent-glow);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 25%,transparent)}
+    .no-methods{text-align:center;padding:20px;color:var(--muted);font-size:.82rem;font-weight:300}
+
+    /* ── PURCHASE BUTTON ──────────────────────── */
+    .cta-section{animation:fadeUp .5s .25s ease both;margin-bottom:0}
+    .cta-notice{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;margin-bottom:12px;
+      border-radius:var(--radius-sm);background:color-mix(in srgb,var(--gold) 10%,var(--card));
+      border:1px solid color-mix(in srgb,var(--gold) 30%,transparent);font-size:.78rem;color:var(--muted);line-height:1.5}
+    .cta-notice i{color:var(--gold);flex-shrink:0;margin-top:1px}
+    .cta-notice strong{color:var(--text)}
+    .buy-btn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;height:68px;
+      border:none;border-radius:var(--radius-sm);background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      color:#fff;font-family:var(--font-d);font-size:1.35rem;letter-spacing:.1em;cursor:pointer;
+      box-shadow:0 6px 24px rgba(232,52,10,.35);transition:var(--tr);text-decoration:none}
+    .buy-btn:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(232,52,10,.5)}
+    .buy-btn:active{transform:translateY(0)}
+    .buy-btn i{font-size:1.3rem}
+
+    /* ── FOOTER ───────────────────────────────── */
+footer{position:relative;z-index:1;margin-top:25px;padding:18px 24px;text-align:center;
+      font-size:.72rem;color:var(--muted);font-weight:300;letter-spacing:.05em;border-top:1px solid var(--border)}
+footer span{color:var(--accent)}
+
+    /* ── ANIMATIONS ───────────────────────────── */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+    @media(max-width:480px){
+      .benefits-list{grid-template-columns:1fr}
+      .plans-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="../index.html">LINK <em>DIRECTO</em></a>
+  <a class="back-btn" href="../index.html"><i class="fa-solid fa-arrow-left"></i> Volver</a>
+</header>
+
+<div class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge"><i class="fa-solid fa-crown"></i> Premium Edition</div>
+    <h1 class="hero-title">JEXE<br/><em>REGEDIT</em></h1>
+    <p class="hero-sub">iOS 11 — 26.3+ · Sin jailbreak · Acceso inmediato</p>
+    <div class="hero-div"></div>
+  </div>
+
+  <!-- VIDEO -->
+  <div class="video-wrap">
+    <video controls preload="metadata" poster="">
+      <source src="videos/producto.mp4" type="video/mp4"/>
+      Tu navegador no soporta video HTML5.
+    </video>
+    <div class="video-label"><i class="fa-solid fa-play"></i> VIDEO REFERENCIAL</div>
+  </div>
+
+  <!-- PRODUCT -->
+  <p class="sec-label">El producto</p>
+  <div class="card product-card">
+    <div class="compat-row">
+      <span class="compat-pill"><i class="fa-solid fa-circle-check"></i> iOS VERSION</span>
+      <span class="compat-pill"><i class="fa-solid fa-circle-check"></i> iOS 11 – 26.3+</span>
+    </div>
+
+    <div class="benefits-title">BENEFICIOS INCLUIDOS</div>
+    <div class="benefits-list">
+      <div class="benefit-item"><i class="fa-solid fa-bolt"></i> 2 actualizaciones / mes</div>
+      <div class="benefit-item"><i class="fa-solid fa-book-open"></i> Tutoriales de instalación</div>
+      <div class="benefit-item"><i class="fa-solid fa-certificate"></i> Certificados Premium</div>
+      <div class="benefit-item"><i class="fa-solid fa-crosshairs"></i> Aimfov 120%</div>
+      <div class="benefit-item"><i class="fa-solid fa-lock-open"></i> Aimlock 65%</div>
+      <div class="benefit-item"><i class="fa-solid fa-bullseye"></i> Aimassist 65%</div>
+      <div class="benefit-item"><i class="fa-solid fa-shield-halved"></i> Libre de Baneo</div>
+      <div class="benefit-item"><i class="fa-solid fa-list-check"></i> Libre de Blacklist</div>
+      <div class="benefit-item"><i class="fa-solid fa-arrow-up"></i> Libre reinicio de rango</div>
+    </div>
+
+    <div class="plans-grid">
+      <div class="plan monthly">
+        <div class="plan-badge">Mensual</div>
+        <div class="plan-price"><span class="plan-currency">$</span>12</div>
+        <div class="plan-period">USD · 1 Mes</div>
+      </div>
+      <div class="plan permanent">
+        <div class="plan-best">MEJOR VALOR</div>
+        <div class="plan-badge">Permanente</div>
+        <div class="plan-price"><span class="plan-currency">$</span>32</div>
+        <div class="plan-period">USD · Acceso permanente</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOCIAL PROOF -->
+  <p class="sec-label">Más de 1000 compras verificadas</p>
+  <div class="card proof-card">
+    <a class="proof-inner" href="https://t.me/+56Wdh8JANmJjYzZh" target="_blank" rel="noopener">
+      <div class="proof-icon"><i class="fa-brands fa-telegram"></i></div>
+      <div class="proof-text">
+        <strong>Referencias públicas de compra</strong>
+        <span>4 años de historial · actualizándose constantemente</span>
+      </div>
+      <div class="proof-cta"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver</div>
+    </a>
+  </div>
+
+  <!-- COUNTRY SELECTOR -->
+  <p class="sec-label">¿De qué país eres?</p>
+  <div class="card country-card">
+    <div class="select-wrap">
+      <select id="countrySelect" onchange="showMethods()">
+        <option value="">— Selecciona tu país —</option>
+        <!-- LATAM -->
+        <optgroup label="🌎 América Latina">
+          <option value="mx">🇲🇽 México</option>
+          <option value="co">🇨🇴 Colombia</option>
+          <option value="ar">🇦🇷 Argentina</option>
+          <option value="cl">🇨🇱 Chile</option>
+          <option value="pe">🇵🇪 Perú</option>
+          <option value="ve">🇻🇪 Venezuela</option>
+          <option value="ec">🇪🇨 Ecuador</option>
+          <option value="bo">🇧🇴 Bolivia</option>
+          <option value="py">🇵🇾 Paraguay</option>
+          <option value="uy">🇺🇾 Uruguay</option>
+          <option value="cr">🇨🇷 Costa Rica</option>
+          <option value="pa">🇵🇦 Panamá</option>
+          <option value="gt">🇬🇹 Guatemala</option>
+          <option value="hn">🇭🇳 Honduras</option>
+          <option value="sv">🇸🇻 El Salvador</option>
+          <option value="ni">🇳🇮 Nicaragua</option>
+          <option value="do">🇩🇴 República Dominicana</option>
+          <option value="cu">🇨🇺 Cuba</option>
+          <option value="br">🇧🇷 Brasil</option>
+          <option value="pr">🇵🇷 Puerto Rico</option>
+        </optgroup>
+        <!-- NORTEAMERICA -->
+        <optgroup label="🌎 Norte América">
+          <option value="us">🇺🇸 Estados Unidos</option>
+          <option value="ca">🇨🇦 Canadá</option>
+        </optgroup>
+        <!-- EUROPA -->
+        <optgroup label="🌍 Europa">
+          <option value="es">🇪🇸 España</option>
+          <option value="gb">🇬🇧 Reino Unido</option>
+          <option value="de">🇩🇪 Alemania</option>
+          <option value="fr">🇫🇷 Francia</option>
+          <option value="it">🇮🇹 Italia</option>
+          <option value="pt">🇵🇹 Portugal</option>
+          <option value="nl">🇳🇱 Países Bajos</option>
+          <option value="be">🇧🇪 Bélgica</option>
+          <option value="ch">🇨🇭 Suiza</option>
+          <option value="at">🇦🇹 Austria</option>
+          <option value="pl">🇵🇱 Polonia</option>
+          <option value="ro">🇷🇴 Rumanía</option>
+          <option value="gr">🇬🇷 Grecia</option>
+          <option value="se">🇸🇪 Suecia</option>
+          <option value="no">🇳🇴 Noruega</option>
+          <option value="dk">🇩🇰 Dinamarca</option>
+          <option value="fi">🇫🇮 Finlandia</option>
+          <option value="ie">🇮🇪 Irlanda</option>
+          <option value="tr">🇹🇷 Turquía</option>
+        </optgroup>
+        <!-- ASIA -->
+        <optgroup label="🌏 Asia / Medio Oriente">
+          <option value="in">🇮🇳 India</option>
+          <option value="ph">🇵🇭 Filipinas</option>
+          <option value="id">🇮🇩 Indonesia</option>
+          <option value="ae">🇦🇪 Emiratos Árabes</option>
+          <option value="sa">🇸🇦 Arabia Saudita</option>
+          <option value="ng">🇳🇬 Nigeria</option>
+          <option value="gh">🇬🇭 Ghana</option>
+          <option value="ke">🇰🇪 Kenia</option>
+        </optgroup>
+        <optgroup label="🌍 Otro">
+          <option value="other">🌐 Otro país</option>
+        </optgroup>
+      </select>
+    </div>
+
+    <div class="methods-wrap" id="methodsWrap">
+      <div class="method-list" id="methodList"></div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <div class="cta-notice">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <span><strong>Importante:</strong> El botón de compra es <strong>únicamente</strong> para quienes ya leyeron toda la información, vieron el video y están <strong>decididos a comprar</strong>. No uses este botón para consultas generales.</span>
+    </div>
+    <a id="buyBtn" class="buy-btn"
+       href="https://wa.me/12147255380?text=Hola%20buen%20d%C3%ADa%2C%20le%C3%AD%20y%20vi%20toda%20la%20informaci%C3%B3n%2C%20quiero%20comprar"
+       target="_blank" rel="noopener">
+      <i class="fa-brands fa-whatsapp"></i>
+      QUIERO COMPRAR
+    </a>
+  </div>
+
+</div><!-- /main -->
+
+
+<footer>© <span>jexe</span> 2026</footer>
+
+<script>
+// ── PAYMENT METHODS DATA ──────────────────────────────────────────────────
+// Each country maps to an array of method IDs available there.
+// Methods are built from jexe's accepted list cross-referenced by country.
+const METHODS = {
+  card: {
+    name: 'Tarjeta Débito / Crédito',
+    desc: 'Visa, Mastercard, cualquier banco emisor',
+    icon: '<i class="fa-solid fa-credit-card" style="color:#1A1F71;font-size:1.2rem"></i>',
+    tag: 'Universal'
+  },
+  astropay: {
+    name: 'AstroPay',
+    desc: 'Billetera digital internacional',
+    icon: '<img src="https://cdn.aptoide.com/imgs/e/6/d/e6d94cbbd8f8d5cc33b451d7e5772b1c_icon.png" alt="AstroPay"/>',
+    tag: 'Digital'
+  },
+  skrill: {
+    name: 'Skrill',
+    desc: 'Billetera digital global (130+ países)',
+    icon: '<img src="https://logodownload.org/wp-content/uploads/2020/10/skrill-logo-0.png" alt="Skrill"/>',
+    tag: 'Digital'
+  },
+  binance: {
+    name: 'Binance Pay',
+    desc: 'Pago en criptomonedas (USDT, BTC, etc.)',
+    icon: '<img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Binance-coin-bnb-logo.png" alt="Binance"/>',
+    tag: 'Crypto'
+  },
+  remittance: {
+    name: 'Remesadora',
+    desc: 'Remitly, MoneyGram, Western Union',
+    icon: '<i class="fa-solid fa-money-bill-transfer" style="color:#E8340A;font-size:1.2rem"></i>',
+    tag: 'Remesa'
+  },
+  clabe: {
+    name: 'CLABE / Transferencia MX',
+    desc: 'Transferencia bancaria interbancaria México',
+    icon: '<i class="fa-solid fa-building-columns" style="color:#006847;font-size:1.2rem"></i>',
+    tag: 'México'
+  },
+  nequi: {
+    name: 'Nequi',
+    desc: 'App de pagos Colombia (Bancolombia)',
+    icon: '<img src="https://images.seeklogo.com/logo-png/50/2/nequi-colombia-logo-png_seeklogo-505078.png" alt="Nequi"/>',
+    tag: 'Colombia'
+  },
+  llave: {
+    name: 'Llave (BRE-B)',
+    desc: 'Cualquier banco de Colombia',
+    icon: '<i class="fa-solid fa-key" style="color:#E4202C;font-size:1.2rem"></i>',
+    tag: 'Colombia'
+  }
+};
+
+// Country → methods array (ordered by recommended)
+const COUNTRY_METHODS = {
+  // LATAM
+  mx: ['card','clabe','remittance','binance','astropay','skrill'],
+  co: ['card','nequi','llave','remittance','binance','astropay','skrill'],
+  ar: ['card','astropay','remittance','binance','skrill'],
+  cl: ['card','astropay','remittance','binance','skrill'],
+  pe: ['card','astropay','remittance','binance','skrill'],
+  ve: ['remittance','binance','astropay','card'],
+  ec: ['card','remittance','binance','astropay'],
+  bo: ['card','remittance','binance','astropay'],
+  py: ['card','remittance','binance','astropay'],
+  uy: ['card','astropay','remittance','binance','skrill'],
+  cr: ['card','remittance','binance','astropay','skrill'],
+  pa: ['card','remittance','binance','astropay'],
+  gt: ['card','remittance','binance','astropay'],
+  hn: ['card','remittance','binance'],
+  sv: ['card','remittance','binance'],
+  ni: ['remittance','binance','card'],
+  do: ['card','remittance','binance','astropay'],
+  cu: ['remittance','binance'],
+  br: ['card','astropay','remittance','binance','skrill'],
+  pr: ['card','remittance','binance','skrill'],
+  // NORTE AMERICA
+  us: ['card','remittance','binance','skrill'],
+  ca: ['card','remittance','binance','skrill'],
+  // EUROPA
+  es: ['card','astropay','skrill','remittance','binance'],
+  gb: ['card','astropay','skrill','remittance','binance'],
+  de: ['card','astropay','skrill','remittance','binance'],
+  fr: ['card','astropay','skrill','remittance','binance'],
+  it: ['card','astropay','skrill','remittance','binance'],
+  pt: ['card','astropay','skrill','remittance','binance'],
+  nl: ['card','skrill','remittance','binance'],
+  be: ['card','astropay','skrill','remittance','binance'],
+  ch: ['card','skrill','remittance','binance'],
+  at: ['card','astropay','skrill','remittance','binance'],
+  pl: ['card','astropay','skrill','remittance','binance'],
+  ro: ['card','skrill','remittance','binance'],
+  gr: ['card','skrill','remittance','binance'],
+  se: ['card','skrill','remittance','binance'],
+  no: ['card','skrill','remittance','binance'],
+  dk: ['card','astropay','skrill','remittance','binance'],
+  fi: ['card','skrill','remittance','binance'],
+  ie: ['card','skrill','remittance','binance'],
+  tr: ['card','skrill','remittance','binance'],
+  // ASIA / AFRICA
+  in: ['card','remittance','binance'],
+  ph: ['card','remittance','binance'],
+  id: ['card','remittance','binance'],
+  ae: ['card','skrill','remittance','binance'],
+  sa: ['card','remittance','binance'],
+  ng: ['card','astropay','remittance','binance'],
+  gh: ['card','astropay','remittance','binance'],
+  ke: ['card','astropay','remittance','binance'],
+  other: ['card','remittance','binance','astropay','skrill']
+};
+
+function showMethods() {
+  const sel = document.getElementById('countrySelect');
+  const wrap = document.getElementById('methodsWrap');
+  const list = document.getElementById('methodList');
+  const val = sel.value;
+
+  if (!val) { wrap.classList.remove('show'); return; }
+
+  const ids = COUNTRY_METHODS[val] || COUNTRY_METHODS['other'];
+  list.innerHTML = '';
+
+  ids.forEach(id => {
+    const m = METHODS[id];
+    if (!m) return;
+    const el = document.createElement('div');
+    el.className = 'method-item';
+    el.innerHTML = `
+      <div class="method-logo">${m.icon}</div>
+      <div class="method-info">
+        <div class="method-name">${m.name}</div>
+        <div class="method-desc">${m.desc}</div>
+      </div>
+      <div class="method-tag">${m.tag}</div>
+    `;
+    list.appendChild(el);
+  });
+
+  wrap.classList.add('show');
+}
+</script>
+</body>
+</html>
