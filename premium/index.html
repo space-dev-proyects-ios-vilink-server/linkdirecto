@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta name="monetag" content="cbc1a9fc1a884e4a36bc9b1d1f834540">
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="color-scheme" content="light dark"/>
@@ -170,9 +169,9 @@
     .buy-btn i{font-size:1.3rem}
 
     /* ── FOOTER ───────────────────────────────── */
-footer{position:relative;z-index:1;margin-top:25px;padding:18px 24px;text-align:center;
+    footer{position:relative;z-index:1;margin-top:auto;padding:18px 24px;text-align:center;
       font-size:.72rem;color:var(--muted);font-weight:300;letter-spacing:.05em;border-top:1px solid var(--border)}
-footer span{color:var(--accent)}
+    footer span{color:var(--accent)}
 
     /* ── ANIMATIONS ───────────────────────────── */
     @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
@@ -196,14 +195,14 @@ footer span{color:var(--accent)}
   <div class="hero">
     <div class="hero-badge"><i class="fa-solid fa-crown"></i> Premium Edition</div>
     <h1 class="hero-title">JEXE<br/><em>REGEDIT</em></h1>
-    <p class="hero-sub">iOS 11 — 26.3+ · Sin jailbreak · Acceso inmediato</p>
+    <p class="hero-sub">iOS 11 – 26.3+ · Android 8 – 16+ · Sin root ni jailbreak</p>
     <div class="hero-div"></div>
   </div>
 
   <!-- VIDEO -->
   <div class="video-wrap">
     <video controls preload="metadata" poster="">
-      <source src="producto.mp4" type="video/mp4"/>
+      <source src="../videos/producto.mp4" type="video/mp4"/>
       Tu navegador no soporta video HTML5.
     </video>
     <div class="video-label"><i class="fa-solid fa-play"></i> VIDEO REFERENCIAL</div>
@@ -212,9 +211,9 @@ footer span{color:var(--accent)}
   <!-- PRODUCT -->
   <p class="sec-label">El producto</p>
   <div class="card product-card">
-    <div class="compat-row">
-      <span class="compat-pill"><i class="fa-solid fa-circle-check"></i> iOS VERSION</span>
-      <span class="compat-pill"><i class="fa-solid fa-circle-check"></i> iOS 11 – 26.3+</span>
+    <div class="compat-row" style="flex-wrap:wrap;gap:6px">
+      <span class="compat-pill"><i class="fa-brands fa-apple"></i> iOS 11 – 26.3+</span>
+      <span class="compat-pill"><i class="fa-brands fa-android"></i> Android 8 – 16+</span>
     </div>
 
     <div class="benefits-title">BENEFICIOS INCLUIDOS</div>
@@ -261,6 +260,12 @@ footer span{color:var(--accent)}
   <!-- COUNTRY SELECTOR -->
   <p class="sec-label">¿De qué país eres?</p>
   <div class="card country-card">
+
+    <!-- AVISO SELECTOR -->
+    <div style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;margin-bottom:14px;border-radius:var(--radius-sm);background:color-mix(in srgb,var(--accent) 8%,var(--card));border:1px solid color-mix(in srgb,var(--accent) 25%,transparent);font-size:.78rem;color:var(--muted);line-height:1.55">
+      <i class="fa-solid fa-circle-info" style="color:var(--accent);flex-shrink:0;margin-top:2px"></i>
+      <span>Selecciona tu país para ver los <strong style="color:var(--text)">métodos de pago disponibles</strong> en tu región. La compra se realiza <strong style="color:var(--text)">única y exclusivamente vía WhatsApp</strong> directamente conmigo.</span>
+    </div>
     <div class="select-wrap">
       <select id="countrySelect" onchange="showMethods()">
         <option value="">— Selecciona tu país —</option>
@@ -352,7 +357,6 @@ footer span{color:var(--accent)}
 
 </div><!-- /main -->
 
-
 <footer>© <span>jexe</span> 2026</footer>
 
 <script>
@@ -369,19 +373,19 @@ const METHODS = {
   astropay: {
     name: 'AstroPay',
     desc: 'Billetera digital internacional',
-    icon: '<img src="https://cdn.aptoide.com/imgs/e/6/d/e6d94cbbd8f8d5cc33b451d7e5772b1c_icon.png" alt="AstroPay"/>',
+    icon: '<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/AstroPay_logo.svg/320px-AstroPay_logo.svg.png" alt="AstroPay"/>',
     tag: 'Digital'
   },
   skrill: {
     name: 'Skrill',
     desc: 'Billetera digital global (130+ países)',
-    icon: '<img src="https://logodownload.org/wp-content/uploads/2020/10/skrill-logo-0.png" alt="Skrill"/>',
+    icon: '<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Skrill_logo.svg/320px-Skrill_logo.svg.png" alt="Skrill"/>',
     tag: 'Digital'
   },
   binance: {
     name: 'Binance Pay',
     desc: 'Pago en criptomonedas (USDT, BTC, etc.)',
-    icon: '<img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Binance-coin-bnb-logo.png" alt="Binance"/>',
+    icon: '<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Binance_Logo.png/240px-Binance_Logo.png" alt="Binance"/>',
     tag: 'Crypto'
   },
   remittance: {
@@ -399,12 +403,12 @@ const METHODS = {
   nequi: {
     name: 'Nequi',
     desc: 'App de pagos Colombia (Bancolombia)',
-    icon: '<img src="https://images.seeklogo.com/logo-png/50/2/nequi-colombia-logo-png_seeklogo-505078.png" alt="Nequi"/>',
+    icon: '<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Nequi_logo.svg/320px-Nequi_logo.svg.png" alt="Nequi"/>',
     tag: 'Colombia'
   },
   llave: {
-    name: 'Llave (BRE-B)',
-    desc: 'Cualquier banco de Colombia',
+    name: 'Llave (Davivienda)',
+    desc: 'Billetera digital de Davivienda, Colombia',
     icon: '<i class="fa-solid fa-key" style="color:#E4202C;font-size:1.2rem"></i>',
     tag: 'Colombia'
   }
