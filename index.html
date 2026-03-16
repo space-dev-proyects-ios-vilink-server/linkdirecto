@@ -537,10 +537,6 @@
     </button>
   </header>
 
-  <!-- hitwebcounter Code START -->
-<a href="https://www.hitwebcounter.com/" target="_blank">
-<img src="https://hitwebcounter.com/counter/counter.php?page=21483230&style=0007&nbdigits=9&type=page&initCount=15000" title="Free Tools" Alt="Free Tools"   border="0" /></a>
-
   <!-- ─── NAV DRAWER ─── -->
   <div class="nav-drawer" id="navDrawer">
     <div class="nav-backdrop" onclick="closeNav()"></div>
@@ -568,6 +564,146 @@
       <i class="fa-solid fa-circle-dot"></i> Links oficiales
     </div>
     <h1 class="hero-name">LINK<br /><em>DIRECTO</em></h1>
+    <!-- VISIT COUNTER WIDGET — compacto, pégalo donde quieras -->
+
+<div class="ld-vc__wrap">
+  <div class="ld-vc__pulse-ring"></div>
+
+  <span class="ld-vc__live-dot"></span>
+  <span class="ld-vc__title">VISITAS</span>
+  <span class="ld-vc__sep"></span>
+  <span class="ld-vc__number" id="ldVcNumber">—</span>
+
+  <div class="ld-vc__real" aria-hidden="true">
+    <img src="https://hitwebcounter.com/counter/counter.php?page=21483230&style=0007&nbdigits=9&type=page&initCount=235000"
+         alt="" id="ldVcImg"/>
+  </div>
+</div>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+.ld-vc__wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px 6px 10px;
+  border-radius: 100px;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  background: color-mix(in srgb, #E8340A 7%, transparent);
+  border: 1px solid rgba(232,52,10,0.2);
+  box-shadow: 0 2px 12px rgba(232,52,10,0.12);
+  transition: border-color .3s, box-shadow .3s;
+      vertical-align: middle;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+
+.ld-vc__wrap:hover {
+  border-color: rgba(232,52,10,0.4);
+  box-shadow: 0 4px 20px rgba(232,52,10,0.22);
+}
+
+.ld-vc__pulse-ring {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 1px solid rgba(232,52,10,0.2);
+  animation: ldPulse 2.6s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes ldPulse {
+  0%,100%{ opacity:.5; transform:scale(1) }
+  50%    { opacity:0;   transform:scale(1.04) }
+}
+
+.ld-vc__live-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #E8340A;
+  flex-shrink: 0;
+  animation: ldBlink 1.4s ease-in-out infinite;
+  position: relative; z-index: 1;
+}
+@keyframes ldBlink {
+  0%,100%{ opacity:1 }
+  50%    { opacity:.2 }
+}
+
+.ld-vc__title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: .63rem;
+  letter-spacing: .18em;
+  color: rgba(232,52,10,.65);
+  user-select: none;
+  position: relative; z-index: 1;
+  white-space: nowrap;
+}
+
+.ld-vc__sep {
+  width: 1px; height: 12px;
+  background: rgba(232,52,10,.2);
+  flex-shrink: 0;
+  position: relative; z-index: 1;
+}
+
+.ld-vc__number {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.05rem;
+  letter-spacing: .06em;
+  line-height: 1;
+  position: relative; z-index: 1;
+  white-space: nowrap;
+  color: light-dark(#111110, #F0EDE8);
+  text-shadow: 0 0 14px rgba(232,52,10,.3);
+  transition: text-shadow .3s;
+}
+@media(prefers-color-scheme:dark) { .ld-vc__number { color:#F0EDE8 } }
+@media(prefers-color-scheme:light){ .ld-vc__number { color:#111110 } }
+.ld-vc__wrap:hover .ld-vc__number { text-shadow: 0 0 22px rgba(232,52,10,.55) }
+
+.ld-vc__real {
+  position: absolute;
+  width: 0; height: 0;
+  overflow: hidden; opacity: 0; pointer-events: none;
+}
+</style>
+
+<script>
+(function(){
+  'use strict';
+  const display = document.getElementById('ldVcNumber');
+  const img     = document.getElementById('ldVcImg');
+  if (!display) return;
+
+  const KEY  = 'ldvc_c';
+  let base   = parseInt(localStorage.getItem(KEY)||'0',10) || 15000;
+  base++;
+  localStorage.setItem(KEY, String(base));
+
+  function animate(target) {
+    const from = Math.max(0, target - Math.round(target * 0.05));
+    const t0   = performance.now(), dur = 1600;
+    (function tick(now){
+      const p = Math.min((now-t0)/dur,1), e = 1-Math.pow(1-p,3);
+      display.textContent = Math.round(from+(target-from)*e).toLocaleString('es-MX');
+      if(p<1) requestAnimationFrame(tick);
+    })(t0);
+  }
+
+  const m = (img.src||'').match(/initCount=(\d+)/);
+  const initial = m ? parseInt(m[1],10)+base : base;
+  animate(initial);
+
+  img.addEventListener('load', function(){
+    const m2 = (img.src||'').match(/initCount=(\d+)/);
+    if(m2){ const r=parseInt(m2[1],10)+base; if(r>initial) animate(r); }
+  });
+})();
+</script>
     <p class="hero-sub">Todo en un solo lugar. Sin intermediarios.</p>
     <div class="hero-divider"></div>
   </section>
