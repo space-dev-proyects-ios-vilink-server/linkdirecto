@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="color-scheme" content="light dark"/>
-  <title>PREMIUM</title>
+  <title>Comprar — JEXE Regedit Premium Edition</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
@@ -135,9 +135,9 @@
     .cta-notice{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;margin-bottom:12px;border-radius:var(--radius-sm);background:color-mix(in srgb,var(--gold) 10%,var(--card));border:1px solid color-mix(in srgb,var(--gold) 30%,transparent);font-size:.78rem;color:var(--muted);line-height:1.5}
     .cta-notice i{color:var(--gold);flex-shrink:0;margin-top:1px}
     .cta-notice strong{color:var(--text)}
-    .buy-btn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;height:68px;border:none;border-radius:var(--radius-sm);background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;font-family:var(--font-d);font-size:1.35rem;letter-spacing:.1em;cursor:pointer;box-shadow:0 6px 24px rgba(232,52,10,.35);transition:var(--tr);text-decoration:none;opacity:.35;pointer-events:none}
+    .buy-btn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;height:68px;border:none;border-radius:var(--radius-sm);background:linear-gradient(135deg,#229ED9,#1A8FC1);color:#fff;font-family:var(--font-d);font-size:1.35rem;letter-spacing:.1em;cursor:pointer;box-shadow:0 6px 24px rgba(34,158,217,.35);transition:var(--tr);text-decoration:none;opacity:.35;pointer-events:none}
     .buy-btn.ready{opacity:1;pointer-events:all}
-    .buy-btn.ready:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(232,52,10,.5)}
+    .buy-btn.ready:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(34,158,217,.5)}
     .buy-btn:active{transform:translateY(0)}
 
     footer{position:relative;z-index:1;margin-top:auto;padding:18px 24px;text-align:center;font-size:.72rem;color:var(--muted);font-weight:300;letter-spacing:.05em;border-top:1px solid var(--border)}
@@ -163,7 +163,7 @@
   <div class="hero">
     <div class="hero-badge"><i class="fa-solid fa-crown"></i> Premium Edition</div>
     <h1 class="hero-title">JEXE<br/><em>REGEDIT</em></h1>
-    <p class="hero-sub"><i class="fa-brands fa-apple"></i> iOS 11 – 26.3+ · Sin jailbreak · Acceso inmediato</p>
+    <p class="hero-sub"><i class="fa-brands fa-apple"></i> iOS 11 – 26.4+ · Sin jailbreak · Acceso inmediato</p>
     <div class="hero-div"></div>
   </div>
 
@@ -179,7 +179,7 @@
   <p class="sec-label">El producto</p>
   <div class="card product-card">
     <div class="compat-row">
-      <span class="compat-pill"><i class="fa-brands fa-apple"></i> iOS 11 – 26.3+</span>
+      <span class="compat-pill"><i class="fa-brands fa-apple"></i> iOS 11 – 26.4+</span>
       <span class="compat-pill"><i class="fa-solid fa-circle-check"></i> Sin jailbreak</span>
     </div>
     <div class="benefits-title">BENEFICIOS INCLUIDOS</div>
@@ -202,7 +202,7 @@
     <a class="proof-inner" href="https://t.me/+56Wdh8JANmJjYzZh" target="_blank" rel="noopener">
       <div class="proof-icon"><i class="fa-brands fa-telegram"></i></div>
       <div class="proof-text">
-        <strong>Referencias públicas de compra</strong>
+        <strong>Referencias públicas</strong>
         <span>4 años de historial · actualizándose constantemente</span>
       </div>
       <div class="proof-cta"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver</div>
@@ -315,13 +315,13 @@
   </div><!-- /order-card -->
 
   <!-- CTA -->
-  <div style="animation:fadeUp .5s .25s ease both">
+  <div style="animation:fadeUp .5s .25s ease both;margin-bottom:40px">
     <div class="cta-notice">
       <i class="fa-solid fa-triangle-exclamation"></i>
-      <span><strong>Importante:</strong> Usa el botón solo cuando estés <strong>decidido a comprar</strong>. Tu pedido completo se enviará automáticamente al mensaje.</span>
+      <span><strong>Importante:</strong> Usa el botón solo cuando estés <strong>decidido a comprar</strong>. Tu pedido completo se enviará por <strong>Telegram</strong> directamente.</span>
     </div>
     <a id="buyBtn" class="buy-btn" href="#" target="_blank" rel="noopener">
-      <i class="fa-brands fa-whatsapp"></i>
+      <i class="fa-brands fa-telegram"></i>
       ENVIAR PEDIDO
     </a>
   </div>
@@ -331,7 +331,7 @@
 <footer>© <span>jexe</span> 2026</footer>
 
 <script>
-const WA = '573132878955';
+const TG = 'jexeoficial';
 
 const METHODS = {
   card:       { name:'Tarjeta Débito / Crédito', desc:'Visa, Mastercard — cualquier banco', icon:'<i class="fa-solid fa-credit-card" style="color:#1A1F71;font-size:1.1rem"></i>', tag:'Universal' },
@@ -403,7 +403,7 @@ function getPricing(country, method) {
     const isClabe = method === 'clabe';
     return {
       monthly:  { display:'$220 MXN',  usd:'$12 USD' },
-      permanent:{ display: isClabe ? '$500 MXN' : '$580 MXN', usd:'$25 USD', discount: isClabe },
+      permanent:{ display: isClabe ? '$500 MXN' : '$580 MXN', usd:'$32 USD', discount: isClabe },
       note: isClabe
         ? '💡 Por pagar con CLABE, el plan Permanente baja a $500 MXN (descuento especial por transferencia bancaria).'
         : 'Tip: si pagas con CLABE (transferencia bancaria), el plan Permanente baja a $500 MXN.',
@@ -413,7 +413,7 @@ function getPricing(country, method) {
     const isLocal = method === 'nequi' || method === 'llave';
     return {
       monthly:  { display:'$45.000 COP', usd:'$12 USD' },
-      permanent:{ display: isLocal ? '$100.000 COP' : '$132.000 COP', usd:'$25 USD', discount: isLocal },
+      permanent:{ display: isLocal ? '$100.000 COP' : '$132.000 COP', usd:'$32 USD', discount: isLocal },
       note: isLocal
         ? '💡 Por pagar con Nequi o Llave, el plan Permanente baja a $100.000 COP (descuento especial).'
         : 'Tip: si pagas con Nequi o Llave, el plan Permanente baja a $100.000 COP.',
@@ -507,21 +507,21 @@ function updateSummary() {
   document.getElementById('sumPlan').textContent    = sel.plan;
   document.getElementById('sumTotal').textContent   = sel.price + (sel.price !== sel.priceUSD ? ' (' + sel.priceUSD + ')' : '');
   document.getElementById('summaryWrap').classList.add('show');
-  buildWA();
+  buildTG();
 }
 
-function buildWA() {
+function buildTG() {
   const msg =
     `Hola buen día, leí y vi toda la información, quiero comprar.\n\n` +
-    `━━━━━━━━━━━━━━━━\n🛒 *MI PEDIDO*\n━━━━━━━━━━━━━━━━\n` +
-    `📱 Plataforma: *iOS (iPhone / iPad)*\n` +
-    `🌎 País: *${COUNTRY_NAMES[sel.country] || sel.country}*\n` +
-    `💳 Método de pago: *${sel.methodName}*\n` +
-    `📦 Plan: *${sel.plan}*\n` +
-    `💰 Total: *${sel.price}*` +
-    (sel.price !== sel.priceUSD ? ` _(${sel.priceUSD})_` : '') +
+    `━━━━━━━━━━━━━━━━\n🛒 𝗠𝗜 𝗣𝗘𝗗𝗜𝗗𝗢\n━━━━━━━━━━━━━━━━\n` +
+    `📱 𝗣𝗹𝗮𝘁𝗮𝗳𝗼𝗿𝗺𝗮: iOS (iPhone / iPad)\n` +
+    `🌎 𝗣𝗮í𝘀: ${COUNTRY_NAMES[sel.country] || sel.country}\n` +
+    `💳 𝗠é𝘁𝗼𝗱𝗼 𝗱𝗲 𝗽𝗮𝗴𝗼: ${sel.methodName}\n` +
+    `📦 𝗣𝗹𝗮𝗻: ${sel.plan}\n` +
+    `💰 𝗧𝗼𝘁𝗮𝗹: ${sel.price}` +
+    (sel.price !== sel.priceUSD ? ` (${sel.priceUSD})` : '') +
     `\n━━━━━━━━━━━━━━━━\nPor favor confirmar disponibilidad y datos de pago. ¡Gracias!`;
-  document.getElementById('buyBtn').href = `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
+  document.getElementById('buyBtn').href = `https://t.me/${TG}?text=${encodeURIComponent(msg)}`;
 }
 
 function hideSummary() { document.getElementById('summaryWrap').classList.remove('show'); }
