@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="color-scheme" content="light dark"/>
-  <title>Comprar — JEXE Regedit Premium Edition</title>
+  <title>Evento Especial Limitado — JEXE Regedit Premium Edition</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
@@ -12,7 +12,7 @@
   <style>
     :root{
       --accent:#E8340A;--accent-2:#FF6B35;--accent-glow:rgba(232,52,10,0.14);
-      --gold:#F4B942;--gold-glow:rgba(244,185,66,0.15);--green:#25D366;
+      --gold:#F4B942;--gold-glow:rgba(244,185,66,0.15);--green:#25D366;--red:#FF3D3D;--red-glow:rgba(255,61,61,0.14);
       --radius:18px;--radius-sm:12px;
       --font-d:'Bebas Neue',sans-serif;--font-b:'Outfit',sans-serif;
       --tr:0.28s cubic-bezier(0.4,0,0.2,1);
@@ -36,8 +36,25 @@
 
     .main{position:relative;z-index:1;max-width:560px;width:100%;margin:0 auto;padding:0 20px}
 
+    /* ══ TIMER BANNER ══ */
+    .timer-banner{position:sticky;top:56px;z-index:99;background:linear-gradient(135deg,rgba(232,52,10,0.95),rgba(255,107,53,0.95));backdrop-filter:blur(12px);border-bottom:2px solid var(--accent);padding:14px 20px;text-align:center;box-shadow:0 4px 20px rgba(232,52,10,0.3);animation:slideDown .5s ease}
+    .timer-title{font-family:var(--font-d);font-size:.9rem;letter-spacing:.15em;color:#fff;margin-bottom:8px;text-transform:uppercase}
+    .timer-display{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:8px}
+    .timer-unit{display:flex;flex-direction:column;align-items:center;gap:2px}
+    .timer-number{font-family:var(--font-d);font-size:2rem;line-height:1;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,0.3)}
+    .timer-label{font-size:.55rem;letter-spacing:.1em;color:rgba(255,255,255,0.8);text-transform:uppercase;font-weight:600}
+    .timer-end{font-size:.7rem;color:rgba(255,255,255,0.9);margin-top:6px}
+    .units-status{display:flex;align-items:center;justify-content:center;gap:8px;padding:8px 0;margin-top:8px;border-top:1px solid rgba(255,255,255,0.2)}
+    .units-bar{flex:1;height:4px;background:rgba(255,255,255,0.2);border-radius:2px;overflow:hidden}
+    .units-fill{height:100%;background:#fff;transition:width .8s ease}
+    .units-text{font-size:.68rem;font-weight:700;color:#fff;letter-spacing:.08em}
+
+    @keyframes slideDown{from{transform:translateY(-100%)}to{transform:translateY(0)}}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+    .pulse{animation:pulse .8s ease-in-out infinite}
+
     .hero{text-align:center;padding:36px 0 24px;animation:fadeUp .5s ease both}
-    .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 18px;border-radius:100px;background:color-mix(in srgb,var(--accent) 12%,transparent);border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);font-family:var(--font-d);font-size:1rem;letter-spacing:.12em;color:var(--accent);margin-bottom:14px}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 18px;border-radius:100px;background:color-mix(in srgb,var(--red) 12%,transparent);border:1px solid color-mix(in srgb,var(--red) 30%,transparent);font-family:var(--font-d);font-size:1rem;letter-spacing:.12em;color:var(--red);margin-bottom:14px;animation:pulse .9s ease-in-out infinite}
     .hero-title{font-family:var(--font-d);font-size:clamp(2.6rem,11vw,4.2rem);letter-spacing:.04em;line-height:.95;margin-bottom:6px}
     .hero-title em{color:var(--accent);font-style:normal}
     .hero-sub{font-size:.83rem;color:var(--muted);font-weight:300;letter-spacing:.04em}
@@ -67,10 +84,18 @@
     .proof-text span{font-size:.78rem;color:var(--muted);font-weight:300}
     .proof-cta{margin-left:auto;display:flex;align-items:center;gap:5px;font-size:.75rem;font-weight:600;color:var(--accent);padding:7px 12px;border-radius:8px;border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);background:var(--accent-glow);white-space:nowrap}
 
+    /* ══ URGENCY BOX ══ */
+    .urgency-box{background:linear-gradient(135deg,rgba(255,61,61,0.08),rgba(255,107,53,0.08));border:1.5px solid rgba(255,61,61,0.3);border-radius:var(--radius);padding:16px 18px;margin-bottom:16px;animation:fadeUp .5s .18s ease both}
+    .urgency-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+    .urgency-row:last-child{margin-bottom:0}
+    .urgency-icon{width:36px;height:36px;border-radius:50%;background:rgba(255,61,61,0.15);display:grid;place-items:center;flex-shrink:0;font-size:.95rem;color:var(--red)}
+    .urgency-text{flex:1;font-size:.78rem;line-height:1.5;color:var(--text)}
+    .urgency-text strong{color:var(--red);font-weight:700}
+
     /* ══ ORDER BUILDER ══ */
     .order-card{animation:fadeUp .5s .2s ease both}
     .step-row{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-    .step-num{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;display:grid;place-items:center;font-family:var(--font-d);font-size:.85rem;flex-shrink:0}
+    .step-num{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;display:grid;place-items:center;font-family:var(--font-d);font-size:.85rem;flex-shrink:0;font-weight:700}
     .step-title{font-family:var(--font-d);font-size:.9rem;letter-spacing:.1em}
     .step-done{font-size:.73rem;color:var(--green);margin-left:auto;font-weight:600;display:none;align-items:center;gap:4px}
     .step-done.show{display:flex}
@@ -81,6 +106,24 @@
     .sel-wrap select{width:100%;padding:13px 44px 13px 16px;border-radius:var(--radius-sm);background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:var(--font-b);font-size:.88rem;font-weight:500;appearance:none;-webkit-appearance:none;cursor:pointer;transition:var(--tr)}
     .sel-wrap select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
     .sel-wrap::after{content:'\f107';font-family:'Font Awesome 6 Free';font-weight:900;position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+
+    /* IPHONE MODELS GRID - COMPACT & PROFESSIONAL */
+    .models-container{margin-top:14px}
+    .models-scroll{display:flex;gap:8px;overflow-x:auto;overflow-y:hidden;padding-bottom:8px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}
+    .models-scroll::-webkit-scrollbar{height:4px}
+    .models-scroll::-webkit-scrollbar-track{background:transparent}
+    .models-scroll::-webkit-scrollbar-thumb{background:var(--muted);border-radius:2px}
+    .model-btn{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 10px;background:var(--card);border:2px solid var(--border);border-radius:var(--radius-sm);transition:var(--tr);cursor:pointer;user-select:none;text-align:center;flex-shrink:0;width:76px;position:relative}
+    .model-btn:hover:not(.selected){border-color:color-mix(in srgb,var(--accent) 35%,transparent);background:color-mix(in srgb,var(--accent) 3%,var(--card))}
+    .model-btn.selected{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--card));box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 20%,transparent)}
+    .model-icon{font-size:1.4rem;height:22px;display:flex;align-items:center;justify-content:center;color:var(--text)}
+    .model-name{font-size:.65rem;font-weight:600;line-height:1.2;color:var(--text)}
+    .model-check{position:absolute;top:4px;right:4px;width:14px;height:14px;border-radius:50%;border:1.5px solid var(--border);display:grid;place-items:center;flex-shrink:0;transition:var(--tr);background:var(--card)}
+    .model-btn.selected .model-check{border-color:var(--accent);background:var(--accent);box-shadow:0 0 0 2px var(--card)}
+    .model-check i{font-size:.42rem;color:#fff;opacity:0;transition:opacity .2s}
+    .model-btn.selected .model-check i{opacity:1}
+    .models-label{display:flex;align-items:center;gap:8px;font-size:.75rem;color:var(--muted);margin-bottom:10px;padding:0 4px}
+    .models-label i{color:var(--accent);font-size:.85rem}
 
     /* METHODS */
     .method-list{display:flex;flex-direction:column;gap:8px;margin-top:14px}
@@ -98,21 +141,22 @@
     .method-item.selected .method-check i{opacity:1}
 
     /* PLANS */
-    .plans-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-    .plan-btn{border-radius:var(--radius-sm);padding:18px 14px;text-align:center;border:2px solid var(--border);background:var(--card);transition:var(--tr);cursor:pointer;position:relative;overflow:hidden;user-select:none}
-    .plan-btn:hover:not(.selected){border-color:color-mix(in srgb,var(--accent) 30%,transparent)}
-    .plan-btn.selected.monthly{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,var(--card))}
-    .plan-btn.selected.permanent{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 7%,var(--card))}
-    .plan-label{font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:100px;display:inline-block;margin-bottom:8px}
-    .plan-btn.monthly .plan-label{background:var(--accent-glow);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 25%,transparent)}
-    .plan-btn.permanent .plan-label{background:var(--gold-glow);color:var(--gold);border:1px solid color-mix(in srgb,var(--gold) 30%,transparent)}
-    .plan-price-main{font-family:var(--font-d);font-size:1.9rem;letter-spacing:.04em;line-height:1}
-    .plan-btn.monthly .plan-price-main{color:var(--accent)}
-    .plan-btn.permanent .plan-price-main{color:var(--gold)}
-    .plan-currency-label{font-size:.68rem;color:var(--muted);font-weight:400;margin-top:3px;line-height:1.4}
-    .plan-period{font-size:.68rem;color:var(--muted);font-weight:300;margin-top:2px}
-    .plan-best-tag{position:absolute;top:7px;right:7px;font-size:.52rem;font-weight:700;padding:2px 7px;border-radius:100px;background:var(--gold);color:#000;letter-spacing:.08em}
-    .plan-discount{font-size:.65rem;color:var(--green);font-weight:600;margin-top:5px}
+    .plans-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:14px}
+    .plan-card{position:relative;border-radius:var(--radius-sm);padding:18px 16px;border:2px solid var(--border);background:var(--card);transition:var(--tr);cursor:pointer;user-select:none;overflow:hidden}
+    .plan-card:hover:not(.selected){border-color:color-mix(in srgb,var(--accent) 30%,transparent)}
+    .plan-card.selected{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 7%,var(--card))}
+    .plan-card.selected::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),transparent)}
+    .plan-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+    .plan-label{font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:100px;background:var(--gold-glow);color:var(--gold);border:1px solid color-mix(in srgb,var(--gold) 30%,transparent)}
+    .plan-badge{font-size:.55rem;font-weight:800;padding:3px 8px;border-radius:100px;background:rgba(255,61,61,.15);color:var(--red);letter-spacing:.08em}
+    .plan-details{display:flex;align-items:baseline;gap:8px}
+    .plan-price{font-family:var(--font-d);font-size:1.8rem;letter-spacing:.04em;line-height:1;color:var(--gold)}
+    .plan-usd{font-size:.7rem;color:var(--muted);font-weight:400}
+    .plan-period{font-size:.65rem;color:var(--muted);font-weight:300;margin-top:6px}
+    .plan-check{width:18px;height:18px;border-radius:50%;border:2px solid var(--border);display:grid;place-items:center;flex-shrink:0;transition:var(--tr);margin-left:auto}
+    .plan-card.selected .plan-check{border-color:var(--gold);background:var(--gold)}
+    .plan-check i{font-size:.5rem;color:#fff;opacity:0;transition:opacity .2s}
+    .plan-card.selected .plan-check i{opacity:1}
 
     /* PRICE NOTE */
     .price-note{display:none;font-size:.74rem;color:var(--muted);line-height:1.6;padding:11px 14px;background:color-mix(in srgb,var(--green) 8%,var(--card));border:1px solid color-mix(in srgb,var(--green) 25%,transparent);border-radius:var(--radius-sm);margin-top:10px}
@@ -132,13 +176,14 @@
     .summary-total-val{font-family:var(--font-d);font-size:1.4rem;color:var(--gold)}
 
     /* CTA */
-    .cta-notice{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;margin-bottom:12px;border-radius:var(--radius-sm);background:color-mix(in srgb,var(--gold) 10%,var(--card));border:1px solid color-mix(in srgb,var(--gold) 30%,transparent);font-size:.78rem;color:var(--muted);line-height:1.5}
-    .cta-notice i{color:var(--gold);flex-shrink:0;margin-top:1px}
-    .cta-notice strong{color:var(--text)}
-    .buy-btn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;height:68px;border:none;border-radius:var(--radius-sm);background:linear-gradient(135deg,#229ED9,#1A8FC1);color:#fff;font-family:var(--font-d);font-size:1.35rem;letter-spacing:.1em;cursor:pointer;box-shadow:0 6px 24px rgba(34,158,217,.35);transition:var(--tr);text-decoration:none;opacity:.35;pointer-events:none}
+    .cta-warning{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;margin-bottom:12px;border-radius:var(--radius-sm);background:linear-gradient(135deg,rgba(255,61,61,.08),rgba(232,52,10,.08));border:1.5px solid rgba(255,61,61,.3);font-size:.78rem;color:var(--text);line-height:1.5;animation:fadeUp .5s .25s ease both}
+    .cta-warning i{color:var(--red);flex-shrink:0;margin-top:1px;font-size:.9rem}
+    .cta-warning strong{color:var(--text);font-weight:700}
+    .buy-btn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;height:68px;border:none;border-radius:var(--radius-sm);background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;font-family:var(--font-d);font-size:1.35rem;letter-spacing:.1em;cursor:pointer;box-shadow:0 6px 24px rgba(232,52,10,.35);transition:var(--tr);text-decoration:none;opacity:.35;pointer-events:none;font-weight:700;animation:fadeUp .5s .26s ease both}
     .buy-btn.ready{opacity:1;pointer-events:all}
-    .buy-btn.ready:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(34,158,217,.5)}
-    .buy-btn:active{transform:translateY(0)}
+    .buy-btn.ready:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(232,52,10,.5)}
+    .buy-btn.ready:active{transform:translateY(0)}
+    .buy-btn i{font-size:1.1rem}
 
     footer{position:relative;z-index:1;margin-top:auto;padding:18px 24px;text-align:center;font-size:.72rem;color:var(--muted);font-weight:300;letter-spacing:.05em;border-top:1px solid var(--border)}
     footer span{color:var(--accent)}
@@ -146,7 +191,8 @@
     @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
     @media(max-width:480px){
       .benefits-list{grid-template-columns:1fr}
-      .plans-grid{grid-template-columns:1fr}
+      .models-grid{grid-template-columns:1fr}
+      .timer-number{font-size:1.6rem}
     }
   </style>
 </head>
@@ -157,11 +203,45 @@
   <a class="back-btn" href="../index.html"><i class="fa-solid fa-arrow-left"></i> Volver</a>
 </header>
 
+<!-- TIMER BANNER -->
+<div class="timer-banner">
+  <div class="timer-title"><i class="fa-solid fa-hourglass-end"></i> EVENTO ESPECIAL LIMITADO</div>
+  <div class="timer-display">
+    <div class="timer-unit">
+      <div class="timer-number" id="timerDays">10</div>
+      <div class="timer-label">días</div>
+    </div>
+    <span style="color:#fff;font-size:.8rem;font-weight:700">:</span>
+    <div class="timer-unit">
+      <div class="timer-number" id="timerHours">00</div>
+      <div class="timer-label">horas</div>
+    </div>
+    <span style="color:#fff;font-size:.8rem;font-weight:700">:</span>
+    <div class="timer-unit">
+      <div class="timer-number" id="timerMins">00</div>
+      <div class="timer-label">mins</div>
+    </div>
+    <span style="color:#fff;font-size:.8rem;font-weight:700">:</span>
+    <div class="timer-unit">
+      <div class="timer-number" id="timerSecs">00</div>
+      <div class="timer-label">segs</div>
+    </div>
+  </div>
+  <div class="timer-end" id="timerEnd">Termina: Abril 10 — 11:59 PM (Hora Colombia)</div>
+  <div class="units-status">
+    <div class="units-text" id="unitsText">100 <i class="fa-solid fa-gift"></i></div>
+    <div class="units-bar">
+      <div class="units-fill" id="unitsFill" style="width:100%"></div>
+    </div>
+    <div class="units-text" id="unitsSold">0 vendidas</div>
+  </div>
+</div>
+
 <div class="main">
 
   <!-- HERO -->
   <div class="hero">
-    <div class="hero-badge"><i class="fa-solid fa-crown"></i> Premium Edition</div>
+    <div class="hero-badge"><i class="fa-solid fa-fire"></i> SOLO 10 DÍAS</div>
     <h1 class="hero-title">JEXE<br/><em>REGEDIT</em></h1>
     <p class="hero-sub"><i class="fa-brands fa-apple"></i> iOS 11 – 26.4+ · Sin jailbreak · Acceso inmediato</p>
     <div class="hero-div"></div>
@@ -181,6 +261,7 @@
     <div class="compat-row">
       <span class="compat-pill"><i class="fa-brands fa-apple"></i> iOS 11 – 26.4+</span>
       <span class="compat-pill"><i class="fa-solid fa-circle-check"></i> Sin jailbreak</span>
+      <span class="compat-pill"><i class="fa-solid fa-shield"></i> 3 meses garantía</span>
     </div>
     <div class="benefits-title">BENEFICIOS INCLUIDOS</div>
     <div class="benefits-list">
@@ -209,88 +290,121 @@
     </a>
   </div>
 
+  <!-- URGENCY BOX -->
+  <div class="urgency-box">
+    <div class="urgency-row">
+      <div class="urgency-icon"><i class="fa-solid fa-clock"></i></div>
+      <div class="urgency-text"><strong>Evento termina en 10 días.</strong> No habrá restock después de esta fecha. Nunca más estará disponible.</div>
+    </div>
+    <div class="urgency-row">
+      <div class="urgency-icon"><i class="fa-solid fa-boxes-stacked"></i></div>
+      <div class="urgency-text"><strong>Solo 100 unidades</strong> disponibles. A medida que avanza el evento, las unidades disminuyen automáticamente.</div>
+    </div>
+    <div class="urgency-row">
+      <div class="urgency-icon"><i class="fa-solid fa-rocket"></i></div>
+      <div class="urgency-text"><strong>Precio único: $14.99 USD.</strong> Sin descuentos. 3 meses de acceso premium garantizado.</div>
+    </div>
+  </div>
+
   <!-- ORDER BUILDER -->
   <p class="sec-label">Arma tu pedido</p>
   <div class="card order-card">
 
-    <!-- STEP 1 -->
+    <!-- STEP 1: IPHONE MODEL -->
     <div class="step-row">
       <div class="step-num">1</div>
-      <div class="step-title">Tu país</div>
+      <div class="step-title">Tu modelo iPhone</div>
       <div class="step-done" id="done1"><i class="fa-solid fa-check"></i> Listo</div>
     </div>
-    <div class="sel-wrap">
-      <select id="countrySelect" onchange="onCountryChange()">
-        <option value="">— Selecciona tu país —</option>
-        <optgroup label="🌎 América Latina">
-          <option value="mx">🇲🇽 México</option>
-          <option value="co">🇨🇴 Colombia</option>
-          <option value="ar">🇦🇷 Argentina</option>
-          <option value="cl">🇨🇱 Chile</option>
-          <option value="pe">🇵🇪 Perú</option>
-          <option value="ve">🇻🇪 Venezuela</option>
-          <option value="ec">🇪🇨 Ecuador</option>
-          <option value="bo">🇧🇴 Bolivia</option>
-          <option value="py">🇵🇾 Paraguay</option>
-          <option value="uy">🇺🇾 Uruguay</option>
-          <option value="cr">🇨🇷 Costa Rica</option>
-          <option value="pa">🇵🇦 Panamá</option>
-          <option value="gt">🇬🇹 Guatemala</option>
-          <option value="hn">🇭🇳 Honduras</option>
-          <option value="sv">🇸🇻 El Salvador</option>
-          <option value="ni">🇳🇮 Nicaragua</option>
-          <option value="do">🇩🇴 Rep. Dominicana</option>
-          <option value="cu">🇨🇺 Cuba</option>
-          <option value="br">🇧🇷 Brasil</option>
-          <option value="pr">🇵🇷 Puerto Rico</option>
-        </optgroup>
-        <optgroup label="🌎 Norte América">
-          <option value="us">🇺🇸 Estados Unidos</option>
-          <option value="ca">🇨🇦 Canadá</option>
-        </optgroup>
-        <optgroup label="🌍 Europa">
-          <option value="es">🇪🇸 España</option>
-          <option value="gb">🇬🇧 Reino Unido</option>
-          <option value="de">🇩🇪 Alemania</option>
-          <option value="fr">🇫🇷 Francia</option>
-          <option value="it">🇮🇹 Italia</option>
-          <option value="pt">🇵🇹 Portugal</option>
-          <option value="nl">🇳🇱 Países Bajos</option>
-          <option value="be">🇧🇪 Bélgica</option>
-          <option value="ch">🇨🇭 Suiza</option>
-          <option value="at">🇦🇹 Austria</option>
-          <option value="pl">🇵🇱 Polonia</option>
-          <option value="se">🇸🇪 Suecia</option>
-          <option value="no">🇳🇴 Noruega</option>
-          <option value="tr">🇹🇷 Turquía</option>
-        </optgroup>
-        <optgroup label="🌏 Asia / Otros">
-          <option value="in">🇮🇳 India</option>
-          <option value="ph">🇵🇭 Filipinas</option>
-          <option value="ae">🇦🇪 Emiratos Árabes</option>
-          <option value="other">🌐 Otro país</option>
-        </optgroup>
-      </select>
+    <div class="models-label">
+      <i class="fa-solid fa-mobile"></i>
+      <span>Desliza para seleccionar tu modelo</span>
+    </div>
+    <div class="models-container">
+      <div class="models-scroll" id="modelsScroll"></div>
     </div>
 
-    <!-- STEP 2 -->
+    <!-- STEP 2: COUNTRY -->
     <div id="step2Wrap" style="display:none">
       <div class="step-divider"></div>
       <div class="step-row">
         <div class="step-num">2</div>
-        <div class="step-title">Método de pago</div>
+        <div class="step-title">Tu país</div>
         <div class="step-done" id="done2"><i class="fa-solid fa-check"></i> Listo</div>
       </div>
-      <div class="method-list" id="methodList"></div>
+      <div class="sel-wrap">
+        <select id="countrySelect" onchange="onCountryChange()">
+          <option value="">— Selecciona tu país —</option>
+          <optgroup label="🌎 América Latina">
+            <option value="mx">🇲🇽 México</option>
+            <option value="co">🇨🇴 Colombia</option>
+            <option value="ar">🇦🇷 Argentina</option>
+            <option value="cl">🇨🇱 Chile</option>
+            <option value="pe">🇵🇪 Perú</option>
+            <option value="ve">🇻🇪 Venezuela</option>
+            <option value="ec">🇪🇨 Ecuador</option>
+            <option value="bo">🇧🇴 Bolivia</option>
+            <option value="py">🇵🇾 Paraguay</option>
+            <option value="uy">🇺🇾 Uruguay</option>
+            <option value="cr">🇨🇷 Costa Rica</option>
+            <option value="pa">🇵🇦 Panamá</option>
+            <option value="gt">🇬🇹 Guatemala</option>
+            <option value="hn">🇭🇳 Honduras</option>
+            <option value="sv">🇸🇻 El Salvador</option>
+            <option value="ni">🇳🇮 Nicaragua</option>
+            <option value="do">🇩🇴 Rep. Dominicana</option>
+            <option value="cu">🇨🇺 Cuba</option>
+            <option value="br">🇧🇷 Brasil</option>
+            <option value="pr">🇵🇷 Puerto Rico</option>
+          </optgroup>
+          <optgroup label="🌎 Norte América">
+            <option value="us">🇺🇸 Estados Unidos</option>
+            <option value="ca">🇨🇦 Canadá</option>
+          </optgroup>
+          <optgroup label="🌍 Europa">
+            <option value="es">🇪🇸 España</option>
+            <option value="gb">🇬🇧 Reino Unido</option>
+            <option value="de">🇩🇪 Alemania</option>
+            <option value="fr">🇫🇷 Francia</option>
+            <option value="it">🇮🇹 Italia</option>
+            <option value="pt">🇵🇹 Portugal</option>
+            <option value="nl">🇳🇱 Países Bajos</option>
+            <option value="be">🇧🇪 Bélgica</option>
+            <option value="ch">🇨🇭 Suiza</option>
+            <option value="at">🇦🇹 Austria</option>
+            <option value="pl">🇵🇱 Polonia</option>
+            <option value="se">🇸🇪 Suecia</option>
+            <option value="no">🇳🇴 Noruega</option>
+            <option value="tr">🇹🇷 Turquía</option>
+          </optgroup>
+          <optgroup label="🌏 Asia / Otros">
+            <option value="in">🇮🇳 India</option>
+            <option value="ph">🇵🇭 Filipinas</option>
+            <option value="ae">🇦🇪 Emiratos Árabes</option>
+            <option value="other">🌐 Otro país</option>
+          </optgroup>
+        </select>
+      </div>
     </div>
 
-    <!-- STEP 3 -->
+    <!-- STEP 3: PAYMENT METHOD -->
     <div id="step3Wrap" style="display:none">
       <div class="step-divider"></div>
       <div class="step-row">
         <div class="step-num">3</div>
-        <div class="step-title">Plan</div>
+        <div class="step-title">Método de pago</div>
         <div class="step-done" id="done3"><i class="fa-solid fa-check"></i> Listo</div>
+      </div>
+      <div class="method-list" id="methodList"></div>
+    </div>
+
+    <!-- STEP 4: PLAN (FIXED - 3 MONTHS) -->
+    <div id="step4Wrap" style="display:none">
+      <div class="step-divider"></div>
+      <div class="step-row">
+        <div class="step-num">4</div>
+        <div class="step-title">Confirmación de plan</div>
+        <div class="step-done" id="done4"><i class="fa-solid fa-check"></i> Listo</div>
       </div>
       <div class="plans-grid" id="plansGrid"></div>
       <div class="price-note" id="priceNote"></div>
@@ -301,13 +415,13 @@
       <div class="step-divider"></div>
       <div class="summary-box">
         <div class="summary-title">RESUMEN DE TU PEDIDO</div>
-        <div class="summary-row"><span class="summary-key">Plataforma</span><span class="summary-val">iOS — iPhone / iPad</span></div>
+        <div class="summary-row"><span class="summary-key">Modelo iPhone</span><span class="summary-val" id="sumModel">—</span></div>
         <div class="summary-row"><span class="summary-key">País</span><span class="summary-val" id="sumCountry">—</span></div>
         <div class="summary-row"><span class="summary-key">Método de pago</span><span class="summary-val" id="sumMethod">—</span></div>
         <div class="summary-row"><span class="summary-key">Plan</span><span class="summary-val" id="sumPlan">—</span></div>
         <div class="summary-total">
           <span class="summary-total-label">TOTAL A PAGAR</span>
-          <span class="summary-total-val" id="sumTotal">—</span>
+          <span class="summary-total-val" id="sumTotal">$14.99 USD</span>
         </div>
       </div>
     </div>
@@ -315,24 +429,92 @@
   </div><!-- /order-card -->
 
   <!-- CTA -->
-  <div style="animation:fadeUp .5s .25s ease both;margin-bottom:40px">
-    <div class="cta-notice">
-      <i class="fa-solid fa-triangle-exclamation"></i>
-      <span><strong>Importante:</strong> Usa el botón solo cuando estés <strong>decidido a comprar</strong>. Tu pedido completo se enviará por <strong>Telegram</strong> directamente.</span>
+  <div style="animation:fadeUp .5s .27s ease both;margin-bottom:40px">
+    <div class="cta-warning">
+      <i class="fa-solid fa-exclamation"></i>
+      <span><strong>⚠ Compra ahora o pierdes esta oportunidad.</strong> Solo <strong id="ctaUnits">100 unidades</strong> · Evento termina en <strong id="ctaDays">10 días</strong> · Nunca más vuelve.</span>
     </div>
     <a id="buyBtn" class="buy-btn" href="#" target="_blank" rel="noopener">
       <i class="fa-brands fa-telegram"></i>
-      ENVIAR PEDIDO
+      COMPRAR AHORA — $14.99 USD
     </a>
   </div>
 
 </div>
 
-<footer>© <span>jexe</span> 2026</footer>
+<footer>© <span>jexe</span> 2026 — Evento limitado</footer>
 
 <script>
 const TG = 'jexeoficial';
 
+// ══ EVENT TIMELINE ══
+const EVENT_START = new Date('2026-04-01T00:00:00-05:00'); // Colombia timezone
+const EVENT_END = new Date('2026-04-10T23:59:59-05:00');
+const TOTAL_UNITS = 100;
+const TOTAL_HOURS = 240; // 10 días = 240 horas
+const UNITS_PER_HOUR = TOTAL_UNITS / TOTAL_HOURS; // 0.41666... (decrease 1 unit every ~2.4 hours)
+
+// ══ IPHONE MODELS ══
+const IPHONE_MODELS = [
+  // iPhone 8 Series
+  { id:'ip8',          name:'iPhone 8',        icon:'<i class="fa-solid fa-mobile"></i>' },
+  { id:'ip8p',         name:'iPhone 8 Plus',   icon:'<i class="fa-solid fa-mobile"></i>' },
+  
+  // iPhone X Series
+  { id:'ipx',          name:'iPhone X',        icon:'<i class="fa-solid fa-mobile"></i>' },
+  { id:'ipxs',         name:'iPhone XS',       icon:'<i class="fa-solid fa-mobile"></i>' },
+  { id:'ipxsmax',      name:'iPhone XS Max',   icon:'<i class="fa-solid fa-mobile"></i>' },
+  { id:'ipxr',         name:'iPhone XR',       icon:'<i class="fa-solid fa-mobile"></i>' },
+  
+  // iPhone 11 Series
+  { id:'ip11',         name:'iPhone 11',       icon:'<i class="fa-solid fa-mobile"></i>' },
+  { id:'ip11pro',      name:'iPhone 11 Pro',   icon:'<i class="fa-solid fa-mobile"></i>' },
+  { id:'ip11promax',   name:'11 Pro Max',      icon:'<i class="fa-solid fa-mobile"></i>' },
+  
+  // iPhone SE Series
+  { id:'ipse2',        name:'iPhone SE 2',     icon:'<i class="fa-solid fa-mobile"></i>' },
+  { id:'ipse3',        name:'iPhone SE 3',     icon:'<i class="fa-solid fa-mobile"></i>' },
+  
+  // iPhone 12 Series
+  { id:'ip12mini',     name:'12 mini',         icon:'<i class="fa-solid fa-mobile"></i>' },
+  { id:'ip12',         name:'iPhone 12',       icon:'<i class="fa-solid fa-mobile"></i>' },
+  { id:'ip12pro',      name:'12 Pro',          icon:'<i class="fa-solid fa-mobile"></i>' },
+  { id:'ip12promax',   name:'12 Pro Max',      icon:'<i class="fa-solid fa-mobile"></i>' },
+  
+  // iPhone 13 Series
+  { id:'ip13mini',     name:'13 mini',         icon:'<i class="fa-solid fa-mobile"></i>' },
+  { id:'ip13',         name:'iPhone 13',       icon:'<i class="fa-solid fa-mobile"></i>' },
+  { id:'ip13pro',      name:'13 Pro',          icon:'<i class="fa-solid fa-mobile"></i>' },
+  { id:'ip13promax',   name:'13 Pro Max',      icon:'<i class="fa-solid fa-mobile"></i>' },
+  
+  // iPhone 14 Series
+  { id:'ip14',         name:'iPhone 14',       icon:'<i class="fa-solid fa-mobile"></i>' },
+  { id:'ip14plus',     name:'14 Plus',         icon:'<i class="fa-solid fa-mobile"></i>' },
+  { id:'ip14pro',      name:'14 Pro',          icon:'<i class="fa-solid fa-mobile"></i>' },
+  { id:'ip14promax',   name:'14 Pro Max',      icon:'<i class="fa-solid fa-mobile"></i>' },
+  
+  // iPhone 15 Series
+  { id:'ip15',         name:'iPhone 15',       icon:'<i class="fa-solid fa-mobile"></i>' },
+  { id:'ip15plus',     name:'15 Plus',         icon:'<i class="fa-solid fa-mobile"></i>' },
+  { id:'ip15pro',      name:'15 Pro',          icon:'<i class="fa-solid fa-mobile"></i>' },
+  { id:'ip15promax',   name:'15 Pro Max',      icon:'<i class="fa-solid fa-mobile"></i>' },
+  
+  // iPhone 16 Series
+  { id:'ip16',         name:'iPhone 16',       icon:'<i class="fa-solid fa-mobile"></i>' },
+  { id:'ip16plus',     name:'16 Plus',         icon:'<i class="fa-solid fa-mobile"></i>' },
+  { id:'ip16pro',      name:'16 Pro',          icon:'<i class="fa-solid fa-mobile"></i>' },
+  { id:'ip16promax',   name:'16 Pro Max',      icon:'<i class="fa-solid fa-mobile"></i>' },
+  { id:'ip16e',        name:'iPhone 16e',      icon:'<i class="fa-solid fa-mobile"></i>' },
+  
+  // iPhone 17 Series
+  { id:'ip17',         name:'iPhone 17',       icon:'<i class="fa-solid fa-mobile"></i>' },
+  { id:'ip17air',      name:'17 Air',          icon:'<i class="fa-solid fa-mobile"></i>' },
+  { id:'ip17pro',      name:'17 Pro',          icon:'<i class="fa-solid fa-mobile"></i>' },
+  { id:'ip17promax',   name:'17 Pro Max',      icon:'<i class="fa-solid fa-mobile"></i>' },
+  { id:'ip17e',        name:'iPhone 17e',      icon:'<i class="fa-solid fa-mobile"></i>' },
+];
+
+// ══ PAYMENT METHODS ══
 const METHODS = {
   card:       { name:'Tarjeta Débito / Crédito', desc:'Visa, Mastercard — cualquier banco', icon:'<i class="fa-solid fa-credit-card" style="color:#1A1F71;font-size:1.1rem"></i>', tag:'Universal' },
   astropay:   { name:'AstroPay',                 desc:'Billetera digital internacional',    icon:'<i class="fa-solid fa-wallet" style="color:#0070CC;font-size:1.1rem"></i>',       tag:'Digital'   },
@@ -397,139 +579,213 @@ const COUNTRY_NAMES = {
   in:'India',ph:'Filipinas',ae:'Emiratos Árabes',other:'Otro país',
 };
 
-// Devuelve precios según país y método seleccionado
-function getPricing(country, method) {
-  if (country === 'mx') {
-    const isClabe = method === 'clabe';
-    return {
-      monthly:  { display:'$220 MXN',  usd:'$12 USD' },
-      permanent:{ display: isClabe ? '$500 MXN' : '$580 MXN', usd:'$32 USD', discount: isClabe },
-      note: isClabe
-        ? '💡 Por pagar con CLABE, el plan Permanente baja a $500 MXN (descuento especial por transferencia bancaria).'
-        : 'Tip: si pagas con CLABE (transferencia bancaria), el plan Permanente baja a $500 MXN.',
-    };
+let sel = { model:'', modelName:'', country:'', method:'', methodName:'', plan:'3 meses', price:'$14.99 USD' };
+
+// ══ TIMER & UNITS ══
+function updateTimer() {
+  const now = new Date();
+  const remaining = EVENT_END - now;
+  
+  if (remaining <= 0) {
+    document.getElementById('timerDays').textContent = '0';
+    document.getElementById('timerHours').textContent = '00';
+    document.getElementById('timerMins').textContent = '00';
+    document.getElementById('timerSecs').textContent = '00';
+    document.getElementById('timerEnd').textContent = '✓ ¡Evento finalizado!';
+    document.getElementById('buyBtn').style.opacity = '0.2';
+    document.getElementById('buyBtn').style.pointerEvents = 'none';
+    document.getElementById('buyBtn').textContent = '✗ EVENTO FINALIZADO';
+    return;
   }
-  if (country === 'co') {
-    const isLocal = method === 'nequi' || method === 'llave';
-    return {
-      monthly:  { display:'$45.000 COP', usd:'$12 USD' },
-      permanent:{ display: isLocal ? '$100.000 COP' : '$132.000 COP', usd:'$32 USD', discount: isLocal },
-      note: isLocal
-        ? '💡 Por pagar con Nequi o Llave, el plan Permanente baja a $100.000 COP (descuento especial).'
-        : 'Tip: si pagas con Nequi o Llave, el plan Permanente baja a $100.000 COP.',
-    };
+
+  const days = Math.floor(remaining / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const mins = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+  const secs = Math.floor((remaining % (1000 * 60)) / 1000);
+
+  document.getElementById('timerDays').textContent = days;
+  document.getElementById('timerHours').textContent = String(hours).padStart(2, '0');
+  document.getElementById('timerMins').textContent = String(mins).padStart(2, '0');
+  document.getElementById('timerSecs').textContent = String(secs).padStart(2, '0');
+  document.getElementById('ctaDays').textContent = days + ' día' + (days !== 1 ? 's' : '');
+
+  // Calculate remaining units based on time elapsed
+  const elapsed = now - EVENT_START;
+  const elapsedHours = elapsed / (1000 * 60 * 60);
+  const unitsSold = Math.floor(elapsedHours * UNITS_PER_HOUR);
+  const unitsRemaining = Math.max(0, TOTAL_UNITS - unitsSold);
+  
+  document.getElementById('unitsText').textContent = unitsRemaining + ' ' + (unitsRemaining === 1 ? 'unidad' : 'unidades');
+  document.getElementById('unitsSold').textContent = unitsSold + ' vendidas';
+  document.getElementById('ctaUnits').textContent = unitsRemaining + ' unidades';
+  
+  const fillPercent = (unitsRemaining / TOTAL_UNITS) * 100;
+  document.getElementById('unitsFill').style.width = fillPercent + '%';
+
+  // Add pulse effect when low on units
+  if (unitsRemaining <= 20) {
+    document.querySelector('.timer-banner').classList.add('pulse');
+  } else {
+    document.querySelector('.timer-banner').classList.remove('pulse');
   }
-  return {
-    monthly:  { display:'$12 USD', usd:'$12 USD' },
-    permanent:{ display:'$32 USD', usd:'$32 USD', discount: false },
-    note: null,
-  };
 }
 
-let sel = { country:'', method:'', methodName:'', plan:'', price:'', priceUSD:'' };
+setInterval(updateTimer, 100);
+updateTimer();
+
+// ══ RENDER IPHONE MODELS ══
+function renderModels() {
+  const scroll = document.getElementById('modelsScroll');
+  scroll.innerHTML = '';
+  IPHONE_MODELS.forEach((model, idx) => {
+    const btn = document.createElement('div');
+    btn.className = 'model-btn';
+    btn.innerHTML = `
+      <div class="model-icon">${model.icon}</div>
+      <div class="model-name">${model.name}</div>
+      <div class="model-check"><i class="fa-solid fa-check"></i></div>
+    `;
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.model-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      sel.model = model.id;
+      sel.modelName = model.name;
+      done(1, true);
+      show('step2Wrap');
+      sel.country = '';
+      sel.method = '';
+      sel.methodName = '';
+      hide('step3Wrap');
+      hide('step4Wrap');
+      hideSummary();
+      disableBuy();
+      // Auto-scroll selected item into view
+      setTimeout(() => {
+        btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }, 100);
+    });
+    scroll.appendChild(btn);
+  });
+}
 
 function onCountryChange() {
-  sel = { country: document.getElementById('countrySelect').value, method:'', methodName:'', plan:'', price:'', priceUSD:'' };
-  hide('step2Wrap'); hide('step3Wrap');
-  done(1, false); done(2, false); done(3, false);
-  hideSummary(); disableBuy();
+  sel.country = document.getElementById('countrySelect').value;
+  sel.method = '';
+  sel.methodName = '';
+  hide('step3Wrap');
+  hide('step4Wrap');
+  hideSummary();
+  done(2, false);
+  done(3, false);
+  done(4, false);
+  disableBuy();
   if (!sel.country) return;
-  done(1, true);
+  done(2, true);
   renderMethods();
-  show('step2Wrap');
+  show('step3Wrap');
 }
 
 function renderMethods() {
   const list = document.getElementById('methodList');
   list.innerHTML = '';
   (COUNTRY_METHODS[sel.country] || COUNTRY_METHODS['other']).forEach(id => {
-    const m = METHODS[id]; if (!m) return;
+    const m = METHODS[id];
+    if (!m) return;
     const el = document.createElement('div');
     el.className = 'method-item';
     el.innerHTML = `
       <div class="method-logo">${m.icon}</div>
       <div class="method-info"><div class="method-name">${m.name}</div><div class="method-desc">${m.desc}</div></div>
       <div class="method-tag">${m.tag}</div>
-      <div class="method-check"><i class="fa-solid fa-check"></i></div>`;
+      <div class="method-check"><i class="fa-solid fa-check"></i></div>
+    `;
     el.addEventListener('click', () => {
       document.querySelectorAll('.method-item').forEach(i => i.classList.remove('selected'));
       el.classList.add('selected');
-      sel.method = id; sel.methodName = m.name;
-      sel.plan = ''; sel.price = ''; sel.priceUSD = '';
-      done(2, true); done(3, false);
-      hideSummary(); disableBuy();
-      renderPlans();
-      show('step3Wrap');
+      sel.method = id;
+      sel.methodName = m.name;
+      done(3, true);
+      done(4, false);
+      hide('step4Wrap');
+      hideSummary();
+      disableBuy();
+      renderPlan();
+      show('step4Wrap');
     });
     list.appendChild(el);
   });
 }
 
-function renderPlans() {
+function renderPlan() {
   const grid = document.getElementById('plansGrid');
   grid.innerHTML = '';
-  const p = getPricing(sel.country, sel.method);
-  const noteEl = document.getElementById('priceNote');
-  if (p.note) { noteEl.textContent = p.note; noteEl.classList.add('show'); }
-  else noteEl.classList.remove('show');
+  
+  const plan = {
+    label: '3 meses',
+    period: 'Acceso por 3 meses',
+    price: '$14.99',
+    usd: '$14.99 USD',
+  };
 
-  [
-    { key:'monthly',   cls:'monthly',   label:'Mensual',    period:'1 Mes',              data: p.monthly  },
-    { key:'permanent', cls:'permanent', label:'Permanente', period:'Acceso permanente',   data: p.permanent },
-  ].forEach(({ key, cls, label, period, data }) => {
-    const btn = document.createElement('div');
-    btn.className = `plan-btn ${cls}`;
-    btn.innerHTML = `
-      ${cls === 'permanent' ? '<div class="plan-best-tag">MEJOR VALOR</div>' : ''}
-      <div class="plan-label">${label}</div>
-      <div class="plan-price-main">${data.display.split(' ')[0]}</div>
-      <div class="plan-currency-label">${data.display.includes('USD') ? 'USD' : data.display.split(' ')[1] || ''}</div>
-      <div class="plan-period">${period}</div>
-      ${data.discount ? '<div class="plan-discount">✓ Precio especial aplicado</div>' : ''}
-    `;
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.plan-btn').forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
-      sel.plan = label + ' (' + period + ')';
-      sel.price = data.display;
-      sel.priceUSD = data.usd;
-      done(3, true);
-      updateSummary();
-      enableBuy();
-    });
-    grid.appendChild(btn);
+  const card = document.createElement('div');
+  card.className = 'plan-card selected';
+  card.innerHTML = `
+    <div class="plan-header">
+      <div style="flex:1">
+        <div class="plan-label">EVENTO LIMITADO</div>
+        <div style="font-size:.85rem;font-weight:700;color:var(--text);margin-top:6px">${plan.label}</div>
+      </div>
+      <div class="plan-badge"><i class="fa-solid fa-star"></i> ÚNICO</div>
+    </div>
+    <div class="plan-details">
+      <div class="plan-price">${plan.price}</div>
+      <div style="flex:1">
+        <div class="plan-usd">${plan.usd}</div>
+        <div class="plan-period">${plan.period}</div>
+      </div>
+      <div class="plan-check"><i class="fa-solid fa-check"></i></div>
+    </div>
+  `;
+  card.addEventListener('click', () => {
+    done(4, true);
+    updateSummary();
+    enableBuy();
   });
+  grid.appendChild(card);
 }
 
 function updateSummary() {
+  document.getElementById('sumModel').textContent = sel.modelName;
   document.getElementById('sumCountry').textContent = COUNTRY_NAMES[sel.country] || sel.country;
-  document.getElementById('sumMethod').textContent  = sel.methodName;
-  document.getElementById('sumPlan').textContent    = sel.plan;
-  document.getElementById('sumTotal').textContent   = sel.price + (sel.price !== sel.priceUSD ? ' (' + sel.priceUSD + ')' : '');
+  document.getElementById('sumMethod').textContent = sel.methodName;
+  document.getElementById('sumPlan').textContent = '3 meses';
   document.getElementById('summaryWrap').classList.add('show');
   buildTG();
 }
 
 function buildTG() {
   const msg =
-    `Hola buen día, leí y vi toda la información, quiero comprar.\n\n` +
+    `Hola buen día, leí y vi toda la información, quiero comprar el JEXE Regedit en esta edición especial limitada.\n\n` +
     `━━━━━━━━━━━━━━━━\n🛒 𝗠𝗜 𝗣𝗘𝗗𝗜𝗗𝗢\n━━━━━━━━━━━━━━━━\n` +
-    `📱 𝗣𝗹𝗮𝘁𝗮𝗳𝗼𝗿𝗺𝗮: iOS (iPhone / iPad)\n` +
-    `🌎 𝗣𝗮í𝘀: ${COUNTRY_NAMES[sel.country] || sel.country}\n` +
+    `📱 𝗠𝗼𝗱𝗲𝗹𝗼: ${sel.modelName}\n` +
+    `🌎 𝗣𝗮í𝘀: ${COUNTRY_NAMES[sel.country]}\n` +
     `💳 𝗠é𝘁𝗼𝗱𝗼 𝗱𝗲 𝗽𝗮𝗴𝗼: ${sel.methodName}\n` +
-    `📦 𝗣𝗹𝗮𝗻: ${sel.plan}\n` +
-    `💰 𝗧𝗼𝘁𝗮𝗹: ${sel.price}` +
-    (sel.price !== sel.priceUSD ? ` (${sel.priceUSD})` : '') +
-    `\n━━━━━━━━━━━━━━━━\nPor favor confirmar disponibilidad y datos de pago. ¡Gracias!`;
+    `📦 𝗣𝗿𝗼𝗱𝘂𝗰𝘁𝗼: 3 meses de acceso (Evento Especial)\n` +
+    `💰 𝗣𝗿𝗲𝗰𝗶𝗼: $14.99 USD\n` +
+    `━━━━━━━━━━━━━━━━\nPor favor confirmar disponibilidad y datos de pago. ¡Gracias!`;
   document.getElementById('buyBtn').href = `https://t.me/${TG}?text=${encodeURIComponent(msg)}`;
 }
 
 function hideSummary() { document.getElementById('summaryWrap').classList.remove('show'); }
-function enableBuy()   { document.getElementById('buyBtn').classList.add('ready'); }
-function disableBuy()  { document.getElementById('buyBtn').classList.remove('ready'); }
-function show(id)      { document.getElementById(id).style.display = 'block'; }
-function hide(id)      { document.getElementById(id).style.display = 'none'; }
-function done(n, v)    { document.getElementById('done'+n).classList[v?'add':'remove']('show'); }
+function enableBuy() { document.getElementById('buyBtn').classList.add('ready'); }
+function disableBuy() { document.getElementById('buyBtn').classList.remove('ready'); }
+function show(id) { document.getElementById(id).style.display = 'block'; }
+function hide(id) { document.getElementById(id).style.display = 'none'; }
+function done(n, v) { document.getElementById('done' + n).classList[v ? 'add' : 'remove']('show'); }
+
+// ══ INITIALIZE ══
+renderModels();
 </script>
+
 </body>
 </html>
