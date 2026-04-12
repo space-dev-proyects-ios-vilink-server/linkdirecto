@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6057938174058476"
-     crossorigin="anonymous"></script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="color-scheme" content="light dark"/>
-  <title>CashCr — Link Directo</title>
+  <title>Vault Game — Link Directo</title>
 
-  <!-- Onclick ad (kept) -->
-  <script src="https://quge5.com/88/tag.min.js" data-zone="217186" async data-cfasync="false"></script>
+  <!-- AD SCRIPT REMOVED FROM HERE — se inyecta dinámicamente al seleccionar 3 cajas -->
 
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -200,6 +197,14 @@
 
     .box-icon{font-size:1.8rem;color:var(--muted)}
     .box-number{font-family:var(--font-mono);font-size:.65rem;color:var(--muted);letter-spacing:.1em}
+
+    /* selected state */
+    .box.selected-pending{
+      border-color:color-mix(in srgb,var(--gold) 70%,transparent) !important;
+      background:color-mix(in srgb,var(--gold) 8%,var(--bg2)) !important;
+      transform:scale(1.04);
+    }
+    .box.selected-pending .box-icon{color:var(--gold)}
 
     /* prize states */
     .box.win-25  .box-back{background:color-mix(in srgb,var(--green) 15%,var(--bg2))}
@@ -548,27 +553,25 @@ const MAX_CREDITS      = 100000;
 const MAX_DAILY        = 1000;
 const DAILY_ATTEMPTS   = 10;
 const CREDITS_PER_CENT = 100;   // 100 credits = $0.01
-const WHATSAPP_NUM     = '573132878955‬';
+const WHATSAPP_NUM     = '15045537126';
 const WITHDRAW_TARGETS = [
   { usd: 0.50, credits: 5000  },
   { usd: 1.00, credits: 10000 },
   { usd: 5.00, credits: 50000 },
   { usd:10.00, credits: 100000}
 ];
-const PRIZE_MAP = [25, 50, 100]; // positions 0,1,2 in 3 winning boxes
 
 // ── STATE ──────────────────────────────────────────────────────
 let STATE = {
   totalCredits: 0,
-  firstPlayDate: null,       // ISO string
-  firstPlayTS: null,         // timestamp ms (actual)
-  dailyDate: '',             // 'YYYY-MM-DD' based on real date
+  firstPlayDate: null,
+  firstPlayTS: null,
+  dailyDate: '',
   dailyAttempts: DAILY_ATTEMPTS,
   dailyEarned: 0,
-  bonusAvailable: false,     // one-time bonus per session reset
-  history: [],               // array of {date, amount, method, code}
-  // anti-cheat
-  storedDateCheck: null,     // last known date string
+  bonusAvailable: false,
+  history: [],
+  storedDateCheck: null,
 };
 
 // ── PERSIST ────────────────────────────────────────────────────
@@ -590,15 +593,10 @@ function todayStr() {
 }
 function nowTS() { return Date.now(); }
 
-// Anti-cheat: detect if date rolled back
 function detectDateTampering() {
   const today = todayStr();
-  // If stored date is "in the future" relative to device, possible tamper
   if (STATE.storedDateCheck) {
-    if (STATE.storedDateCheck > today) {
-      // Device date was rolled back — don't reset attempts
-      return true;
-    }
+    if (STATE.storedDateCheck > today) return true;
   }
   return false;
 }
@@ -613,14 +611,10 @@ function checkDailyReset() {
     STATE.bonusAvailable = false;
     STATE.storedDateCheck = today;
     saveState();
-  } else if (tampered) {
-    // Do NOT reset — keep current attempts
   }
 }
 
 // ── CODE GENERATOR ─────────────────────────────────────────────
-// Format: 4 uppercase + 4 lowercase + 4 digits + day(2) + month(2)
-// Total: 16 chars
 function generateCode() {
   const upper  = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
   const lower  = 'abcdefghjkmnpqrstuvwxyz';
@@ -631,20 +625,35 @@ function generateCode() {
   let l4 = Array.from({length:4}, () => rand(lower));
   let d4 = Array.from({length:4}, () => rand(digits));
 
-  // Shuffle u4+l4+d4 for first 12 chars
   let mid = [...u4, ...l4, ...d4];
   for (let i = mid.length-1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i+1));
     [mid[i], mid[j]] = [mid[j], mid[i]];
   }
 
-  // Last 4: day(2 digits) + month(2 digits)
   const now = new Date();
   const day   = String(now.getDate()).padStart(2,'0');
   const month = String(now.getMonth()+1).padStart(2,'0');
-  const suffix = `${day}${month}`;
+  return mid.join('') + day + month;
+}
 
-  return mid.join('') + suffix; // 12 + 4 = 16
+// ── AD MANAGEMENT ──────────────────────────────────────────────
+// Inyecta el script del anuncio en el DOM
+function injectAd() {
+  if (document.getElementById('ad-tag')) return; // ya existe, no duplicar
+  const s = document.createElement('script');
+  s.id = 'ad-tag';
+  s.src = 'https://fpyf8.com/88/tag.min.js';
+  s.setAttribute('data-zone', '183074');
+  s.setAttribute('data-cfasync', 'false');
+  s.async = true;
+  document.body.appendChild(s);
+}
+
+// Remueve el script del anuncio del DOM
+function removeAd() {
+  const s = document.getElementById('ad-tag');
+  if (s) s.remove();
 }
 
 // ── BOARD LOGIC ────────────────────────────────────────────────
@@ -655,7 +664,6 @@ let inRound       = false;
 let bonusActive   = false;
 
 function buildPrizes() {
-  // 3 prizes randomly placed in 9 boxes
   let prizes = [25, 50, 100, 0, 0, 0, 0, 0, 0];
   for (let i = prizes.length-1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i+1));
@@ -699,12 +707,21 @@ function handleBoxClick(box, idx) {
   if (STATE.dailyAttempts <= 0 && !bonusActive) return;
 
   if (box.classList.contains('selected-pending')) {
+    // Deseleccionar
     box.classList.remove('selected-pending');
     selectedBoxes = selectedBoxes.filter(i => i !== idx);
+    // Si baja de 3, remover el anuncio
+    if (selectedBoxes.length < 3) {
+      removeAd();
+    }
   } else {
     if (selectedBoxes.length >= 3) return;
     box.classList.add('selected-pending');
     selectedBoxes.push(idx);
+    // Al llegar exactamente a 3, inyectar el anuncio
+    if (selectedBoxes.length === 3) {
+      injectAd();
+    }
   }
   updateSpinBtn();
 }
@@ -727,7 +744,6 @@ function revealBoxes() {
   inRound = true;
   revealed = true;
 
-  // Deduct attempt
   if (bonusActive) {
     bonusActive = false;
   } else {
@@ -736,8 +752,6 @@ function revealBoxes() {
   saveState();
 
   const boxes = document.querySelectorAll('.box');
-
-  // Reveal selected boxes one by one
   let totalWon = 0;
   let delay = 0;
 
@@ -772,14 +786,13 @@ function revealBoxes() {
       }
 
       if (i === selectedBoxes.length - 1) {
-        // All revealed
         setTimeout(() => finishRound(totalWon), 400);
       }
     }, delay);
     delay += 350;
   });
 
-  // Disable remaining boxes
+  // Deshabilitar cajas no seleccionadas
   setTimeout(() => {
     boxes.forEach((b, idx) => {
       if (!selectedBoxes.includes(idx)) b.classList.add('disabled');
@@ -798,7 +811,6 @@ function finishRound(won) {
     STATE.dailyEarned  = Math.min(MAX_DAILY, STATE.dailyEarned + add);
   }
 
-  // First play
   if (!STATE.firstPlayDate) {
     STATE.firstPlayDate = new Date().toLocaleString('es-MX', {
       year:'numeric', month:'long', day:'numeric',
@@ -811,10 +823,12 @@ function finishRound(won) {
   saveState();
   updateUI();
 
+  // ── REMOVER EL ANUNCIO después de que se revelan los premios ──
+  removeAd();
+
   if (won === 0) {
     result.className = 'round-result loss';
     result.textContent = '📦 Sin premio esta vez...';
-    // Offer bonus if not already given today and no attempts left
     if (!STATE.bonusAvailable) {
       STATE.bonusAvailable = true;
       saveState();
@@ -832,7 +846,6 @@ function finishRound(won) {
     document.getElementById('spinBtn').classList.add('glow');
   }
 
-  // Re-enable spin for next round
   setTimeout(() => {
     if (STATE.dailyAttempts > 0) {
       renderBoard();
@@ -928,7 +941,6 @@ function validateWithdraw() {
   const method = document.getElementById('withdrawMethod').value;
   const btn = document.getElementById('withdrawBtn');
   if (!selectedWithdrawAmount || !method) { btn.disabled = true; return; }
-  // FreeFire only for $1, $5, $10
   if (method === 'FreeFire' && selectedWithdrawAmount.usd < 1) {
     btn.disabled = true;
     return;
@@ -950,7 +962,6 @@ document.getElementById('withdrawBtn').addEventListener('click', () => {
     hour:'2-digit', minute:'2-digit', second:'2-digit'
   });
 
-  // Build popup
   document.getElementById('popupCode').textContent = code;
   document.getElementById('popupSubtitle').textContent =
     `$${selectedWithdrawAmount.usd.toFixed(2)} USD vía ${method}`;
@@ -960,7 +971,6 @@ document.getElementById('withdrawBtn').addEventListener('click', () => {
      <strong>Créditos:</strong> ${selectedWithdrawAmount.credits.toLocaleString()}
      &nbsp;·&nbsp; <strong>Fecha:</strong> ${dateStr}`;
 
-  // WhatsApp message
   const msg = encodeURIComponent(
     `Hola buen día, quiero solicitar un retiro.\n\n` +
     `💰 *Monto:* $${selectedWithdrawAmount.usd.toFixed(2)} USD\n` +
@@ -972,7 +982,6 @@ document.getElementById('withdrawBtn').addEventListener('click', () => {
   );
   document.getElementById('popupWhatsApp').href = `https://wa.me/${WHATSAPP_NUM}?text=${msg}`;
 
-  // Save to history and deduct credits
   STATE.history.unshift({
     amount:  `$${selectedWithdrawAmount.usd.toFixed(2)}`,
     credits: selectedWithdrawAmount.credits,
@@ -981,10 +990,8 @@ document.getElementById('withdrawBtn').addEventListener('click', () => {
     date: dateStr
   });
 
-  // Deduct credits
   STATE.totalCredits = Math.max(0, STATE.totalCredits - selectedWithdrawAmount.credits);
 
-  // Reset selection
   selectedWithdrawAmount = null;
   document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
   document.getElementById('withdrawMethod').value = '';
@@ -997,7 +1004,6 @@ document.getElementById('withdrawBtn').addEventListener('click', () => {
 });
 
 document.getElementById('popupWhatsApp').addEventListener('click', () => {
-  // Close overlay after a moment
   setTimeout(() => {
     document.getElementById('withdrawOverlay').classList.remove('show');
     renderHistory();
@@ -1045,7 +1051,6 @@ function renderProgressBars() {
 
 function renderWalletGrid() {
   const usd = STATE.totalCredits / CREDITS_PER_CENT / 100;
-  // Calc remaining for each target
   const grid = document.getElementById('walletGrid');
   grid.innerHTML = '';
   const stats = [
