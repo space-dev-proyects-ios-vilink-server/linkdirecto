@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Acceso · Evaluación</title>
+  <!-- Fuentes dignas: Inter + fallback -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+  <!-- Iconos profesionales (Font Awesome) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0f1218;  /* base oscura pero se adapta al dispositivo */
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #eef2f6;
+      padding: 1.5rem 1rem;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      line-height: 1.4;
+    }
+
+    .app-wrapper {
+      max-width: 780px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* Compacto: menos padding */
+    .card-panel {
+      background: #1a212b;
+      border-radius: 24px;
+      padding: 1.5rem 1.5rem 1.8rem;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.5), 0 0 0 1px rgba(70, 120, 200, 0.1);
+      backdrop-filter: blur(2px);
+    }
+
+    h1 {
+      font-weight: 600;
+      font-size: 1.9rem;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #f0f5ff 0%, #b8cdff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.25rem;
+    }
+
+    .sub-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #9aabbf;
+      font-weight: 400;
+      font-size: 0.9rem;
+      margin-bottom: 1.6rem;
+      border-left: 3px solid #3a7bd5;
+      padding-left: 12px;
+    }
+
+    /* Bloques compactos */
+    .section-block {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid #293544;
+      padding-bottom: 1.2rem;
+    }
+    .section-block:last-of-type {
+      border-bottom: none;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 1.2rem;
+      color: #c6d9f0;
+    }
+    .section-title i {
+      color: #3f8cff;
+      width: 20px;
+      font-size: 1rem;
+    }
+
+    .q-item {
+      margin-bottom: 1.2rem;
+    }
+
+    .q-text {
+      font-weight: 500;
+      margin-bottom: 0.6rem;
+      font-size: 0.95rem;
+      color: #e2eaf5;
+    }
+
+    .options-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      align-items: center;
+    }
+
+    .opt-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      background: #1f2a36;
+      padding: 0.3rem 0.9rem 0.3rem 0.7rem;
+      border-radius: 30px;
+      border: 1px solid #31465b;
+      transition: all 0.12s;
+      color: #cfdceb;
+    }
+    .opt-label:hover {
+      background: #263544;
+      border-color: #4f7eb3;
+      color: white;
+    }
+
+    input[type="radio"] {
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #3f5e7c;
+      border-radius: 50%;
+      margin: 0;
+      background: #0f1a24;
+      transition: 0.1s;
+      cursor: pointer;
+    }
+    input[type="radio"]:checked {
+      border-color: #3a7bd5;
+      background: #1f3a5f;
+      box-shadow: inset 0 0 0 4px #3a7bd5;
+    }
+
+    .risk-marker {
+      opacity: 0.8;
+      font-weight: 500;
+    }
+
+    /* Botones */
+    .btn {
+      background: #1f2d3e;
+      border: 1px solid #38536b;
+      color: #f0f6ff;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 48px;
+      width: 100%;
+      cursor: pointer;
+      transition: 0.15s;
+      letter-spacing: 0.2px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      margin-top: 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-primary {
+      background: #1a4a7a;
+      border: 1px solid #3a7bd5;
+      color: white;
+    }
+    .btn-primary:hover {
+      background: #1f5c9c;
+      border-color: #6aa3ff;
+    }
+    .btn-success {
+      background: #0e4622;
+      border-color: #1f8b4c;
+    }
+    .btn-outline-light {
+      background: transparent;
+      border: 1px solid #4b6885;
+      color: #d3e2fd;
+    }
+
+    .result-area {
+      margin-top: 1.5rem;
+    }
+
+    .state-message {
+      padding: 1.2rem 1.2rem;
+      border-radius: 20px;
+      background: #101a24;
+      border-left: 5px solid;
+      animation: fade 0.25s ease;
+    }
+
+    .reject-state { border-left-color: #cf4444; background: #1b202a; }
+    .success-state { border-left-color: #2ecc71; background: #11261a; }
+    .expired-state { border-left-color: #e6a020; background: #241f12; }
+
+    .price-tag {
+      background: #1e3a2b;
+      padding: 0.6rem 1.2rem;
+      border-radius: 48px;
+      display: inline-block;
+      font-weight: 600;
+      margin: 0.5rem 0;
+      border: 1px solid #2ecc71;
+    }
+
+    .telegram-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #1e8449;
+      padding: 0.8rem 1.8rem;
+      border-radius: 60px;
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      border: 1px solid #2ecc71;
+      margin-top: 12px;
+      transition: 0.15s;
+    }
+    .telegram-link:hover {
+      background: #239b56;
+    }
+
+    .validation-note {
+      color: #f28b82;
+      font-size: 0.8rem;
+      margin-top: 0.4rem;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @keyframes fade {
+      0% { opacity: 0.6; }
+      100% { opacity: 1; }
+    }
+
+    .compact-text {
+      font-size: 0.9rem;
+    }
+
+    /* menos scroll: reducir espacios */
+    .mt-2 { margin-top: 0.8rem; }
+    .mb-1 { margin-bottom: 0.5rem; }
+  </style>
+</head>
+<body>
+<div class="app-wrapper">
+  <div class="card-panel">
+    <h1>Prueba 5 días</h1>
+    <div class="sub-header">
+      <i class="fas fa-clipboard-list"></i> 
+      <span>Evaluación de perfil</span>
+    </div>
+
+    <!-- CONTENEDOR PRINCIPAL: aquí se muestra formulario o estado guardado -->
+    <div id="dynamicContent"></div>
+  </div>
+  <div style="margin-top: 0.8rem; text-align: right; font-size: 0.7rem; opacity: 0.5;">
+    <i class="fas fa-database"></i> estado local
+  </div>
+</div>
+
+<script>
+  (function(){
+    "use strict";
+
+    // ---------- STORAGE KEYS ----------
+    const STORAGE_KEY = 'gambling_access_profile';
+    const TIMESTAMP_KEY = 'gambling_access_ts';
+
+    // Estados posibles: 'rejected', 'active_trial', 'expired', null
+    // Estructura guardada: { status: 'rejected'|'active_trial'|'expired', acceptedDate: ISOstring, score: number }
+
+    const container = document.getElementById('dynamicContent');
+
+    // ---------- FUNCIONES DE ALMACENAMIENTO ----------
+    function getStoredData() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return null;
+      try { return JSON.parse(raw); } catch(e){ return null; }
+    }
+
+    function setStoredData(data) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function clearStoredData() {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(TIMESTAMP_KEY);
+    }
+
+    // Calcula si el trial expiró (5 días desde acceptedDate)
+    function isTrialExpired(acceptedDateISO) {
+      if (!acceptedDateISO) return false;
+      const accepted = new Date(acceptedDateISO);
+      const now = new Date();
+      const diffDays = (now - accepted) / (1000 * 60 * 60 * 24);
+      return diffDays > 5;  // más de 5 días
+    }
+
+    // Verifica estado guardado y actualiza si expiró
+    function checkAndUpdateStoredState() {
+      const data = getStoredData();
+      if (!data) return null;
+      
+      if (data.status === 'active_trial' && data.acceptedDate) {
+        if (isTrialExpired(data.acceptedDate)) {
+          data.status = 'expired';
+          setStoredData(data);
+        }
+      }
+      return data;
+    }
+
+    // ---------- RENDER SEGUN ESTADO ----------
+    function renderUI() {
+      const stored = checkAndUpdateStoredState();
+      
+      if (!stored) {
+        // Sin datos: mostrar cuestionario limpio
+        renderQuestionnaire();
+        return;
+      }
+
+      const status = stored.status;
+      
+      if (status === 'rejected') {
+        renderRejectedState(true);
+      } else if (status === 'active_trial') {
+        renderActiveTrialState(stored.acceptedDate, stored.score);
+      } else if (status === 'expired') {
+        renderExpiredState(stored.acceptedDate);
+      } else {
+        // fallback
+        renderQuestionnaire();
+      }
+    }
+
+    // ----- RENDER RECHAZADO (con mensaje de no reintento) -----
+    function renderRejectedState(isPermanent = true) {
+      const html = `
+        <div class="state-message reject-state">
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <i class="fas fa-ban" style="font-size: 1.6rem; color: #e05a5a;"></i>
+            <span style="font-weight: 700; font-size: 1.3rem;">Acceso denegado</span>
+          </div>
+          <p style="margin-bottom: 10px;">Este grupo no es apto para tu perfil actual. Detectamos comportamientos de riesgo. No es posible volver a solicitar la prueba gratuita.</p>
+          <p style="opacity: 0.8; font-size: 0.9rem;"><i class="fas fa-shield-alt"></i> Tu registro permanece en el sistema local.</p>
+          ${isPermanent ? '<div style="margin-top: 16px;"><i class="fas fa-lock"></i> No se permiten reintentos.</div>' : ''}
+        </div>
+      `;
+      container.innerHTML = html;
+    }
+
+    // ----- RENDER TRIAL ACTIVO (acceso a Telegram) -----
+    function renderActiveTrialState(acceptedDateISO, score = null) {
+      const acceptedDate = acceptedDateISO ? new Date(acceptedDateISO) : new Date();
+      const expiraDate = new Date(acceptedDate);
+      expiraDate.setDate(expiraDate.getDate() + 5);
+      
+      const formattedExp = expiraDate.toLocaleDateString('es-ES', {day:'2-digit', month:'2-digit', year:'numeric'});
+      
+      const html = `
+        <div class="state-message success-state">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <i class="fas fa-check-circle" style="color: #2ecc71; font-size: 1.6rem;"></i>
+            <span style="font-weight: 700; font-size: 1.3rem;">Acceso activo</span>
+          </div>
+          <p style="margin: 8px 0 4px;">Tu perfil fue aprobado${score !== null ? ' (puntuación '+score+')' : ''}. Disfruta de la prueba hasta el ${formattedExp}.</p>
+          <div style="margin-top: 18px;">
+            <a href="https://t.me/+mXwNgQDDdSBmZDg5" target="_blank" class="telegram-link">
+              <i class="fab fa-telegram-plane"></i> Unirse al grupo privado
+            </a>
+            <p style="margin-top: 12px; font-size: 0.8rem; opacity: 0.8;"><i class="far fa-clock"></i> Acceso válido durante 5 días desde la aceptación.</p>
+          </div>
+        </div>
+      `;
+      container.innerHTML = html;
+    }
+
+    // ----- RENDER EXPIRADO (ofrecer compra) -----
+    function renderExpiredState(acceptedDateISO) {
+      const html = `
+        <div class="state-message expired-state">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <i class="fas fa-hourglass-end" style="color: #e6a020; font-size: 1.6rem;"></i>
+            <span style="font-weight: 700; font-size: 1.3rem;">Prueba finalizada</span>
+          </div>
+          <p style="margin: 10px 0;">Tu periodo de prueba gratuita de 5 días ha expirado. Si el grupo fue de tu agrado, puedes continuar con acceso extendido.</p>
+          <div class="price-tag">
+            <i class="fas fa-tag"></i> 15 días adicionales · $10 USD
+          </div>
+          <div style="margin-top: 16px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <button class="btn btn-success" id="simulatePurchaseBtn" style="width: auto; padding: 0.7rem 1.8rem;">
+              <i class="fas fa-shopping-cart"></i> Comprar 15 días
+            </button>
+            <button class="btn btn-outline-light" id="clearStateDevBtn" style="width: auto; padding: 0.7rem 1.2rem;">
+              <i class="fas fa-undo-alt"></i> Reiniciar demo
+            </button>
+          </div>
+          <p style="font-size: 0.75rem; margin-top: 14px; opacity: 0.6;"><i class="far fa-credit-card"></i> Simulación · en producción conectar pasarela.</p>
+        </div>
+      `;
+      container.innerHTML = html;
+      
+      document.getElementById('simulatePurchaseBtn')?.addEventListener('click', function(){
+        // Simular compra: extender 15 días desde hoy (o podríamos actualizar estado)
+        const now = new Date();
+        // Crear nuevo estado active_trial pero con fecha aceptación reciente
+        const newData = {
+          status: 'active_trial',
+          acceptedDate: now.toISOString(),
+          score: null,
+          extended: true
+        };
+        setStoredData(newData);
+        renderUI();
+      });
+      
+      document.getElementById('clearStateDevBtn')?.addEventListener('click', function(){
+        if(confirm('Reiniciar estado local (solo para pruebas). ¿Continuar?')) {
+          clearStoredData();
+          renderUI();
+        }
+      });
+    }
+
+    // ----- RENDER CUESTIONARIO (nuevo intento solo si no hay estado) -----
+    function renderQuestionnaire() {
+      const formHtml = `
+        <form id="accessForm">
+          <!-- BLOQUE 1 -->
+          <div class="section-block">
+            <div class="section-title"><i class="fas fa-sliders-h"></i> Control · comportamiento</div>
+            ${createQuestion('q1', '1. ¿Con qué frecuencia apuestas más dinero del que tenías planeado?', 
+              ['Nunca:0', 'A veces ⚠️:1', 'Frecuentemente ⚠️:1', 'Siempre 🚫:2'])}
+            ${createQuestion('q2', '2. ¿Has intentado recuperar pérdidas apostando más dinero?', 
+              ['Nunca:0', 'Algunas veces ⚠️:1', 'Frecuentemente ⚠️:1', 'Siempre 🚫:2'])}
+            ${createQuestion('q3', '3. ¿Te cuesta dejar de apostar cuando empiezas?', 
+              ['No:0', 'A veces ⚠️:1', 'Sí 🚫:2'])}
+            ${createQuestion('q4', '4. ¿Has perdido el control de tus apuestas en algún momento?', 
+              ['Nunca:0', 'Sí, una vez ⚠️:1', 'Sí, varias veces 🚫:2'])}
+          </div>
+          <!-- BLOQUE 2 -->
+          <div class="section-block">
+            <div class="section-title"><i class="fas fa-coins"></i> Impacto financiero</div>
+            ${createQuestion('q5', '5. ¿Apuestas dinero que necesitas para gastos importantes?', 
+              ['Nunca:0', 'Alguna vez ⚠️:1', 'Sí 🚫:2'])}
+            ${createQuestion('q6', '6. ¿Has pedido dinero prestado para apostar o recuperar pérdidas?', 
+              ['Nunca:0', 'Sí ⚠️:1', 'Varias veces 🚫:2'])}
+            ${createQuestion('q7', '7. ¿Qué porcentaje de tus ingresos destinas a apuestas?', 
+              ['1–5%:0', '5–10%:0', '10–25% ⚠️:1', 'Más de 25% 🚫:2'])}
+          </div>
+          <!-- BLOQUE 3 -->
+          <div class="section-block">
+            <div class="section-title"><i class="fas fa-heart"></i> Estado emocional</div>
+            ${createQuestion('q8', '8. ¿Te sientes ansioso o irritado cuando no puedes apostar?', 
+              ['No:0', 'A veces ⚠️:1', 'Sí 🚫:2'])}
+            ${createQuestion('q9', '9. ¿Apuestas para escapar de problemas o emociones negativas?', 
+              ['No:0', 'A veces ⚠️:1', 'Sí 🚫:2'])}
+            ${createQuestion('q10', '10. ¿Las apuestas afectan tu estado de ánimo diariamente?', 
+              ['No:0', 'Un poco ⚠️:1', 'Sí 🚫:2'])}
+          </div>
+          <!-- BLOQUE 4 -->
+          <div class="section-block">
+            <div class="section-title"><i class="fas fa-brain"></i> Relación con la realidad</div>
+            ${createQuestion('q11', '11. ¿Crees que puedes vivir de las apuestas de forma segura y constante?', 
+              ['No:0', 'Sí, pero con riesgo ⚠️:1', 'Sí, completamente 🚫:2'])}
+            ${createQuestion('q12', '12. ¿Cómo reaccionas ante una racha negativa?', 
+              ['Reduzco riesgo o paro:0', 'Mantengo estrategia:0', 'Aumento apuestas para recuperar 🚫:2'])}
+            ${createQuestion('q13', '13. ¿Qué harías si pierdes 5 apuestas seguidas?', 
+              ['Paro y analizo:0', 'Bajo stake:0', 'Intento recuperar rápido 🚫:2'])}
+          </div>
+          <!-- BLOQUE 5 -->
+          <div class="section-block">
+            <div class="section-title"><i class="fas fa-shield-alt"></i> Responsabilidad</div>
+            ${createQuestion('q14', '14. ¿Estás dispuesto a seguir gestión de banca estricta?', 
+              ['Sí:0', 'Depende ⚠️:1', 'No 🚫:2'])}
+            ${createQuestion('q15', '15. ¿Aceptas que las pérdidas son parte del proceso?', 
+              ['Sí:0', 'Me cuesta ⚠️:1', 'No 🚫:2'])}
+          </div>
+          <div id="validationMsg" class="validation-note"></div>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-clipboard-check"></i> Evaluar perfil</button>
+        </form>
+        <div id="formResult" class="result-area"></div>
+      `;
+      
+      container.innerHTML = formHtml;
+      
+      const form = document.getElementById('accessForm');
+      const validationMsg = document.getElementById('validationMsg');
+      const formResult = document.getElementById('formResult');
+      
+      const radioGroups = ['q1','q2','q3','q4','q5','q6','q7','q8','q9','q10','q11','q12','q13','q14','q15'];
+      
+      function getSelectedValue(name) {
+        const checked = document.querySelector(`input[name="${name}"]:checked`);
+        return checked ? parseInt(checked.value, 10) : null;
+      }
+      
+      function allAnswered() {
+        return radioGroups.every(g => getSelectedValue(g) !== null);
+      }
+      
+      function calculateScore() {
+        return radioGroups.reduce((sum, g) => sum + (getSelectedValue(g) || 0), 0);
+      }
+      
+      function hasCritical() {
+        return radioGroups.some(g => getSelectedValue(g) === 2);
+      }
+      
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        if (!allAnswered()) {
+          validationMsg.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Responde todas las preguntas.';
+          formResult.innerHTML = '';
+          return;
+        }
+        validationMsg.innerHTML = '';
+        
+        const score = calculateScore();
+        const critical = hasCritical();
+        
+        // Reglas rechazo: critico o score >=9
+        if (critical || score >= 9) {
+          // Rechazo permanente: guardar estado rejected
+          const rejectedData = {
+            status: 'rejected',
+            timestamp: new Date().toISOString(),
+            score: score
+          };
+          setStoredData(rejectedData);
+          // render rechazo
+          renderUI();  // volverá a mostrar estado rechazado
+        } else {
+          // Aprobado (0-8)
+          const acceptedDate = new Date().toISOString();
+          const approvedData = {
+            status: 'active_trial',
+            acceptedDate: acceptedDate,
+            score: score
+          };
+          setStoredData(approvedData);
+          renderUI(); // mostrará active trial
+        }
+      });
+      
+      // limpiar resultado al cambiar respuestas
+      document.querySelectorAll('input[type="radio"]').forEach(r => {
+        r.addEventListener('change', () => {
+          validationMsg.innerHTML = '';
+          formResult.innerHTML = '';
+        });
+      });
+    }
+
+    // helper para generar pregunta compacta
+    function createQuestion(name, text, optionsArray) {
+      let optsHtml = '';
+      optionsArray.forEach(opt => {
+        const [label, val] = opt.split(':');
+        optsHtml += `<label class="opt-label"><input type="radio" name="${name}" value="${val}"> ${label}</label>`;
+      });
+      return `
+        <div class="q-item">
+          <div class="q-text">${text}</div>
+          <div class="options-row">${optsHtml}</div>
+        </div>
+      `;
+    }
+
+    // Función de utilidad (debug) pero mantenemos limpio
+    window.debugClearStorage = function(){
+      if(confirm('Borrar estado local?')) {
+        clearStoredData();
+        renderUI();
+      }
+    };
+
+    // Iniciar render
+    renderUI();
+  })();
+</script>
+<!-- pequeña ayuda para desarrollador: puedes llamar debugClearStorage() en consola -->
+</body>
+</html>
