@@ -52,6 +52,52 @@
     .video-label{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);border-radius:8px;padding:5px 12px;font-size:.72rem;font-weight:600;color:#fff;letter-spacing:.06em;display:flex;align-items:center;gap:6px}
     .video-label i{color:var(--accent)}
 
+    /* ══ COUPON SECTION ══ */
+    .coupon-card{animation:fadeUp .5s .08s ease both;margin-bottom:16px}
+    .coupon-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+    .coupon-icon-wrap{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,color-mix(in srgb,var(--gold) 20%,transparent),color-mix(in srgb,var(--gold) 8%,transparent));border:1px solid color-mix(in srgb,var(--gold) 35%,transparent);display:grid;place-items:center;font-size:1rem;color:var(--gold);flex-shrink:0}
+    .coupon-header-text strong{display:block;font-size:.9rem;font-weight:700}
+    .coupon-header-text span{font-size:.72rem;color:var(--muted);font-weight:300}
+    .coupon-input-row{display:flex;gap:8px;align-items:stretch}
+    .coupon-input{flex:1;padding:13px 16px;border-radius:var(--radius-sm);background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:var(--font-b);font-size:.92rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;transition:var(--tr);outline:none}
+    .coupon-input::placeholder{text-transform:none;font-weight:300;letter-spacing:.02em;color:var(--muted)}
+    .coupon-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow)}
+    .coupon-input:disabled{opacity:.5;cursor:not-allowed}
+    .coupon-apply-btn{padding:0 20px;border-radius:var(--radius-sm);border:none;background:linear-gradient(135deg,var(--gold),#e6a830);color:#000;font-family:var(--font-d);font-size:.95rem;letter-spacing:.1em;cursor:pointer;transition:var(--tr);white-space:nowrap;min-width:90px}
+    .coupon-apply-btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 4px 16px rgba(244,185,66,.4)}
+    .coupon-apply-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+
+    /* States */
+    .coupon-state{display:none;align-items:center;gap:10px;margin-top:10px;padding:11px 14px;border-radius:var(--radius-sm);font-size:.8rem;line-height:1.5}
+    .coupon-state.show{display:flex}
+    .coupon-state-icon{font-size:1rem;flex-shrink:0}
+    .coupon-state.success{background:color-mix(in srgb,#25D366 10%,transparent);border:1px solid color-mix(in srgb,#25D366 30%,transparent);color:var(--text)}
+    .coupon-state.success .coupon-state-icon{color:#25D366}
+    .coupon-state.error{background:color-mix(in srgb,var(--accent) 10%,transparent);border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);color:var(--text)}
+    .coupon-state.error .coupon-state-icon{color:var(--accent)}
+    .coupon-state.warning{background:color-mix(in srgb,var(--gold) 10%,transparent);border:1px solid color-mix(in srgb,var(--gold) 30%,transparent);color:var(--text)}
+    .coupon-state.warning .coupon-state-icon{color:var(--gold)}
+    .coupon-state.used-global{background:color-mix(in srgb,#888 10%,transparent);border:1px solid color-mix(in srgb,#888 30%,transparent);color:var(--text)}
+    .coupon-state.used-global .coupon-state-icon{color:#888}
+    .coupon-badge-applied{display:none;align-items:center;gap:8px;padding:10px 16px;border-radius:var(--radius-sm);background:color-mix(in srgb,#25D366 12%,transparent);border:1px solid color-mix(in srgb,#25D366 35%,transparent);font-size:.82rem;font-weight:600;color:#25D366}
+    .coupon-badge-applied.show{display:flex}
+    .coupon-badge-applied i{font-size:.9rem}
+    .coupon-badge-applied span{flex:1}
+    .coupon-badge-applied .discount-tag{font-family:var(--font-d);font-size:1rem;letter-spacing:.08em;color:#25D366}
+
+    /* One-time warning modal */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:999;display:none;align-items:flex-end;justify-content:center;padding:0 0 0 0;backdrop-filter:blur(6px)}
+    .modal-overlay.show{display:flex;animation:fadeIn .25s ease}
+    .modal-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius) var(--radius) 0 0;padding:28px 24px 36px;width:100%;max-width:560px;animation:slideUp .3s cubic-bezier(0.4,0,0.2,1) both}
+    .modal-icon{width:56px;height:56px;border-radius:16px;background:color-mix(in srgb,var(--gold) 18%,transparent);border:1px solid color-mix(in srgb,var(--gold) 40%,transparent);display:grid;place-items:center;font-size:1.6rem;color:var(--gold);margin:0 auto 16px}
+    .modal-title{font-family:var(--font-d);font-size:1.6rem;letter-spacing:.06em;text-align:center;margin-bottom:8px}
+    .modal-title em{color:var(--gold);font-style:normal}
+    .modal-body{font-size:.83rem;color:var(--muted);text-align:center;line-height:1.7;margin-bottom:22px}
+    .modal-body strong{color:var(--text)}
+    .modal-confirm-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:58px;border:none;border-radius:var(--radius-sm);background:linear-gradient(135deg,var(--gold),#e6a830);color:#000;font-family:var(--font-d);font-size:1.15rem;letter-spacing:.1em;cursor:pointer;transition:var(--tr)}
+    .modal-confirm-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(244,185,66,.5)}
+    .modal-sub{text-align:center;font-size:.72rem;color:var(--muted);margin-top:12px;line-height:1.5}
+
     /* ══ PLATFORM SELECTOR ══ */
     .platform-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:2px}
     .platform-btn{border-radius:var(--radius-sm);padding:20px 14px;text-align:center;border:2px solid var(--border);background:var(--card);transition:var(--tr);cursor:pointer;position:relative;overflow:hidden;user-select:none;display:flex;flex-direction:column;align-items:center;gap:8px}
@@ -96,13 +142,11 @@
     .step-done.show{display:flex}
     .step-divider{height:1px;background:var(--border);margin:18px 0}
 
-    /* SELECT */
     .sel-wrap{position:relative}
     .sel-wrap select{width:100%;padding:13px 44px 13px 16px;border-radius:var(--radius-sm);background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:var(--font-b);font-size:.88rem;font-weight:500;appearance:none;-webkit-appearance:none;cursor:pointer;transition:var(--tr)}
     .sel-wrap select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
     .sel-wrap::after{content:'\f107';font-family:'Font Awesome 6 Free';font-weight:900;position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
 
-    /* METHODS */
     .method-list{display:flex;flex-direction:column;gap:8px;margin-top:14px}
     .method-item{display:flex;align-items:center;gap:12px;padding:13px 14px;background:var(--card);border:2px solid var(--border);border-radius:var(--radius-sm);transition:var(--tr);cursor:pointer;user-select:none}
     .method-item:hover{border-color:color-mix(in srgb,var(--accent) 35%,transparent)}
@@ -117,7 +161,6 @@
     .method-check i{font-size:.58rem;color:#fff;opacity:0;transition:opacity .2s}
     .method-item.selected .method-check i{opacity:1}
 
-    /* PLANS */
     .plans-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
     .plan-btn{border-radius:var(--radius-sm);padding:18px 14px;text-align:center;border:2px solid var(--border);background:var(--card);transition:var(--tr);cursor:pointer;position:relative;overflow:hidden;user-select:none}
     .plan-btn:hover:not(.selected){border-color:color-mix(in srgb,var(--accent) 30%,transparent)}
@@ -133,12 +176,12 @@
     .plan-period{font-size:.68rem;color:var(--muted);font-weight:300;margin-top:2px}
     .plan-best-tag{position:absolute;top:7px;right:7px;font-size:.52rem;font-weight:700;padding:2px 7px;border-radius:100px;background:var(--gold);color:#000;letter-spacing:.08em}
     .plan-discount{font-size:.65rem;color:var(--green);font-weight:600;margin-top:5px}
+    .plan-original-price{font-size:.65rem;color:var(--muted);text-decoration:line-through;margin-top:2px}
+    .plan-coupon-discount{font-size:.65rem;color:var(--gold);font-weight:700;margin-top:2px}
 
-    /* PRICE NOTE */
     .price-note{display:none;font-size:.74rem;color:var(--muted);line-height:1.6;padding:11px 14px;background:color-mix(in srgb,var(--green) 8%,var(--card));border:1px solid color-mix(in srgb,var(--green) 25%,transparent);border-radius:var(--radius-sm);margin-top:10px}
     .price-note.show{display:block}
 
-    /* SUMMARY */
     .summary-wrap{display:none;animation:fadeUp .4s ease both}
     .summary-wrap.show{display:block}
     .summary-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 18px;margin-bottom:14px}
@@ -147,11 +190,13 @@
     .summary-row:last-child{border-bottom:none;padding-bottom:0}
     .summary-key{color:var(--muted);font-weight:300}
     .summary-val{font-weight:600;text-align:right;max-width:58%}
+    .summary-coupon-row{display:none}
+    .summary-coupon-row.show{display:flex}
+    .summary-coupon-val{color:var(--gold);font-weight:700}
     .summary-total{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding:12px 14px;border-radius:var(--radius-sm);background:color-mix(in srgb,var(--gold) 10%,var(--card));border:1px solid color-mix(in srgb,var(--gold) 30%,transparent)}
     .summary-total-label{font-family:var(--font-d);font-size:.82rem;letter-spacing:.12em;color:var(--gold)}
     .summary-total-val{font-family:var(--font-d);font-size:1.4rem;color:var(--gold)}
 
-    /* CTA */
     .cta-notice{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;margin-bottom:12px;border-radius:var(--radius-sm);background:color-mix(in srgb,var(--gold) 10%,var(--card));border:1px solid color-mix(in srgb,var(--gold) 30%,transparent);font-size:.78rem;color:var(--muted);line-height:1.5}
     .cta-notice i{color:var(--gold);flex-shrink:0;margin-top:1px}
     .cta-notice strong{color:var(--text)}
@@ -164,6 +209,8 @@
     footer span{color:var(--accent)}
 
     @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
     @media(max-width:480px){
       .benefits-list{grid-template-columns:1fr}
       .plans-grid{grid-template-columns:1fr}
@@ -172,6 +219,23 @@
   </style>
 </head>
 <body>
+
+<!-- ONE-TIME WARNING MODAL -->
+<div class="modal-overlay" id="couponModal">
+  <div class="modal-box">
+    <div class="modal-icon"><i class="fa-solid fa-ticket"></i></div>
+    <div class="modal-title"><em>CUPON</em> APLICADO</div>
+    <div class="modal-body">
+      Tu descuento de <strong>$5 USD</strong> ha sido aplicado correctamente.<br/><br/>
+      <strong>⚠️ ATENCIÓN:</strong> Este cupón solo se puede usar <strong>1 vez por persona</strong>. Una vez confirmado, quedará registrado en tu dispositivo de forma permanente.<br/><br/>
+      Si lo pusiste, <strong>compra de inmediato</strong> — aunque reinicies tu celular o borres la caché, <strong>no podrás volver a usar este cupón.</strong>
+    </div>
+    <button class="modal-confirm-btn" onclick="confirmCouponModal()">
+      <i class="fa-solid fa-check"></i> ENTENDIDO, IR A COMPRAR
+    </button>
+    <div class="modal-sub">El cupón es válido hasta el 31 de mayo de 2026</div>
+  </div>
+</div>
 
 <header>
   <a class="logo" href="../index.html">LINK <em>DIRECTO</em></a>
@@ -229,6 +293,38 @@
       </div>
       <div class="proof-cta"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver</div>
     </a>
+  </div>
+
+  <!-- COUPON SECTION -->
+  <p class="sec-label" id="couponSecLabel">Cupon de descuento · Mayo 2026</p>
+  <div class="card coupon-card" id="couponCard">
+    <div class="coupon-header">
+      <div class="coupon-icon-wrap"><i class="fa-solid fa-ticket"></i></div>
+      <div class="coupon-header-text">
+        <strong>¿Tienes un cupón?</strong>
+        <span>Aplica tu código y ahorra $5 USD en cualquier plan</span>
+      </div>
+    </div>
+
+    <!-- Input row (shown when coupon not yet applied/blocked) -->
+    <div id="couponInputWrap">
+      <div class="coupon-input-row">
+        <input class="coupon-input" id="couponInput" type="text" maxlength="20" placeholder="Escribe tu código aquí..." autocomplete="off" autocorrect="off" spellcheck="false"/>
+        <button class="coupon-apply-btn" id="couponApplyBtn" onclick="applyCoupon()">APLICAR</button>
+      </div>
+      <!-- State messages -->
+      <div class="coupon-state" id="couponStateMsg">
+        <span class="coupon-state-icon"></span>
+        <span id="couponStateTxt"></span>
+      </div>
+    </div>
+
+    <!-- Applied badge (shown after successful apply + modal confirm) -->
+    <div class="coupon-badge-applied" id="couponBadge">
+      <i class="fa-solid fa-circle-check"></i>
+      <span>Cupón Mayo 2026 aplicado</span>
+      <span class="discount-tag">− $5 USD</span>
+    </div>
   </div>
 
   <!-- ORDER BUILDER -->
@@ -351,6 +447,10 @@
         <div class="summary-row"><span class="summary-key">Pais</span><span class="summary-val" id="sumCountry">—</span></div>
         <div class="summary-row"><span class="summary-key">Metodo de pago</span><span class="summary-val" id="sumMethod">—</span></div>
         <div class="summary-row"><span class="summary-key">Plan</span><span class="summary-val" id="sumPlan">—</span></div>
+        <div class="summary-row summary-coupon-row" id="sumCouponRow">
+          <span class="summary-key">Cupon Mayo 2026</span>
+          <span class="summary-val summary-coupon-val">− $5 USD aplicados</span>
+        </div>
         <div class="summary-total">
           <span class="summary-total-label">TOTAL A PAGAR</span>
           <span class="summary-total-val" id="sumTotal">—</span>
@@ -377,6 +477,183 @@
 <footer>© <span>jexe</span> 2026</footer>
 
 <script>
+/* ══════════════════════════════════════════════
+   COUPON SYSTEM — Multi-layer persistence
+   Layers: localStorage + sessionStorage + IndexedDB + cookie
+   Strategy: any layer detecting prior use = blocked
+   ══════════════════════════════════════════════ */
+
+const COUPON_CODE     = 'MAYO5$';
+const COUPON_KEY      = 'jexe_cpn_mayo26_used';
+const COUPON_DISCOUNT = 5; // USD
+const COUPON_START    = new Date('2026-04-24T00:00:00-05:00'); // Colombia UTC-5
+const COUPON_END      = new Date('2026-05-31T23:59:59-05:00');
+
+// ── IndexedDB helpers ──
+function idbSet(key, val) {
+  try {
+    const req = indexedDB.open('jexe_store', 1);
+    req.onupgradeneeded = e => e.target.result.createObjectStore('kv', { keyPath:'k' });
+    req.onsuccess = e => {
+      const db = e.target.result;
+      const tx = db.transaction('kv','readwrite');
+      tx.objectStore('kv').put({ k: key, v: val });
+    };
+  } catch(e){}
+}
+function idbGet(key, cb) {
+  try {
+    const req = indexedDB.open('jexe_store', 1);
+    req.onupgradeneeded = e => e.target.result.createObjectStore('kv', { keyPath:'k' });
+    req.onsuccess = e => {
+      const db = e.target.result;
+      const tx = db.transaction('kv','readonly');
+      const r2 = tx.objectStore('kv').get(key);
+      r2.onsuccess = () => cb(r2.result ? r2.result.v : null);
+      r2.onerror   = () => cb(null);
+    };
+    req.onerror = () => cb(null);
+  } catch(e){ cb(null); }
+}
+
+// ── Cookie helpers ──
+function cookieSet(name, val, days) {
+  try {
+    const exp = new Date(Date.now() + days * 864e5).toUTCString();
+    document.cookie = `${name}=${val};expires=${exp};path=/;SameSite=Strict`;
+  } catch(e){}
+}
+function cookieGet(name) {
+  try {
+    const m = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+    return m ? decodeURIComponent(m[1]) : null;
+  } catch(e){ return null; }
+}
+
+// ── Write to all layers ──
+function persistCouponUsed() {
+  const val = '1';
+  try { localStorage.setItem(COUPON_KEY, val); } catch(e){}
+  try { sessionStorage.setItem(COUPON_KEY, val); } catch(e){}
+  idbSet(COUPON_KEY, val);
+  cookieSet(COUPON_KEY, val, 365);
+}
+
+// ── Read from all layers (sync check — cookie + localStorage + sessionStorage) ──
+function isCouponUsedSync() {
+  try { if (localStorage.getItem(COUPON_KEY))  return true; } catch(e){}
+  try { if (sessionStorage.getItem(COUPON_KEY)) return true; } catch(e){}
+  if (cookieGet(COUPON_KEY)) return true;
+  return false;
+}
+
+// ── Full async check including IndexedDB ──
+function checkCouponUsedFull(cb) {
+  if (isCouponUsedSync()) { cb(true); return; }
+  idbGet(COUPON_KEY, val => cb(!!val));
+}
+
+// ── Is coupon currently within valid date range? ──
+function isCouponDateValid() {
+  const now = new Date();
+  return now >= COUPON_START && now <= COUPON_END;
+}
+
+/* ══ Coupon UI state ══ */
+let couponApplied = false; // active in this session
+
+function initCouponUI() {
+  checkCouponUsedFull(used => {
+    if (used) {
+      // Already used — show permanent block
+      showCouponBlockedUI();
+    } else {
+      // Not used yet — show input normally
+      // (already visible by default)
+    }
+  });
+}
+
+function showCouponBlockedUI() {
+  // Disable input & button
+  const inp = document.getElementById('couponInput');
+  const btn = document.getElementById('couponApplyBtn');
+  if (inp) inp.disabled = true;
+  if (btn) btn.disabled = true;
+  // Show error state
+  const state = document.getElementById('couponStateMsg');
+  const txt   = document.getElementById('couponStateTxt');
+  state.className = 'coupon-state used-global show';
+  state.querySelector('.coupon-state-icon').innerHTML = '<i class="fa-solid fa-ban"></i>';
+  txt.textContent = 'Este cupón ya fue utilizado en este dispositivo y no puede volver a aplicarse.';
+}
+
+function applyCoupon() {
+  const raw   = document.getElementById('couponInput').value.trim().toUpperCase();
+  const state = document.getElementById('couponStateMsg');
+  const txt   = document.getElementById('couponStateTxt');
+  const icon  = state.querySelector('.coupon-state-icon');
+
+  // Reset state
+  state.className = 'coupon-state';
+
+  // Date range check
+  if (!isCouponDateValid()) {
+    state.className = 'coupon-state error show';
+    icon.innerHTML  = '<i class="fa-solid fa-clock"></i>';
+    txt.textContent = 'Este cupón no está activo en este momento. Es válido del 24 de abril al 31 de mayo de 2026.';
+    return;
+  }
+
+  // Already used?
+  checkCouponUsedFull(used => {
+    if (used) {
+      showCouponBlockedUI();
+      return;
+    }
+
+    // Wrong code?
+    if (raw !== COUPON_CODE) {
+      state.className = 'coupon-state error show';
+      icon.innerHTML  = '<i class="fa-solid fa-xmark"></i>';
+      txt.textContent = 'Código incorrecto. Verifica que lo hayas escrito exactamente como te lo dieron.';
+      return;
+    }
+
+    // VALID — show one-time warning modal
+    document.getElementById('couponModal').classList.add('show');
+  });
+}
+
+function confirmCouponModal() {
+  // Close modal
+  document.getElementById('couponModal').classList.remove('show');
+
+  // Mark as used in ALL layers immediately
+  persistCouponUsed();
+
+  // Update UI
+  couponApplied = true;
+  document.getElementById('couponInputWrap').style.display = 'none';
+  document.getElementById('couponStateMsg').className = 'coupon-state';
+  document.getElementById('couponBadge').classList.add('show');
+
+  // Re-render plans if already selected
+  if (sel.method) {
+    renderPlans();
+    // If plan was already selected, reset so user re-picks with new price
+    if (sel.plan) {
+      sel.plan = ''; sel.price = ''; sel.priceUSD = '';
+      done(4, false);
+      hideSummary();
+      disableBuy();
+    }
+  }
+}
+
+/* ══════════════════════════════════════════════
+   MAIN ORDER LOGIC
+   ══════════════════════════════════════════════ */
 const WA_NUMBER = '573132878955';
 
 const METHODS = {
@@ -446,9 +723,22 @@ const COUNTRY_NAMES = {
 function getPricing(country, method) {
   if (country === 'mx') {
     const isClabe = method === 'clabe';
+    const mBase  = 12;
+    const pBase  = isClabe ? 32 : 32;
+    const pDisp  = isClabe ? 500 : 580;
+    const pDispD = isClabe ? 'aprox.' : '';
     return {
-      monthly:  { display:'$220 MXN',  usd:'$12 USD' },
-      permanent:{ display: isClabe ? '$500 MXN' : '$580 MXN', usd:'$32 USD', discount: isClabe },
+      monthly:  {
+        displayLocal: '$220 MXN', usd: '$12 USD',
+        usdNum: mBase,
+        discountedUsdNum: couponApplied ? mBase - COUPON_DISCOUNT : null,
+      },
+      permanent:{
+        displayLocal: isClabe ? '$500 MXN' : '$580 MXN', usd: '$32 USD',
+        usdNum: pBase,
+        discountedUsdNum: couponApplied ? pBase - COUPON_DISCOUNT : null,
+        discount: isClabe,
+      },
       note: isClabe
         ? 'Por pagar con CLABE, el plan Permanente baja a $500 MXN (descuento especial por transferencia bancaria).'
         : 'Tip: si pagas con CLABE (transferencia bancaria), el plan Permanente baja a $500 MXN.',
@@ -456,17 +746,38 @@ function getPricing(country, method) {
   }
   if (country === 'co') {
     const isLocal = method === 'nequi' || method === 'llave';
+    const mBase   = 12;
+    const pBase   = isLocal ? 32 : 32;
     return {
-      monthly:  { display:'$45.000 COP', usd:'$12 USD' },
-      permanent:{ display: isLocal ? '$100.000 COP' : '$132.000 COP', usd:'$32 USD', discount: isLocal },
+      monthly:  {
+        displayLocal: '$45.000 COP', usd: '$12 USD',
+        usdNum: mBase,
+        discountedUsdNum: couponApplied ? mBase - COUPON_DISCOUNT : null,
+      },
+      permanent:{
+        displayLocal: isLocal ? '$100.000 COP' : '$132.000 COP', usd: '$32 USD',
+        usdNum: pBase,
+        discountedUsdNum: couponApplied ? pBase - COUPON_DISCOUNT : null,
+        discount: isLocal,
+      },
       note: isLocal
         ? 'Por pagar con Nequi o Llave, el plan Permanente baja a $100.000 COP (descuento especial).'
         : 'Tip: si pagas con Nequi o Llave, el plan Permanente baja a $100.000 COP.',
     };
   }
+  const mBase = 12, pBase = 32;
   return {
-    monthly:  { display:'$12 USD', usd:'$12 USD' },
-    permanent:{ display:'$32 USD', usd:'$32 USD', discount: false },
+    monthly:  {
+      displayLocal: '$12 USD', usd: '$12 USD',
+      usdNum: mBase,
+      discountedUsdNum: couponApplied ? mBase - COUPON_DISCOUNT : null,
+    },
+    permanent:{
+      displayLocal: '$32 USD', usd: '$32 USD',
+      usdNum: pBase,
+      discountedUsdNum: couponApplied ? pBase - COUPON_DISCOUNT : null,
+      discount: false,
+    },
     note: null,
   };
 }
@@ -477,7 +788,6 @@ function selectPlatform(p) {
   sel = { platform: p, platformLabel: p === 'ios' ? 'iOS (iPhone / iPad)' : 'Android 8 – 16+', country:'', method:'', methodName:'', plan:'', price:'', priceUSD:'' };
   document.querySelectorAll('.platform-btn').forEach(b => b.classList.remove('selected'));
   document.getElementById(p === 'ios' ? 'btnIOS' : 'btnAndroid').classList.add('selected');
-  // reset downstream
   document.getElementById('countrySelect').value = '';
   hide('step3Wrap'); hide('step4Wrap');
   done(1, true); done(2, false); done(3, false); done(4, false);
@@ -523,6 +833,10 @@ function renderMethods() {
   });
 }
 
+function fmtUSD(num) {
+  return '$' + num + ' USD';
+}
+
 function renderPlans() {
   const grid = document.getElementById('plansGrid');
   grid.innerHTML = '';
@@ -535,22 +849,30 @@ function renderPlans() {
     { key:'monthly',   cls:'monthly',   label:'Mensual',    period:'1 Mes',            data: p.monthly  },
     { key:'permanent', cls:'permanent', label:'Permanente', period:'Acceso permanente', data: p.permanent },
   ].forEach(({ key, cls, label, period, data }) => {
+    const hasCoupon    = couponApplied && data.discountedUsdNum !== null;
+    const displayMain  = hasCoupon ? fmtUSD(data.discountedUsdNum) : data.displayLocal;
+    const currLabel    = hasCoupon ? 'USD' : (data.displayLocal.includes('USD') ? 'USD' : (data.displayLocal.split(' ')[1] || ''));
+    const priceForSummary = hasCoupon ? fmtUSD(data.discountedUsdNum) : data.displayLocal;
+    const priceUSDForSummary = hasCoupon ? fmtUSD(data.discountedUsdNum) : data.usd;
+
     const btn = document.createElement('div');
     btn.className = `plan-btn ${cls}`;
     btn.innerHTML = `
       ${cls === 'permanent' ? '<div class="plan-best-tag">MEJOR VALOR</div>' : ''}
       <div class="plan-label">${label}</div>
-      <div class="plan-price-main">${data.display.split(' ')[0]}</div>
-      <div class="plan-currency-label">${data.display.includes('USD') ? 'USD' : (data.display.split(' ')[1] || '')}</div>
+      ${hasCoupon ? `<div class="plan-original-price" style="text-decoration:line-through;font-size:.65rem;color:var(--muted)">${data.displayLocal}</div>` : ''}
+      <div class="plan-price-main">${displayMain.split(' ')[0]}</div>
+      <div class="plan-currency-label">${currLabel}</div>
       <div class="plan-period">${period}</div>
-      ${data.discount ? '<div class="plan-discount">Precio especial aplicado</div>' : ''}
+      ${data.discount && !hasCoupon ? '<div class="plan-discount">Precio especial aplicado</div>' : ''}
+      ${hasCoupon ? '<div class="plan-coupon-discount"><i class="fa-solid fa-ticket" style="font-size:.6rem"></i> −$5 USD cupón Mayo</div>' : ''}
     `;
     btn.addEventListener('click', () => {
       document.querySelectorAll('.plan-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
-      sel.plan = label + ' (' + period + ')';
-      sel.price = data.display;
-      sel.priceUSD = data.usd;
+      sel.plan      = label + ' (' + period + ')';
+      sel.price     = priceForSummary;
+      sel.priceUSD  = priceUSDForSummary;
       done(4, true);
       updateSummary();
       enableBuy();
@@ -565,18 +887,27 @@ function updateSummary() {
   document.getElementById('sumMethod').textContent   = sel.methodName;
   document.getElementById('sumPlan').textContent     = sel.plan;
   document.getElementById('sumTotal').textContent    = sel.price + (sel.price !== sel.priceUSD ? ' (' + sel.priceUSD + ')' : '');
+
+  const couponRow = document.getElementById('sumCouponRow');
+  if (couponApplied) {
+    couponRow.classList.add('show');
+  } else {
+    couponRow.classList.remove('show');
+  }
+
   document.getElementById('summaryWrap').classList.add('show');
   buildWA();
 }
 
 function buildWA() {
+  const couponLine = couponApplied ? '\nCupon: MAYO5$ (−$5 USD aplicados)' : '';
   const msg =
     `Hola buen dia, lei y vi toda la informacion, quiero comprar.\n\n` +
     `━━━━━━━━━━━━━━━━\n MI PEDIDO\n━━━━━━━━━━━━━━━━\n` +
     `Plataforma: ${sel.platformLabel}\n` +
     `Pais: ${COUNTRY_NAMES[sel.country] || sel.country}\n` +
     `Metodo de pago: ${sel.methodName}\n` +
-    `Plan: ${sel.plan}\n` +
+    `Plan: ${sel.plan}${couponLine}\n` +
     `Total: ${sel.price}` +
     (sel.price !== sel.priceUSD ? ` (${sel.priceUSD})` : '') +
     `\n━━━━━━━━━━━━━━━━\nPor favor confirmar disponibilidad y datos de pago. Gracias!`;
@@ -589,6 +920,14 @@ function disableBuy()  { document.getElementById('buyBtn').classList.remove('rea
 function show(id)      { document.getElementById(id).style.display = 'block'; }
 function hide(id)      { document.getElementById(id).style.display = 'none'; }
 function done(n, v)    { document.getElementById('done'+n).classList[v?'add':'remove']('show'); }
+
+// Allow Enter key on coupon input
+document.getElementById('couponInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') applyCoupon();
+});
+
+// Init on load
+initCouponUI();
 </script>
 </body>
 </html>
