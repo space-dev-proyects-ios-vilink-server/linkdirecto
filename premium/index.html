@@ -67,7 +67,6 @@
     .coupon-apply-btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 4px 16px rgba(244,185,66,.4)}
     .coupon-apply-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
 
-    /* States */
     .coupon-state{display:none;align-items:center;gap:10px;margin-top:10px;padding:11px 14px;border-radius:var(--radius-sm);font-size:.8rem;line-height:1.5}
     .coupon-state.show{display:flex}
     .coupon-state-icon{font-size:1rem;flex-shrink:0}
@@ -85,8 +84,8 @@
     .coupon-badge-applied span{flex:1}
     .coupon-badge-applied .discount-tag{font-family:var(--font-d);font-size:1rem;letter-spacing:.08em;color:#25D366}
 
-    /* One-time warning modal */
-    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:999;display:none;align-items:flex-end;justify-content:center;padding:0 0 0 0;backdrop-filter:blur(6px)}
+    /* ══ MODALS ══ */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:999;display:none;align-items:flex-end;justify-content:center;padding:0;backdrop-filter:blur(6px)}
     .modal-overlay.show{display:flex;animation:fadeIn .25s ease}
     .modal-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius) var(--radius) 0 0;padding:28px 24px 36px;width:100%;max-width:560px;animation:slideUp .3s cubic-bezier(0.4,0,0.2,1) both}
     .modal-icon{width:56px;height:56px;border-radius:16px;background:color-mix(in srgb,var(--gold) 18%,transparent);border:1px solid color-mix(in srgb,var(--gold) 40%,transparent);display:grid;place-items:center;font-size:1.6rem;color:var(--gold);margin:0 auto 16px}
@@ -97,6 +96,25 @@
     .modal-confirm-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:58px;border:none;border-radius:var(--radius-sm);background:linear-gradient(135deg,var(--gold),#e6a830);color:#000;font-family:var(--font-d);font-size:1.15rem;letter-spacing:.1em;cursor:pointer;transition:var(--tr)}
     .modal-confirm-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(244,185,66,.5)}
     .modal-sub{text-align:center;font-size:.72rem;color:var(--muted);margin-top:12px;line-height:1.5}
+
+    /* ══ ADVISOR MODAL ══ */
+    #advisorModal .modal-icon{background:color-mix(in srgb,var(--green) 18%,transparent);border-color:color-mix(in srgb,var(--green) 40%,transparent);color:var(--green)}
+    #advisorModal .modal-title em{color:var(--green)}
+    .advisor-alert{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-radius:var(--radius-sm);background:color-mix(in srgb,var(--accent) 10%,transparent);border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);font-size:.78rem;color:var(--muted);line-height:1.6;margin-bottom:18px}
+    .advisor-alert i{color:var(--accent);flex-shrink:0;margin-top:2px}
+    .advisor-alert strong{color:var(--text)}
+    .advisor-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:6px}
+    .advisor-btn{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:var(--radius-sm);border:2px solid var(--border);background:var(--card);cursor:pointer;transition:var(--tr);text-align:left;width:100%}
+    .advisor-btn:hover{border-color:color-mix(in srgb,var(--green) 50%,transparent);background:color-mix(in srgb,var(--green) 6%,transparent)}
+    .advisor-btn-icon{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:1.2rem;flex-shrink:0}
+    .advisor-btn-icon.yt{background:rgba(255,0,0,.12);border:1px solid rgba(255,0,0,.25);color:#FF0000}
+    .advisor-btn-icon.wa{background:rgba(37,211,102,.12);border:1px solid rgba(37,211,102,.25);color:var(--green)}
+    .advisor-btn-info{flex:1;min-width:0}
+    .advisor-btn-name{font-size:.9rem;font-weight:700;margin-bottom:2px}
+    .advisor-btn-desc{font-size:.7rem;color:var(--muted);font-weight:300;line-height:1.4}
+    .advisor-btn-tag{font-size:.58rem;font-weight:700;letter-spacing:.08em;padding:3px 8px;border-radius:100px;flex-shrink:0}
+    .advisor-btn-tag.slow{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 28%,transparent)}
+    .advisor-btn-tag.fast{background:color-mix(in srgb,var(--green) 14%,transparent);color:var(--green);border:1px solid color-mix(in srgb,var(--green) 28%,transparent)}
 
     /* ══ PLATFORM SELECTOR ══ */
     .platform-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:2px}
@@ -161,26 +179,41 @@
     .method-check i{font-size:.58rem;color:#fff;opacity:0;transition:opacity .2s}
     .method-item.selected .method-check i{opacity:1}
 
-    .plans-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-    .plan-btn{border-radius:var(--radius-sm);padding:18px 14px;text-align:center;border:2px solid var(--border);background:var(--card);transition:var(--tr);cursor:pointer;position:relative;overflow:hidden;user-select:none}
+    /* ══ PLANS GRID — 3 columnas ══ */
+    .plans-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:14px}
+    .plan-btn{border-radius:var(--radius-sm);padding:14px 10px;text-align:center;border:2px solid var(--border);background:var(--card);transition:var(--tr);cursor:pointer;position:relative;overflow:hidden;user-select:none}
     .plan-btn:hover:not(.selected){border-color:color-mix(in srgb,var(--accent) 30%,transparent)}
+    .plan-btn.selected.biweekly{border-color:var(--accent-2);background:color-mix(in srgb,var(--accent-2) 7%,var(--card))}
     .plan-btn.selected.monthly{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,var(--card))}
     .plan-btn.selected.permanent{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 7%,var(--card))}
-    .plan-label{font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:100px;display:inline-block;margin-bottom:8px}
+    .plan-label{font-size:.55rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:100px;display:inline-block;margin-bottom:6px}
+    .plan-btn.biweekly .plan-label{background:color-mix(in srgb,var(--accent-2) 14%,transparent);color:var(--accent-2);border:1px solid color-mix(in srgb,var(--accent-2) 28%,transparent)}
     .plan-btn.monthly .plan-label{background:var(--accent-glow);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 25%,transparent)}
     .plan-btn.permanent .plan-label{background:var(--gold-glow);color:var(--gold);border:1px solid color-mix(in srgb,var(--gold) 30%,transparent)}
-    .plan-price-main{font-family:var(--font-d);font-size:1.9rem;letter-spacing:.04em;line-height:1}
+    .plan-price-main{font-family:var(--font-d);font-size:1.55rem;letter-spacing:.04em;line-height:1}
+    .plan-btn.biweekly .plan-price-main{color:var(--accent-2)}
     .plan-btn.monthly .plan-price-main{color:var(--accent)}
     .plan-btn.permanent .plan-price-main{color:var(--gold)}
-    .plan-currency-label{font-size:.68rem;color:var(--muted);font-weight:400;margin-top:3px;line-height:1.4}
-    .plan-period{font-size:.68rem;color:var(--muted);font-weight:300;margin-top:2px}
-    .plan-best-tag{position:absolute;top:7px;right:7px;font-size:.52rem;font-weight:700;padding:2px 7px;border-radius:100px;background:var(--gold);color:#000;letter-spacing:.08em}
-    .plan-discount{font-size:.65rem;color:var(--green);font-weight:600;margin-top:5px}
-    .plan-original-price{font-size:.65rem;color:var(--muted);text-decoration:line-through;margin-top:2px}
-    .plan-coupon-discount{font-size:.65rem;color:var(--gold);font-weight:700;margin-top:2px}
+    .plan-currency-label{font-size:.62rem;color:var(--muted);font-weight:400;margin-top:3px;line-height:1.3}
+    .plan-period{font-size:.62rem;color:var(--muted);font-weight:300;margin-top:2px}
+    .plan-best-tag{position:absolute;top:6px;right:6px;font-size:.48rem;font-weight:700;padding:2px 6px;border-radius:100px;background:var(--gold);color:#000;letter-spacing:.08em}
+    .plan-discount{font-size:.6rem;color:var(--green);font-weight:600;margin-top:4px}
+    .plan-original-price{font-size:.6rem;color:var(--muted);text-decoration:line-through;margin-top:1px}
+    .plan-coupon-discount{font-size:.6rem;color:var(--gold);font-weight:700;margin-top:2px}
+    .plan-perma-only{font-size:.58rem;color:var(--gold);font-weight:600;margin-top:4px;opacity:.85}
+    /* beneficios mini por plan */
+    .plan-benefits{margin-top:7px;display:flex;flex-direction:column;gap:2px}
+    .plan-benefit-mini{font-size:.58rem;color:var(--muted);display:flex;align-items:center;gap:4px;justify-content:center;line-height:1.3}
+    .plan-benefit-mini i{font-size:.5rem;color:var(--accent);flex-shrink:0}
+    .plan-btn.permanent .plan-benefit-mini i{color:var(--gold)}
+    .plan-btn.biweekly .plan-benefit-mini i{color:var(--accent-2)}
 
     .price-note{display:none;font-size:.74rem;color:var(--muted);line-height:1.6;padding:11px 14px;background:color-mix(in srgb,var(--green) 8%,var(--card));border:1px solid color-mix(in srgb,var(--green) 25%,transparent);border-radius:var(--radius-sm);margin-top:10px}
     .price-note.show{display:block}
+
+    /* ══ COUPON RESTRICTION NOTICE ══ */
+    .coupon-restrict{display:flex;align-items:center;gap:8px;padding:9px 13px;border-radius:var(--radius-sm);background:color-mix(in srgb,var(--gold) 9%,transparent);border:1px solid color-mix(in srgb,var(--gold) 25%,transparent);font-size:.72rem;color:var(--muted);line-height:1.4;margin-top:10px}
+    .coupon-restrict i{color:var(--gold);flex-shrink:0}
 
     .summary-wrap{display:none;animation:fadeUp .4s ease both}
     .summary-wrap.show{display:block}
@@ -196,6 +229,10 @@
     .summary-total{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding:12px 14px;border-radius:var(--radius-sm);background:color-mix(in srgb,var(--gold) 10%,var(--card));border:1px solid color-mix(in srgb,var(--gold) 30%,transparent)}
     .summary-total-label{font-family:var(--font-d);font-size:.82rem;letter-spacing:.12em;color:var(--gold)}
     .summary-total-val{font-family:var(--font-d);font-size:1.4rem;color:var(--gold)}
+
+    /* ══ ADVISOR SELECTOR ══ */
+    .advisor-section{display:none;animation:fadeUp .4s ease both;margin-bottom:16px}
+    .advisor-section.show{display:block}
 
     .cta-notice{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;margin-bottom:12px;border-radius:var(--radius-sm);background:color-mix(in srgb,var(--gold) 10%,var(--card));border:1px solid color-mix(in srgb,var(--gold) 30%,transparent);font-size:.78rem;color:var(--muted);line-height:1.5}
     .cta-notice i{color:var(--gold);flex-shrink:0;margin-top:1px}
@@ -220,20 +257,58 @@
 </head>
 <body>
 
-<!-- ONE-TIME WARNING MODAL -->
+<!-- COUPON MODAL -->
 <div class="modal-overlay" id="couponModal">
   <div class="modal-box">
     <div class="modal-icon"><i class="fa-solid fa-ticket"></i></div>
     <div class="modal-title"><em>CUPON</em> APLICADO</div>
     <div class="modal-body">
-      Tu descuento de <strong>$5 USD</strong> ha sido aplicado correctamente.<br/><br/>
+      Tu descuento de <strong>$5 USD</strong> ha sido aplicado al plan <strong>Permanente</strong>.<br/><br/>
       <strong>⚠️ ATENCIÓN:</strong> Este cupón solo se puede usar <strong>1 vez por persona</strong>. Una vez confirmado, quedará registrado en tu dispositivo de forma permanente.<br/><br/>
       Si lo pusiste, <strong>compra de inmediato</strong> — aunque reinicies tu celular o borres la caché, <strong>no podrás volver a usar este cupón.</strong>
     </div>
     <button class="modal-confirm-btn" onclick="confirmCouponModal()">
       <i class="fa-solid fa-check"></i> ENTENDIDO, IR A COMPRAR
     </button>
-    <div class="modal-sub">El cupón es válido hasta el 31 de mayo de 2026</div>
+    <div class="modal-sub">El cupón es válido hasta el 31 de mayo de 2026 · Solo aplica al plan Permanente</div>
+  </div>
+</div>
+
+<!-- ADVISOR MODAL -->
+<div class="modal-overlay" id="advisorModal">
+  <div class="modal-box">
+    <div class="modal-icon" style="background:color-mix(in srgb,var(--green) 18%,transparent);border-color:color-mix(in srgb,var(--green) 40%,transparent);color:var(--green)"><i class="fa-brands fa-whatsapp"></i></div>
+    <div class="modal-title">¿CON QUIÉN <em style="color:var(--green)">HABLAR?</em></div>
+    <div class="advisor-alert">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <span><strong>Importante:</strong> Envía tu pedido solo a <strong>una persona</strong>. Si ya enviaste a uno, <strong>espera mínimo 30 minutos</strong> antes de contactar a otro. Duplicar el pedido genera confusión y puede retrasar tu entrega.</span>
+    </div>
+    <div class="advisor-grid">
+      <button class="advisor-btn" onclick="sendToAdvisor('573132878955','JEXE (YouTuber)')">
+        <div class="advisor-btn-icon yt"><i class="fa-brands fa-youtube"></i></div>
+        <div class="advisor-btn-info">
+          <div class="advisor-btn-name">JEXE — YouTuber</div>
+          <div class="advisor-btn-desc">Chat oficial · Mayor demanda · Puede demorar más en responder</div>
+        </div>
+        <div class="advisor-btn-tag slow">+ LENTO</div>
+      </button>
+      <button class="advisor-btn" onclick="sendToAdvisor('573118246157','Gilbert (Asesor)')">
+        <div class="advisor-btn-icon wa"><i class="fa-brands fa-whatsapp"></i></div>
+        <div class="advisor-btn-info">
+          <div class="advisor-btn-name">Gilbert — Asesor</div>
+          <div class="advisor-btn-desc">+57 311 8246157 · Respuesta rápida</div>
+        </div>
+        <div class="advisor-btn-tag fast">RÁPIDO</div>
+      </button>
+      <button class="advisor-btn" onclick="sendToAdvisor('573117574285','Juli (Asesora)')">
+        <div class="advisor-btn-icon wa"><i class="fa-brands fa-whatsapp"></i></div>
+        <div class="advisor-btn-info">
+          <div class="advisor-btn-name">Juli — Asesor</div>
+          <div class="advisor-btn-desc">+57 311 7574285 · Respuesta rápida</div>
+        </div>
+        <div class="advisor-btn-tag fast">RÁPIDO</div>
+      </button>
+    </div>
   </div>
 </div>
 
@@ -270,7 +345,7 @@
     </div>
     <div class="benefits-title">BENEFICIOS INCLUIDOS</div>
     <div class="benefits-list">
-      <div class="benefit-item"><i class="fa-solid fa-bolt"></i> 2 actualizaciones / mes</div>
+      <div class="benefit-item"><i class="fa-solid fa-bolt"></i> Actualizaciones mensuales</div>
       <div class="benefit-item"><i class="fa-solid fa-book-open"></i> Tutoriales de instalación</div>
       <div class="benefit-item"><i class="fa-solid fa-certificate"></i> Certificados Premium</div>
       <div class="benefit-item"><i class="fa-solid fa-crosshairs"></i> Aimfov 120%</div>
@@ -296,33 +371,31 @@
   </div>
 
   <!-- COUPON SECTION -->
-  <p class="sec-label" id="couponSecLabel">Cupon de descuento · Mayo 2026</p>
+  <p class="sec-label" id="couponSecLabel">Cupon de descuento · Mayo 2026 · Solo plan Permanente</p>
   <div class="card coupon-card" id="couponCard">
     <div class="coupon-header">
       <div class="coupon-icon-wrap"><i class="fa-solid fa-ticket"></i></div>
       <div class="coupon-header-text">
         <strong>¿Tienes un cupón?</strong>
-        <span>Aplica tu código y ahorra $5 USD en cualquier plan</span>
+        <span>Aplica tu código y ahorra $5 USD — solo en el plan Permanente</span>
       </div>
     </div>
 
-    <!-- Input row (shown when coupon not yet applied/blocked) -->
     <div id="couponInputWrap">
       <div class="coupon-input-row">
         <input class="coupon-input" id="couponInput" type="text" maxlength="20" placeholder="Escribe tu código aquí..." autocomplete="off" autocorrect="off" spellcheck="false"/>
         <button class="coupon-apply-btn" id="couponApplyBtn" onclick="applyCoupon()">APLICAR</button>
       </div>
-      <!-- State messages -->
       <div class="coupon-state" id="couponStateMsg">
         <span class="coupon-state-icon"></span>
         <span id="couponStateTxt"></span>
       </div>
+      <div class="coupon-restrict"><i class="fa-solid fa-circle-info"></i>Cupón <strong>&nbsp;PERMA&nbsp;</strong>aprovecha.</div>
     </div>
 
-    <!-- Applied badge (shown after successful apply + modal confirm) -->
     <div class="coupon-badge-applied" id="couponBadge">
       <i class="fa-solid fa-circle-check"></i>
-      <span>Cupón Mayo 2026 aplicado</span>
+      <span>Cupón PERMA aplicado — Plan Permanente</span>
       <span class="discount-tag">− $5 USD</span>
     </div>
   </div>
@@ -448,7 +521,7 @@
         <div class="summary-row"><span class="summary-key">Metodo de pago</span><span class="summary-val" id="sumMethod">—</span></div>
         <div class="summary-row"><span class="summary-key">Plan</span><span class="summary-val" id="sumPlan">—</span></div>
         <div class="summary-row summary-coupon-row" id="sumCouponRow">
-          <span class="summary-key">Cupon Mayo 2026</span>
+          <span class="summary-key">Cupon PERMA</span>
           <span class="summary-val summary-coupon-val">− $5 USD aplicados</span>
         </div>
         <div class="summary-total">
@@ -460,13 +533,49 @@
 
   </div><!-- /order-card -->
 
+  <!-- ADVISOR SELECTOR -->
+  <div class="advisor-section" id="advisorSection">
+    <p class="sec-label">¿Con quién hacer tu pedido?</p>
+    <div class="card" style="padding:18px 16px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <div style="width:36px;height:36px;border-radius:10px;background:color-mix(in srgb,var(--green) 14%,transparent);border:1px solid color-mix(in srgb,var(--green) 30%,transparent);display:grid;place-items:center;font-size:.95rem;color:var(--green);flex-shrink:0"><i class="fa-brands fa-whatsapp"></i></div>
+        <div>
+          <div style="font-size:.88rem;font-weight:700;margin-bottom:1px">Selecciona tu asesor</div>
+          <div style="font-size:.7rem;color:var(--muted);font-weight:300">Elige uno y haz tu pedido solo con esa persona</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div class="advisor-btn" onclick="openAdvisorModal()">
+          <div class="advisor-btn-icon yt"><i class="fa-brands fa-youtube"></i></div>
+          <div class="advisor-btn-info">
+            <div class="advisor-btn-name">JEXE — YouTuber</div>
+            <div class="advisor-btn-desc">Chat con mayor demanda · Puede demorar en responder</div>
+          </div>
+          <div class="advisor-btn-tag slow">+ LENTO</div>
+        </div>
+        <div class="advisor-btn" onclick="openAdvisorModal()">
+          <div class="advisor-btn-icon wa"><i class="fa-brands fa-whatsapp"></i></div>
+          <div class="advisor-btn-info">
+            <div class="advisor-btn-name">Gilbert · Juli — Asesores</div>
+            <div class="advisor-btn-desc">+57 311 8246157 / +57 311 7574285 · Respuesta rápida</div>
+          </div>
+          <div class="advisor-btn-tag fast">RÁPIDO</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:8px;margin-top:12px;padding:10px 12px;border-radius:var(--radius-sm);background:color-mix(in srgb,var(--accent) 8%,transparent);border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);font-size:.7rem;color:var(--muted);line-height:1.5">
+        <i class="fa-solid fa-triangle-exclamation" style="color:var(--accent);flex-shrink:0;margin-top:2px"></i>
+        <span><strong style="color:var(--text)">No dupliques el pedido.</strong> Si ya enviaste a uno, espera <strong style="color:var(--text)">mínimo 30 minutos</strong> antes de contactar a otro.</span>
+      </div>
+    </div>
+  </div>
+
   <!-- CTA -->
   <div style="animation:fadeUp .5s .25s ease both;margin-bottom:40px">
     <div class="cta-notice">
       <i class="fa-solid fa-triangle-exclamation"></i>
-      <span><strong>Importante:</strong> Usa el boton solo cuando estes <strong>decidido a comprar</strong>. Tu pedido completo se enviara por <strong>WhatsApp</strong> directamente.</span>
+      <span><strong>Importante:</strong> Selecciona a tu asesor arriba para enviar tu pedido completo por <strong>WhatsApp</strong> directamente.</span>
     </div>
-    <a id="buyBtn" class="buy-btn" href="#" target="_blank" rel="noopener">
+    <a id="buyBtn" class="buy-btn" href="#" onclick="handleBuyClick(event)">
       <i class="fa-brands fa-whatsapp"></i>
       ENVIAR PEDIDO
     </a>
@@ -481,12 +590,13 @@
    COUPON SYSTEM — Multi-layer persistence
    Layers: localStorage + sessionStorage + IndexedDB + cookie
    Strategy: any layer detecting prior use = blocked
+   Cupón PERMA — solo aplica al plan Permanente
    ══════════════════════════════════════════════ */
 
-const COUPON_CODE     = 'MAYO5$';
+const COUPON_CODE     = 'PERMA';
 const COUPON_KEY      = 'jexe_cpn_mayo26_used';
-const COUPON_DISCOUNT = 5; // USD
-const COUPON_START    = new Date('2026-04-24T00:00:00-05:00'); // Colombia UTC-5
+const COUPON_DISCOUNT = 5; // USD — solo plan Permanente
+const COUPON_START    = new Date('2026-04-24T00:00:00-05:00');
 const COUPON_END      = new Date('2026-05-31T23:59:59-05:00');
 
 // ── IndexedDB helpers ──
@@ -539,9 +649,9 @@ function persistCouponUsed() {
   cookieSet(COUPON_KEY, val, 365);
 }
 
-// ── Read from all layers (sync check — cookie + localStorage + sessionStorage) ──
+// ── Read from all layers (sync check) ──
 function isCouponUsedSync() {
-  try { if (localStorage.getItem(COUPON_KEY))  return true; } catch(e){}
+  try { if (localStorage.getItem(COUPON_KEY))   return true; } catch(e){}
   try { if (sessionStorage.getItem(COUPON_KEY)) return true; } catch(e){}
   if (cookieGet(COUPON_KEY)) return true;
   return false;
@@ -559,28 +669,19 @@ function isCouponDateValid() {
   return now >= COUPON_START && now <= COUPON_END;
 }
 
-/* ══ Coupon UI state ══ */
-let couponApplied = false; // active in this session
+let couponApplied = false;
 
 function initCouponUI() {
   checkCouponUsedFull(used => {
-    if (used) {
-      // Already used — show permanent block
-      showCouponBlockedUI();
-    } else {
-      // Not used yet — show input normally
-      // (already visible by default)
-    }
+    if (used) showCouponBlockedUI();
   });
 }
 
 function showCouponBlockedUI() {
-  // Disable input & button
   const inp = document.getElementById('couponInput');
   const btn = document.getElementById('couponApplyBtn');
   if (inp) inp.disabled = true;
   if (btn) btn.disabled = true;
-  // Show error state
   const state = document.getElementById('couponStateMsg');
   const txt   = document.getElementById('couponStateTxt');
   state.className = 'coupon-state used-global show';
@@ -593,11 +694,8 @@ function applyCoupon() {
   const state = document.getElementById('couponStateMsg');
   const txt   = document.getElementById('couponStateTxt');
   const icon  = state.querySelector('.coupon-state-icon');
-
-  // Reset state
   state.className = 'coupon-state';
 
-  // Date range check
   if (!isCouponDateValid()) {
     state.className = 'coupon-state error show';
     icon.innerHTML  = '<i class="fa-solid fa-clock"></i>';
@@ -605,14 +703,9 @@ function applyCoupon() {
     return;
   }
 
-  // Already used?
   checkCouponUsedFull(used => {
-    if (used) {
-      showCouponBlockedUI();
-      return;
-    }
+    if (used) { showCouponBlockedUI(); return; }
 
-    // Wrong code?
     if (raw !== COUPON_CODE) {
       state.className = 'coupon-state error show';
       icon.innerHTML  = '<i class="fa-solid fa-xmark"></i>';
@@ -626,36 +719,69 @@ function applyCoupon() {
 }
 
 function confirmCouponModal() {
-  // Close modal
   document.getElementById('couponModal').classList.remove('show');
-
-  // Mark as used in ALL layers immediately
   persistCouponUsed();
-
-  // Update UI
   couponApplied = true;
   document.getElementById('couponInputWrap').style.display = 'none';
   document.getElementById('couponStateMsg').className = 'coupon-state';
   document.getElementById('couponBadge').classList.add('show');
 
-  // Re-render plans if already selected
   if (sel.method) {
     renderPlans();
-    // If plan was already selected, reset so user re-picks with new price
     if (sel.plan) {
       sel.plan = ''; sel.price = ''; sel.priceUSD = '';
       done(4, false);
       hideSummary();
       disableBuy();
+      hideAdvisor();
     }
   }
 }
 
 /* ══════════════════════════════════════════════
+   ADVISOR SYSTEM
+   ══════════════════════════════════════════════ */
+let currentWANumber = '';
+let currentWAMessage = '';
+
+function openAdvisorModal() {
+  if (!sel.plan) return;
+  buildWAMessage();
+  document.getElementById('advisorModal').classList.add('show');
+}
+
+function sendToAdvisor(number, advisorName) {
+  document.getElementById('advisorModal').classList.remove('show');
+  const waMsg = buildWAMessageStr(advisorName);
+  window.open(`https://wa.me/${number}?text=${encodeURIComponent(waMsg)}`, '_blank', 'noopener');
+}
+
+function buildWAMessageStr(advisorName) {
+  const couponLine = (couponApplied && sel.planKey === 'permanent') ? '\nCupon: PERMA (−$5 USD aplicados al plan Permanente)' : '';
+  return `Hola buen dia, lei y vi toda la informacion, quiero comprar.\n\n` +
+    `━━━━━━━━━━━━━━━━\n MI PEDIDO\n━━━━━━━━━━━━━━━━\n` +
+    `Plataforma: ${sel.platformLabel}\n` +
+    `Pais: ${COUNTRY_NAMES[sel.country] || sel.country}\n` +
+    `Metodo de pago: ${sel.methodName}\n` +
+    `Plan: ${sel.plan}${couponLine}\n` +
+    `Total: ${sel.price}` +
+    (sel.price !== sel.priceUSD ? ` (${sel.priceUSD})` : '') +
+    `\n━━━━━━━━━━━━━━━━\nPor favor confirmar disponibilidad y datos de pago. Gracias!`;
+}
+
+function buildWAMessage() {
+  currentWAMessage = buildWAMessageStr('');
+}
+
+function handleBuyClick(e) {
+  e.preventDefault();
+  if (!document.getElementById('buyBtn').classList.contains('ready')) return;
+  openAdvisorModal();
+}
+
+/* ══════════════════════════════════════════════
    MAIN ORDER LOGIC
    ══════════════════════════════════════════════ */
-const WA_NUMBER = '573132878955';
-
 const METHODS = {
   card:       { name:'Tarjeta Debito / Credito', desc:'Visa, Mastercard — cualquier banco', icon:'<i class="fa-solid fa-credit-card" style="color:#1A1F71;font-size:1.1rem"></i>', tag:'Universal' },
   astropay:   { name:'AstroPay',                 desc:'Billetera digital internacional',    icon:'<i class="fa-solid fa-wallet" style="color:#0070CC;font-size:1.1rem"></i>',       tag:'Digital'   },
@@ -665,6 +791,7 @@ const METHODS = {
   clabe:      { name:'CLABE / Transferencia MX', desc:'Transferencia bancaria Mexico',      icon:'<i class="fa-solid fa-building-columns" style="color:#006847;font-size:1.1rem"></i>', tag:'Mexico'  },
   nequi:      { name:'Nequi',                    desc:'App de pagos Bancolombia',            icon:'<i class="fa-solid fa-mobile-screen" style="color:#7B2D8B;font-size:1.1rem"></i>', tag:'Colombia'  },
   llave:      { name:'Llave / BRE-B',            desc:'Cualquier banco de Colombia',        icon:'<i class="fa-solid fa-key" style="color:#E4202C;font-size:1.1rem"></i>',           tag:'Colombia'  },
+  pix:        { name:'PIX / QR PIX',             desc:'Transferencia instantanea Brasil',   icon:'<i class="fa-solid fa-qrcode" style="color:#32BCAD;font-size:1.1rem"></i>',        tag:'Brasil'    },
 };
 
 const COUNTRY_METHODS = {
@@ -686,7 +813,7 @@ const COUNTRY_METHODS = {
   ni:['remittance','binance','card'],
   do:['card','remittance','binance','astropay'],
   cu:['remittance','binance'],
-  br:['card','astropay','remittance','binance','skrill'],
+  br:['pix','card','astropay','remittance','binance','skrill'],
   pr:['card','remittance','binance','skrill'],
   us:['card','remittance','binance','skrill'],
   ca:['card','remittance','binance','skrill'],
@@ -720,23 +847,22 @@ const COUNTRY_NAMES = {
   in:'India',ph:'Filipinas',ae:'Emiratos Arabes',other:'Otro pais',
 };
 
+/* Plan definitions: 3 planes */
 function getPricing(country, method) {
   if (country === 'mx') {
     const isClabe = method === 'clabe';
-    const mBase  = 12;
-    const pBase  = isClabe ? 32 : 32;
-    const pDisp  = isClabe ? 500 : 580;
-    const pDispD = isClabe ? 'aprox.' : '';
     return {
-      monthly:  {
-        displayLocal: '$220 MXN', usd: '$12 USD',
-        usdNum: mBase,
-        discountedUsdNum: couponApplied ? mBase - COUPON_DISCOUNT : null,
+      biweekly: {
+        displayLocal: '$130 MXN', usd: '$7 USD', usdNum: 7,
+        discountedUsdNum: null, // cupón NO aplica a este plan
       },
-      permanent:{
-        displayLocal: isClabe ? '$500 MXN' : '$580 MXN', usd: '$32 USD',
-        usdNum: pBase,
-        discountedUsdNum: couponApplied ? pBase - COUPON_DISCOUNT : null,
+      monthly: {
+        displayLocal: '$220 MXN', usd: '$12 USD', usdNum: 12,
+        discountedUsdNum: null,
+      },
+      permanent: {
+        displayLocal: isClabe ? '$500 MXN' : '$580 MXN', usd: '$32 USD', usdNum: 32,
+        discountedUsdNum: couponApplied ? 32 - COUPON_DISCOUNT : null,
         discount: isClabe,
       },
       note: isClabe
@@ -746,18 +872,18 @@ function getPricing(country, method) {
   }
   if (country === 'co') {
     const isLocal = method === 'nequi' || method === 'llave';
-    const mBase   = 12;
-    const pBase   = isLocal ? 32 : 32;
     return {
-      monthly:  {
-        displayLocal: '$45.000 COP', usd: '$12 USD',
-        usdNum: mBase,
-        discountedUsdNum: couponApplied ? mBase - COUPON_DISCOUNT : null,
+      biweekly: {
+        displayLocal: '$27.000 COP', usd: '$7 USD', usdNum: 7,
+        discountedUsdNum: null,
       },
-      permanent:{
-        displayLocal: isLocal ? '$100.000 COP' : '$132.000 COP', usd: '$32 USD',
-        usdNum: pBase,
-        discountedUsdNum: couponApplied ? pBase - COUPON_DISCOUNT : null,
+      monthly: {
+        displayLocal: '$45.000 COP', usd: '$12 USD', usdNum: 12,
+        discountedUsdNum: null,
+      },
+      permanent: {
+        displayLocal: isLocal ? '$100.000 COP' : '$132.000 COP', usd: '$32 USD', usdNum: 32,
+        discountedUsdNum: couponApplied ? 32 - COUPON_DISCOUNT : null,
         discount: isLocal,
       },
       note: isLocal
@@ -765,42 +891,44 @@ function getPricing(country, method) {
         : 'Tip: si pagas con Nequi o Llave, el plan Permanente baja a $100.000 COP.',
     };
   }
-  const mBase = 12, pBase = 32;
+  // Default USD
   return {
-    monthly:  {
-      displayLocal: '$12 USD', usd: '$12 USD',
-      usdNum: mBase,
-      discountedUsdNum: couponApplied ? mBase - COUPON_DISCOUNT : null,
+    biweekly: {
+      displayLocal: '$7 USD', usd: '$7 USD', usdNum: 7,
+      discountedUsdNum: null,
     },
-    permanent:{
-      displayLocal: '$32 USD', usd: '$32 USD',
-      usdNum: pBase,
-      discountedUsdNum: couponApplied ? pBase - COUPON_DISCOUNT : null,
+    monthly: {
+      displayLocal: '$12 USD', usd: '$12 USD', usdNum: 12,
+      discountedUsdNum: null,
+    },
+    permanent: {
+      displayLocal: '$32 USD', usd: '$32 USD', usdNum: 32,
+      discountedUsdNum: couponApplied ? 32 - COUPON_DISCOUNT : null,
       discount: false,
     },
     note: null,
   };
 }
 
-let sel = { platform:'', platformLabel:'', country:'', method:'', methodName:'', plan:'', price:'', priceUSD:'' };
+let sel = { platform:'', platformLabel:'', country:'', method:'', methodName:'', plan:'', planKey:'', price:'', priceUSD:'' };
 
 function selectPlatform(p) {
-  sel = { platform: p, platformLabel: p === 'ios' ? 'iOS (iPhone / iPad)' : 'Android 8 – 16+', country:'', method:'', methodName:'', plan:'', price:'', priceUSD:'' };
+  sel = { platform: p, platformLabel: p === 'ios' ? 'iOS (iPhone / iPad)' : 'Android 8 – 16+', country:'', method:'', methodName:'', plan:'', planKey:'', price:'', priceUSD:'' };
   document.querySelectorAll('.platform-btn').forEach(b => b.classList.remove('selected'));
   document.getElementById(p === 'ios' ? 'btnIOS' : 'btnAndroid').classList.add('selected');
   document.getElementById('countrySelect').value = '';
   hide('step3Wrap'); hide('step4Wrap');
   done(1, true); done(2, false); done(3, false); done(4, false);
-  hideSummary(); disableBuy();
+  hideSummary(); disableBuy(); hideAdvisor();
   show('step2Wrap');
 }
 
 function onCountryChange() {
   sel.country = document.getElementById('countrySelect').value;
-  sel.method = ''; sel.methodName = ''; sel.plan = ''; sel.price = ''; sel.priceUSD = '';
+  sel.method = ''; sel.methodName = ''; sel.plan = ''; sel.planKey = ''; sel.price = ''; sel.priceUSD = '';
   hide('step3Wrap'); hide('step4Wrap');
   done(2, false); done(3, false); done(4, false);
-  hideSummary(); disableBuy();
+  hideSummary(); disableBuy(); hideAdvisor();
   if (!sel.country) return;
   done(2, true);
   renderMethods();
@@ -823,9 +951,9 @@ function renderMethods() {
       document.querySelectorAll('.method-item').forEach(i => i.classList.remove('selected'));
       el.classList.add('selected');
       sel.method = id; sel.methodName = m.name;
-      sel.plan = ''; sel.price = ''; sel.priceUSD = '';
+      sel.plan = ''; sel.planKey = ''; sel.price = ''; sel.priceUSD = '';
       done(3, true); done(4, false);
-      hideSummary(); disableBuy();
+      hideSummary(); disableBuy(); hideAdvisor();
       renderPlans();
       show('step4Wrap');
     });
@@ -833,9 +961,26 @@ function renderMethods() {
   });
 }
 
-function fmtUSD(num) {
-  return '$' + num + ' USD';
-}
+function fmtUSD(num) { return '$' + num + ' USD'; }
+
+/* Plan definitions con beneficios por plan */
+const PLAN_DEFS = [
+  {
+    key: 'biweekly', cls: 'biweekly', label: '15 Días', period: '15 días de acceso',
+    benefits: ['1 actualización incluida', 'Tutoriales de instalación', 'Certificados Premium'],
+    isBest: false,
+  },
+  {
+    key: 'monthly', cls: 'monthly', label: 'Mensual', period: '1 Mes de acceso',
+    benefits: ['2 actualizaciones / mes', 'Tutoriales de instalación', 'Certificados Premium'],
+    isBest: false,
+  },
+  {
+    key: 'permanent', cls: 'permanent', label: 'Permanente', period: 'Acceso permanente',
+    benefits: ['Actualizaciones todos los meses', 'Sin fecha de vencimiento', 'Soporte prioritario'],
+    isBest: true,
+  },
+];
 
 function renderPlans() {
   const grid = document.getElementById('plansGrid');
@@ -845,37 +990,41 @@ function renderPlans() {
   if (p.note) { noteEl.textContent = p.note; noteEl.classList.add('show'); }
   else noteEl.classList.remove('show');
 
-  [
-    { key:'monthly',   cls:'monthly',   label:'Mensual',    period:'1 Mes',            data: p.monthly  },
-    { key:'permanent', cls:'permanent', label:'Permanente', period:'Acceso permanente', data: p.permanent },
-  ].forEach(({ key, cls, label, period, data }) => {
-    const hasCoupon    = couponApplied && data.discountedUsdNum !== null;
+  PLAN_DEFS.forEach(({ key, cls, label, period, benefits, isBest }) => {
+    const data = p[key];
+    const hasCoupon    = couponApplied && key === 'permanent' && data.discountedUsdNum !== null;
     const displayMain  = hasCoupon ? fmtUSD(data.discountedUsdNum) : data.displayLocal;
     const currLabel    = hasCoupon ? 'USD' : (data.displayLocal.includes('USD') ? 'USD' : (data.displayLocal.split(' ')[1] || ''));
-    const priceForSummary = hasCoupon ? fmtUSD(data.discountedUsdNum) : data.displayLocal;
+    const priceForSummary   = hasCoupon ? fmtUSD(data.discountedUsdNum) : data.displayLocal;
     const priceUSDForSummary = hasCoupon ? fmtUSD(data.discountedUsdNum) : data.usd;
+
+    const benefitsHTML = benefits.map(b => `<div class="plan-benefit-mini"><i class="fa-solid fa-check"></i>${b}</div>`).join('');
 
     const btn = document.createElement('div');
     btn.className = `plan-btn ${cls}`;
     btn.innerHTML = `
-      ${cls === 'permanent' ? '<div class="plan-best-tag">MEJOR VALOR</div>' : ''}
+      ${isBest ? '<div class="plan-best-tag">MEJOR</div>' : ''}
       <div class="plan-label">${label}</div>
-      ${hasCoupon ? `<div class="plan-original-price" style="text-decoration:line-through;font-size:.65rem;color:var(--muted)">${data.displayLocal}</div>` : ''}
+      ${hasCoupon ? `<div class="plan-original-price">${data.displayLocal}</div>` : ''}
       <div class="plan-price-main">${displayMain.split(' ')[0]}</div>
       <div class="plan-currency-label">${currLabel}</div>
       <div class="plan-period">${period}</div>
-      ${data.discount && !hasCoupon ? '<div class="plan-discount">Precio especial aplicado</div>' : ''}
-      ${hasCoupon ? '<div class="plan-coupon-discount"><i class="fa-solid fa-ticket" style="font-size:.6rem"></i> −$5 USD cupón Mayo</div>' : ''}
+      ${data.discount && !hasCoupon ? '<div class="plan-discount">Precio especial</div>' : ''}
+      ${hasCoupon ? '<div class="plan-coupon-discount"><i class="fa-solid fa-ticket" style="font-size:.5rem"></i> −$5 cupón</div>' : ''}
+      ${(couponApplied && key !== 'permanent') ? '<div class="plan-perma-only">Cupón: solo Permanente</div>' : ''}
+      <div class="plan-benefits">${benefitsHTML}</div>
     `;
     btn.addEventListener('click', () => {
       document.querySelectorAll('.plan-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
-      sel.plan      = label + ' (' + period + ')';
-      sel.price     = priceForSummary;
-      sel.priceUSD  = priceUSDForSummary;
+      sel.plan     = label + ' (' + period + ')';
+      sel.planKey  = key;
+      sel.price    = priceForSummary;
+      sel.priceUSD = priceUSDForSummary;
       done(4, true);
       updateSummary();
       enableBuy();
+      showAdvisor();
     });
     grid.appendChild(btn);
   });
@@ -889,44 +1038,30 @@ function updateSummary() {
   document.getElementById('sumTotal').textContent    = sel.price + (sel.price !== sel.priceUSD ? ' (' + sel.priceUSD + ')' : '');
 
   const couponRow = document.getElementById('sumCouponRow');
-  if (couponApplied) {
+  if (couponApplied && sel.planKey === 'permanent') {
     couponRow.classList.add('show');
   } else {
     couponRow.classList.remove('show');
   }
 
   document.getElementById('summaryWrap').classList.add('show');
-  buildWA();
 }
 
-function buildWA() {
-  const couponLine = couponApplied ? '\nCupon: MAYO5$ (−$5 USD aplicados)' : '';
-  const msg =
-    `Hola buen dia, lei y vi toda la informacion, quiero comprar.\n\n` +
-    `━━━━━━━━━━━━━━━━\n MI PEDIDO\n━━━━━━━━━━━━━━━━\n` +
-    `Plataforma: ${sel.platformLabel}\n` +
-    `Pais: ${COUNTRY_NAMES[sel.country] || sel.country}\n` +
-    `Metodo de pago: ${sel.methodName}\n` +
-    `Plan: ${sel.plan}${couponLine}\n` +
-    `Total: ${sel.price}` +
-    (sel.price !== sel.priceUSD ? ` (${sel.priceUSD})` : '') +
-    `\n━━━━━━━━━━━━━━━━\nPor favor confirmar disponibilidad y datos de pago. Gracias!`;
-  document.getElementById('buyBtn').href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
-}
+function hideSummary()  { document.getElementById('summaryWrap').classList.remove('show'); }
+function enableBuy()    { document.getElementById('buyBtn').classList.add('ready'); }
+function disableBuy()   { document.getElementById('buyBtn').classList.remove('ready'); }
+function showAdvisor()  { document.getElementById('advisorSection').classList.add('show'); }
+function hideAdvisor()  { document.getElementById('advisorSection').classList.remove('show'); }
+function show(id)       { document.getElementById(id).style.display = 'block'; }
+function hide(id)       { document.getElementById(id).style.display = 'none'; }
+function done(n, v)     { document.getElementById('done'+n).classList[v?'add':'remove']('show'); }
 
-function hideSummary() { document.getElementById('summaryWrap').classList.remove('show'); }
-function enableBuy()   { document.getElementById('buyBtn').classList.add('ready'); }
-function disableBuy()  { document.getElementById('buyBtn').classList.remove('ready'); }
-function show(id)      { document.getElementById(id).style.display = 'block'; }
-function hide(id)      { document.getElementById(id).style.display = 'none'; }
-function done(n, v)    { document.getElementById('done'+n).classList[v?'add':'remove']('show'); }
-
-// Allow Enter key on coupon input
+// Keyboard shortcut for coupon
 document.getElementById('couponInput').addEventListener('keydown', e => {
   if (e.key === 'Enter') applyCoupon();
 });
 
-// Init on load
+// Init
 initCouponUI();
 </script>
 </body>
