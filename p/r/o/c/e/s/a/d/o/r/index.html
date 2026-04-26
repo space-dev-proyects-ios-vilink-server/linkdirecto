@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Procesamiento de Pedidos</title>
+    
+    <!-- Pack de iconos Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root {
+            --bg-primary: #0f1117;
+            --bg-secondary: #1a1d27;
+            --bg-card: #21242f;
+            --bg-input: #2a2d3a;
+            --text-primary: #e4e6eb;
+            --text-secondary: #b0b3b8;
+            --text-muted: #6c757d;
+            --accent: #6366f1;
+            --accent-hover: #5558e6;
+            --accent-light: rgba(99, 102, 241, 0.15);
+            --border: #2d3140;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.3), 0 2px 4px -2px rgba(0,0,0,0.4);
+            --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            overflow: hidden;
+            transition: all var(--transition);
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1e2030 0%, #252839 100%);
+            padding: 28px 32px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .header-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--accent-light);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .header-icon i {
+            color: var(--accent);
+            width: 24px;
+            height: 24px;
+        }
+
+        .header-text h1 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+
+        .header-text p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        /* Main Content */
+        .content {
+            padding: 28px 32px;
+        }
+
+        /* Textarea Section */
+        .input-section {
+            margin-bottom: 24px;
+        }
+
+        .label-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            letter-spacing: 0.01em;
+        }
+
+        .label i {
+            width: 18px;
+            height: 18px;
+            color: var(--text-secondary);
+        }
+
+        .clear-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+            transition: all var(--transition);
+            font-family: inherit;
+        }
+
+        .clear-btn:hover {
+            color: var(--text-primary);
+            background: var(--bg-input);
+        }
+
+        .clear-btn i {
+            width: 14px;
+            height: 14px;
+        }
+
+        .textarea-wrapper {
+            position: relative;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 160px;
+            background: var(--bg-input);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            padding: 16px;
+            font-size: 0.95rem;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+            line-height: 1.6;
+            resize: vertical;
+            transition: all var(--transition);
+            outline: none;
+        }
+
+        textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-light);
+        }
+
+        textarea::placeholder {
+            color: var(--text-muted);
+            font-family: 'Inter', sans-serif;
+            font-style: italic;
+            opacity: 0.7;
+        }
+
+        .textarea-icon {
+            position: absolute;
+            bottom: 14px;
+            right: 14px;
+            color: var(--text-muted);
+            width: 18px;
+            height: 18px;
+            pointer-events: none;
+            transition: color var(--transition);
+        }
+
+        textarea:focus ~ .textarea-icon {
+            color: var(--accent);
+        }
+
+        /* Button */
+        .process-btn {
+            width: 100%;
+            padding: 14px 24px;
+            background: var(--accent);
+            color: #ffffff;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all var(--transition);
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+            margin-bottom: 28px;
+            font-family: inherit;
+            letter-spacing: 0.01em;
+        }
+
+        .process-btn:hover {
+            background: var(--accent-hover);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45);
+            transform: translateY(-1px);
+        }
+
+        .process-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+        }
+
+        .process-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .process-btn i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Results Section */
+        .results {
+            display: none;
+            animation: fadeInUp 0.4s ease;
+        }
+
+        .results.active {
+            display: block;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .result-header {
+            padding: 14px 18px;
+            background: rgba(99, 102, 241, 0.08);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+        }
+
+        .result-header i {
+            width: 16px;
+            height: 16px;
+            color: var(--accent);
+        }
+
+        .result-body {
+            padding: 18px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 14px;
+        }
+
+        .info-item {
+            background: var(--bg-input);
+            padding: 14px;
+            border-radius: var(--radius-sm);
+            border: 1px solid transparent;
+            transition: all var(--transition);
+        }
+
+        .info-item:hover {
+            border-color: var(--border);
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            font-weight: 600;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .info-label i {
+            width: 14px;
+            height: 14px;
+        }
+
+        .info-value {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text-primary);
+            word-break: break-word;
+        }
+
+        .highlight-value {
+            color: var(--accent);
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .payment-details {
+            background: var(--bg-input);
+            padding: 16px;
+            border-radius: var(--radius-sm);
+            margin-top: 12px;
+            border: 2px solid var(--accent-light);
+            border-left: 4px solid var(--accent);
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            word-break: break-word;
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+
+        .link-display {
+            background: var(--bg-input);
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            margin-top: 12px;
+            word-break: break-all;
+            color: var(--accent);
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.85rem;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .link-display i {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .copy-response-btn {
+            width: 100%;
+            padding: 12px 20px;
+            background: var(--bg-card);
+            color: var(--accent);
+            border: 1.5px solid var(--accent);
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all var(--transition);
+            margin-top: 12px;
+            font-family: inherit;
+            letter-spacing: 0.01em;
+        }
+
+        .copy-response-btn:hover {
+            background: var(--accent-light);
+            border-color: var(--accent-hover);
+        }
+
+        .copy-response-btn i {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Error Message */
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: var(--radius-md);
+            padding: 14px 18px;
+            color: var(--danger);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.9rem;
+            display: none;
+            margin-bottom: 16px;
+        }
+
+        .error-message.active {
+            display: flex;
+        }
+
+        .error-message i {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                margin: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .content {
+                padding: 16px;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .highlight-value {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-icon">
+                <i data-lucide="zap"></i>
+            </div>
+            <div class="header-text">
+                <h1>Procesador de Pedidos</h1>
+                <p>Pega el pedido del cliente y obtén los datos de pago al instante</p>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Error Message -->
+            <div class="error-message" id="errorMessage">
+                <i data-lucide="alert-circle"></i>
+                <span id="errorText"></span>
+            </div>
+
+            <!-- Input Section -->
+            <div class="input-section">
+                <div class="label-wrapper">
+                    <label class="label" for="orderInput">
+                        <i data-lucide="clipboard-paste"></i>
+                        Pedido del Cliente
+                    </label>
+                    <button class="clear-btn" id="clearBtn" type="button">
+                        <i data-lucide="x-circle"></i>
+                        Limpiar
+                    </button>
+                </div>
+                <div class="textarea-wrapper">
+                    <textarea 
+                        id="orderInput" 
+                        placeholder="Pega aquí el pedido completo del cliente...&#10;&#10;Ejemplo:&#10;━━━━━━━━━━━━━━━━&#10; MI PEDIDO&#10;━━━━━━━━━━━━━━━━&#10;Plataforma: iOS&#10;Pais: Chile&#10;Metodo de pago: Binance Pay&#10;Plan: Permanente&#10;Total: $32 USD&#10;━━━━━━━━━━━━━━━━..."
+                    ></textarea>
+                    <i data-lucide="file-text" class="textarea-icon"></i>
+                </div>
+            </div>
+
+            <!-- Process Button -->
+            <button class="process-btn" id="processBtn" type="button">
+                <i data-lucide="search"></i>
+                <span id="btnText">Procesar Pedido</span>
+                <div class="spinner" id="spinner"></div>
+            </button>
+
+            <!-- Results Section -->
+            <div class="results" id="results">
+                <!-- Order Summary -->
+                <div class="result-card">
+                    <div class="result-header">
+                        <i data-lucide="file-check"></i>
+                        Resumen del Pedido
+                    </div>
+                    <div class="result-body">
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">
+                                    <i data-lucide="smartphone"></i>
+                                    Plataforma
+                                </div>
+                                <div class="info-value" id="resultPlatform">-</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">
+                                    <i data-lucide="globe"></i>
+                                    País
+                                </div>
+                                <div class="info-value" id="resultCountry">-</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">
+                                    <i data-lucide="credit-card"></i>
+                                    Método de Pago
+                                </div>
+                                <div class="info-value" id="resultMethod">-</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">
+                                    <i data-lucide="calendar"></i>
+                                    Plan
+                                </div>
+                                <div class="info-value" id="resultPlan">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Amount -->
+                <div class="result-card">
+                    <div class="result-header">
+                        <i data-lucide="coins"></i>
+                        Monto a Pagar
+                    </div>
+                    <div class="result-body">
+                        <div class="info-value highlight-value" id="resultAmount">-</div>
+                        <div class="info-label" style="margin-top: 4px; font-size: 0.8rem;" id="resultCurrency">-</div>
+                    </div>
+                </div>
+
+                <!-- Payment Details -->
+                <div class="result-card" id="paymentDetailsCard">
+                    <div class="result-header">
+                        <i data-lucide="banknote"></i>
+                        Datos de Pago
+                    </div>
+                    <div class="result-body">
+                        <div class="payment-details" id="resultPaymentDetails">-</div>
+                        <div class="link-display" id="resultLink" style="display: none;">
+                            <i data-lucide="link"></i>
+                            <span id="linkText"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Copy Response Button -->
+                <button class="copy-response-btn" id="copyResponseBtn" type="button">
+                    <i data-lucide="copy"></i>
+                    Copiar Respuesta para el Cliente
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Payment methods database
+        const paymentDatabase = {
+            'Tarjeta': {
+                '15 Dias': {
+                    amount: 7,
+                    currency: 'USD',
+                    details: 'Enlace de pago Bold',
+                    link: 'https://checkout.bold.co/payment/LNK_JM425KYOI9'
+                },
+                '1 Mes': {
+                    amount: 12,
+                    currency: 'USD',
+                    details: 'Enlace de pago Bold',
+                    link: 'https://checkout.bold.co/payment/LNK_0U1NVUMWQK'
+                },
+                'Permanente': {
+                    amount: 32,
+                    currency: 'USD',
+                    details: 'Enlace de pago Bold',
+                    link: 'https://checkout.bold.co/payment/LNK_9ILGBXLTH7'
+                }
+            },
+            'Nequi': {
+                '15 Dias': {
+                    amount: 27000,
+                    currency: 'COP',
+                    details: 'Nequi: 3132878955\nTitular: Juan Aguirre',
+                    link: ''
+                },
+                '1 Mes': {
+                    amount: 45000,
+                    currency: 'COP',
+                    details: 'Nequi: 3132878955\nTitular: Juan Aguirre',
+                    link: ''
+                },
+                'Permanente': {
+                    amount: 100000,
+                    currency: 'COP',
+                    details: 'Nequi: 3132878955\nTitular: Juan Aguirre',
+                    link: ''
+                }
+            },
+            'Llave Bold': {
+                '15 Dias': {
+                    amount: 27000,
+                    currency: 'COP',
+                    details: 'Bold CF: mediaspaceapp@gmail.com\nTitular: Juan Aguirre',
+                    link: ''
+                },
+                '1 Mes': {
+                    amount: 45000,
+                    currency: 'COP',
+                    details: 'Bold CF: mediaspaceapp@gmail.com\nTitular: Juan Aguirre',
+                    link: ''
+                },
+                'Permanente': {
+                    amount: 100000,
+                    currency: 'COP',
+                    details: 'Bold CF: mediaspaceapp@gmail.com\nTitular: Juan Aguirre',
+                    link: ''
+                }
+            },
+            'CLABE México': {
+                '15 Dias': {
+                    amount: 130,
+                    currency: 'MXN',
+                    details: 'Titular: Juan Pablo Aguirre Grosso\nCLABE: 646180546701915656\nEntidad: STP',
+                    link: ''
+                },
+                '1 Mes': {
+                    amount: 220,
+                    currency: 'MXN',
+                    details: 'Titular: Juan Pablo Aguirre Grosso\nCLABE: 646180546701915656\nEntidad: STP',
+                    link: ''
+                },
+                'Permanente': {
+                    amount: 500,
+                    currency: 'MXN',
+                    details: 'Titular: Juan Pablo Aguirre Grosso\nCLABE: 646180546701915656\nEntidad: STP',
+                    link: ''
+                }
+            },
+            'Binance': {
+                '15 Dias': {
+                    amount: 7,
+                    currency: 'USDT',
+                    details: 'Binance ID: 538653875\nUsuario: @jexeregedit',
+                    link: ''
+                },
+                '1 Mes': {
+                    amount: 12,
+                    currency: 'USDT',
+                    details: 'Binance ID: 538653875\nUsuario: @jexeregedit',
+                    link: ''
+                },
+                'Permanente': {
+                    amount: 32,
+                    currency: 'USDT',
+                    details: 'Binance ID: 538653875\nUsuario: @jexeregedit',
+                    link: ''
+                }
+            },
+            'AstroPay': {
+                '15 Dias': {
+                    amount: 7,
+                    currency: 'USD',
+                    details: 'Enlace de pago AstroPay',
+                    link: 'https://onetouch.astropay.com/payment?external_reference_id=nKk94mxro8pNRM6E8o1AoQXV2qLnJCCx'
+                },
+                '1 Mes': {
+                    amount: 12,
+                    currency: 'USD',
+                    details: 'Enlace de pago AstroPay',
+                    link: 'https://onetouch.astropay.com/payment?external_reference_id=sgnR2c3ZKlH4c6C6W07KhNzmL1i7boF5'
+                },
+                'Permanente': {
+                    amount: 32,
+                    currency: 'USD',
+                    details: 'Enlace de pago AstroPay',
+                    link: 'https://onetouch.astropay.com/payment?external_reference_id=LhBnOGPnmTI9rXz8NXuEjiezus2JNDAa'
+                }
+            },
+            'Skrill': {
+                '15 Dias': {
+                    amount: 7,
+                    currency: 'USD',
+                    details: 'Skrill: juanpabloaguirregrosso@gmail.com',
+                    link: ''
+                },
+                '1 Mes': {
+                    amount: 12,
+                    currency: 'USD',
+                    details: 'Skrill: juanpabloaguirregrosso@gmail.com',
+                    link: ''
+                },
+                'Permanente': {
+                    amount: 32,
+                    currency: 'USD',
+                    details: 'Skrill: juanpabloaguirregrosso@gmail.com',
+                    link: ''
+                }
+            },
+            'Remitly': {
+                '15 Dias': {
+                    amount: null,
+                    currency: 'COP',
+                    details: 'Nombre: Juan Pablo Aguirre Grosso\nPaís: Colombia\nTeléfono: +573132878955\nCuenta: 3132878955\nBilletera: Nequi\nTipo: Ahorros',
+                    link: '',
+                    customAmount: true
+                },
+                '1 Mes': {
+                    amount: null,
+                    currency: 'COP',
+                    details: 'Nombre: Juan Pablo Aguirre Grosso\nPaís: Colombia\nTeléfono: +573132878955\nCuenta: 3132878955\nBilletera: Nequi\nTipo: Ahorros',
+                    link: '',
+                    customAmount: true
+                },
+                'Permanente': {
+                    amount: null,
+                    currency: 'COP',
+                    details: 'Nombre: Juan Pablo Aguirre Grosso\nPaís: Colombia\nTeléfono: +573132878955\nCuenta: 3132878955\nBilletera: Nequi\nTipo: Ahorros',
+                    link: '',
+                    customAmount: true
+                }
+            }
+        };
+
+        // DOM Elements
+        const orderInput = document.getElementById('orderInput');
+        const processBtn = document.getElementById('processBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const results = document.getElementById('results');
+        const errorMessage = document.getElementById('errorMessage');
+        const errorText = document.getElementById('errorText');
+        const spinner = document.getElementById('spinner');
+        const btnText = document.getElementById('btnText');
+        const copyResponseBtn = document.getElementById('copyResponseBtn');
+
+        // Event Listeners
+        processBtn.addEventListener('click', processOrder);
+        clearBtn.addEventListener('click', clearAll);
+        copyResponseBtn.addEventListener('click', copyResponseToClipboard);
+
+        // Allow Ctrl+Enter to process
+        orderInput.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                e.preventDefault();
+                processOrder();
+            }
+        });
+
+        function showError(message) {
+            errorText.textContent = message;
+            errorMessage.classList.add('active');
+            results.classList.remove('active');
+            setTimeout(() => {
+                errorMessage.classList.remove('active');
+            }, 8000);
+        }
+
+        function hideError() {
+            errorMessage.classList.remove('active');
+        }
+
+        function clearAll() {
+            orderInput.value = '';
+            results.classList.remove('active');
+            hideError();
+            orderInput.focus();
+        }
+
+        function processOrder() {
+            const text = orderInput.value.trim();
+            
+            if (!text) {
+                showError('Por favor pega el pedido del cliente antes de procesar.');
+                return;
+            }
+
+            // Show loading state
+            processBtn.disabled = true;
+            spinner.style.display = 'block';
+            btnText.textContent = 'Procesando...';
+            hideError();
+            results.classList.remove('active');
+
+            // Simulate processing delay for UX
+            setTimeout(() => {
+                try {
+                    const orderData = extractOrderData(text);
+                    
+                    if (!orderData) {
+                        throw new Error('No se pudo identificar el formato del pedido. Verifica que el texto incluya las secciones requeridas.');
+                    }
+
+                    displayResults(orderData);
+                    results.classList.add('active');
+                    results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                } catch (error) {
+                    showError(error.message || 'Error al procesar el pedido. Verifica el formato e intenta de nuevo.');
+                } finally {
+                    // Reset button state
+                    processBtn.disabled = false;
+                    spinner.style.display = 'none';
+                    btnText.textContent = 'Procesar Pedido';
+                }
+            }, 600);
+        }
+
+        function extractOrderData(text) {
+            const orderData = {
+                platform: 'No especificada',
+                country: 'No especificado',
+                method: 'No especificado',
+                plan: 'No especificado',
+                rawText: text
+            };
+
+            // Extract Platform
+            const platformMatch = text.match(/(?:Plataforma|Platform)\s*:\s*(.+)/i);
+            if (platformMatch) {
+                orderData.platform = platformMatch[1].trim();
+            }
+
+            // Extract Country
+            const countryMatch = text.match(/(?:Pais|País|Country)\s*:\s*(.+)/i);
+            if (countryMatch) {
+                let country = countryMatch[1].trim().toLowerCase();
+                if (country.includes('chile')) orderData.country = 'Chile';
+                else if (country.includes('colombia')) orderData.country = 'Colombia';
+                else if (country.includes('mexico') || country.includes('méxico')) orderData.country = 'México';
+                else orderData.country = countryMatch[1].trim();
+            }
+
+            // Extract Payment Method
+            const methodMatch = text.match(/(?:Metodo\s+de\s+pago|Método\s+de\s+pago|Payment\s+method)\s*:\s*(.+)/i);
+            if (methodMatch) {
+                let method = methodMatch[1].trim().toLowerCase();
+                if (method.includes('binance')) orderData.method = 'Binance';
+                else if (method.includes('nequi')) orderData.method = 'Nequi';
+                else if (method.includes('llave') || method.includes('bold cf')) orderData.method = 'Llave Bold';
+                else if (method.includes('clabe') || method.includes('transferencia')) orderData.method = 'CLABE México';
+                else if (method.includes('astropay')) orderData.method = 'AstroPay';
+                else if (method.includes('skrill')) orderData.method = 'Skrill';
+                else if (method.includes('tarjeta') || method.includes('bold.co')) orderData.method = 'Tarjeta';
+                else if (method.includes('remitly') || method.includes('remesadora')) orderData.method = 'Remitly';
+                else if (method.includes('pix')) orderData.method = 'PIX';
+                else orderData.method = methodMatch[1].trim();
+            }
+
+            // Extract Plan
+            const planMatch = text.match(/(?:Plan|Plano)\s*:\s*(.+)/i);
+            if (planMatch) {
+                let plan = planMatch[1].trim().toLowerCase();
+                if (plan.includes('permanente') || plan.includes('acceso permanente')) orderData.plan = 'Permanente';
+                else if (plan.includes('1 mes') || plan.includes('30 dias') || plan.includes('30 días') || plan.includes('mensual')) orderData.plan = '1 Mes';
+                else if (plan.includes('15 dias') || plan.includes('15 días') || plan.includes('quincenal')) orderData.plan = '15 Dias';
+                else orderData.plan = planMatch[1].trim();
+            }
+
+            // Get payment info
+            const paymentInfo = getPaymentInfo(orderData.method, orderData.plan);
+            if (paymentInfo) {
+                orderData.amount = paymentInfo.amount;
+                orderData.currency = paymentInfo.currency;
+                orderData.paymentDetails = paymentInfo.details;
+                orderData.link = paymentInfo.link || '';
+                orderData.customAmount = paymentInfo.customAmount || false;
+            } else {
+                throw new Error(`No se encontraron datos de pago para: ${orderData.method} - ${orderData.plan}`);
+            }
+
+            return orderData;
+        }
+
+        function getPaymentInfo(method, plan) {
+            const methodData = paymentDatabase[method];
+            if (!methodData) return null;
+            
+            const planData = methodData[plan];
+            if (!planData) return null;
+            
+            return planData;
+        }
+
+        function displayResults(orderData) {
+            // Platform
+            document.getElementById('resultPlatform').textContent = orderData.platform;
+            
+            // Country
+            document.getElementById('resultCountry').textContent = orderData.country;
+            
+            // Method
+            document.getElementById('resultMethod').textContent = orderData.method;
+            
+            // Plan
+            document.getElementById('resultPlan').textContent = orderData.plan;
+            
+            // Amount
+            if (orderData.customAmount) {
+                document.getElementById('resultAmount').textContent = 'Consultar monto';
+                document.getElementById('resultCurrency').textContent = 'El monto depende de la tasa de cambio actual';
+            } else {
+                const formattedAmount = formatCurrency(orderData.amount, orderData.currency);
+                document.getElementById('resultAmount').textContent = formattedAmount;
+                document.getElementById('resultCurrency').textContent = orderData.currency;
+            }
+            
+            // Payment Details
+            document.getElementById('resultPaymentDetails').textContent = orderData.paymentDetails;
+            
+            // Link
+            const linkDisplay = document.getElementById('resultLink');
+            const linkText = document.getElementById('linkText');
+            if (orderData.link) {
+                linkText.textContent = orderData.link;
+                linkDisplay.style.display = 'flex';
+            } else {
+                linkDisplay.style.display = 'none';
+            }
+
+            // Store for copy function
+            window.currentOrderData = orderData;
+        }
+
+        function formatCurrency(amount, currency) {
+            if (currency === 'COP') {
+                return `$${amount.toLocaleString('es-CO')} COP`;
+            } else if (currency === 'MXN') {
+                return `$${amount.toLocaleString('es-MX')} MXN`;
+            } else if (currency === 'USDT') {
+                return `${amount} USDT`;
+            } else {
+                return `$${amount} USD`;
+            }
+        }
+
+        function copyResponseToClipboard() {
+            const orderData = window.currentOrderData;
+            if (!orderData) {
+                showError('No hay datos para copiar. Procesa un pedido primero.');
+                return;
+            }
+
+            let amountStr;
+            if (orderData.customAmount) {
+                amountStr = 'a consultar';
+            } else {
+                amountStr = formatCurrency(orderData.amount, orderData.currency);
+            }
+
+            let responseMessage = `Hola! Gracias por tu pedido. Aqui tienes el resumen:\n\n`;
+            responseMessage += `Plan: ${orderData.plan}\n`;
+            responseMessage += `Monto: ${amountStr}\n\n`;
+            responseMessage += `Datos de pago:\n${orderData.paymentDetails}`;
+            
+            if (orderData.link) {
+                responseMessage += `\n\nEnlace de pago: ${orderData.link}`;
+            }
+            
+            responseMessage += `\n\nPor favor, enviame la captura de pantalla de la transferencia para confirmar y darte acceso`;
+
+            navigator.clipboard.writeText(responseMessage).then(() => {
+                // Visual feedback
+                const originalHTML = copyResponseBtn.innerHTML;
+                copyResponseBtn.innerHTML = '<i data-lucide="check"></i> Copiado';
+                copyResponseBtn.style.background = 'rgba(16, 185, 129, 0.15)';
+                copyResponseBtn.style.borderColor = '#10b981';
+                copyResponseBtn.style.color = '#10b981';
+                
+                setTimeout(() => {
+                    copyResponseBtn.innerHTML = originalHTML;
+                    copyResponseBtn.style.background = '';
+                    copyResponseBtn.style.borderColor = '';
+                    copyResponseBtn.style.color = '';
+                    lucide.createIcons();
+                }, 2000);
+            }).catch(() => {
+                showError('Error al copiar. Intenta seleccionar y copiar manualmente.');
+            });
+        }
+
+        // Auto-resize textarea
+        orderInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 400) + 'px';
+        });
+
+        // Focus input on load
+        orderInput.focus();
+    </script>
+</body>
+</html>
