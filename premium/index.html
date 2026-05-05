@@ -1,1068 +1,1265 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="color-scheme" content="light dark"/>
-  <title>Comprar — JEXE Regedit Premium Edition</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
-  <style>
-    :root{
-      --accent:#E8340A;--accent-2:#FF6B35;--accent-glow:rgba(232,52,10,0.14);
-      --gold:#F4B942;--gold-glow:rgba(244,185,66,0.15);--green:#25D366;
-      --android:#3DDC84;--android-glow:rgba(61,220,132,0.14);
-      --radius:18px;--radius-sm:12px;
-      --font-d:'Bebas Neue',sans-serif;--font-b:'Outfit',sans-serif;
-      --tr:0.28s cubic-bezier(0.4,0,0.2,1);
-      --bg:#F2F0EC;--bg2:#E8E5DF;--text:#111110;--muted:#6B6760;
-      --card:rgba(0,0,0,0.04);--border:rgba(0,0,0,0.08);--shadow:0 8px 32px rgba(0,0,0,0.10);
-    }
-    @media(prefers-color-scheme:dark){:root{
-      --bg:#0E0E0E;--bg2:#161616;--text:#F0EDE8;--muted:#888580;
-      --card:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.08);--shadow:0 8px 40px rgba(0,0,0,0.5);
-    }}
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height:100dvh;display:flex;flex-direction:column;overflow-x:hidden;padding-bottom:60px}
-    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.4}
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="color-scheme" content="dark"/>
+<title>JEXE Regedit — Premium Edition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700;900&family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+<style>
+:root{
+  --ink:#0A0A0A;
+  --ink1:#111;
+  --ink2:#181818;
+  --ink3:#202020;
+  --ink4:#2A2A2A;
+  --wire:rgba(255,255,255,0.07);
+  --wire2:rgba(255,255,255,0.11);
+  --txt:#F0EDE8;
+  --txt2:#A09C96;
+  --txt3:#5C5854;
+  --red:#E8280A;
+  --red2:#FF5533;
+  --redg:rgba(232,40,10,0.10);
+  --redg2:rgba(232,40,10,0.06);
+  --gold:#C9960A;
+  --gold2:#F2B705;
+  --goldg:rgba(242,183,5,0.10);
+  --green:#0DAF6C;
+  --greeng:rgba(13,175,108,0.10);
+  --andr:#00D68F;
+  --r:18px; --r-sm:12px; --r-xs:8px;
+  --tr:0.2s cubic-bezier(0.4,0,0.2,1);
+  --f-display:'Playfair Display',Georgia,serif;
+  --f-body:'Figtree',sans-serif;
+}
 
-    header{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 24px;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);background:color-mix(in srgb,var(--bg) 80%,transparent);border-bottom:1px solid var(--border)}
-    .logo{font-family:var(--font-d);font-size:1.5rem;letter-spacing:.08em;color:var(--text);text-decoration:none}
-    .logo em{color:var(--accent);font-style:normal}
-    .back-btn{display:flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--border);border-radius:10px;background:none;color:var(--muted);font-family:var(--font-b);font-size:.78rem;font-weight:500;letter-spacing:.05em;cursor:pointer;text-decoration:none;transition:var(--tr)}
-    .back-btn:hover{color:var(--accent);border-color:var(--accent);background:var(--accent-glow)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
+body{
+  font-family:var(--f-body);background:var(--ink);color:var(--txt);
+  min-height:100dvh;overflow-x:hidden;
+  padding-bottom:calc(env(safe-area-inset-bottom,0px) + 40px);
+}
 
-    .main{position:relative;z-index:1;max-width:560px;width:100%;margin:0 auto;padding:0 20px}
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)' opacity='0.022'/%3E%3C/svg%3E");
+  opacity:.7;
+}
 
-    .hero{text-align:center;padding:36px 0 24px;animation:fadeUp .5s ease both}
-    .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 18px;border-radius:100px;background:color-mix(in srgb,var(--accent) 12%,transparent);border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);font-family:var(--font-d);font-size:1rem;letter-spacing:.12em;color:var(--accent);margin-bottom:14px}
-    .hero-title{font-family:var(--font-d);font-size:clamp(2.6rem,11vw,4.2rem);letter-spacing:.04em;line-height:.95;margin-bottom:6px}
-    .hero-title em{color:var(--accent);font-style:normal}
-    .hero-sub{font-size:.83rem;color:var(--muted);font-weight:300;letter-spacing:.04em}
-    .hero-div{width:40px;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:2px;margin:12px auto 0}
+body::before{
+  content:'';position:fixed;top:0;left:50%;transform:translateX(-50%);
+  width:100vw;height:280px;
+  background:radial-gradient(ellipse 70% 100% at 50% 0%,rgba(232,40,10,0.07) 0%,transparent 100%);
+  pointer-events:none;z-index:0;
+}
 
-    .sec-label{font-family:var(--font-d);font-size:.65rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;margin-bottom:10px}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:22px 20px;margin-bottom:16px}
+header{
+  position:sticky;top:0;z-index:80;
+  display:flex;align-items:center;justify-content:center;
+  padding:0 20px;height:56px;
+  background:rgba(10,10,10,0.92);
+  backdrop-filter:blur(28px) saturate(160%);
+  -webkit-backdrop-filter:blur(28px) saturate(160%);
+  border-bottom:1px solid var(--wire);
+}
+.wordmark{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--f-display);font-size:1.05rem;font-weight:700;
+  letter-spacing:.04em;color:var(--txt);text-decoration:none;
+}
+.wordmark-sep{width:1px;height:16px;background:var(--wire2)}
+.wordmark-sub{font-family:var(--f-body);font-size:.68rem;font-weight:500;letter-spacing:.18em;color:var(--txt3);text-transform:uppercase}
 
-    .video-wrap{position:relative;border-radius:var(--radius);overflow:hidden;background:#000;margin-bottom:16px;border:1px solid var(--border);animation:fadeUp .5s .05s ease both}
-    .video-wrap video{width:100%;display:block;max-height:300px;object-fit:cover}
-    .video-label{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);border-radius:8px;padding:5px 12px;font-size:.72rem;font-weight:600;color:#fff;letter-spacing:.06em;display:flex;align-items:center;gap:6px}
-    .video-label i{color:var(--accent)}
+main{position:relative;z-index:1;max-width:500px;width:100%;margin:0 auto;padding:20px 16px 0}
 
-    /* ══ COUPON SECTION ══ */
-    .coupon-card{animation:fadeUp .5s .08s ease both;margin-bottom:16px}
-    .coupon-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-    .coupon-icon-wrap{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,color-mix(in srgb,var(--gold) 20%,transparent),color-mix(in srgb,var(--gold) 8%,transparent));border:1px solid color-mix(in srgb,var(--gold) 35%,transparent);display:grid;place-items:center;font-size:1rem;color:var(--gold);flex-shrink:0}
-    .coupon-header-text strong{display:block;font-size:.9rem;font-weight:700}
-    .coupon-header-text span{font-size:.72rem;color:var(--muted);font-weight:300}
-    .coupon-input-row{display:flex;gap:8px;align-items:stretch}
-    .coupon-input{flex:1;padding:13px 16px;border-radius:var(--radius-sm);background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:var(--font-b);font-size:.92rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;transition:var(--tr);outline:none}
-    .coupon-input::placeholder{text-transform:none;font-weight:300;letter-spacing:.02em;color:var(--muted)}
-    .coupon-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow)}
-    .coupon-input:disabled{opacity:.5;cursor:not-allowed}
-    .coupon-apply-btn{padding:0 20px;border-radius:var(--radius-sm);border:none;background:linear-gradient(135deg,var(--gold),#e6a830);color:#000;font-family:var(--font-d);font-size:.95rem;letter-spacing:.1em;cursor:pointer;transition:var(--tr);white-space:nowrap;min-width:90px}
-    .coupon-apply-btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 4px 16px rgba(244,185,66,.4)}
-    .coupon-apply-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.hero{padding:24px 0 20px;animation:riseIn .6s ease both}
+.hero-kicker{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:5px 13px;border-radius:100px;
+  border:1px solid rgba(232,40,10,0.28);
+  background:var(--redg2);
+  font-family:var(--f-body);font-size:.65rem;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--red2);
+  margin-bottom:14px;
+}
+.hero-h1{
+  font-family:var(--f-display);font-size:clamp(2.6rem,12vw,4rem);
+  font-weight:900;line-height:.9;letter-spacing:-.02em;margin-bottom:10px;
+}
+.hero-h1 em{
+  font-style:normal;color:transparent;
+  background:linear-gradient(135deg,var(--red) 0%,var(--red2) 100%);
+  -webkit-background-clip:text;background-clip:text;
+}
+.hero-descriptor{
+  font-size:.78rem;font-weight:300;color:var(--txt2);
+  letter-spacing:.04em;line-height:1.6;
+}
+.hero-descriptor i.ph{font-size:.7rem;color:var(--txt3);margin:0 2px}
+.hero-rule{width:36px;height:1.5px;background:linear-gradient(90deg,var(--red),transparent);border-radius:2px;margin:12px 0 0}
 
-    .coupon-state{display:none;align-items:center;gap:10px;margin-top:10px;padding:11px 14px;border-radius:var(--radius-sm);font-size:.8rem;line-height:1.5}
-    .coupon-state.show{display:flex}
-    .coupon-state-icon{font-size:1rem;flex-shrink:0}
-    .coupon-state.success{background:color-mix(in srgb,#25D366 10%,transparent);border:1px solid color-mix(in srgb,#25D366 30%,transparent);color:var(--text)}
-    .coupon-state.success .coupon-state-icon{color:#25D366}
-    .coupon-state.error{background:color-mix(in srgb,var(--accent) 10%,transparent);border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);color:var(--text)}
-    .coupon-state.error .coupon-state-icon{color:var(--accent)}
-    .coupon-state.warning{background:color-mix(in srgb,var(--gold) 10%,transparent);border:1px solid color-mix(in srgb,var(--gold) 30%,transparent);color:var(--text)}
-    .coupon-state.warning .coupon-state-icon{color:var(--gold)}
-    .coupon-state.used-global{background:color-mix(in srgb,#888 10%,transparent);border:1px solid color-mix(in srgb,#888 30%,transparent);color:var(--text)}
-    .coupon-state.used-global .coupon-state-icon{color:#888}
-    .coupon-badge-applied{display:none;align-items:center;gap:8px;padding:10px 16px;border-radius:var(--radius-sm);background:color-mix(in srgb,#25D366 12%,transparent);border:1px solid color-mix(in srgb,#25D366 35%,transparent);font-size:.82rem;font-weight:600;color:#25D366}
-    .coupon-badge-applied.show{display:flex}
-    .coupon-badge-applied i{font-size:.9rem}
-    .coupon-badge-applied span{flex:1}
-    .coupon-badge-applied .discount-tag{font-family:var(--font-d);font-size:1rem;letter-spacing:.08em;color:#25D366}
+.video-frame{
+  position:relative;border-radius:var(--r);overflow:hidden;
+  background:#000;margin-bottom:12px;border:1px solid var(--wire);
+  animation:riseIn .55s .06s ease both;
+}
+.video-frame video{width:100%;display:block;max-height:230px;object-fit:cover}
+.video-caption{
+  position:absolute;top:10px;left:10px;
+  background:rgba(0,0,0,.78);backdrop-filter:blur(12px);
+  border-radius:6px;padding:4px 11px;
+  font-family:var(--f-body);font-size:.62rem;font-weight:600;
+  color:rgba(255,255,255,.8);letter-spacing:.1em;text-transform:uppercase;
+  display:flex;align-items:center;gap:5px;
+}
+.video-caption i.ph{color:var(--red);font-size:.75rem}
 
-    /* ══ MODALS ══ */
-    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:999;display:none;align-items:flex-end;justify-content:center;padding:0;backdrop-filter:blur(6px)}
-    .modal-overlay.show{display:flex;animation:fadeIn .25s ease}
-    .modal-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius) var(--radius) 0 0;padding:28px 24px 36px;width:100%;max-width:560px;animation:slideUp .3s cubic-bezier(0.4,0,0.2,1) both}
-    .modal-icon{width:56px;height:56px;border-radius:16px;background:color-mix(in srgb,var(--gold) 18%,transparent);border:1px solid color-mix(in srgb,var(--gold) 40%,transparent);display:grid;place-items:center;font-size:1.6rem;color:var(--gold);margin:0 auto 16px}
-    .modal-title{font-family:var(--font-d);font-size:1.6rem;letter-spacing:.06em;text-align:center;margin-bottom:8px}
-    .modal-title em{color:var(--gold);font-style:normal}
-    .modal-body{font-size:.83rem;color:var(--muted);text-align:center;line-height:1.7;margin-bottom:22px}
-    .modal-body strong{color:var(--text)}
-    .modal-confirm-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:58px;border:none;border-radius:var(--radius-sm);background:linear-gradient(135deg,var(--gold),#e6a830);color:#000;font-family:var(--font-d);font-size:1.15rem;letter-spacing:.1em;cursor:pointer;transition:var(--tr)}
-    .modal-confirm-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(244,185,66,.5)}
-    .modal-sub{text-align:center;font-size:.72rem;color:var(--muted);margin-top:12px;line-height:1.5}
+.surface{
+  background:var(--ink1);border:1px solid var(--wire);
+  border-radius:var(--r);padding:18px 16px;margin-bottom:10px;
+  position:relative;overflow:hidden;
+}
+.surface::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.06),transparent);
+}
 
-    /* ══ ADVISOR MODAL ══ */
-    #advisorModal .modal-icon{background:color-mix(in srgb,var(--green) 18%,transparent);border-color:color-mix(in srgb,var(--green) 40%,transparent);color:var(--green)}
-    #advisorModal .modal-title em{color:var(--green)}
-    .advisor-alert{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-radius:var(--radius-sm);background:color-mix(in srgb,var(--accent) 10%,transparent);border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);font-size:.78rem;color:var(--muted);line-height:1.6;margin-bottom:18px}
-    .advisor-alert i{color:var(--accent);flex-shrink:0;margin-top:2px}
-    .advisor-alert strong{color:var(--text)}
-    .advisor-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:6px}
-    .advisor-btn{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:var(--radius-sm);border:2px solid var(--border);background:var(--card);cursor:pointer;transition:var(--tr);text-align:left;width:100%}
-    .advisor-btn:hover{border-color:color-mix(in srgb,var(--green) 50%,transparent);background:color-mix(in srgb,var(--green) 6%,transparent)}
-    .advisor-btn-icon{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:1.2rem;flex-shrink:0}
-    .advisor-btn-icon.yt{background:rgba(255,0,0,.12);border:1px solid rgba(255,0,0,.25);color:#FF0000}
-    .advisor-btn-icon.wa{background:rgba(37,211,102,.12);border:1px solid rgba(37,211,102,.25);color:var(--green)}
-    .advisor-btn-info{flex:1;min-width:0}
-    .advisor-btn-name{font-size:.9rem;font-weight:700;margin-bottom:2px}
-    .advisor-btn-desc{font-size:.7rem;color:var(--muted);font-weight:300;line-height:1.4}
-    .advisor-btn-tag{font-size:.58rem;font-weight:700;letter-spacing:.08em;padding:3px 8px;border-radius:100px;flex-shrink:0}
-    .advisor-btn-tag.slow{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 28%,transparent)}
-    .advisor-btn-tag.fast{background:color-mix(in srgb,var(--green) 14%,transparent);color:var(--green);border:1px solid color-mix(in srgb,var(--green) 28%,transparent)}
+.section-eyebrow{
+  font-family:var(--f-body);font-size:.58rem;font-weight:700;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--txt3);
+  margin-bottom:9px;
+}
 
-    /* ══ PLATFORM SELECTOR ══ */
-    .platform-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:2px}
-    .platform-btn{border-radius:var(--radius-sm);padding:20px 14px;text-align:center;border:2px solid var(--border);background:var(--card);transition:var(--tr);cursor:pointer;position:relative;overflow:hidden;user-select:none;display:flex;flex-direction:column;align-items:center;gap:8px}
-    .platform-btn:hover:not(.selected){border-color:color-mix(in srgb,var(--accent) 30%,transparent)}
-    .platform-btn.selected.ios-btn{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--card))}
-    .platform-btn.selected.android-btn{border-color:var(--android);background:color-mix(in srgb,var(--android) 8%,var(--card))}
-    .platform-icon{font-size:2rem}
-    .platform-btn.ios-btn .platform-icon{color:var(--accent)}
-    .platform-btn.android-btn .platform-icon{color:var(--android)}
-    .platform-name{font-family:var(--font-d);font-size:1.05rem;letter-spacing:.08em}
-    .platform-range{font-size:.7rem;color:var(--muted);font-weight:300;line-height:1.3}
-    .platform-check{position:absolute;top:8px;right:8px;width:18px;height:18px;border-radius:50%;border:2px solid var(--border);display:grid;place-items:center;transition:var(--tr)}
-    .platform-btn.selected.ios-btn .platform-check{border-color:var(--accent);background:var(--accent)}
-    .platform-btn.selected.android-btn .platform-check{border-color:var(--android);background:var(--android)}
-    .platform-check i{font-size:.5rem;color:#fff;opacity:0;transition:opacity .2s}
-    .platform-btn.selected .platform-check i{opacity:1}
+.compat-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.cpill{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:4px 10px;border-radius:100px;font-size:.67rem;font-weight:500;
+  letter-spacing:.03em;
+}
+.cpill.ios{background:rgba(232,40,10,.08);border:1px solid rgba(232,40,10,.2);color:#FF6B6B}
+.cpill.and{background:rgba(0,214,143,.08);border:1px solid rgba(0,214,143,.2);color:var(--andr)}
+.cpill.safe{background:rgba(13,175,108,.08);border:1px solid rgba(13,175,108,.2);color:var(--green)}
+.cpill i.ph{font-size:.75rem}
 
-    /* ══ PRODUCT CARD ══ */
-    .product-card{animation:fadeUp .5s .1s ease both}
-    .compat-row{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap}
-    .compat-pill{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:100px;background:rgba(0,180,80,.10);border:1px solid rgba(0,180,80,.25);font-size:.75rem;font-weight:600;color:#00b450}
-    .compat-pill.android-pill{background:rgba(61,220,132,.12);border-color:rgba(61,220,132,.30);color:var(--android)}
-    .benefits-title{font-family:var(--font-d);font-size:.85rem;letter-spacing:.12em;color:var(--muted);margin-bottom:10px}
-    .benefits-list{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px}
-    .benefit-item{display:flex;align-items:center;gap:8px;font-size:.82rem}
-    .benefit-item i{color:var(--accent);font-size:.75rem;flex-shrink:0}
+.benefits-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 10px}
+.bitem{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:.77rem;color:var(--txt2)}
+.bitem i.ph{color:var(--red);font-size:.95rem;flex-shrink:0;width:16px}
 
-    .proof-card{animation:fadeUp .5s .15s ease both}
-    .proof-inner{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--text);transition:var(--tr)}
-    .proof-inner:hover{transform:translateX(3px)}
-    .proof-icon{width:48px;height:48px;border-radius:12px;background:rgba(255,0,0,.10);border:1px solid rgba(255,0,0,.2);display:grid;place-items:center;font-size:1.4rem;color:#FF0000;flex-shrink:0}
-    .proof-text strong{display:block;font-size:.92rem;font-weight:700;margin-bottom:2px}
-    .proof-text span{font-size:.78rem;color:var(--muted);font-weight:300}
-    .proof-cta{margin-left:auto;display:flex;align-items:center;gap:5px;font-size:.75rem;font-weight:600;color:var(--accent);padding:7px 12px;border-radius:8px;border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);background:var(--accent-glow);white-space:nowrap}
+.proof-anchor{
+  display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--txt);
+  padding:12px 14px;background:var(--ink2);border-radius:var(--r-sm);
+  border:1px solid var(--wire);transition:var(--tr);
+}
+.proof-anchor:hover{border-color:var(--wire2);background:var(--ink3)}
+.proof-icon-wrap{
+  width:40px;height:40px;border-radius:10px;
+  background:rgba(41,182,246,.09);border:1px solid rgba(41,182,246,.18);
+  display:grid;place-items:center;flex-shrink:0;
+}
+.proof-icon-wrap i.ph{font-size:1.25rem;color:#29B6F6}
+.proof-label strong{display:block;font-size:.82rem;font-weight:600;margin-bottom:1px}
+.proof-label span{font-size:.67rem;color:var(--txt3);font-weight:300;letter-spacing:.02em}
+.proof-caret{margin-left:auto;color:var(--txt3)}
+.proof-caret i.ph{font-size:1rem}
 
-    /* ══ ORDER BUILDER ══ */
-    .order-card{animation:fadeUp .5s .2s ease both}
-    .step-row{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-    .step-num{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;display:grid;place-items:center;font-family:var(--font-d);font-size:.85rem;flex-shrink:0}
-    .step-title{font-family:var(--font-d);font-size:.9rem;letter-spacing:.1em}
-    .step-done{font-size:.73rem;color:var(--green);margin-left:auto;font-weight:600;display:none;align-items:center;gap:4px}
-    .step-done.show{display:flex}
-    .step-divider{height:1px;background:var(--border);margin:18px 0}
+.coupon-header-row{display:flex;align-items:center;gap:11px;margin-bottom:13px}
+.coupon-icon-box{
+  width:38px;height:38px;border-radius:10px;flex-shrink:0;
+  background:var(--goldg);border:1px solid rgba(242,183,5,.22);
+  display:grid;place-items:center;
+}
+.coupon-icon-box i.ph{font-size:1.2rem;color:var(--gold2)}
+.coupon-hdr-title{font-size:.85rem;font-weight:600;margin-bottom:2px;letter-spacing:.01em}
+.coupon-hdr-sub{font-size:.67rem;color:var(--txt3);font-weight:300}
+.coupon-hdr-sub strong{color:var(--gold2);font-weight:600}
 
-    .sel-wrap{position:relative}
-    .sel-wrap select{width:100%;padding:13px 44px 13px 16px;border-radius:var(--radius-sm);background:var(--bg2);border:1px solid var(--border);color:var(--text);font-family:var(--font-b);font-size:.88rem;font-weight:500;appearance:none;-webkit-appearance:none;cursor:pointer;transition:var(--tr)}
-    .sel-wrap select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
-    .sel-wrap::after{content:'\f107';font-family:'Font Awesome 6 Free';font-weight:900;position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+.coupon-row{display:flex;gap:7px}
+.coupon-field{
+  flex:1;padding:11px 14px;border-radius:var(--r-sm);
+  background:var(--ink2);border:1px solid var(--wire);color:var(--txt);
+  font-family:var(--f-body);font-size:.85rem;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;outline:none;transition:var(--tr);
+}
+.coupon-field::placeholder{text-transform:none;font-weight:300;letter-spacing:.02em;color:var(--txt3)}
+.coupon-field:focus{border-color:var(--gold2);box-shadow:0 0 0 3px var(--goldg)}
+.coupon-field:disabled{opacity:.35;cursor:not-allowed}
+.coupon-submit{
+  padding:0 18px;border-radius:var(--r-sm);border:none;
+  background:linear-gradient(150deg,var(--gold2),#d9a004);color:#000;
+  font-family:var(--f-body);font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  cursor:pointer;transition:var(--tr);white-space:nowrap;min-width:82px;
+}
+.coupon-submit:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 4px 16px rgba(242,183,5,.3)}
+.coupon-submit:disabled{opacity:.3;cursor:not-allowed;transform:none}
 
-    .method-list{display:flex;flex-direction:column;gap:8px;margin-top:14px}
-    .method-item{display:flex;align-items:center;gap:12px;padding:13px 14px;background:var(--card);border:2px solid var(--border);border-radius:var(--radius-sm);transition:var(--tr);cursor:pointer;user-select:none}
-    .method-item:hover{border-color:color-mix(in srgb,var(--accent) 35%,transparent)}
-    .method-item.selected{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 6%,var(--card))}
-    .method-logo{width:36px;height:28px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem}
-    .method-info{flex:1;min-width:0}
-    .method-name{font-size:.85rem;font-weight:600;margin-bottom:1px}
-    .method-desc{font-size:.68rem;color:var(--muted);font-weight:300}
-    .method-tag{font-size:.6rem;font-weight:700;letter-spacing:.08em;padding:2px 7px;border-radius:100px;background:var(--accent-glow);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 25%,transparent);flex-shrink:0}
-    .method-check{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);display:grid;place-items:center;flex-shrink:0;transition:var(--tr)}
-    .method-item.selected .method-check{border-color:var(--accent);background:var(--accent)}
-    .method-check i{font-size:.58rem;color:#fff;opacity:0;transition:opacity .2s}
-    .method-item.selected .method-check i{opacity:1}
+.coupon-alert{
+  display:none;align-items:center;gap:8px;margin-top:8px;
+  padding:9px 12px;border-radius:var(--r-xs);font-size:.74rem;line-height:1.5;
+}
+.coupon-alert.show{display:flex}
+.coupon-alert i.ph{font-size:1rem;flex-shrink:0}
+.coupon-alert.ok{background:rgba(13,175,108,.09);border:1px solid rgba(13,175,108,.22);color:#4DD4A0}
+.coupon-alert.err{background:var(--redg);border:1px solid rgba(232,40,10,.22);color:#FF8E80}
+.coupon-alert.warn{background:var(--goldg);border:1px solid rgba(242,183,5,.22);color:var(--gold2)}
+.coupon-alert.off{background:rgba(80,80,80,.1);border:1px solid rgba(80,80,80,.2);color:var(--txt3)}
 
-    /* ══ PLANS GRID — 3 columnas ══ */
-    .plans-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:14px}
-    .plan-btn{border-radius:var(--radius-sm);padding:14px 10px;text-align:center;border:2px solid var(--border);background:var(--card);transition:var(--tr);cursor:pointer;position:relative;overflow:hidden;user-select:none}
-    .plan-btn:hover:not(.selected){border-color:color-mix(in srgb,var(--accent) 30%,transparent)}
-    .plan-btn.selected.biweekly{border-color:var(--accent-2);background:color-mix(in srgb,var(--accent-2) 7%,var(--card))}
-    .plan-btn.selected.monthly{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,var(--card))}
-    .plan-btn.selected.permanent{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 7%,var(--card))}
-    .plan-label{font-size:.55rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:100px;display:inline-block;margin-bottom:6px}
-    .plan-btn.biweekly .plan-label{background:color-mix(in srgb,var(--accent-2) 14%,transparent);color:var(--accent-2);border:1px solid color-mix(in srgb,var(--accent-2) 28%,transparent)}
-    .plan-btn.monthly .plan-label{background:var(--accent-glow);color:var(--accent);border:1px solid color-mix(in srgb,var(--accent) 25%,transparent)}
-    .plan-btn.permanent .plan-label{background:var(--gold-glow);color:var(--gold);border:1px solid color-mix(in srgb,var(--gold) 30%,transparent)}
-    .plan-price-main{font-family:var(--font-d);font-size:1.55rem;letter-spacing:.04em;line-height:1}
-    .plan-btn.biweekly .plan-price-main{color:var(--accent-2)}
-    .plan-btn.monthly .plan-price-main{color:var(--accent)}
-    .plan-btn.permanent .plan-price-main{color:var(--gold)}
-    .plan-currency-label{font-size:.62rem;color:var(--muted);font-weight:400;margin-top:3px;line-height:1.3}
-    .plan-period{font-size:.62rem;color:var(--muted);font-weight:300;margin-top:2px}
-    .plan-best-tag{position:absolute;top:6px;right:6px;font-size:.48rem;font-weight:700;padding:2px 6px;border-radius:100px;background:var(--gold);color:#000;letter-spacing:.08em}
-    .plan-discount{font-size:.6rem;color:var(--green);font-weight:600;margin-top:4px}
-    .plan-original-price{font-size:.6rem;color:var(--muted);text-decoration:line-through;margin-top:1px}
-    .plan-coupon-discount{font-size:.6rem;color:var(--gold);font-weight:700;margin-top:2px}
-    .plan-perma-only{font-size:.58rem;color:var(--gold);font-weight:600;margin-top:4px;opacity:.85}
-    /* beneficios mini por plan */
-    .plan-benefits{margin-top:7px;display:flex;flex-direction:column;gap:2px}
-    .plan-benefit-mini{font-size:.58rem;color:var(--muted);display:flex;align-items:center;gap:4px;justify-content:center;line-height:1.3}
-    .plan-benefit-mini i{font-size:.5rem;color:var(--accent);flex-shrink:0}
-    .plan-btn.permanent .plan-benefit-mini i{color:var(--gold)}
-    .plan-btn.biweekly .plan-benefit-mini i{color:var(--accent-2)}
+.coupon-confirmed{
+  display:none;align-items:center;gap:10px;
+  padding:10px 14px;border-radius:var(--r-sm);
+  background:rgba(13,175,108,.08);border:1px solid rgba(13,175,108,.2);
+  font-size:.77rem;font-weight:500;color:#4DD4A0;
+}
+.coupon-confirmed.show{display:flex}
+.coupon-confirmed i.ph{font-size:1.1rem;flex-shrink:0}
+.coupon-confirmed .disc-badge{
+  margin-left:auto;font-family:var(--f-display);font-size:1rem;font-weight:700;
+  color:var(--gold2);
+}
 
-    .price-note{display:none;font-size:.74rem;color:var(--muted);line-height:1.6;padding:11px 14px;background:color-mix(in srgb,var(--green) 8%,var(--card));border:1px solid color-mix(in srgb,var(--green) 25%,transparent);border-radius:var(--radius-sm);margin-top:10px}
-    .price-note.show{display:block}
+.flow{display:flex;flex-direction:column;gap:8px;animation:riseIn .5s .1s ease both}
 
-    /* ══ COUPON RESTRICTION NOTICE ══ */
-    .coupon-restrict{display:flex;align-items:center;gap:8px;padding:9px 13px;border-radius:var(--radius-sm);background:color-mix(in srgb,var(--gold) 9%,transparent);border:1px solid color-mix(in srgb,var(--gold) 25%,transparent);font-size:.72rem;color:var(--muted);line-height:1.4;margin-top:10px}
-    .coupon-restrict i{color:var(--gold);flex-shrink:0}
+.step{
+  background:var(--ink1);border:1px solid var(--wire);
+  border-radius:var(--r);overflow:hidden;transition:border-color var(--tr);
+}
+.step.is-active{border-color:rgba(232,40,10,0.3)}
+.step.is-done{border-color:rgba(13,175,108,0.18)}
 
-    .summary-wrap{display:none;animation:fadeUp .4s ease both}
-    .summary-wrap.show{display:block}
-    .summary-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 18px;margin-bottom:14px}
-    .summary-title{font-family:var(--font-d);font-size:.75rem;letter-spacing:.18em;color:var(--muted);margin-bottom:12px}
-    .summary-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:.82rem}
-    .summary-row:last-child{border-bottom:none;padding-bottom:0}
-    .summary-key{color:var(--muted);font-weight:300}
-    .summary-val{font-weight:600;text-align:right;max-width:58%}
-    .summary-coupon-row{display:none}
-    .summary-coupon-row.show{display:flex}
-    .summary-coupon-val{color:var(--gold);font-weight:700}
-    .summary-total{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding:12px 14px;border-radius:var(--radius-sm);background:color-mix(in srgb,var(--gold) 10%,var(--card));border:1px solid color-mix(in srgb,var(--gold) 30%,transparent)}
-    .summary-total-label{font-family:var(--font-d);font-size:.82rem;letter-spacing:.12em;color:var(--gold)}
-    .summary-total-val{font-family:var(--font-d);font-size:1.4rem;color:var(--gold)}
+.step-hdr{
+  display:flex;align-items:center;gap:12px;padding:14px 16px;user-select:none;
+}
+.step-index{
+  width:28px;height:28px;border-radius:50%;
+  background:var(--ink3);border:1px solid var(--wire);
+  display:grid;place-items:center;flex-shrink:0;
+  font-family:var(--f-display);font-size:.82rem;font-weight:700;color:var(--txt3);
+  transition:all var(--tr);
+}
+.step.is-active .step-index{background:var(--red);border-color:var(--red);color:#fff;box-shadow:0 0 18px rgba(232,40,10,.35)}
+.step.is-done .step-index{background:var(--green);border-color:var(--green);color:#fff}
+.step.is-done .step-index i.ph{font-size:.75rem}
+.step-meta{flex:1;min-width:0}
+.step-title{font-family:var(--f-body);font-size:.84rem;font-weight:600;letter-spacing:.02em}
+.step-selection{font-size:.68rem;color:var(--txt3);margin-top:2px;font-weight:300;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color var(--tr)}
+.step.is-done .step-selection{color:var(--green)}
+.step-edit-btn{
+  font-family:var(--f-body);font-size:.62rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--txt3);padding:5px 10px;border-radius:var(--r-xs);
+  border:1px solid var(--wire);background:none;cursor:pointer;transition:var(--tr);
+  display:none;white-space:nowrap;
+}
+.step-edit-btn:hover{color:var(--txt);border-color:var(--wire2)}
+.step.is-done .step-edit-btn{display:flex;align-items:center;gap:5px}
 
-    /* ══ ADVISOR SELECTOR ══ */
-    .advisor-section{display:none;animation:fadeUp .4s ease both;margin-bottom:16px}
-    .advisor-section.show{display:block}
+.step-body{padding:0 16px 16px;display:none}
+.step.is-active .step-body{display:block}
 
-    .cta-notice{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;margin-bottom:12px;border-radius:var(--radius-sm);background:color-mix(in srgb,var(--gold) 10%,var(--card));border:1px solid color-mix(in srgb,var(--gold) 30%,transparent);font-size:.78rem;color:var(--muted);line-height:1.5}
-    .cta-notice i{color:var(--gold);flex-shrink:0;margin-top:1px}
-    .cta-notice strong{color:var(--text)}
-    .buy-btn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;height:68px;border:none;border-radius:var(--radius-sm);background:linear-gradient(135deg,#25D366,#1aad52);color:#fff;font-family:var(--font-d);font-size:1.35rem;letter-spacing:.1em;cursor:pointer;box-shadow:0 6px 24px rgba(37,211,102,.35);transition:var(--tr);text-decoration:none;opacity:.35;pointer-events:none}
-    .buy-btn.ready{opacity:1;pointer-events:all}
-    .buy-btn.ready:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(37,211,102,.5)}
-    .buy-btn:active{transform:translateY(0)}
+.plat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.plat-card{
+  border-radius:var(--r-sm);padding:16px 12px 14px;
+  border:1.5px solid var(--wire);background:var(--ink2);
+  cursor:pointer;transition:all var(--tr);
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  position:relative;user-select:none;text-align:center;
+}
+.plat-card:hover{border-color:var(--wire2)}
+.plat-card.sel-ios{border-color:var(--red);background:rgba(232,40,10,0.05)}
+.plat-card.sel-and{border-color:var(--andr);background:rgba(0,214,143,0.05)}
+.plat-icon{font-size:2rem}
+.plat-card.sel-ios .plat-icon{color:var(--red)}
+.plat-card.sel-and .plat-icon{color:var(--andr)}
+.plat-card .plat-icon{color:var(--txt3);transition:color var(--tr)}
+.plat-card .plat-icon i.ph{font-size:2rem}
+.plat-name{font-family:var(--f-display);font-size:.95rem;font-weight:700;letter-spacing:.02em}
+.plat-spec{font-size:.6rem;color:var(--txt3);font-weight:300;line-height:1.5}
+.plat-tick{
+  position:absolute;top:7px;right:7px;width:17px;height:17px;border-radius:50%;
+  border:1.5px solid var(--wire);display:grid;place-items:center;transition:all var(--tr);
+}
+.plat-tick i.ph{font-size:.55rem;color:#fff;opacity:0;transition:opacity .15s}
+.plat-card.sel-ios .plat-tick{background:var(--red);border-color:var(--red)}
+.plat-card.sel-and .plat-tick{background:var(--andr);border-color:var(--andr)}
+.plat-card.sel-ios .plat-tick i.ph,.plat-card.sel-and .plat-tick i.ph{opacity:1}
 
-    footer{position:relative;z-index:1;margin-top:auto;padding:18px 24px;text-align:center;font-size:.72rem;color:var(--muted);font-weight:300;letter-spacing:.05em;border-top:1px solid var(--border)}
-    footer span{color:var(--accent)}
+.field-wrap{position:relative}
+.field-wrap select{
+  width:100%;padding:12px 38px 12px 14px;border-radius:var(--r-sm);
+  background:var(--ink2);border:1px solid var(--wire);color:var(--txt);
+  font-family:var(--f-body);font-size:.84rem;font-weight:400;
+  appearance:none;-webkit-appearance:none;cursor:pointer;outline:none;transition:var(--tr);
+}
+.field-wrap select:focus{border-color:var(--red);box-shadow:0 0 0 3px var(--redg)}
+.field-wrap::after{
+  content:'\e2f8';font-family:'Phosphor';
+  position:absolute;right:13px;top:50%;transform:translateY(-50%);
+  font-size:1rem;color:var(--txt3);pointer-events:none;
+}
+.field-wrap select option{background:#1a1a1a;color:var(--txt)}
 
-    @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-    @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-    @media(max-width:480px){
-      .benefits-list{grid-template-columns:1fr}
-      .plans-grid{grid-template-columns:1fr}
-      .platform-grid{grid-template-columns:1fr 1fr}
-    }
-  </style>
+.method-list{display:flex;flex-direction:column;gap:7px}
+.method-item{
+  display:flex;align-items:center;gap:11px;padding:11px 13px;
+  background:var(--ink2);border:1.5px solid var(--wire);border-radius:var(--r-sm);
+  cursor:pointer;transition:all var(--tr);user-select:none;
+}
+.method-item:hover{border-color:var(--wire2)}
+.method-item.is-sel{border-color:var(--red);background:rgba(232,40,10,0.04)}
+.method-icon-box{width:34px;height:28px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.method-icon-box i.ph{font-size:1.25rem}
+.method-info{flex:1;min-width:0}
+.method-name{font-size:.8rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.01em}
+.method-desc{font-size:.63rem;color:var(--txt3);font-weight:300;margin-top:1px}
+.method-badge{
+  font-size:.55rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+  padding:2px 7px;border-radius:100px;
+  background:var(--redg);color:var(--red2);border:1px solid rgba(232,40,10,.18);flex-shrink:0;
+}
+.method-radio{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--wire);display:grid;place-items:center;flex-shrink:0;transition:all var(--tr)}
+.method-item.is-sel .method-radio{background:var(--red);border-color:var(--red)}
+.method-radio i.ph{font-size:.6rem;color:#fff;opacity:0;transition:opacity .15s}
+.method-item.is-sel .method-radio i.ph{opacity:1}
+
+.plans-wrap{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
+.plan-card{
+  border-radius:var(--r-sm);padding:14px 8px 12px;text-align:center;
+  border:1.5px solid var(--wire);background:var(--ink2);
+  cursor:pointer;transition:all var(--tr);position:relative;overflow:hidden;user-select:none;
+}
+.plan-card:hover:not(.is-sel){border-color:var(--wire2)}
+.plan-card.is-sel.p-bw{border-color:var(--red2);background:rgba(255,85,51,.05)}
+.plan-card.is-sel.p-mo{border-color:var(--red);background:rgba(232,40,10,.05)}
+.plan-card.is-sel.p-pm{border-color:var(--gold2);background:rgba(242,183,5,.05)}
+
+.plan-chip{
+  font-size:.5rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  padding:2px 7px;border-radius:100px;display:inline-block;margin-bottom:6px;
+}
+.plan-card.p-bw .plan-chip{background:rgba(255,85,51,.12);color:var(--red2);border:1px solid rgba(255,85,51,.22)}
+.plan-card.p-mo .plan-chip{background:var(--redg);color:var(--red2);border:1px solid rgba(232,40,10,.2)}
+.plan-card.p-pm .plan-chip{background:var(--goldg);color:var(--gold2);border:1px solid rgba(242,183,5,.25)}
+
+.plan-price{font-family:var(--f-display);font-size:1.5rem;font-weight:900;line-height:1;letter-spacing:-.02em}
+.plan-card.p-bw .plan-price{color:var(--red2)}
+.plan-card.p-mo .plan-price{color:var(--red)}
+.plan-card.p-pm .plan-price{color:var(--gold2)}
+.plan-currency{font-size:.58rem;color:var(--txt3);margin-top:2px;letter-spacing:.04em;font-weight:400}
+.plan-duration{font-size:.6rem;color:var(--txt3);font-weight:300;margin-top:2px}
+.plan-strike{font-size:.57rem;color:var(--txt3);text-decoration:line-through;margin-top:2px}
+.plan-coupon-line{
+  font-size:.56rem;font-weight:700;color:var(--gold2);
+  display:flex;align-items:center;gap:3px;justify-content:center;margin-top:2px;
+}
+.plan-coupon-line i.ph{font-size:.65rem}
+.plan-only-pm{font-size:.52rem;color:rgba(201,150,10,.5);margin-top:3px}
+.plan-best{
+  position:absolute;top:5px;right:5px;
+  background:var(--gold2);color:#000;
+  font-size:.44rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  padding:2px 6px;border-radius:100px;
+}
+.plan-feats{margin-top:7px;display:flex;flex-direction:column;gap:2px}
+.plan-feat{font-size:.56rem;color:var(--txt3);display:flex;align-items:center;gap:3px;justify-content:center}
+.plan-feat i.ph{font-size:.65rem;color:var(--red)}
+.plan-card.p-pm .plan-feat i.ph{color:var(--gold2)}
+.plan-card.p-bw .plan-feat i.ph{color:var(--red2)}
+
+.plan-note-banner{
+  display:none;margin-top:8px;padding:9px 12px;border-radius:var(--r-xs);
+  background:var(--greeng);border:1px solid rgba(13,175,108,.2);
+  font-size:.7rem;color:rgba(77,212,160,.85);line-height:1.5;
+}
+.plan-note-banner.show{display:block}
+
+/* ── SUMMARY ── */
+.summary-block{
+  display:none;margin-top:10px;
+  background:var(--ink1);border:1px solid rgba(242,183,5,.16);
+  border-radius:var(--r);overflow:hidden;animation:riseIn .3s ease both;
+}
+.summary-block.show{display:block}
+.summary-rows{padding:14px 16px}
+.sum-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--wire);font-size:.79rem}
+.sum-row:last-child{border:none;padding-bottom:0}
+.sum-key{color:var(--txt3);font-weight:300}
+.sum-val{font-weight:600;text-align:right;max-width:56%}
+.sum-coupon-row{display:none}
+.sum-coupon-row.show{display:flex}
+.sum-coupon-row .sum-val{color:var(--gold2)}
+.summary-total{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:13px 16px;
+  background:linear-gradient(135deg,rgba(242,183,5,.08),rgba(242,183,5,.03));
+  border-top:1px solid rgba(242,183,5,.18);
+}
+.sum-total-label{font-family:var(--f-body);font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--txt3)}
+/* ── CAMBIO: fuente y tamaño del monto total ── */
+.sum-total-amount{font-family:var(--f-body);font-size:1.05rem;font-weight:700;letter-spacing:.04em;color:var(--gold2)}
+
+/* ── PAYMENT ── */
+.pay-section{display:none;margin-top:10px;animation:riseIn .3s ease both}
+.pay-section.show{display:block}
+.pay-card{background:var(--ink1);border:1px solid var(--wire);border-radius:var(--r);overflow:hidden}
+
+.pay-card-header{
+  display:flex;align-items:center;gap:11px;padding:14px 16px;
+  border-bottom:1px solid var(--wire);
+}
+.pay-card-icon{
+  width:40px;height:40px;border-radius:10px;display:grid;place-items:center;flex-shrink:0;
+}
+.pay-card-icon i.ph{font-size:1.3rem}
+.pay-card-title{font-size:.86rem;font-weight:600;letter-spacing:.01em;margin-bottom:2px}
+.pay-card-sub{font-size:.67rem;color:var(--txt3);font-weight:300}
+
+.pay-card-body{padding:14px 16px}
+
+.pay-action-btn{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  width:100%;height:52px;border:none;border-radius:var(--r-sm);
+  font-family:var(--f-body);font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  cursor:pointer;transition:all var(--tr);text-decoration:none;
+}
+.pay-action-btn.primary{
+  background:linear-gradient(150deg,var(--red),#c01d00);color:#fff;
+  box-shadow:0 4px 20px rgba(232,40,10,.28);
+}
+.pay-action-btn.primary:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(232,40,10,.4)}
+.pay-action-btn.primary i.ph{font-size:1.1rem}
+
+.data-table{display:flex;flex-direction:column;gap:6px}
+.data-row{
+  display:flex;align-items:center;gap:8px;
+  background:var(--ink2);border-radius:var(--r-xs);padding:10px 12px;
+  border:1px solid var(--wire);
+}
+.data-lbl{font-size:.66rem;color:var(--txt3);font-weight:300;min-width:82px;flex-shrink:0}
+.data-val{font-size:.8rem;font-weight:600;flex:1;word-break:break-all;letter-spacing:.01em}
+.data-copy{
+  width:30px;height:30px;border-radius:6px;border:1px solid var(--wire);
+  background:var(--ink3);color:var(--txt3);font-size:.7rem;
+  cursor:pointer;display:grid;place-items:center;flex-shrink:0;transition:all var(--tr);
+}
+.data-copy:hover{color:var(--txt);border-color:var(--wire2)}
+.data-copy.copied{color:var(--green);border-color:rgba(13,175,108,.3);background:rgba(13,175,108,.07)}
+.data-copy i.ph{font-size:.9rem}
+
+.amounts-row{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}
+.amt-pill{text-align:center;padding:9px 6px;border-radius:var(--r-xs);background:var(--ink2);border:1px solid var(--wire)}
+.amt-plan{font-size:.57rem;color:var(--txt3);font-weight:300;margin-bottom:2px;letter-spacing:.04em}
+.amt-val{font-family:var(--f-display);font-size:.9rem;font-weight:700}
+.amt-pill:nth-child(1) .amt-val{color:var(--red2)}
+.amt-pill:nth-child(2) .amt-val{color:var(--red)}
+.amt-pill:nth-child(3) .amt-val{color:var(--gold2)}
+
+.info-banner{
+  display:flex;align-items:center;gap:10px;margin-top:10px;
+  padding:11px 13px;border-radius:var(--r-sm);
+  background:rgba(13,175,108,.07);border:1px solid rgba(13,175,108,.16);
+}
+.info-banner-icon{width:32px;height:32px;border-radius:8px;background:rgba(13,175,108,.12);border:1px solid rgba(13,175,108,.2);display:grid;place-items:center;flex-shrink:0}
+.info-banner-icon i.ph{font-size:1rem;color:var(--green)}
+.info-banner-txt strong{display:block;font-size:.78rem;font-weight:600;color:var(--green);margin-bottom:1px}
+.info-banner-txt span{font-size:.67rem;color:var(--txt3);font-weight:300;line-height:1.5}
+
+.pix-block{
+  padding:14px;border-radius:var(--r-sm);
+  background:rgba(41,182,246,.06);border:1px solid rgba(41,182,246,.15);
+  display:flex;align-items:flex-start;gap:11px;
+}
+.pix-icon{width:38px;height:38px;border-radius:9px;background:rgba(50,188,173,.1);border:1px solid rgba(50,188,173,.22);display:grid;place-items:center;flex-shrink:0}
+.pix-icon i.ph{font-size:1.2rem;color:#32BCAD}
+.pix-txt strong{display:block;font-size:.82rem;font-weight:600;margin-bottom:3px}
+.pix-txt span{font-size:.68rem;color:var(--txt3);line-height:1.5}
+
+/* ── CONFIRM ── */
+.confirm-section{display:none;margin-top:10px;animation:riseIn .3s ease both}
+.confirm-section.show{display:block}
+
+.confirm-trigger{
+  width:100%;display:flex;align-items:center;gap:12px;
+  padding:14px 16px;border-radius:var(--r);
+  background:var(--ink1);border:1px solid var(--wire);cursor:pointer;
+  transition:all var(--tr);text-align:left;
+}
+.confirm-trigger:hover{border-color:rgba(13,175,108,.3);background:rgba(13,175,108,.04)}
+.confirm-trigger-icon{
+  width:40px;height:40px;border-radius:10px;flex-shrink:0;
+  background:rgba(13,175,108,.09);border:1px solid rgba(13,175,108,.2);
+  display:grid;place-items:center;
+}
+.confirm-trigger-icon i.ph{font-size:1.25rem;color:var(--green)}
+.confirm-trigger-meta{flex:1}
+.confirm-trigger-title{font-size:.85rem;font-weight:600;color:var(--green);margin-bottom:2px}
+.confirm-trigger-sub{font-size:.67rem;color:var(--txt3);font-weight:300}
+.confirm-trigger-chevron{color:var(--txt3);transition:transform .2s}
+.confirm-trigger-chevron i.ph{font-size:1.1rem}
+.confirm-trigger.open .confirm-trigger-chevron{transform:rotate(180deg)}
+
+.confirm-panel{
+  display:none;background:var(--ink1);
+  border:1px solid rgba(13,175,108,.16);border-top:none;
+  border-radius:0 0 var(--r) var(--r);padding:16px;margin-top:-1px;
+}
+.confirm-panel.open{display:block;animation:riseIn .25s ease both}
+
+.warn-strip{
+  display:flex;align-items:flex-start;gap:8px;
+  padding:10px 12px;border-radius:var(--r-xs);
+  background:var(--redg);border:1px solid rgba(232,40,10,.18);
+  font-size:.71rem;color:rgba(255,142,128,.85);line-height:1.6;margin-bottom:14px;
+}
+.warn-strip i.ph{color:var(--red);flex-shrink:0;margin-top:1px;font-size:.95rem}
+
+.cf-field{margin-bottom:11px}
+.cf-label{
+  display:block;font-size:.63rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--txt3);margin-bottom:6px;
+}
+.cf-select,.cf-textarea{
+  width:100%;padding:11px 13px;border-radius:var(--r-sm);
+  background:var(--ink2);border:1px solid var(--wire);color:var(--txt);
+  font-family:var(--f-body);font-size:.83rem;font-weight:400;outline:none;transition:var(--tr);
+  appearance:none;-webkit-appearance:none;
+}
+.cf-select:focus,.cf-textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px var(--greeng)}
+.cf-select option{background:#1a1a1a;color:var(--txt)}
+.cf-textarea{resize:vertical;min-height:66px;font-weight:300;line-height:1.5}
+
+.no-pay-block{
+  padding:12px;background:var(--redg);border:1px solid rgba(232,40,10,.2);
+  border-radius:var(--r-sm);font-size:.75rem;color:rgba(255,142,128,.85);line-height:1.6;margin-top:8px;
+}
+.no-pay-block i.ph{margin-right:5px;font-size:.9rem}
+
+.send-wa-btn{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  width:100%;height:52px;border:none;border-radius:var(--r-sm);
+  background:linear-gradient(150deg,#1DB954,#128C7E);color:#fff;
+  font-family:var(--f-body);font-size:.85rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  cursor:pointer;transition:all var(--tr);box-shadow:0 4px 18px rgba(18,140,126,.2);margin-top:12px;
+}
+.send-wa-btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 8px 26px rgba(18,140,126,.35)}
+.send-wa-btn:disabled{opacity:.3;cursor:not-allowed;transform:none}
+.send-wa-btn i.ph{font-size:1.15rem}
+
+/* ── MODAL ── */
+.modal-backdrop{
+  position:fixed;inset:0;background:rgba(0,0,0,.86);z-index:200;
+  display:none;align-items:flex-end;justify-content:center;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+}
+.modal-backdrop.show{display:flex;animation:fadeIn .22s ease}
+.modal-sheet{
+  background:var(--ink1);border:1px solid var(--wire);
+  border-radius:var(--r) var(--r) 0 0;
+  padding:28px 22px calc(env(safe-area-inset-bottom,0px) + 32px);
+  width:100%;max-width:500px;
+  animation:sheetUp .28s cubic-bezier(0.4,0,0.2,1) both;
+}
+.modal-pill{width:36px;height:3px;border-radius:2px;background:var(--ink4);margin:0 auto 22px}
+.modal-icon-box{
+  width:54px;height:54px;border-radius:15px;margin:0 auto 15px;
+  background:var(--goldg);border:1px solid rgba(242,183,5,.25);
+  display:grid;place-items:center;
+}
+.modal-icon-box i.ph{font-size:1.6rem;color:var(--gold2)}
+.modal-title{
+  font-family:var(--f-display);font-size:1.55rem;font-weight:900;
+  text-align:center;margin-bottom:8px;letter-spacing:-.01em;
+}
+.modal-title em{font-style:normal;color:var(--gold2)}
+.modal-body{font-size:.79rem;color:var(--txt3);text-align:center;line-height:1.75;margin-bottom:22px}
+.modal-body strong{color:var(--txt);font-weight:600}
+.modal-cta{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  width:100%;height:56px;border:none;border-radius:var(--r-sm);
+  background:linear-gradient(150deg,var(--gold2),#d9a004);color:#000;
+  font-family:var(--f-body);font-size:.85rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  cursor:pointer;transition:all var(--tr);
+}
+.modal-cta:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(242,183,5,.35)}
+.modal-cta i.ph{font-size:1.1rem}
+.modal-footnote{text-align:center;font-size:.66rem;color:var(--txt3);margin-top:10px;line-height:1.5}
+
+@keyframes riseIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+
+@media(max-width:380px){
+  .plans-wrap{grid-template-columns:1fr}
+}
+</style>
 </head>
 <body>
 
 <!-- COUPON MODAL -->
-<div class="modal-overlay" id="couponModal">
-  <div class="modal-box">
-    <div class="modal-icon"><i class="fa-solid fa-ticket"></i></div>
-    <div class="modal-title"><em>CUPON</em> APLICADO</div>
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal-sheet">
+    <div class="modal-pill"></div>
+    <div class="modal-icon-box"><i class="ph ph-ticket"></i></div>
+    <div class="modal-title">Cupón <em>Activado</em></div>
     <div class="modal-body">
-      Tu descuento de <strong>$5 USD</strong> ha sido aplicado al plan <strong>Permanente</strong>.<br/><br/>
-      <strong>⚠️ ATENCIÓN:</strong> Este cupón solo se puede usar <strong>1 vez por persona</strong>. Una vez confirmado, quedará registrado en tu dispositivo de forma permanente.<br/><br/>
-      Si lo pusiste, <strong>compra de inmediato</strong> — aunque reinicies tu celular o borres la caché, <strong>no podrás volver a usar este cupón.</strong>
+      Tu descuento de <strong>$5 USD</strong> quedará aplicado al plan <strong>Permanente</strong>.<br/><br/>
+      <strong>Aviso:</strong> Este cupón es de un solo uso por dispositivo. Una vez confirmado queda registrado de forma permanente — no podrá volver a aplicarse aunque reinicies o limpies caché.
     </div>
-    <button class="modal-confirm-btn" onclick="confirmCouponModal()">
-      <i class="fa-solid fa-check"></i> ENTENDIDO, IR A COMPRAR
+    <button class="modal-cta" onclick="confirmCoupon()">
+      <i class="ph ph-check"></i> Entendido, aplicar descuento
     </button>
-    <div class="modal-sub">El cupón es válido hasta el 31 de mayo de 2026 · Solo aplica al plan Permanente</div>
+    <div class="modal-footnote">Válido hasta el 31 de mayo 2026 &nbsp;·&nbsp; Exclusivo plan Permanente</div>
   </div>
 </div>
 
-<!-- ADVISOR MODAL -->
-<div class="modal-overlay" id="advisorModal">
-  <div class="modal-box">
-    <div class="modal-icon" style="background:color-mix(in srgb,var(--green) 18%,transparent);border-color:color-mix(in srgb,var(--green) 40%,transparent);color:var(--green)"><i class="fa-brands fa-whatsapp"></i></div>
-    <div class="modal-title">¿CON QUIÉN <em style="color:var(--green)">HABLAR?</em></div>
-    <div class="advisor-alert">
-      <i class="fa-solid fa-triangle-exclamation"></i>
-      <span><strong>Importante:</strong> Envía tu pedido solo a <strong>una persona</strong>. Si ya enviaste a uno, <strong>espera mínimo 30 minutos</strong> antes de contactar a otro. Duplicar el pedido genera confusión y puede retrasar tu entrega.</span>
-    </div>
-    <div class="advisor-grid">
-      <button class="advisor-btn" onclick="sendToAdvisor('573132878955','JEXE (YouTuber)')">
-        <div class="advisor-btn-icon yt"><i class="fa-brands fa-youtube"></i></div>
-        <div class="advisor-btn-info">
-          <div class="advisor-btn-name">JEXE — YouTuber</div>
-          <div class="advisor-btn-desc">Chat oficial · Mayor demanda · Puede demorar más en responder</div>
-        </div>
-        <div class="advisor-btn-tag slow">+ LENTO</div>
-      </button>
-      <button class="advisor-btn" onclick="sendToAdvisor('573118246157','Gilbert (Asesor)')">
-        <div class="advisor-btn-icon wa"><i class="fa-brands fa-whatsapp"></i></div>
-        <div class="advisor-btn-info">
-          <div class="advisor-btn-name">Gilbert — Asesor</div>
-          <div class="advisor-btn-desc">+57 311 8246157 · Respuesta rápida</div>
-        </div>
-        <div class="advisor-btn-tag fast">RÁPIDO</div>
-      </button>
-      <button class="advisor-btn" onclick="sendToAdvisor('573117574285','Juli (Asesora)')">
-        <div class="advisor-btn-icon wa"><i class="fa-brands fa-whatsapp"></i></div>
-        <div class="advisor-btn-info">
-          <div class="advisor-btn-name">Juli — Asesor</div>
-          <div class="advisor-btn-desc">+57 311 7574285 · Respuesta rápida</div>
-        </div>
-        <div class="advisor-btn-tag fast">RÁPIDO</div>
-      </button>
-    </div>
-  </div>
-</div>
-
+<!-- HEADER -->
 <header>
-  <a class="logo" href="../index.html">LINK <em>DIRECTO</em></a>
-  <a class="back-btn" href="../index.html"><i class="fa-solid fa-arrow-left"></i> Volver</a>
+  <div class="wordmark">
+    <span>YouTube</span>
+    <div class="wordmark-sep"></div>
+    <span class="wordmark-sub">Premium Edition</span>
+  </div>
 </header>
 
-<div class="main">
+<main>
 
   <!-- HERO -->
   <div class="hero">
-    <div class="hero-badge"><i class="fa-solid fa-crown"></i> Premium Edition</div>
-    <h1 class="hero-title">JEXE<br/><em>REGEDIT</em></h1>
-    <p class="hero-sub" id="heroSub"><i class="fa-brands fa-apple"></i> iOS · <i class="fa-brands fa-android"></i> Android · Sin root · Acceso inmediato</p>
-    <div class="hero-div"></div>
+    <div class="hero-kicker"><i class="ph ph-crown-simple"></i> Premium Edition</div>
+    <h1 class="hero-h1">JEXE<br/><em>REGEDIT</em></h1>
+    <p class="hero-descriptor">
+      <i class="ph ph-apple-logo"></i> iOS &nbsp;&middot;&nbsp;
+      <i class="ph ph-android-logo"></i> Android &nbsp;&middot;&nbsp;
+      Sin root &nbsp;&middot;&nbsp; Acceso inmediato
+    </p>
+    <div class="hero-rule"></div>
   </div>
 
   <!-- VIDEO -->
-  <div class="video-wrap">
+  <div class="video-frame">
     <video controls preload="metadata">
       <source src="producto.mp4" type="video/mp4"/>
     </video>
-    <div class="video-label"><i class="fa-solid fa-play"></i> VIDEO REFERENCIAL</div>
+    <div class="video-caption"><i class="ph ph-play-circle"></i> Vista previa</div>
   </div>
 
   <!-- PRODUCT -->
-  <p class="sec-label">El producto</p>
-  <div class="card product-card">
-    <div class="compat-row" id="compatRow">
-      <span class="compat-pill"><i class="fa-brands fa-apple"></i> iOS 11 – 26.4+</span>
-      <span class="compat-pill android-pill"><i class="fa-brands fa-android"></i> Android 8 – 16+</span>
-      <span class="compat-pill"><i class="fa-solid fa-circle-check"></i> Sin root / jailbreak</span>
+  <div class="section-eyebrow">El producto</div>
+  <div class="surface" style="animation:riseIn .5s .05s ease both;margin-bottom:10px">
+    <div class="compat-row">
+      <span class="cpill ios"><i class="ph ph-apple-logo"></i> iOS 11 – 26.4+</span>
+      <span class="cpill and"><i class="ph ph-android-logo"></i> Android 8 – 16+</span>
+      <span class="cpill safe"><i class="ph ph-shield-check"></i> Sin root</span>
     </div>
-    <div class="benefits-title">BENEFICIOS INCLUIDOS</div>
-    <div class="benefits-list">
-      <div class="benefit-item"><i class="fa-solid fa-bolt"></i> Actualizaciones mensuales</div>
-      <div class="benefit-item"><i class="fa-solid fa-book-open"></i> Tutoriales de instalación</div>
-      <div class="benefit-item"><i class="fa-solid fa-certificate"></i> Certificados Premium</div>
-      <div class="benefit-item"><i class="fa-solid fa-crosshairs"></i> Aimfov 120%</div>
-      <div class="benefit-item"><i class="fa-solid fa-lock-open"></i> Aimlock 65%</div>
-      <div class="benefit-item"><i class="fa-solid fa-bullseye"></i> Aimassist 65%</div>
-      <div class="benefit-item"><i class="fa-solid fa-shield-halved"></i> Libre de Baneo</div>
-      <div class="benefit-item"><i class="fa-solid fa-list-check"></i> Libre de Blacklist</div>
-      <div class="benefit-item"><i class="fa-solid fa-arrow-up"></i> Libre reinicio de rango</div>
+    <div class="benefits-grid">
+      <div class="bitem"><i class="ph ph-lightning"></i><span>Actualizaciones mensuales</span></div>
+      <div class="bitem"><i class="ph ph-crosshair-simple"></i><span>Aimfov 120%</span></div>
+      <div class="bitem"><i class="ph ph-lock-open"></i><span>Aimlock 65%</span></div>
+      <div class="bitem"><i class="ph ph-target"></i><span>Aimassist 65%</span></div>
+      <div class="bitem"><i class="ph ph-certificate"></i><span>Certificados Premium</span></div>
+      <div class="bitem"><i class="ph ph-shield-slash"></i><span>Libre de Baneo</span></div>
+      <div class="bitem"><i class="ph ph-prohibit"></i><span>Sin Blacklist</span></div>
+      <div class="bitem"><i class="ph ph-trend-up"></i><span>Sin reinicio de rango</span></div>
     </div>
   </div>
 
   <!-- PROOF -->
-  <p class="sec-label">Mas de 1000 compras verificadas</p>
-  <div class="card proof-card">
-    <a class="proof-inner" href="https://t.me/+56Wdh8JANmJjYzZh" target="_blank" rel="noopener">
-      <div class="proof-icon"><i class="fa-brands fa-telegram"></i></div>
-      <div class="proof-text">
-        <strong>Referencias publicas</strong>
-        <span>4 anos de historial · actualizandose constantemente</span>
+  <div class="section-eyebrow">Más de 1500 compras verificadas</div>
+  <div class="surface" style="padding:12px 14px;margin-bottom:10px;animation:riseIn .5s .08s ease both">
+    <a class="proof-anchor" href="https://t.me/+56Wdh8JANmJjYzZh" target="_blank" rel="noopener">
+      <div class="proof-icon-wrap"><i class="ph ph-telegram-logo"></i></div>
+      <div class="proof-label">
+        <strong>Referencias públicas</strong>
+        <span>4 años de historial &nbsp;&middot;&nbsp; +1.500 ventas</span>
       </div>
-      <div class="proof-cta"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver</div>
+      <div class="proof-caret"><i class="ph ph-arrow-up-right"></i></div>
     </a>
   </div>
 
-  <!-- COUPON SECTION -->
-  <p class="sec-label" id="couponSecLabel">Cupon de descuento · Mayo 2026 · Solo plan Permanente</p>
-  <div class="card coupon-card" id="couponCard">
-    <div class="coupon-header">
-      <div class="coupon-icon-wrap"><i class="fa-solid fa-ticket"></i></div>
-      <div class="coupon-header-text">
-        <strong>¿Tienes un cupón?</strong>
-        <span>Aplica tu código y ahorra $5 USD — solo en el plan Permanente</span>
+  <!-- COUPON -->
+  <div class="section-eyebrow">Cupón mayo 2026</div>
+  <div class="surface" style="animation:riseIn .5s .1s ease both;margin-bottom:12px" id="couponCard">
+    <div class="coupon-header-row">
+      <div class="coupon-icon-box"><i class="ph ph-ticket"></i></div>
+      <div>
+        <div class="coupon-hdr-title">Tienes un cupón de descuento</div>
+        <div class="coupon-hdr-sub">Código <strong>PERMA</strong> &mdash; ahorra $5 USD en el plan Permanente</div>
       </div>
     </div>
-
-    <div id="couponInputWrap">
-      <div class="coupon-input-row">
-        <input class="coupon-input" id="couponInput" type="text" maxlength="20" placeholder="Escribe tu código aquí..." autocomplete="off" autocorrect="off" spellcheck="false"/>
-        <button class="coupon-apply-btn" id="couponApplyBtn" onclick="applyCoupon()">APLICAR</button>
+    <div id="couponInputArea">
+      <div class="coupon-row">
+        <input class="coupon-field" id="couponInp" type="text" maxlength="20" placeholder="Escribe tu código..." autocomplete="off" autocorrect="off" spellcheck="false"/>
+        <button class="coupon-submit" id="couponBtn" onclick="applyCoupon()">Aplicar</button>
       </div>
-      <div class="coupon-state" id="couponStateMsg">
-        <span class="coupon-state-icon"></span>
-        <span id="couponStateTxt"></span>
-      </div>
-      <div class="coupon-restrict"><i class="fa-solid fa-circle-info"></i>Cupón <strong>&nbsp;PERMA&nbsp;</strong>aprovecha.</div>
+      <div class="coupon-alert" id="couponAlert"><i class="ph"></i><span id="couponAlertTxt"></span></div>
     </div>
-
-    <div class="coupon-badge-applied" id="couponBadge">
-      <i class="fa-solid fa-circle-check"></i>
-      <span>Cupón PERMA aplicado — Plan Permanente</span>
-      <span class="discount-tag">− $5 USD</span>
+    <div class="coupon-confirmed" id="couponConfirmed">
+      <i class="ph ph-check-circle"></i>
+      <span>Cupón <strong>PERMA</strong> aplicado &mdash; plan Permanente</span>
+      <span class="disc-badge">&minus;$5</span>
     </div>
   </div>
 
-  <!-- ORDER BUILDER -->
-  <p class="sec-label">Arma tu pedido</p>
-  <div class="card order-card">
+  <!-- ORDER FLOW -->
+  <div class="section-eyebrow">Arma tu pedido</div>
+  <div class="flow">
 
-    <!-- STEP 1: PLATAFORMA -->
-    <div class="step-row">
-      <div class="step-num">1</div>
-      <div class="step-title">Tu plataforma</div>
-      <div class="step-done" id="done1"><i class="fa-solid fa-check"></i> Listo</div>
-    </div>
-    <div class="platform-grid">
-      <div class="platform-btn ios-btn" id="btnIOS" onclick="selectPlatform('ios')">
-        <div class="platform-check"><i class="fa-solid fa-check"></i></div>
-        <div class="platform-icon"><i class="fa-brands fa-apple"></i></div>
-        <div class="platform-name">iOS</div>
-        <div class="platform-range">iPhone / iPad<br/>iOS 11 – 26.4+<br/>Sin jailbreak</div>
+    <!-- 1 PLATFORM -->
+    <div class="step is-active" id="step1">
+      <div class="step-hdr">
+        <div class="step-index" id="si1">1</div>
+        <div class="step-meta">
+          <div class="step-title">Plataforma</div>
+          <div class="step-selection" id="ss1">Selecciona iOS o Android</div>
+        </div>
+        <button class="step-edit-btn" id="ed1" onclick="editStep(1)"><i class="ph ph-pencil-simple"></i> Editar</button>
       </div>
-      <div class="platform-btn android-btn" id="btnAndroid" onclick="selectPlatform('android')">
-        <div class="platform-check"><i class="fa-solid fa-check"></i></div>
-        <div class="platform-icon"><i class="fa-brands fa-android"></i></div>
-        <div class="platform-name">Android</div>
-        <div class="platform-range">Cualquier marca<br/>Android 8 – 16+<br/>Sin root</div>
+      <div class="step-body" id="sb1">
+        <div class="plat-grid">
+          <div class="plat-card" id="platIOS" onclick="selectPlatform('ios')">
+            <div class="plat-tick"><i class="ph ph-check"></i></div>
+            <div class="plat-icon"><i class="ph ph-apple-logo"></i></div>
+            <div class="plat-name">iOS</div>
+            <div class="plat-spec">iPhone &amp; iPad<br/>iOS 11 – 26.4+<br/>Sin jailbreak</div>
+          </div>
+          <div class="plat-card" id="platAND" onclick="selectPlatform('android')">
+            <div class="plat-tick"><i class="ph ph-check"></i></div>
+            <div class="plat-icon"><i class="ph ph-android-logo"></i></div>
+            <div class="plat-name">Android</div>
+            <div class="plat-spec">Cualquier marca<br/>Android 8 – 16+<br/>Sin root</div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- STEP 2: PAIS -->
-    <div id="step2Wrap" style="display:none">
-      <div class="step-divider"></div>
-      <div class="step-row">
-        <div class="step-num">2</div>
-        <div class="step-title">Tu pais</div>
-        <div class="step-done" id="done2"><i class="fa-solid fa-check"></i> Listo</div>
+    <!-- 2 COUNTRY -->
+    <div class="step" id="step2">
+      <div class="step-hdr">
+        <div class="step-index" id="si2">2</div>
+        <div class="step-meta">
+          <div class="step-title">País</div>
+          <div class="step-selection" id="ss2">Selecciona tu plataforma primero</div>
+        </div>
+        <button class="step-edit-btn" id="ed2" onclick="editStep(2)"><i class="ph ph-pencil-simple"></i> Editar</button>
       </div>
-      <div class="sel-wrap">
-        <select id="countrySelect" onchange="onCountryChange()">
-          <option value="">— Selecciona tu pais —</option>
-          <optgroup label="America Latina">
-            <option value="mx">Mexico</option>
-            <option value="co">Colombia</option>
-            <option value="ar">Argentina</option>
-            <option value="cl">Chile</option>
-            <option value="pe">Peru</option>
-            <option value="ve">Venezuela</option>
-            <option value="ec">Ecuador</option>
-            <option value="bo">Bolivia</option>
-            <option value="py">Paraguay</option>
-            <option value="uy">Uruguay</option>
-            <option value="cr">Costa Rica</option>
-            <option value="pa">Panama</option>
-            <option value="gt">Guatemala</option>
-            <option value="hn">Honduras</option>
-            <option value="sv">El Salvador</option>
-            <option value="ni">Nicaragua</option>
-            <option value="do">Rep. Dominicana</option>
-            <option value="cu">Cuba</option>
-            <option value="br">Brasil</option>
-            <option value="pr">Puerto Rico</option>
-          </optgroup>
-          <optgroup label="Norte America">
-            <option value="us">Estados Unidos</option>
-            <option value="ca">Canada</option>
-          </optgroup>
-          <optgroup label="Europa">
-            <option value="es">Espana</option>
-            <option value="gb">Reino Unido</option>
-            <option value="de">Alemania</option>
-            <option value="fr">Francia</option>
-            <option value="it">Italia</option>
-            <option value="pt">Portugal</option>
-            <option value="nl">Paises Bajos</option>
-            <option value="be">Belgica</option>
-            <option value="ch">Suiza</option>
-            <option value="at">Austria</option>
-            <option value="pl">Polonia</option>
-            <option value="se">Suecia</option>
-            <option value="no">Noruega</option>
-            <option value="tr">Turquia</option>
-          </optgroup>
-          <optgroup label="Asia / Otros">
-            <option value="in">India</option>
-            <option value="ph">Filipinas</option>
-            <option value="ae">Emiratos Arabes</option>
-            <option value="other">Otro pais</option>
-          </optgroup>
+      <div class="step-body" id="sb2">
+        <div class="field-wrap">
+          <select id="countrySelect" onchange="onCountry()">
+            <option value="">— Selecciona tu país —</option>
+            <optgroup label="América Latina">
+              <option value="mx">México</option>
+              <option value="co">Colombia</option>
+              <option value="ar">Argentina</option>
+              <option value="cl">Chile</option>
+              <option value="pe">Perú</option>
+              <option value="ve">Venezuela</option>
+              <option value="ec">Ecuador</option>
+              <option value="bo">Bolivia</option>
+              <option value="py">Paraguay</option>
+              <option value="uy">Uruguay</option>
+              <option value="cr">Costa Rica</option>
+              <option value="pa">Panamá</option>
+              <option value="gt">Guatemala</option>
+              <option value="hn">Honduras</option>
+              <option value="sv">El Salvador</option>
+              <option value="ni">Nicaragua</option>
+              <option value="do">Rep. Dominicana</option>
+              <option value="cu">Cuba</option>
+              <option value="br">Brasil</option>
+              <option value="pr">Puerto Rico</option>
+            </optgroup>
+            <optgroup label="Norte América">
+              <option value="us">Estados Unidos</option>
+              <option value="ca">Canadá</option>
+            </optgroup>
+            <optgroup label="Europa">
+              <option value="es">España</option>
+              <option value="gb">Reino Unido</option>
+              <option value="de">Alemania</option>
+              <option value="fr">Francia</option>
+              <option value="it">Italia</option>
+              <option value="pt">Portugal</option>
+              <option value="nl">Países Bajos</option>
+              <option value="be">Bélgica</option>
+              <option value="ch">Suiza</option>
+              <option value="at">Austria</option>
+              <option value="pl">Polonia</option>
+              <option value="se">Suecia</option>
+              <option value="no">Noruega</option>
+              <option value="tr">Turquía</option>
+            </optgroup>
+            <optgroup label="Asia &amp; Otros">
+              <option value="in">India</option>
+              <option value="ph">Filipinas</option>
+              <option value="ae">Emiratos Árabes</option>
+              <option value="other">Otro país</option>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 PAYMENT METHOD -->
+    <div class="step" id="step3">
+      <div class="step-hdr">
+        <div class="step-index" id="si3">3</div>
+        <div class="step-meta">
+          <div class="step-title">Método de pago</div>
+          <div class="step-selection" id="ss3">Selecciona tu país primero</div>
+        </div>
+        <button class="step-edit-btn" id="ed3" onclick="editStep(3)"><i class="ph ph-pencil-simple"></i> Editar</button>
+      </div>
+      <div class="step-body" id="sb3">
+        <div class="method-list" id="methodList"></div>
+      </div>
+    </div>
+
+    <!-- 4 PLAN -->
+    <div class="step" id="step4">
+      <div class="step-hdr">
+        <div class="step-index" id="si4">4</div>
+        <div class="step-meta">
+          <div class="step-title">Plan</div>
+          <div class="step-selection" id="ss4">Selecciona método de pago primero</div>
+        </div>
+        <button class="step-edit-btn" id="ed4" onclick="editStep(4)"><i class="ph ph-pencil-simple"></i> Editar</button>
+      </div>
+      <div class="step-body" id="sb4">
+        <div class="plans-wrap" id="plansGrid"></div>
+        <div class="plan-note-banner" id="planNote"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="summary-block" id="summaryBlock">
+    <div class="summary-rows">
+      <div class="sum-row"><span class="sum-key">Plataforma</span><span class="sum-val" id="sumPlatform">—</span></div>
+      <div class="sum-row"><span class="sum-key">País</span><span class="sum-val" id="sumCountry">—</span></div>
+      <div class="sum-row"><span class="sum-key">Método de pago</span><span class="sum-val" id="sumMethod">—</span></div>
+      <div class="sum-row"><span class="sum-key">Plan</span><span class="sum-val" id="sumPlan">—</span></div>
+      <div class="sum-row sum-coupon-row" id="sumCouponRow"><span class="sum-key">Cupón PERMA</span><span class="sum-val">&minus; $5 USD</span></div>
+    </div>
+    <div class="summary-total">
+      <span class="sum-total-label">Total a pagar</span>
+      <span class="sum-total-amount" id="sumTotal">—</span>
+    </div>
+  </div>
+
+  <!-- PAYMENT DISPLAY -->
+  <div class="pay-section" id="paySection">
+    <div class="section-eyebrow" style="margin-top:12px">Realiza tu pago</div>
+    <div class="pay-card" id="payCard"></div>
+  </div>
+
+  <!-- CONFIRM SECTION -->
+  <div class="confirm-section" id="confirmSection">
+    <div class="section-eyebrow" style="margin-top:12px">Ya realicé mi pago</div>
+    <button class="confirm-trigger" id="confirmTrigger" onclick="toggleConfirm()">
+      <div class="confirm-trigger-icon"><i class="ph ph-telegram-logo"></i></div>
+      <div class="confirm-trigger-meta">
+        <div class="confirm-trigger-title">Notificar a JEXE</div>
+        <div class="confirm-trigger-sub">Solo si ya completaste el pago</div>
+      </div>
+      <div class="confirm-trigger-chevron"><i class="ph ph-caret-down"></i></div>
+    </button>
+    <div class="confirm-panel" id="confirmPanel">
+      <div class="warn-strip">
+        <i class="ph ph-warning"></i>
+        <span><strong style="color:var(--txt)">Solo escribe si ya completaste el pago.</strong> Mensajes sin pago saturan el chat y retrasan la entrega a otros clientes.</span>
+      </div>
+      <div class="cf-field">
+        <label class="cf-label">Ya realicé el pago</label>
+        <select class="cf-select" id="cfPaid" onchange="onPaidChange()">
+          <option value="">— Selecciona —</option>
+          <option value="si">Sí, ya pagué</option>
+          <option value="no">No, todavía no</option>
         </select>
       </div>
-    </div>
-
-    <!-- STEP 3: METODO -->
-    <div id="step3Wrap" style="display:none">
-      <div class="step-divider"></div>
-      <div class="step-row">
-        <div class="step-num">3</div>
-        <div class="step-title">Metodo de pago</div>
-        <div class="step-done" id="done3"><i class="fa-solid fa-check"></i> Listo</div>
-      </div>
-      <div class="method-list" id="methodList"></div>
-    </div>
-
-    <!-- STEP 4: PLAN -->
-    <div id="step4Wrap" style="display:none">
-      <div class="step-divider"></div>
-      <div class="step-row">
-        <div class="step-num">4</div>
-        <div class="step-title">Plan</div>
-        <div class="step-done" id="done4"><i class="fa-solid fa-check"></i> Listo</div>
-      </div>
-      <div class="plans-grid" id="plansGrid"></div>
-      <div class="price-note" id="priceNote"></div>
-    </div>
-
-    <!-- RESUMEN -->
-    <div class="summary-wrap" id="summaryWrap">
-      <div class="step-divider"></div>
-      <div class="summary-box">
-        <div class="summary-title">RESUMEN DE TU PEDIDO</div>
-        <div class="summary-row"><span class="summary-key">Plataforma</span><span class="summary-val" id="sumPlatform">—</span></div>
-        <div class="summary-row"><span class="summary-key">Pais</span><span class="summary-val" id="sumCountry">—</span></div>
-        <div class="summary-row"><span class="summary-key">Metodo de pago</span><span class="summary-val" id="sumMethod">—</span></div>
-        <div class="summary-row"><span class="summary-key">Plan</span><span class="summary-val" id="sumPlan">—</span></div>
-        <div class="summary-row summary-coupon-row" id="sumCouponRow">
-          <span class="summary-key">Cupon PERMA</span>
-          <span class="summary-val summary-coupon-val">− $5 USD aplicados</span>
+      <div id="cfFields" style="display:none">
+        <div class="cf-field">
+          <label class="cf-label">Plan que compré</label>
+          <select class="cf-select" id="cfPlan">
+            <option value="">— Selecciona —</option>
+            <option value="15 dias ($7 USD)">15 días &mdash; $7 USD</option>
+            <option value="Mensual ($12 USD)">Mensual &mdash; $12 USD</option>
+            <option value="Permanente ($32 USD)">Permanente &mdash; $32 USD</option>
+            <option value="Permanente ($27 USD, cupon PERMA)">Permanente &mdash; $27 USD (cupón PERMA)</option>
+          </select>
         </div>
-        <div class="summary-total">
-          <span class="summary-total-label">TOTAL A PAGAR</span>
-          <span class="summary-total-val" id="sumTotal">—</span>
+        <div class="cf-field">
+          <label class="cf-label">Con qué pagué</label>
+          <select class="cf-select" id="cfMethod">
+            <option value="">— Selecciona —</option>
+            <option>Tarjeta débito/crédito (Bold)</option>
+            <option>Nequi</option>
+            <option>Llave / BRE-B</option>
+            <option>CLABE — Transferencia México</option>
+            <option>Binance Pay</option>
+            <option>AstroPay</option>
+            <option>Skrill</option>
+            <option>Remesadora</option>
+            <option>PIX</option>
+          </select>
+        </div>
+        <div class="cf-field">
+          <label class="cf-label">Mi dispositivo</label>
+          <select class="cf-select" id="cfPlat">
+            <option value="">— Selecciona —</option>
+            <option>iOS (iPhone / iPad)</option>
+            <option>Android</option>
+          </select>
+        </div>
+        <div class="cf-field">
+          <label class="cf-label">Nota adicional (opcional)</label>
+          <textarea class="cf-textarea" id="cfNote" placeholder="Número de orden, referencia del pago, captura, etc."></textarea>
         </div>
       </div>
-    </div>
-
-  </div><!-- /order-card -->
-
-  <!-- ADVISOR SELECTOR -->
-  <div class="advisor-section" id="advisorSection">
-    <p class="sec-label">¿Con quién hacer tu pedido?</p>
-    <div class="card" style="padding:18px 16px">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-        <div style="width:36px;height:36px;border-radius:10px;background:color-mix(in srgb,var(--green) 14%,transparent);border:1px solid color-mix(in srgb,var(--green) 30%,transparent);display:grid;place-items:center;font-size:.95rem;color:var(--green);flex-shrink:0"><i class="fa-brands fa-whatsapp"></i></div>
-        <div>
-          <div style="font-size:.88rem;font-weight:700;margin-bottom:1px">Selecciona tu asesor</div>
-          <div style="font-size:.7rem;color:var(--muted);font-weight:300">Elige uno y haz tu pedido solo con esa persona</div>
+      <div id="cfNoPayBlock" style="display:none">
+        <div class="no-pay-block">
+          <i class="ph ph-prohibit"></i>
+          <strong>Por favor realiza el pago primero.</strong> Escribe a JEXE únicamente cuando hayas completado la transacción. Esto ayuda a mantener el servicio ágil para todos.
         </div>
       </div>
-      <div style="display:flex;flex-direction:column;gap:8px">
-        <div class="advisor-btn" onclick="openAdvisorModal()">
-          <div class="advisor-btn-icon yt"><i class="fa-brands fa-youtube"></i></div>
-          <div class="advisor-btn-info">
-            <div class="advisor-btn-name">JEXE — YouTuber</div>
-            <div class="advisor-btn-desc">Chat con mayor demanda · Puede demorar en responder</div>
-          </div>
-          <div class="advisor-btn-tag slow">+ LENTO</div>
-        </div>
-        <div class="advisor-btn" onclick="openAdvisorModal()">
-          <div class="advisor-btn-icon wa"><i class="fa-brands fa-whatsapp"></i></div>
-          <div class="advisor-btn-info">
-            <div class="advisor-btn-name">Gilbert · Juli — Asesores</div>
-            <div class="advisor-btn-desc">+57 311 8246157 / +57 311 7574285 · Respuesta rápida</div>
-          </div>
-          <div class="advisor-btn-tag fast">RÁPIDO</div>
-        </div>
-      </div>
-      <div style="display:flex;align-items:flex-start;gap:8px;margin-top:12px;padding:10px 12px;border-radius:var(--radius-sm);background:color-mix(in srgb,var(--accent) 8%,transparent);border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);font-size:.7rem;color:var(--muted);line-height:1.5">
-        <i class="fa-solid fa-triangle-exclamation" style="color:var(--accent);flex-shrink:0;margin-top:2px"></i>
-        <span><strong style="color:var(--text)">No dupliques el pedido.</strong> Si ya enviaste a uno, espera <strong style="color:var(--text)">mínimo 30 minutos</strong> antes de contactar a otro.</span>
-      </div>
+      <button class="send-wa-btn" id="cfSendBtn" onclick="sendToJexe()" disabled>
+        <i class="ph ph-telegram-logo"></i> Enviar confirmación a JEXE
+      </button>
     </div>
   </div>
 
-  <!-- CTA -->
-  <div style="animation:fadeUp .5s .25s ease both;margin-bottom:40px">
-    <div class="cta-notice">
-      <i class="fa-solid fa-triangle-exclamation"></i>
-      <span><strong>Importante:</strong> Selecciona a tu asesor arriba para enviar tu pedido completo por <strong>WhatsApp</strong> directamente.</span>
-    </div>
-    <a id="buyBtn" class="buy-btn" href="#" onclick="handleBuyClick(event)">
-      <i class="fa-brands fa-whatsapp"></i>
-      ENVIAR PEDIDO
-    </a>
-  </div>
-
-</div>
-
-<footer>© <span>jexe</span> 2026</footer>
+</main>
 
 <script>
-/* ══════════════════════════════════════════════
-   COUPON SYSTEM — Multi-layer persistence
-   Layers: localStorage + sessionStorage + IndexedDB + cookie
-   Strategy: any layer detecting prior use = blocked
-   Cupón PERMA — solo aplica al plan Permanente
-   ══════════════════════════════════════════════ */
+/* ══════════════════════════════════════
+   COUPON SYSTEM
+══════════════════════════════════════ */
+const CPN_CODE='PERMA',CPN_KEY='jexe_cpn_mayo26_used',CPN_DISC=5;
+const CPN_START=new Date('2026-04-24T00:00:00-05:00');
+const CPN_END=new Date('2026-05-31T23:59:59-05:00');
+let couponApplied=false;
 
-const COUPON_CODE     = 'PERMA';
-const COUPON_KEY      = 'jexe_cpn_mayo26_used';
-const COUPON_DISCOUNT = 5; // USD — solo plan Permanente
-const COUPON_START    = new Date('2026-04-24T00:00:00-05:00');
-const COUPON_END      = new Date('2026-05-31T23:59:59-05:00');
+function idbSet(k,v){try{const r=indexedDB.open('jexe_store',1);r.onupgradeneeded=e=>e.target.result.createObjectStore('kv',{keyPath:'k'});r.onsuccess=e=>{const db=e.target.result;db.transaction('kv','readwrite').objectStore('kv').put({k,v})}}catch(e){}}
+function idbGet(k,cb){try{const r=indexedDB.open('jexe_store',1);r.onupgradeneeded=e=>e.target.result.createObjectStore('kv',{keyPath:'k'});r.onsuccess=e=>{const db=e.target.result,t=db.transaction('kv','readonly'),g=t.objectStore('kv').get(k);g.onsuccess=()=>cb(g.result?g.result.v:null);g.onerror=()=>cb(null)};r.onerror=()=>cb(null)}catch(e){cb(null)}}
+function cSet(n,v,d){try{document.cookie=`${n}=${v};expires=${new Date(Date.now()+d*864e5).toUTCString()};path=/;SameSite=Strict`}catch(e){}}
+function cGet(n){try{const m=document.cookie.match(new RegExp('(?:^|; )'+n+'=([^;]*)'));return m?decodeURIComponent(m[1]):null}catch(e){return null}}
+function persistCpn(){const v='1';try{localStorage.setItem(CPN_KEY,v)}catch(e){}try{sessionStorage.setItem(CPN_KEY,v)}catch(e){}idbSet(CPN_KEY,v);cSet(CPN_KEY,v,365)}
+function cpnUsedSync(){try{if(localStorage.getItem(CPN_KEY))return true}catch(e){}try{if(sessionStorage.getItem(CPN_KEY))return true}catch(e){}return!!cGet(CPN_KEY)}
+function cpnUsedFull(cb){if(cpnUsedSync()){cb(true);return}idbGet(CPN_KEY,v=>cb(!!v))}
 
-// ── IndexedDB helpers ──
-function idbSet(key, val) {
-  try {
-    const req = indexedDB.open('jexe_store', 1);
-    req.onupgradeneeded = e => e.target.result.createObjectStore('kv', { keyPath:'k' });
-    req.onsuccess = e => {
-      const db = e.target.result;
-      const tx = db.transaction('kv','readwrite');
-      tx.objectStore('kv').put({ k: key, v: val });
-    };
-  } catch(e){}
+function setCpnAlert(type,icon,txt){
+  const el=document.getElementById('couponAlert');
+  el.className='coupon-alert '+type+' show';
+  el.querySelector('i.ph').className='ph ph-'+icon;
+  document.getElementById('couponAlertTxt').textContent=txt;
 }
-function idbGet(key, cb) {
-  try {
-    const req = indexedDB.open('jexe_store', 1);
-    req.onupgradeneeded = e => e.target.result.createObjectStore('kv', { keyPath:'k' });
-    req.onsuccess = e => {
-      const db = e.target.result;
-      const tx = db.transaction('kv','readonly');
-      const r2 = tx.objectStore('kv').get(key);
-      r2.onsuccess = () => cb(r2.result ? r2.result.v : null);
-      r2.onerror   = () => cb(null);
-    };
-    req.onerror = () => cb(null);
-  } catch(e){ cb(null); }
-}
-
-// ── Cookie helpers ──
-function cookieSet(name, val, days) {
-  try {
-    const exp = new Date(Date.now() + days * 864e5).toUTCString();
-    document.cookie = `${name}=${val};expires=${exp};path=/;SameSite=Strict`;
-  } catch(e){}
-}
-function cookieGet(name) {
-  try {
-    const m = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
-    return m ? decodeURIComponent(m[1]) : null;
-  } catch(e){ return null; }
-}
-
-// ── Write to all layers ──
-function persistCouponUsed() {
-  const val = '1';
-  try { localStorage.setItem(COUPON_KEY, val); } catch(e){}
-  try { sessionStorage.setItem(COUPON_KEY, val); } catch(e){}
-  idbSet(COUPON_KEY, val);
-  cookieSet(COUPON_KEY, val, 365);
-}
-
-// ── Read from all layers (sync check) ──
-function isCouponUsedSync() {
-  try { if (localStorage.getItem(COUPON_KEY))   return true; } catch(e){}
-  try { if (sessionStorage.getItem(COUPON_KEY)) return true; } catch(e){}
-  if (cookieGet(COUPON_KEY)) return true;
-  return false;
-}
-
-// ── Full async check including IndexedDB ──
-function checkCouponUsedFull(cb) {
-  if (isCouponUsedSync()) { cb(true); return; }
-  idbGet(COUPON_KEY, val => cb(!!val));
-}
-
-// ── Is coupon currently within valid date range? ──
-function isCouponDateValid() {
-  const now = new Date();
-  return now >= COUPON_START && now <= COUPON_END;
-}
-
-let couponApplied = false;
-
-function initCouponUI() {
-  checkCouponUsedFull(used => {
-    if (used) showCouponBlockedUI();
+function applyCoupon(){
+  const v=document.getElementById('couponInp').value.trim().toUpperCase();
+  const now=new Date();
+  if(now<CPN_START||now>CPN_END){setCpnAlert('warn','clock','Este cupón no está activo en este momento. Es válido del 24 de abril al 31 de mayo 2026.');return}
+  cpnUsedFull(used=>{
+    if(used){blockCpn();return}
+    if(v!==CPN_CODE){setCpnAlert('err','x-circle','Código incorrecto. Verifica que esté escrito exactamente como te lo dieron.');return}
+    document.getElementById('modalBackdrop').classList.add('show');
   });
 }
-
-function showCouponBlockedUI() {
-  const inp = document.getElementById('couponInput');
-  const btn = document.getElementById('couponApplyBtn');
-  if (inp) inp.disabled = true;
-  if (btn) btn.disabled = true;
-  const state = document.getElementById('couponStateMsg');
-  const txt   = document.getElementById('couponStateTxt');
-  state.className = 'coupon-state used-global show';
-  state.querySelector('.coupon-state-icon').innerHTML = '<i class="fa-solid fa-ban"></i>';
-  txt.textContent = 'Este cupón ya fue utilizado en este dispositivo y no puede volver a aplicarse.';
+function confirmCoupon(){
+  document.getElementById('modalBackdrop').classList.remove('show');
+  persistCpn();couponApplied=true;
+  document.getElementById('couponInputArea').style.display='none';
+  document.getElementById('couponAlert').classList.remove('show');
+  document.getElementById('couponConfirmed').classList.add('show');
+  if(sel.method){renderPlans();if(sel.plan){sel.plan='';sel.planKey='';hideSummary();hidePaySection();hideConfirmSection()}}
 }
-
-function applyCoupon() {
-  const raw   = document.getElementById('couponInput').value.trim().toUpperCase();
-  const state = document.getElementById('couponStateMsg');
-  const txt   = document.getElementById('couponStateTxt');
-  const icon  = state.querySelector('.coupon-state-icon');
-  state.className = 'coupon-state';
-
-  if (!isCouponDateValid()) {
-    state.className = 'coupon-state error show';
-    icon.innerHTML  = '<i class="fa-solid fa-clock"></i>';
-    txt.textContent = 'Este cupón no está activo en este momento. Es válido del 24 de abril al 31 de mayo de 2026.';
-    return;
-  }
-
-  checkCouponUsedFull(used => {
-    if (used) { showCouponBlockedUI(); return; }
-
-    if (raw !== COUPON_CODE) {
-      state.className = 'coupon-state error show';
-      icon.innerHTML  = '<i class="fa-solid fa-xmark"></i>';
-      txt.textContent = 'Código incorrecto. Verifica que lo hayas escrito exactamente como te lo dieron.';
-      return;
-    }
-
-    // VALID — show one-time warning modal
-    document.getElementById('couponModal').classList.add('show');
-  });
+function blockCpn(){
+  const i=document.getElementById('couponInp'),b=document.getElementById('couponBtn');
+  if(i)i.disabled=true;if(b)b.disabled=true;
+  setCpnAlert('off','prohibit','Este cupón ya fue utilizado en este dispositivo y no puede volver a aplicarse.');
 }
+function initCpn(){cpnUsedFull(u=>{if(u)blockCpn()})}
+document.getElementById('couponInp').addEventListener('keydown',e=>{if(e.key==='Enter')applyCoupon()});
 
-function confirmCouponModal() {
-  document.getElementById('couponModal').classList.remove('show');
-  persistCouponUsed();
-  couponApplied = true;
-  document.getElementById('couponInputWrap').style.display = 'none';
-  document.getElementById('couponStateMsg').className = 'coupon-state';
-  document.getElementById('couponBadge').classList.add('show');
+/* ══════════════════════════════════════
+   DATA
+══════════════════════════════════════ */
+const CARD_LINKS={bw:'https://checkout.bold.co/payment/LNK_JM425KYOI9',mo:'https://checkout.bold.co/payment/LNK_0U1NVUMWQK',pm:'https://checkout.bold.co/payment/LNK_9ILGBXLTH7',pm_cpn:'https://checkout.bold.co/payment/LNK_U8TS5PQU65'};
+const ASTROPAY_LINKS={bw:'https://onetouch.astropay.com/payment?external_reference_id=nKk94mxro8pNRM6E8o1AoQXV2qLnJCCx',mo:'https://onetouch.astropay.com/payment?external_reference_id=sgnR2c3ZKlH4c6C6W07KhNzmL1i7boF5',pm:'https://onetouch.astropay.com/payment?external_reference_id=LhBnOGPnmTI9rXz8NXuEjiezus2JNDAa'};
 
-  if (sel.method) {
-    renderPlans();
-    if (sel.plan) {
-      sel.plan = ''; sel.price = ''; sel.priceUSD = '';
-      done(4, false);
-      hideSummary();
-      disableBuy();
-      hideAdvisor();
-    }
-  }
-}
-
-/* ══════════════════════════════════════════════
-   ADVISOR SYSTEM
-   ══════════════════════════════════════════════ */
-let currentWANumber = '';
-let currentWAMessage = '';
-
-function openAdvisorModal() {
-  if (!sel.plan) return;
-  buildWAMessage();
-  document.getElementById('advisorModal').classList.add('show');
-}
-
-function sendToAdvisor(number, advisorName) {
-  document.getElementById('advisorModal').classList.remove('show');
-  const waMsg = buildWAMessageStr(advisorName);
-  window.open(`https://wa.me/${number}?text=${encodeURIComponent(waMsg)}`, '_blank', 'noopener');
-}
-
-function buildWAMessageStr(advisorName) {
-  const couponLine = (couponApplied && sel.planKey === 'permanent') ? '\nCupon: PERMA (−$5 USD aplicados al plan Permanente)' : '';
-  return `Hola buen dia, lei y vi toda la informacion, quiero comprar.\n\n` +
-    `━━━━━━━━━━━━━━━━\n MI PEDIDO\n━━━━━━━━━━━━━━━━\n` +
-    `Plataforma: ${sel.platformLabel}\n` +
-    `Pais: ${COUNTRY_NAMES[sel.country] || sel.country}\n` +
-    `Metodo de pago: ${sel.methodName}\n` +
-    `Plan: ${sel.plan}${couponLine}\n` +
-    `Total: ${sel.price}` +
-    (sel.price !== sel.priceUSD ? ` (${sel.priceUSD})` : '') +
-    `\n━━━━━━━━━━━━━━━━\nPor favor confirmar disponibilidad y datos de pago. Gracias!`;
-}
-
-function buildWAMessage() {
-  currentWAMessage = buildWAMessageStr('');
-}
-
-function handleBuyClick(e) {
-  e.preventDefault();
-  if (!document.getElementById('buyBtn').classList.contains('ready')) return;
-  openAdvisorModal();
-}
-
-/* ══════════════════════════════════════════════
-   MAIN ORDER LOGIC
-   ══════════════════════════════════════════════ */
-const METHODS = {
-  card:       { name:'Tarjeta Debito / Credito', desc:'Visa, Mastercard — cualquier banco', icon:'<i class="fa-solid fa-credit-card" style="color:#1A1F71;font-size:1.1rem"></i>', tag:'Universal' },
-  astropay:   { name:'AstroPay',                 desc:'Billetera digital internacional',    icon:'<i class="fa-solid fa-wallet" style="color:#0070CC;font-size:1.1rem"></i>',       tag:'Digital'   },
-  skrill:     { name:'Skrill',                   desc:'Billetera digital global',            icon:'<i class="fa-solid fa-circle-dollar-to-slot" style="color:#862165;font-size:1.1rem"></i>', tag:'Digital' },
-  binance:    { name:'Binance Pay',              desc:'Crypto: USDT, BTC y mas',            icon:'<i class="fa-solid fa-bitcoin-sign" style="color:#F0B90B;font-size:1.1rem"></i>', tag:'Crypto'    },
-  remittance: { name:'Remesadora',               desc:'Remitly, MoneyGram, Western Union',  icon:'<i class="fa-solid fa-money-bill-transfer" style="color:#E8340A;font-size:1.1rem"></i>', tag:'Remesa' },
-  clabe:      { name:'CLABE / Transferencia MX', desc:'Transferencia bancaria Mexico',      icon:'<i class="fa-solid fa-building-columns" style="color:#006847;font-size:1.1rem"></i>', tag:'Mexico'  },
-  nequi:      { name:'Nequi',                    desc:'App de pagos Bancolombia',            icon:'<i class="fa-solid fa-mobile-screen" style="color:#7B2D8B;font-size:1.1rem"></i>', tag:'Colombia'  },
-  llave:      { name:'Llave / BRE-B',            desc:'Cualquier banco de Colombia',        icon:'<i class="fa-solid fa-key" style="color:#E4202C;font-size:1.1rem"></i>',           tag:'Colombia'  },
-  pix:        { name:'PIX / QR PIX',             desc:'Transferencia instantanea Brasil',   icon:'<i class="fa-solid fa-qrcode" style="color:#32BCAD;font-size:1.1rem"></i>',        tag:'Brasil'    },
+const METHODS={
+  card:{name:'Tarjeta Débito / Crédito',desc:'Visa &amp; Mastercard — Link de cobro seguro Bold',icon:'ph-credit-card',color:'#4FC3F7',bg:'rgba(79,195,247,.1)',bd:'rgba(79,195,247,.18)',tag:'Universal'},
+  astropay:{name:'AstroPay',desc:'Billetera digital internacional',icon:'ph-wallet',color:'#64B5F6',bg:'rgba(100,181,246,.1)',bd:'rgba(100,181,246,.18)',tag:'Digital'},
+  skrill:{name:'Skrill',desc:'Billetera digital global',icon:'ph-coins',color:'#CE93D8',bg:'rgba(206,147,216,.1)',bd:'rgba(206,147,216,.18)',tag:'Digital'},
+  binance:{name:'Binance Pay',desc:'USDT, BTC y más cryptos',icon:'ph-currency-circle-dollar',color:'#F0B90B',bg:'rgba(240,185,11,.1)',bd:'rgba(240,185,11,.18)',tag:'Crypto'},
+  remittance:{name:'Remesadora',desc:'Remitly, MoneyGram, Western Union',icon:'ph-arrows-left-right',color:'#FFAB91',bg:'rgba(255,171,145,.1)',bd:'rgba(255,171,145,.18)',tag:'Remesa'},
+  clabe:{name:'CLABE — Transferencia MX',desc:'Transferencia bancaria directa México',icon:'ph-bank',color:'#A5D6A7',bg:'rgba(165,214,167,.1)',bd:'rgba(165,214,167,.18)',tag:'México'},
+  nequi:{name:'Nequi',desc:'App Bancolombia — Colombia',icon:'ph-device-mobile',color:'#CE93D8',bg:'rgba(123,45,139,.12)',bd:'rgba(123,45,139,.25)',tag:'Colombia'},
+  llave:{name:'Llave / BRE-B',desc:'Cualquier banco colombiano',icon:'ph-key',color:'#EF9A9A',bg:'rgba(228,32,44,.1)',bd:'rgba(228,32,44,.18)',tag:'Colombia'},
+  pix:{name:'PIX / QR PIX',desc:'Transferencia instantánea Brasil',icon:'ph-qr-code',color:'#32BCAD',bg:'rgba(50,188,173,.1)',bd:'rgba(50,188,173,.18)',tag:'Brasil'},
 };
+const CM={mx:['card','clabe','remittance','binance','astropay','skrill'],co:['card','nequi','llave','remittance','binance','astropay','skrill'],ar:['card','astropay','remittance','binance','skrill'],cl:['card','astropay','remittance','binance','skrill'],pe:['card','astropay','remittance','binance','skrill'],ve:['remittance','binance','astropay','card'],br:['pix','card','astropay','remittance','binance','skrill'],us:['card','remittance','binance','skrill'],ca:['card','remittance','binance','skrill'],es:['card','astropay','skrill','remittance','binance'],gb:['card','astropay','skrill','remittance','binance'],cu:['remittance','binance'],other:['card','remittance','binance','astropay','skrill']};
+['ec','bo','py','uy','cr','pa','gt','hn','sv','ni','do','pr'].forEach(c=>CM[c]=['card','remittance','binance','astropay']);
+['de','fr','it','pt','nl','be','ch','at','pl','se','no','tr','in','ph','ae'].forEach(c=>CM[c]=['card','astropay','skrill','remittance','binance']);
+const CN={mx:'México',co:'Colombia',ar:'Argentina',cl:'Chile',pe:'Perú',ve:'Venezuela',ec:'Ecuador',bo:'Bolivia',py:'Paraguay',uy:'Uruguay',cr:'Costa Rica',pa:'Panamá',gt:'Guatemala',hn:'Honduras',sv:'El Salvador',ni:'Nicaragua',do:'Rep. Dominicana',cu:'Cuba',br:'Brasil',pr:'Puerto Rico',us:'Estados Unidos',ca:'Canadá',es:'España',gb:'Reino Unido',de:'Alemania',fr:'Francia',it:'Italia',pt:'Portugal',nl:'Países Bajos',be:'Bélgica',ch:'Suiza',at:'Austria',pl:'Polonia',se:'Suecia',no:'Noruega',tr:'Turquía',in:'India',ph:'Filipinas',ae:'Emiratos Árabes',other:'Otro país'};
 
-const COUNTRY_METHODS = {
-  mx:['card','clabe','remittance','binance','astropay','skrill'],
-  co:['card','nequi','llave','remittance','binance','astropay','skrill'],
-  ar:['card','astropay','remittance','binance','skrill'],
-  cl:['card','astropay','remittance','binance','skrill'],
-  pe:['card','astropay','remittance','binance','skrill'],
-  ve:['remittance','binance','astropay','card'],
-  ec:['card','remittance','binance','astropay'],
-  bo:['card','remittance','binance','astropay'],
-  py:['card','remittance','binance','astropay'],
-  uy:['card','astropay','remittance','binance','skrill'],
-  cr:['card','remittance','binance','astropay'],
-  pa:['card','remittance','binance','astropay'],
-  gt:['card','remittance','binance','astropay'],
-  hn:['card','remittance','binance'],
-  sv:['card','remittance','binance'],
-  ni:['remittance','binance','card'],
-  do:['card','remittance','binance','astropay'],
-  cu:['remittance','binance'],
-  br:['pix','card','astropay','remittance','binance','skrill'],
-  pr:['card','remittance','binance','skrill'],
-  us:['card','remittance','binance','skrill'],
-  ca:['card','remittance','binance','skrill'],
-  es:['card','astropay','skrill','remittance','binance'],
-  gb:['card','astropay','skrill','remittance','binance'],
-  de:['card','astropay','skrill','remittance','binance'],
-  fr:['card','astropay','skrill','remittance','binance'],
-  it:['card','astropay','skrill','remittance','binance'],
-  pt:['card','astropay','skrill','remittance','binance'],
-  nl:['card','skrill','remittance','binance'],
-  be:['card','astropay','skrill','remittance','binance'],
-  ch:['card','skrill','remittance','binance'],
-  at:['card','astropay','skrill','remittance','binance'],
-  pl:['card','astropay','skrill','remittance','binance'],
-  se:['card','skrill','remittance','binance'],
-  no:['card','skrill','remittance','binance'],
-  tr:['card','skrill','remittance','binance'],
-  in:['card','remittance','binance'],
-  ph:['card','remittance','binance'],
-  ae:['card','skrill','remittance','binance'],
-  other:['card','remittance','binance','astropay','skrill'],
-};
-
-const COUNTRY_NAMES = {
-  mx:'Mexico',co:'Colombia',ar:'Argentina',cl:'Chile',pe:'Peru',ve:'Venezuela',
-  ec:'Ecuador',bo:'Bolivia',py:'Paraguay',uy:'Uruguay',cr:'Costa Rica',pa:'Panama',
-  gt:'Guatemala',hn:'Honduras',sv:'El Salvador',ni:'Nicaragua',do:'Rep. Dominicana',
-  cu:'Cuba',br:'Brasil',pr:'Puerto Rico',us:'Estados Unidos',ca:'Canada',es:'Espana',
-  gb:'Reino Unido',de:'Alemania',fr:'Francia',it:'Italia',pt:'Portugal',nl:'Paises Bajos',
-  be:'Belgica',ch:'Suiza',at:'Austria',pl:'Polonia',se:'Suecia',no:'Noruega',tr:'Turquia',
-  in:'India',ph:'Filipinas',ae:'Emiratos Arabes',other:'Otro pais',
-};
-
-/* Plan definitions: 3 planes */
-function getPricing(country, method) {
-  if (country === 'mx') {
-    const isClabe = method === 'clabe';
-    return {
-      biweekly: {
-        displayLocal: '$130 MXN', usd: '$7 USD', usdNum: 7,
-        discountedUsdNum: null, // cupón NO aplica a este plan
-      },
-      monthly: {
-        displayLocal: '$220 MXN', usd: '$12 USD', usdNum: 12,
-        discountedUsdNum: null,
-      },
-      permanent: {
-        displayLocal: isClabe ? '$500 MXN' : '$580 MXN', usd: '$32 USD', usdNum: 32,
-        discountedUsdNum: couponApplied ? 32 - COUPON_DISCOUNT : null,
-        discount: isClabe,
-      },
-      note: isClabe
-        ? 'Por pagar con CLABE, el plan Permanente baja a $500 MXN (descuento especial por transferencia bancaria).'
-        : 'Tip: si pagas con CLABE (transferencia bancaria), el plan Permanente baja a $500 MXN.',
-    };
-  }
-  if (country === 'co') {
-    const isLocal = method === 'nequi' || method === 'llave';
-    return {
-      biweekly: {
-        displayLocal: '$27.000 COP', usd: '$7 USD', usdNum: 7,
-        discountedUsdNum: null,
-      },
-      monthly: {
-        displayLocal: '$45.000 COP', usd: '$12 USD', usdNum: 12,
-        discountedUsdNum: null,
-      },
-      permanent: {
-        displayLocal: isLocal ? '$100.000 COP' : '$132.000 COP', usd: '$32 USD', usdNum: 32,
-        discountedUsdNum: couponApplied ? 32 - COUPON_DISCOUNT : null,
-        discount: isLocal,
-      },
-      note: isLocal
-        ? 'Por pagar con Nequi o Llave, el plan Permanente baja a $100.000 COP (descuento especial).'
-        : 'Tip: si pagas con Nequi o Llave, el plan Permanente baja a $100.000 COP.',
-    };
-  }
-  // Default USD
-  return {
-    biweekly: {
-      displayLocal: '$7 USD', usd: '$7 USD', usdNum: 7,
-      discountedUsdNum: null,
-    },
-    monthly: {
-      displayLocal: '$12 USD', usd: '$12 USD', usdNum: 12,
-      discountedUsdNum: null,
-    },
-    permanent: {
-      displayLocal: '$32 USD', usd: '$32 USD', usdNum: 32,
-      discountedUsdNum: couponApplied ? 32 - COUPON_DISCOUNT : null,
-      discount: false,
-    },
-    note: null,
-  };
+function getPricing(country,method){
+  if(country==='mx'){const c=method==='clabe';return{bw:{d:'$130 MXN',u:'$7 USD',n:7,dn:null},mo:{d:'$220 MXN',u:'$12 USD',n:12,dn:null},pm:{d:c?'$500 MXN':'$580 MXN',u:'$32 USD',n:32,dn:couponApplied?32-CPN_DISC:null,sp:c},note:c?'Precio especial CLABE: plan Permanente $500 MXN.':'Con CLABE el plan Permanente baja a $500 MXN.'}}
+  if(country==='co'){const l=method==='nequi'||method==='llave';return{bw:{d:'$27.000 COP',u:'$7 USD',n:7,dn:null},mo:{d:'$45.000 COP',u:'$12 USD',n:12,dn:null},pm:{d:l?'$100.000 COP':'$132.000 COP',u:'$32 USD',n:32,dn:couponApplied?32-CPN_DISC:null,sp:l},note:l?'Precio especial Nequi/Llave: plan Permanente $100.000 COP.':'Con Nequi o Llave el plan Permanente baja a $100.000 COP.'}}
+  return{bw:{d:'$7 USD',u:'$7 USD',n:7,dn:null},mo:{d:'$12 USD',u:'$12 USD',n:12,dn:null},pm:{d:'$32 USD',u:'$32 USD',n:32,dn:couponApplied?32-CPN_DISC:null,sp:false},note:null};
 }
 
-let sel = { platform:'', platformLabel:'', country:'', method:'', methodName:'', plan:'', planKey:'', price:'', priceUSD:'' };
+let sel={platform:'',platformLabel:'',country:'',method:'',methodName:'',plan:'',planKey:'',price:'',priceUSD:''};
 
-function selectPlatform(p) {
-  sel = { platform: p, platformLabel: p === 'ios' ? 'iOS (iPhone / iPad)' : 'Android 8 – 16+', country:'', method:'', methodName:'', plan:'', planKey:'', price:'', priceUSD:'' };
-  document.querySelectorAll('.platform-btn').forEach(b => b.classList.remove('selected'));
-  document.getElementById(p === 'ios' ? 'btnIOS' : 'btnAndroid').classList.add('selected');
-  document.getElementById('countrySelect').value = '';
-  hide('step3Wrap'); hide('step4Wrap');
-  done(1, true); done(2, false); done(3, false); done(4, false);
-  hideSummary(); disableBuy(); hideAdvisor();
-  show('step2Wrap');
+/* ══════════════════════════════════════
+   STEP MANAGEMENT
+══════════════════════════════════════ */
+function activateStep(n){
+  const s=document.getElementById('step'+n);
+  s.classList.remove('is-done');s.classList.add('is-active');
+  document.getElementById('sb'+n).style.display='block';
+  document.getElementById('si'+n).innerHTML=n;
+  const ed=document.getElementById('ed'+n);if(ed)ed.style.display='none';
+  document.getElementById('ss'+n).style.color='';
+}
+function markDone(n,lbl){
+  const s=document.getElementById('step'+n);
+  s.classList.remove('is-active');s.classList.add('is-done');
+  document.getElementById('sb'+n).style.display='none';
+  document.getElementById('si'+n).innerHTML='<i class="ph ph-check"></i>';
+  document.getElementById('ss'+n).textContent=lbl;
+  const ed=document.getElementById('ed'+n);if(ed)ed.style.display='flex';
+}
+function editStep(n){
+  for(let i=n;i<=4;i++){
+    const s=document.getElementById('step'+i);
+    s.classList.remove('is-done','is-active');
+    document.getElementById('sb'+i).style.display='none';
+    document.getElementById('si'+i).innerHTML=i;
+    const ed=document.getElementById('ed'+i);if(ed)ed.style.display='none';
+    document.getElementById('ss'+i).style.color='';
+  }
+  activateStep(n);
+  if(n<=2){sel.country='';document.getElementById('countrySelect').value=''}
+  if(n<=3){sel.method='';sel.methodName=''}
+  if(n<=4){sel.plan='';sel.planKey='';sel.price='';sel.priceUSD=''}
+  hideSummary();hidePaySection();hideConfirmSection();
 }
 
-function onCountryChange() {
-  sel.country = document.getElementById('countrySelect').value;
-  sel.method = ''; sel.methodName = ''; sel.plan = ''; sel.planKey = ''; sel.price = ''; sel.priceUSD = '';
-  hide('step3Wrap'); hide('step4Wrap');
-  done(2, false); done(3, false); done(4, false);
-  hideSummary(); disableBuy(); hideAdvisor();
-  if (!sel.country) return;
-  done(2, true);
+function selectPlatform(p){
+  sel.platform=p;sel.platformLabel=p==='ios'?'iOS (iPhone / iPad)':'Android';
+  document.querySelectorAll('.plat-card').forEach(c=>c.classList.remove('sel-ios','sel-and'));
+  document.getElementById(p==='ios'?'platIOS':'platAND').classList.add(p==='ios'?'sel-ios':'sel-and');
+  markDone(1,sel.platformLabel);
+  const s2=document.getElementById('step2');
+  s2.classList.remove('is-done','is-active');
+  document.getElementById('ss2').textContent='Selecciona tu país';
+  document.getElementById('ss2').style.color='';
+  activateStep(2);
+}
+
+function onCountry(){
+  sel.country=document.getElementById('countrySelect').value;
+  if(!sel.country)return;
+  sel.method='';sel.methodName='';sel.plan='';sel.planKey='';sel.price='';sel.priceUSD='';
+  markDone(2,CN[sel.country]||sel.country);
   renderMethods();
-  show('step3Wrap');
+  document.getElementById('step3').classList.remove('is-done');
+  activateStep(3);
 }
 
-function renderMethods() {
-  const list = document.getElementById('methodList');
-  list.innerHTML = '';
-  (COUNTRY_METHODS[sel.country] || COUNTRY_METHODS['other']).forEach(id => {
-    const m = METHODS[id]; if (!m) return;
-    const el = document.createElement('div');
-    el.className = 'method-item';
-    el.innerHTML = `
-      <div class="method-logo">${m.icon}</div>
-      <div class="method-info"><div class="method-name">${m.name}</div><div class="method-desc">${m.desc}</div></div>
-      <div class="method-tag">${m.tag}</div>
-      <div class="method-check"><i class="fa-solid fa-check"></i></div>`;
-    el.addEventListener('click', () => {
-      document.querySelectorAll('.method-item').forEach(i => i.classList.remove('selected'));
-      el.classList.add('selected');
-      sel.method = id; sel.methodName = m.name;
-      sel.plan = ''; sel.planKey = ''; sel.price = ''; sel.priceUSD = '';
-      done(3, true); done(4, false);
-      hideSummary(); disableBuy(); hideAdvisor();
+function renderMethods(){
+  const list=document.getElementById('methodList');list.innerHTML='';
+  (CM[sel.country]||CM['other']).forEach(id=>{
+    const m=METHODS[id];if(!m)return;
+    const el=document.createElement('div');el.className='method-item';
+    el.innerHTML=`<div class="method-icon-box"><i class="ph ${m.icon}" style="color:${m.color}"></i></div><div class="method-info"><div class="method-name">${m.name}</div><div class="method-desc">${m.desc}</div></div><div class="method-badge">${m.tag}</div><div class="method-radio"><i class="ph ph-check"></i></div>`;
+    el.addEventListener('click',()=>{
+      document.querySelectorAll('.method-item').forEach(i=>i.classList.remove('is-sel'));
+      el.classList.add('is-sel');
+      sel.method=id;sel.methodName=m.name.replace(/&amp;/g,'&');
+      sel.plan='';sel.planKey='';sel.price='';sel.priceUSD='';
+      markDone(3,m.name.replace(/&amp;/g,'&'));
       renderPlans();
-      show('step4Wrap');
+      document.getElementById('step4').classList.remove('is-done');
+      activateStep(4);
+      hideSummary();hidePaySection();hideConfirmSection();
     });
     list.appendChild(el);
   });
 }
 
-function fmtUSD(num) { return '$' + num + ' USD'; }
-
-/* Plan definitions con beneficios por plan */
-const PLAN_DEFS = [
-  {
-    key: 'biweekly', cls: 'biweekly', label: '15 Días', period: '15 días de acceso',
-    benefits: ['1 actualización incluida', 'Tutoriales de instalación', 'Certificados Premium'],
-    isBest: false,
-  },
-  {
-    key: 'monthly', cls: 'monthly', label: 'Mensual', period: '1 Mes de acceso',
-    benefits: ['2 actualizaciones / mes', 'Tutoriales de instalación', 'Certificados Premium'],
-    isBest: false,
-  },
-  {
-    key: 'permanent', cls: 'permanent', label: 'Permanente', period: 'Acceso permanente',
-    benefits: ['Actualizaciones todos los meses', 'Sin fecha de vencimiento', 'Soporte prioritario'],
-    isBest: true,
-  },
+const PLAN_DEFS=[
+  {key:'bw',cls:'p-bw',chip:'15 Días',period:'15 días',feats:['1 actualización','Tutoriales','Cert. Premium']},
+  {key:'mo',cls:'p-mo',chip:'Mensual',period:'1 mes',feats:['2 actualizaciones','Tutoriales','Cert. Premium']},
+  {key:'pm',cls:'p-pm',chip:'Permanente',period:'Vitalicio',feats:['Actualizaciones sin límite','Sin vencimiento','Soporte prioritario'],best:true},
 ];
-
-function renderPlans() {
-  const grid = document.getElementById('plansGrid');
-  grid.innerHTML = '';
-  const p = getPricing(sel.country, sel.method);
-  const noteEl = document.getElementById('priceNote');
-  if (p.note) { noteEl.textContent = p.note; noteEl.classList.add('show'); }
-  else noteEl.classList.remove('show');
-
-  PLAN_DEFS.forEach(({ key, cls, label, period, benefits, isBest }) => {
-    const data = p[key];
-    const hasCoupon    = couponApplied && key === 'permanent' && data.discountedUsdNum !== null;
-    const displayMain  = hasCoupon ? fmtUSD(data.discountedUsdNum) : data.displayLocal;
-    const currLabel    = hasCoupon ? 'USD' : (data.displayLocal.includes('USD') ? 'USD' : (data.displayLocal.split(' ')[1] || ''));
-    const priceForSummary   = hasCoupon ? fmtUSD(data.discountedUsdNum) : data.displayLocal;
-    const priceUSDForSummary = hasCoupon ? fmtUSD(data.discountedUsdNum) : data.usd;
-
-    const benefitsHTML = benefits.map(b => `<div class="plan-benefit-mini"><i class="fa-solid fa-check"></i>${b}</div>`).join('');
-
-    const btn = document.createElement('div');
-    btn.className = `plan-btn ${cls}`;
-    btn.innerHTML = `
-      ${isBest ? '<div class="plan-best-tag">MEJOR</div>' : ''}
-      <div class="plan-label">${label}</div>
-      ${hasCoupon ? `<div class="plan-original-price">${data.displayLocal}</div>` : ''}
-      <div class="plan-price-main">${displayMain.split(' ')[0]}</div>
-      <div class="plan-currency-label">${currLabel}</div>
-      <div class="plan-period">${period}</div>
-      ${data.discount && !hasCoupon ? '<div class="plan-discount">Precio especial</div>' : ''}
-      ${hasCoupon ? '<div class="plan-coupon-discount"><i class="fa-solid fa-ticket" style="font-size:.5rem"></i> −$5 cupón</div>' : ''}
-      ${(couponApplied && key !== 'permanent') ? '<div class="plan-perma-only">Cupón: solo Permanente</div>' : ''}
-      <div class="plan-benefits">${benefitsHTML}</div>
-    `;
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.plan-btn').forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
-      sel.plan     = label + ' (' + period + ')';
-      sel.planKey  = key;
-      sel.price    = priceForSummary;
-      sel.priceUSD = priceUSDForSummary;
-      done(4, true);
-      updateSummary();
-      enableBuy();
-      showAdvisor();
+function renderPlans(){
+  const grid=document.getElementById('plansGrid');grid.innerHTML='';
+  const p=getPricing(sel.country,sel.method);
+  const nb=document.getElementById('planNote');
+  p.note?(nb.textContent=p.note,nb.classList.add('show')):nb.classList.remove('show');
+  PLAN_DEFS.forEach(({key,cls,chip,period,feats,best})=>{
+    const d=p[key];
+    const hc=couponApplied&&key==='pm'&&d.dn!==null;
+    const dispMain=hc?`$${d.dn} USD`:d.d;
+    const priceNum=dispMain.split(' ')[0];
+    const curr=hc?'USD':(d.d.includes('USD')?'USD':(d.d.split(' ')[1]||''));
+    const pForSel=hc?`$${d.dn} USD`:d.d;
+    const uForSel=hc?`$${d.dn} USD`:d.u;
+    const featsHTML=feats.map(f=>`<div class="plan-feat"><i class="ph ph-check"></i>${f}</div>`).join('');
+    const btn=document.createElement('div');
+    btn.className=`plan-card ${cls}`;
+    btn.innerHTML=`${best?'<div class="plan-best">MEJOR</div>':''}
+      <div class="plan-chip">${chip}</div>
+      ${hc?`<div class="plan-strike">${d.d}</div>`:''}
+      <div class="plan-price">${priceNum}</div>
+      <div class="plan-currency">${curr}</div>
+      <div class="plan-duration">${period}</div>
+      ${d.sp&&!hc?'<div style="font-size:.52rem;color:var(--green);margin-top:3px">Precio especial</div>':''}
+      ${hc?'<div class="plan-coupon-line"><i class="ph ph-ticket"></i>-$5 cupón</div>':''}
+      ${couponApplied&&key!=='pm'?'<div class="plan-only-pm">Cupón: solo Permanente</div>':''}
+      <div class="plan-feats">${featsHTML}</div>`;
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.plan-card').forEach(b=>b.classList.remove('is-sel'));
+      btn.classList.add('is-sel');
+      sel.plan=`${chip} (${period})`;sel.planKey=key;sel.price=pForSel;sel.priceUSD=uForSel;
+      markDone(4,`${chip} — ${pForSel}`);
+      updateSummary();renderPaySection();showConfirmSection();
     });
     grid.appendChild(btn);
   });
 }
 
-function updateSummary() {
-  document.getElementById('sumPlatform').textContent = sel.platformLabel;
-  document.getElementById('sumCountry').textContent  = COUNTRY_NAMES[sel.country] || sel.country;
-  document.getElementById('sumMethod').textContent   = sel.methodName;
-  document.getElementById('sumPlan').textContent     = sel.plan;
-  document.getElementById('sumTotal').textContent    = sel.price + (sel.price !== sel.priceUSD ? ' (' + sel.priceUSD + ')' : '');
+function updateSummary(){
+  document.getElementById('sumPlatform').textContent=sel.platformLabel;
+  document.getElementById('sumCountry').textContent=CN[sel.country]||sel.country;
+  document.getElementById('sumMethod').textContent=sel.methodName;
+  document.getElementById('sumPlan').textContent=sel.plan;
+  document.getElementById('sumTotal').textContent=sel.price+(sel.price!==sel.priceUSD?' ('+sel.priceUSD+')':'');
+  const cr=document.getElementById('sumCouponRow');
+  couponApplied&&sel.planKey==='pm'?cr.classList.add('show'):cr.classList.remove('show');
+  document.getElementById('summaryBlock').classList.add('show');
+}
+function hideSummary(){document.getElementById('summaryBlock').classList.remove('show')}
 
-  const couponRow = document.getElementById('sumCouponRow');
-  if (couponApplied && sel.planKey === 'permanent') {
-    couponRow.classList.add('show');
-  } else {
-    couponRow.classList.remove('show');
-  }
-
-  document.getElementById('summaryWrap').classList.add('show');
+function copyVal(txt,btnId){
+  const btn=document.getElementById(btnId);
+  navigator.clipboard.writeText(txt).then(()=>{
+    btn.classList.add('copied');btn.querySelector('i.ph').className='ph ph-check';
+    setTimeout(()=>{btn.classList.remove('copied');btn.querySelector('i.ph').className='ph ph-copy'},1800);
+  }).catch(()=>{});
+}
+let _copyIdx=0;
+function dr(label,val){
+  const id='cp'+(++_copyIdx);
+  return `<div class="data-row"><span class="data-lbl">${label}</span><span class="data-val">${val}</span><button class="data-copy" id="${id}" onclick="copyVal('${val.replace(/'/g,"\\'")}','${id}')"><i class="ph ph-copy"></i></button></div>`;
 }
 
-function hideSummary()  { document.getElementById('summaryWrap').classList.remove('show'); }
-function enableBuy()    { document.getElementById('buyBtn').classList.add('ready'); }
-function disableBuy()   { document.getElementById('buyBtn').classList.remove('ready'); }
-function showAdvisor()  { document.getElementById('advisorSection').classList.add('show'); }
-function hideAdvisor()  { document.getElementById('advisorSection').classList.remove('show'); }
-function show(id)       { document.getElementById(id).style.display = 'block'; }
-function hide(id)       { document.getElementById(id).style.display = 'none'; }
-function done(n, v)     { document.getElementById('done'+n).classList[v?'add':'remove']('show'); }
+/* ══════════════════════════════════════
+   PAY SECTION — mensaje de entrega inmediata en todos los métodos
+══════════════════════════════════════ */
+const MSG_ENTREGA = '<strong>Entrega inmediata</strong><span>Una vez realizado el pago, toma captura del comprobante y notifica a JEXE con el botón de abajo para recibir tu acceso al instante.</span>';
 
-// Keyboard shortcut for coupon
-document.getElementById('couponInput').addEventListener('keydown', e => {
-  if (e.key === 'Enter') applyCoupon();
-});
+function renderPaySection(){
+  const sec=document.getElementById('paySection'),card=document.getElementById('payCard');
+  const m=sel.method,k=sel.planKey;
+  _copyIdx=0;
+  let hdr='',body='';
 
-// Init
-initCouponUI();
+  if(m==='card'){
+    const link=(couponApplied&&k==='pm')?CARD_LINKS.pm_cpn:CARD_LINKS[k];
+    const lbl=k==='bw'?'15 días':k==='mo'?'Mensual':'Permanente';
+    hdr=`<div class="pay-card-icon" style="background:rgba(79,195,247,.1);border:1px solid rgba(79,195,247,.18)"><i class="ph ph-credit-card" style="color:#4FC3F7"></i></div><div><div class="pay-card-title">Pago con Tarjeta — Bold</div><div class="pay-card-sub">Link de cobro seguro &nbsp;&middot;&nbsp; ${lbl} &nbsp;&middot;&nbsp; ${sel.price}</div></div>`;
+    body=`<a href="${link}" target="_blank" rel="noopener" class="pay-action-btn primary"><i class="ph ph-credit-card"></i> Pagar ahora &nbsp;&mdash;&nbsp; ${sel.price}</a><div class="info-banner"><div class="info-banner-icon"><i class="ph ph-lock-key"></i></div><div class="info-banner-txt">${MSG_ENTREGA}</div></div>`;
+  }
+  else if(m==='nequi'){
+    const amts={bw:'$27.000 COP',mo:'$45.000 COP',pm:'$100.000 COP'};
+    hdr=`<div class="pay-card-icon" style="background:rgba(123,45,139,.12);border:1px solid rgba(123,45,139,.22)"><i class="ph ph-device-mobile" style="color:#CE93D8"></i></div><div><div class="pay-card-title">Pago con Nequi</div><div class="pay-card-sub">Abre Nequi &rarr; Enviar dinero &rarr; Número</div></div>`;
+    body=`<div class="data-table">${dr('Número','3132878955')}${dr('Titular','Juan Aguirre')}${dr('Monto',amts[k])}</div><div class="info-banner"><div class="info-banner-icon"><i class="ph ph-lock-key"></i></div><div class="info-banner-txt">${MSG_ENTREGA}</div></div>`;
+  }
+  else if(m==='llave'){
+    const amts={bw:'$27.000 COP',mo:'$45.000 COP',pm:'$100.000 COP'};
+    hdr=`<div class="pay-card-icon" style="background:rgba(228,32,44,.1);border:1px solid rgba(228,32,44,.18)"><i class="ph ph-key" style="color:#EF9A9A"></i></div><div><div class="pay-card-title">Pago con Llave / BRE-B</div><div class="pay-card-sub">Cualquier banco colombiano</div></div>`;
+    body=`<div class="data-table">${dr('Entidad','Bold CF')}${dr('Email / ID','mediaspaceapp@gmail.com')}${dr('Titular','Juan Aguirre')}${dr('Monto',amts[k])}</div><div class="info-banner"><div class="info-banner-icon"><i class="ph ph-lock-key"></i></div><div class="info-banner-txt">${MSG_ENTREGA}</div></div>`;
+  }
+  else if(m==='clabe'){
+    const amts={bw:'$130 MXN',mo:'$220 MXN',pm:'$500 MXN'};
+    hdr=`<div class="pay-card-icon" style="background:rgba(0,104,71,.12);border:1px solid rgba(0,104,71,.22)"><i class="ph ph-bank" style="color:#A5D6A7"></i></div><div><div class="pay-card-title">Transferencia CLABE — México</div><div class="pay-card-sub">Transferencia bancaria directa &nbsp;&middot;&nbsp; STP</div></div>`;
+    body=`<div class="data-table">${dr('Titular','Juan Pablo Aguirre Grosso')}${dr('CLABE','646180546701915656')}${dr('Entidad','STP')}${dr('Monto',amts[k])}</div><div class="info-banner"><div class="info-banner-icon"><i class="ph ph-lock-key"></i></div><div class="info-banner-txt">${MSG_ENTREGA}</div></div>`;
+  }
+  else if(m==='binance'){
+    const amts={bw:'$7 USDT',mo:'$12 USDT',pm:'$32 USDT'};
+    hdr=`<div class="pay-card-icon" style="background:rgba(240,185,11,.1);border:1px solid rgba(240,185,11,.18)"><i class="ph ph-currency-circle-dollar" style="color:#F0B90B"></i></div><div><div class="pay-card-title">Binance Pay</div><div class="pay-card-sub">Busca por ID o usuario en Binance Pay</div></div>`;
+    body=`<div class="data-table">${dr('Binance ID','538653875')}${dr('Usuario','@jexeregedit')}${dr('Monto',amts[k])}</div><div class="info-banner"><div class="info-banner-icon"><i class="ph ph-lock-key"></i></div><div class="info-banner-txt">${MSG_ENTREGA}</div></div>`;
+  }
+  else if(m==='astropay'){
+    const lbl=k==='bw'?'15 días':k==='mo'?'Mensual':'Permanente';
+    hdr=`<div class="pay-card-icon" style="background:rgba(100,181,246,.1);border:1px solid rgba(100,181,246,.18)"><i class="ph ph-wallet" style="color:#64B5F6"></i></div><div><div class="pay-card-title">AstroPay</div><div class="pay-card-sub">Link de pago directo &nbsp;&middot;&nbsp; ${lbl} &nbsp;&middot;&nbsp; ${sel.price}</div></div>`;
+    body=`<a href="${ASTROPAY_LINKS[k]}" target="_blank" rel="noopener" class="pay-action-btn primary"><i class="ph ph-wallet"></i> Pagar con AstroPay &nbsp;&mdash;&nbsp; ${sel.price}</a><div class="info-banner"><div class="info-banner-icon"><i class="ph ph-lock-key"></i></div><div class="info-banner-txt">${MSG_ENTREGA}</div></div>`;
+  }
+  else if(m==='skrill'){
+    const amts={bw:'$7 USD',mo:'$12 USD',pm:'$32 USD'};
+    hdr=`<div class="pay-card-icon" style="background:rgba(206,147,216,.1);border:1px solid rgba(206,147,216,.18)"><i class="ph ph-coins" style="color:#CE93D8"></i></div><div><div class="pay-card-title">Skrill</div><div class="pay-card-sub">Envía el pago a este correo desde tu cuenta Skrill</div></div>`;
+    body=`<div class="data-table">${dr('Email Skrill','juanpabloaguirregrosso@gmail.com')}${dr('Monto',amts[k])}</div><div class="info-banner"><div class="info-banner-icon"><i class="ph ph-lock-key"></i></div><div class="info-banner-txt">${MSG_ENTREGA}</div></div>`;
+  }
+  else if(m==='remittance'){
+    const amts={bw:'$7 USD',mo:'$12 USD',pm:'$32 USD'};
+    hdr=`<div class="pay-card-icon" style="background:rgba(255,171,145,.1);border:1px solid rgba(255,171,145,.18)"><i class="ph ph-arrows-left-right" style="color:#FFAB91"></i></div><div><div class="pay-card-title">Remesadora</div><div class="pay-card-sub">Remitly, MoneyGram, Western Union</div></div>`;
+    body=`<div class="data-table">${dr('Nombre','Juan Pablo Aguirre Grosso')}${dr('País destino','Colombia')}${dr('Teléfono','+573132878955')}${dr('Núm. cuenta','3132878955')}${dr('Billetera','Nequi')}${dr('Tipo cuenta','Ahorros')}${dr('Monto',amts[k])}</div><div class="info-banner"><div class="info-banner-icon"><i class="ph ph-lock-key"></i></div><div class="info-banner-txt">${MSG_ENTREGA}</div></div>`;
+  }
+  else if(m==='pix'){
+    hdr=`<div class="pay-card-icon" style="background:rgba(50,188,173,.1);border:1px solid rgba(50,188,173,.18)"><i class="ph ph-qr-code" style="color:#32BCAD"></i></div><div><div class="pay-card-title">PIX &mdash; Brasil</div><div class="pay-card-sub">Gestión directa con JEXE</div></div>`;
+    body=`<div class="pix-block"><div class="pix-icon"><i class="ph ph-telegram-logo"></i></div><div class="pix-txt"><strong>PIX se coordina directamente con JEXE</strong><span>JEXE te entregará los datos del PIX de forma personalizada. Una vez realizado el pago, toma captura del comprobante y notifica a JEXE con el botón de abajo para recibir tu acceso al instante.</span></div></div>`;
+  }
+
+  card.innerHTML=`<div class="pay-card-header">${hdr}</div><div class="pay-card-body">${body}</div>`;
+  sec.classList.add('show');
+}
+
+function hidePaySection(){document.getElementById('paySection').classList.remove('show')}
+function showConfirmSection(){document.getElementById('confirmSection').classList.add('show')}
+function hideConfirmSection(){
+  const cs=document.getElementById('confirmSection');
+  cs.classList.remove('show');
+  document.getElementById('confirmPanel').classList.remove('open');
+  document.getElementById('confirmTrigger').classList.remove('open');
+}
+
+function toggleConfirm(){
+  const panel=document.getElementById('confirmPanel'),trigger=document.getElementById('confirmTrigger');
+  const open=panel.classList.toggle('open');
+  trigger.classList.toggle('open',open);
+}
+function onPaidChange(){
+  const v=document.getElementById('cfPaid').value;
+  const fields=document.getElementById('cfFields');
+  const noBlock=document.getElementById('cfNoPayBlock');
+  const btn=document.getElementById('cfSendBtn');
+  if(v==='si'){fields.style.display='block';noBlock.style.display='none';btn.disabled=false}
+  else if(v==='no'){fields.style.display='none';noBlock.style.display='block';btn.disabled=true}
+  else{fields.style.display='none';noBlock.style.display='none';btn.disabled=true}
+}
+function sendToJexe(){
+  if(document.getElementById('cfPaid').value!=='si')return;
+  const plan=document.getElementById('cfPlan').value||sel.plan||'No especificado';
+  const method=document.getElementById('cfMethod').value||sel.methodName||'No especificado';
+  const plat=document.getElementById('cfPlat').value||sel.platformLabel||'No especificado';
+  const note=document.getElementById('cfNote').value.trim();
+  const msg=
+    'Hola JEXE, ya realice mi pago.\n\n'+
+    '================================\n CONFIRMACION DE PAGO\n================================\n'+
+    'Ya pague: Si\n'+
+    'Plan: '+plan+'\n'+
+    'Metodo: '+method+'\n'+
+    'Plataforma: '+plat+'\n'+
+    (note?'Nota: '+note+'\n':'')+
+    '================================\n'+
+    'Por favor confirmar recibo y enviar acceso. Gracias.';
+  window.open('https://t.me/jexeoficial?text='+encodeURIComponent(msg),'_blank','noopener');
+}
+
+initCpn();
 </script>
 </body>
 </html>
