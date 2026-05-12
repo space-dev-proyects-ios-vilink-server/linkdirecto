@@ -248,6 +248,33 @@
     footer{position:relative;z-index:1;margin-top:auto;padding:18px 24px;text-align:center;font-size:.72rem;color:var(--muted);font-weight:300;letter-spacing:.05em;border-top:1px solid var(--border)}
     footer span{color:var(--accent)}
 
+    /* ══ PRICING PREVIEW ══ */
+    .pricing-card{animation:fadeUp .5s .17s ease both}
+    .pricing-tabs{display:flex;gap:6px;margin-bottom:14px}
+    .pricing-tab{flex:1;padding:7px 6px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:none;font-family:var(--font-b);font-size:.7rem;font-weight:600;letter-spacing:.04em;color:var(--muted);cursor:pointer;transition:var(--tr);text-align:center}
+    .pricing-tab:hover{color:var(--text);border-color:var(--border)}
+    .pricing-tab.active-tab{color:var(--text);border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,transparent)}
+    .pricing-plans-preview{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
+    .pp-plan{border-radius:var(--radius-sm);padding:12px 8px;text-align:center;border:1.5px solid var(--border);background:var(--card);position:relative;transition:var(--tr)}
+    .pp-plan.pp-best{border-color:color-mix(in srgb,var(--gold) 50%,transparent);background:color-mix(in srgb,var(--gold) 5%,var(--card))}
+    .pp-best-tag{position:absolute;top:-8px;left:50%;transform:translateX(-50%);white-space:nowrap;background:var(--gold);color:#000;font-size:.48rem;font-weight:800;letter-spacing:.1em;padding:2px 8px;border-radius:100px}
+    .pp-name{font-family:var(--font-d);font-size:.75rem;letter-spacing:.1em;color:var(--muted);margin-bottom:5px}
+    .pp-price{font-family:var(--font-d);font-size:1.5rem;letter-spacing:.02em;line-height:1;color:var(--text)}
+    .pp-plan.pp-biweekly .pp-price{color:var(--accent-2)}
+    .pp-plan.pp-monthly .pp-price{color:var(--accent)}
+    .pp-plan.pp-best .pp-price{color:var(--gold)}
+    .pp-curr{font-size:.58rem;color:var(--muted);margin-top:2px}
+    .pp-period{font-size:.6rem;color:var(--muted);font-weight:300;margin-top:1px}
+    .pp-divider{height:1px;background:var(--border);margin:8px 0}
+    .pp-features{display:flex;flex-direction:column;gap:3px}
+    .pp-feat{font-size:.58rem;color:var(--muted);display:flex;align-items:center;gap:4px;justify-content:center}
+    .pp-feat i{font-size:.5rem;flex-shrink:0}
+    .pp-plan.pp-biweekly .pp-feat i{color:var(--accent-2)}
+    .pp-plan.pp-monthly .pp-feat i{color:var(--accent)}
+    .pp-plan.pp-best .pp-feat i{color:var(--gold)}
+    .pp-note{font-size:.68rem;color:var(--muted);text-align:center;margin-top:10px;line-height:1.5;padding:8px 10px;background:color-mix(in srgb,var(--green) 7%,transparent);border:1px solid color-mix(in srgb,var(--green) 20%,transparent);border-radius:var(--radius-sm)}
+    .pp-note i{color:var(--green);margin-right:4px}
+
     @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
     @keyframes fadeIn{from{opacity:0}to{opacity:1}}
     @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
@@ -303,19 +330,11 @@
         </div>
         <div class="advisor-btn-tag fast">RÁPIDO</div>
       </button>
-      <button class="advisor-btn" onclick="sendToAdvisor('573117574285','Juli (Asesor)')">
+      <button class="advisor-btn" onclick="sendToAdvisor('573117574285','Juli (Asesora)')">
         <div class="advisor-btn-icon wa"><i class="fa-brands fa-whatsapp"></i></div>
         <div class="advisor-btn-info">
-          <div class="advisor-btn-name">Juli — Asesor</div>
+          <div class="advisor-btn-name">Juli — Asesora</div>
           <div class="advisor-btn-desc">+57 311 7574285 · Respuesta rápida</div>
-        </div>
-        <div class="advisor-btn-tag fast">RÁPIDO</div>
-      </button>
-      <button class="advisor-btn" onclick="sendToAdvisor('573223159395','Alfredo (Asesor)')">
-        <div class="advisor-btn-icon wa"><i class="fa-brands fa-whatsapp"></i></div>
-        <div class="advisor-btn-info">
-          <div class="advisor-btn-name">Alfredo — Asesor</div>
-          <div class="advisor-btn-desc">+57 322 3159395 · Respuesta rápida</div>
         </div>
         <div class="advisor-btn-tag fast">RÁPIDO</div>
       </button>
@@ -375,10 +394,65 @@
       <div class="proof-icon"><i class="fa-brands fa-telegram"></i></div>
       <div class="proof-text">
         <strong>Referencias publicas</strong>
-        <span>4 anos de historial · actualizandose constantemente</span>
+        <span>4 años de historial · actualizandose constantemente</span>
       </div>
       <div class="proof-cta"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver</div>
     </a>
+  </div>
+
+  <!-- PRICING PREVIEW -->
+  <p class="sec-label">Planes y precios</p>
+  <div class="card pricing-card">
+    <!-- Tabs de moneda -->
+    <div class="pricing-tabs">
+      <button class="pricing-tab active-tab" onclick="setPricingTab('usd',this)">USD</button>
+      <button class="pricing-tab" onclick="setPricingTab('cop',this)">COP 🇨🇴</button>
+      <button class="pricing-tab" onclick="setPricingTab('mxn',this)">MXN 🇲🇽</button>
+    </div>
+    <!-- Planes -->
+    <div class="pricing-plans-preview">
+      <!-- 15 Días -->
+      <div class="pp-plan pp-biweekly">
+        <div class="pp-name">15 DÍAS</div>
+        <div class="pp-price" id="ppPrice15">$7</div>
+        <div class="pp-curr" id="ppCurr15">USD</div>
+        <div class="pp-period" id="ppPeriod15">15 días de acceso</div>
+        <div class="pp-divider"></div>
+        <div class="pp-features">
+          <div class="pp-feat"><i class="fa-solid fa-check"></i>1 actualización</div>
+          <div class="pp-feat"><i class="fa-solid fa-check"></i>Tutoriales</div>
+          <div class="pp-feat"><i class="fa-solid fa-check"></i>Certificados</div>
+        </div>
+      </div>
+      <!-- Mensual -->
+      <div class="pp-plan pp-monthly">
+        <div class="pp-name">MENSUAL</div>
+        <div class="pp-price" id="ppPrice1m">$12</div>
+        <div class="pp-curr" id="ppCurr1m">USD</div>
+        <div class="pp-period" id="ppPeriod1m">1 mes de acceso</div>
+        <div class="pp-divider"></div>
+        <div class="pp-features">
+          <div class="pp-feat"><i class="fa-solid fa-check"></i>2 actualizaciones</div>
+          <div class="pp-feat"><i class="fa-solid fa-check"></i>Tutoriales</div>
+          <div class="pp-feat"><i class="fa-solid fa-check"></i>Certificados</div>
+        </div>
+      </div>
+      <!-- Permanente -->
+      <div class="pp-plan pp-best">
+        <div class="pp-best-tag">MEJOR</div>
+        <div class="pp-name">PERMANENTE</div>
+        <div class="pp-price" id="ppPricePerma">$32</div>
+        <div class="pp-curr" id="ppCurrPerma">USD</div>
+        <div class="pp-period" id="ppPeriodPerma">Acceso permanente</div>
+        <div class="pp-divider"></div>
+        <div class="pp-features">
+          <div class="pp-feat"><i class="fa-solid fa-check"></i>Sin vencimiento</div>
+          <div class="pp-feat"><i class="fa-solid fa-check"></i>Actualizaciones siempre</div>
+          <div class="pp-feat"><i class="fa-solid fa-check"></i>Soporte prioritario</div>
+        </div>
+      </div>
+    </div>
+    <div class="pp-note"><i class="fa-solid fa-circle-info"></i>Precios en USD aplican a todos los países. Selecciona COP o MXN para ver equivalentes locales. El precio final exacto se muestra al armar tu pedido abajo.</div>
   </div>
 
   <!-- COUPON SECTION -->
@@ -567,8 +641,8 @@
         <div class="advisor-btn" onclick="openAdvisorModal()">
           <div class="advisor-btn-icon wa"><i class="fa-brands fa-whatsapp"></i></div>
           <div class="advisor-btn-info">
-            <div class="advisor-btn-name">Gilbert · Juli · Alfredo — Asesores</div>
-            <div class="advisor-btn-desc">+57 311 8246157 / +57 311 7574285 / +57 322 3159395 · Respuesta rápida</div>
+            <div class="advisor-btn-name">Gilbert · Juli — Asesores</div>
+            <div class="advisor-btn-desc">+57 311 8246157 / +57 311 7574285 · Respuesta rápida</div>
           </div>
           <div class="advisor-btn-tag fast">RÁPIDO</div>
         </div>
@@ -1071,6 +1145,24 @@ function done(n, v)     { document.getElementById('done'+n).classList[v?'add':'r
 document.getElementById('couponInput').addEventListener('keydown', e => {
   if (e.key === 'Enter') applyCoupon();
 });
+
+/* ══ PRICING PREVIEW TABS ══ */
+const PRICING_PREVIEW = {
+  usd: { p15: '$7',          c15: 'USD', p1m: '$12',         c1m: 'USD', pPerma: '$32',          cPerma: 'USD' },
+  cop: { p15: '$27.000',     c15: 'COP', p1m: '$45.000',     c1m: 'COP', pPerma: '$100.000',      cPerma: 'COP (Nequi/Llave) · $132.000 COP (tarjeta)' },
+  mxn: { p15: '$130',        c15: 'MXN', p1m: '$220',        c1m: 'MXN', pPerma: '$500',          cPerma: 'MXN (CLABE) · $580 MXN (tarjeta)' },
+};
+function setPricingTab(tab, el) {
+  document.querySelectorAll('.pricing-tab').forEach(t => t.classList.remove('active-tab'));
+  el.classList.add('active-tab');
+  const d = PRICING_PREVIEW[tab];
+  document.getElementById('ppPrice15').textContent    = d.p15;
+  document.getElementById('ppCurr15').textContent     = d.c15;
+  document.getElementById('ppPrice1m').textContent    = d.p1m;
+  document.getElementById('ppCurr1m').textContent     = d.c1m;
+  document.getElementById('ppPricePerma').textContent = d.pPerma;
+  document.getElementById('ppCurrPerma').textContent  = d.cPerma;
+}
 
 // Init
 initCouponUI();
