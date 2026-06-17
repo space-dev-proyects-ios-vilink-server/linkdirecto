@@ -3,679 +3,333 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-<meta name="color-scheme" content="dark"/>
-<title>JEXE Regedit — Premium Edition</title>
+<meta name="color-scheme" content="light"/>
+<title>JEXE Regedit — iOS Edition</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@500;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
+
 :root{
-  --bg:#060608;
-  --bg1:#0C0C10;
-  --bg2:#111116;
-  --bg3:#18181F;
-  --bg4:#1E1E27;
-  --line:rgba(255,255,255,0.06);
-  --line2:rgba(255,255,255,0.10);
-  --line3:rgba(255,255,255,0.16);
-  --txt:#F2EFE8;
-  --txt2:#8A8690;
-  --txt3:#4A4852;
-  --red:#D42B0F;
-  --red2:#FF3D1F;
-  --red3:#FF6347;
-  --rg:rgba(212,43,15,0.12);
-  --rg2:rgba(212,43,15,0.06);
-  --rg3:rgba(212,43,15,0.22);
-  --gold:#C4880A;
-  --gold2:#F0A500;
-  --green:#0CA86A;
-  --greeng:rgba(12,168,106,0.10);
-  --andr:#00C880;
-  --r:14px;--r-sm:10px;--r-xs:7px;
-  --tr:0.18s cubic-bezier(0.4,0,0.2,1);
-  --f-display:'Barlow Condensed',sans-serif;
-  --f-body:'Barlow',sans-serif;
+  --white:#FFFFFF;
+  --paper:#FAFAFA;
+  --line:#E5E5E5;
+  --line2:#D9D9D9;
+  --ink:#0A0A0A;
+  --ink2:#1D1D1F;
+  --gray1:#6E6E73;
+  --gray2:#86868B;
+  --gray3:#AEAEB2;
+  --surface:#F5F5F7;
+  --surface2:#EFEFF1;
+  --r-lg:22px;
+  --r-md:16px;
+  --r-sm:11px;
+  --tr:0.2s cubic-bezier(0.16,1,0.3,1);
+  --f-disp:'Inter Tight',-apple-system,'SF Pro Display',system-ui,sans-serif;
+  --f-body:'Inter',-apple-system,'SF Pro Text',system-ui,sans-serif;
 }
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+@media (prefers-reduced-motion: reduce){*{animation-duration:0.001ms !important;transition-duration:0.001ms !important}}
+
 html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
 body{
-  font-family:var(--f-body);background:var(--bg);color:var(--txt);
+  font-family:var(--f-body);background:var(--white);color:var(--ink);
   min-height:100dvh;overflow-x:hidden;
-  padding-bottom:calc(env(safe-area-inset-bottom,0px) + 60px);
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:calc(env(safe-area-inset-bottom,0px) + 36px);
 }
 
-/* ── GRAIN OVERLAY ── */
-body::after{
-  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.028'/%3E%3C/svg%3E");
-  opacity:.9;
-}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 
-/* ── RED GLOW TOP ── */
-body::before{
-  content:'';position:fixed;top:-60px;left:50%;transform:translateX(-50%);
-  width:600px;height:320px;
-  background:radial-gradient(ellipse 60% 80% at 50% 0%,rgba(212,43,15,0.09) 0%,transparent 100%);
-  pointer-events:none;z-index:0;
-}
-
-/* ── HEADER ── */
+/* ───────── HEADER ───────── */
 header{
-  position:sticky;top:0;z-index:80;
+  position:sticky;top:0;z-index:90;
   display:flex;align-items:center;justify-content:space-between;
-  padding:0 20px;height:52px;
-  background:rgba(6,6,8,0.94);
-  backdrop-filter:blur(24px) saturate(140%);
-  -webkit-backdrop-filter:blur(24px) saturate(140%);
+  padding:0 20px;height:54px;
+  background:rgba(255,255,255,0.86);
+  backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
   border-bottom:1px solid var(--line);
 }
-.hdr-brand{
-  display:flex;align-items:center;gap:10px;text-decoration:none;
+.hdr-brand{display:flex;align-items:center;gap:9px}
+.hdr-mark{
+  width:22px;height:22px;border-radius:6px;background:var(--ink);
+  display:grid;place-items:center;flex-shrink:0;
 }
-.hdr-brand-name{
-  font-family:var(--f-display);font-size:1.2rem;font-weight:900;
-  letter-spacing:.08em;text-transform:uppercase;color:var(--txt);
+.hdr-mark svg{width:12px;height:12px}
+.hdr-name{
+  font-family:var(--f-disp);font-size:0.95rem;font-weight:700;
+  letter-spacing:-0.01em;color:var(--ink);
 }
-.hdr-brand-name span{color:var(--red2)}
-.hdr-sep{width:1px;height:14px;background:var(--line2)}
-.hdr-sub{
-  font-family:var(--f-body);font-size:.6rem;font-weight:600;
-  letter-spacing:.22em;text-transform:uppercase;color:var(--txt3);
+.hdr-name .light{font-weight:500;color:var(--gray1)}
+.hdr-tag{
+  font-size:0.62rem;font-weight:600;letter-spacing:0.06em;
+  color:var(--ink);background:var(--surface);
+  padding:5px 10px;border-radius:100px;border:1px solid var(--line);
 }
-.hdr-badge{
-  display:flex;align-items:center;gap:6px;
-  font-family:var(--f-body);font-size:.6rem;font-weight:600;
-  letter-spacing:.14em;text-transform:uppercase;
-  padding:4px 10px;border-radius:4px;
-  background:var(--rg);border:1px solid var(--rg3);color:var(--red3);
-}
-.hdr-badge i.ph{font-size:.75rem}
 
-main{position:relative;z-index:1;max-width:480px;width:100%;margin:0 auto;padding:24px 16px 0}
+main{position:relative;z-index:1;max-width:480px;width:100%;margin:0 auto;padding:0 18px}
 
-/* ── HERO ── */
-.hero{padding:8px 0 28px;animation:riseIn .5s ease both}
-.hero-eyebrow{
-  display:inline-flex;align-items:center;gap:8px;
-  font-family:var(--f-body);font-size:.6rem;font-weight:600;
-  letter-spacing:.24em;text-transform:uppercase;color:var(--txt3);
-  margin-bottom:14px;
+/* ───────── HERO ───────── */
+.hero{padding:40px 0 26px;animation:rise .6s ease both}
+.hero-kicker{
+  font-size:0.72rem;font-weight:600;letter-spacing:0.04em;
+  color:var(--gray1);margin-bottom:14px;
 }
-.hero-eyebrow::before{content:'';width:18px;height:1px;background:var(--red2)}
 .hero-h1{
-  font-family:var(--f-display);
-  font-size:clamp(4rem,18vw,6.5rem);
-  font-weight:900;line-height:.85;letter-spacing:.02em;
-  text-transform:uppercase;margin-bottom:6px;
+  font-family:var(--f-disp);
+  font-size:clamp(2.3rem,9.5vw,2.85rem);
+  font-weight:800;line-height:1.04;letter-spacing:-0.025em;
+  color:var(--ink);
 }
-.hero-h1 .line1{display:block;color:var(--txt)}
-.hero-h1 .line2{
-  display:block;color:transparent;
-  -webkit-text-stroke:1.5px var(--red);
-  font-style:italic;
+.hero-h1 em{
+  font-style:normal;font-weight:800;color:var(--gray2);
 }
-.hero-h1 .line3{
-  display:block;
-  background:linear-gradient(90deg,var(--red) 0%,var(--red2) 55%,var(--red3) 100%);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
+.hero-p{
+  font-size:0.95rem;font-weight:400;line-height:1.55;
+  color:var(--gray1);margin-top:14px;max-width:380px;
 }
-.hero-sub{
-  font-family:var(--f-body);font-size:.75rem;font-weight:300;
-  color:var(--txt2);letter-spacing:.06em;margin-top:16px;
-  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+.hero-platform{
+  display:inline-flex;align-items:center;gap:7px;margin-top:20px;
+  padding:7px 13px 7px 9px;border-radius:100px;
+  background:var(--ink);color:var(--white);
 }
-.hero-sub-item{display:flex;align-items:center;gap:5px}
-.hero-sub-item i.ph{font-size:.8rem;color:var(--red2)}
-.hero-divider{
-  width:100%;height:1px;margin-top:22px;
-  background:linear-gradient(90deg,var(--red) 0%,rgba(212,43,15,0.3) 40%,transparent 100%);
-}
+.hero-platform svg{width:14px;height:14px}
+.hero-platform span{font-size:0.75rem;font-weight:600;letter-spacing:0.01em}
 
-/* ── VIDEO ── */
+/* ───────── VIDEO ───────── */
 .video-wrap{
-  position:relative;border-radius:var(--r);overflow:hidden;
-  background:#000;margin-bottom:20px;
+  position:relative;border-radius:var(--r-lg);overflow:hidden;
+  background:var(--ink);margin-top:22px;animation:rise .6s .03s ease both;
   border:1px solid var(--line);
-  animation:riseIn .5s .05s ease both;
 }
-.video-wrap video{width:100%;display:block;max-height:220px;object-fit:cover}
-.video-overlay-label{
+.video-wrap video{width:100%;display:block;max-height:230px;object-fit:cover}
+.video-label{
   position:absolute;bottom:10px;left:10px;
-  background:rgba(0,0,0,.82);backdrop-filter:blur(10px);
-  border-radius:5px;padding:4px 10px;
-  font-family:var(--f-display);font-size:.7rem;font-weight:700;
-  color:rgba(255,255,255,.75);letter-spacing:.16em;text-transform:uppercase;
-  display:flex;align-items:center;gap:6px;
-}
-.video-overlay-label i.ph{color:var(--red2);font-size:.8rem}
-
-/* ── PRICE PREVIEW ── */
-.price-preview{
-  margin-bottom:20px;animation:riseIn .5s .08s ease both;
-}
-.price-preview-label{
-  font-family:var(--f-body);font-size:.58rem;font-weight:700;
-  letter-spacing:.24em;text-transform:uppercase;color:var(--txt3);
-  margin-bottom:10px;display:flex;align-items:center;gap:8px;
-}
-.price-preview-label::after{content:'';flex:1;height:1px;background:var(--line)}
-.price-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.price-card{
-  background:var(--bg2);border:1px solid var(--line);
-  border-radius:var(--r-sm);padding:16px 14px;
-  position:relative;overflow:hidden;cursor:default;
-}
-.price-card.featured{
-  border-color:rgba(212,43,15,0.35);
-  background:linear-gradient(145deg,rgba(212,43,15,0.07) 0%,var(--bg2) 100%);
-}
-.price-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.07),transparent);
-}
-.price-card.featured::before{
-  background:linear-gradient(90deg,transparent,rgba(212,43,15,0.3),transparent);
-}
-.pc-plan{
-  font-family:var(--f-display);font-size:.7rem;font-weight:700;
-  letter-spacing:.2em;text-transform:uppercase;color:var(--txt3);
-  margin-bottom:10px;
-}
-.pc-price{
-  font-family:var(--f-display);font-size:2.4rem;font-weight:900;
-  line-height:1;letter-spacing:-.01em;color:var(--txt);
-  margin-bottom:2px;
-}
-.price-card.featured .pc-price{color:var(--red2)}
-.pc-currency{
-  font-family:var(--f-body);font-size:.62rem;font-weight:400;
-  color:var(--txt3);letter-spacing:.06em;margin-bottom:8px;
-}
-.pc-duration{
-  font-family:var(--f-body);font-size:.68rem;font-weight:500;
-  color:var(--txt2);letter-spacing:.04em;
-}
-.pc-tag{
-  position:absolute;top:8px;right:8px;
-  font-family:var(--f-display);font-size:.55rem;font-weight:800;
-  letter-spacing:.14em;text-transform:uppercase;
-  padding:3px 8px;border-radius:3px;
-}
-.price-card.featured .pc-tag{background:var(--red);color:#fff}
-.pc-features{margin-top:10px;display:flex;flex-direction:column;gap:4px}
-.pc-feat{
-  font-family:var(--f-body);font-size:.66rem;font-weight:300;
-  color:var(--txt3);display:flex;align-items:center;gap:6px;
-}
-.pc-feat i.ph{font-size:.75rem;color:var(--red2);flex-shrink:0}
-.price-card.featured .pc-feat{color:var(--txt2)}
-
-/* ── SURFACE CARD ── */
-.surface{
-  background:var(--bg1);border:1px solid var(--line);
-  border-radius:var(--r);padding:18px 16px;margin-bottom:12px;
-  position:relative;overflow:hidden;
-}
-.surface::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.05),transparent);
+  background:rgba(255,255,255,0.92);backdrop-filter:blur(8px);
+  border-radius:100px;padding:5px 12px;
+  font-size:0.68rem;font-weight:600;color:var(--ink);letter-spacing:0.01em;
 }
 
-/* ── SECTION LABEL ── */
-.sec-label{
-  font-family:var(--f-body);font-size:.58rem;font-weight:700;
-  letter-spacing:.24em;text-transform:uppercase;color:var(--txt3);
-  margin-bottom:10px;display:flex;align-items:center;gap:8px;
+/* ───────── SCARCITY BAR ───────── */
+.scarcity{
+  margin-top:24px;padding:18px 18px 16px;
+  background:var(--ink);border-radius:var(--r-lg);
+  animation:rise .6s .05s ease both;
 }
-.sec-label::after{content:'';flex:1;height:1px;background:var(--line)}
-
-/* ── COMPAT PILLS ── */
-.compat-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
-.cpill{
-  display:inline-flex;align-items:center;gap:5px;
-  padding:4px 10px;border-radius:4px;font-size:.64rem;font-weight:500;letter-spacing:.05em;
+.scar-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0}
+.scar-label{font-size:0.66rem;font-weight:600;letter-spacing:0.05em;color:rgba(255,255,255,0.5)}
+.scar-count{font-family:var(--f-disp);font-size:1rem;font-weight:800;color:var(--white);letter-spacing:-0.01em}
+.scar-count b{color:#fff}
+.scar-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:13px;margin-top:13px;border-top:1px solid rgba(255,255,255,0.12)}
+.scar-deadline-label{font-size:0.66rem;font-weight:500;color:rgba(255,255,255,0.5)}
+.scar-deadline-date{font-size:0.78rem;font-weight:700;color:#fff;margin-top:1px}
+.scar-timer{display:flex;gap:6px}
+.scar-timer-unit{text-align:center}
+.scar-timer-num{
+  font-family:var(--f-disp);font-size:1.05rem;font-weight:800;color:#fff;
+  min-width:30px;letter-spacing:-0.01em;
 }
-.cpill.ios{background:var(--rg2);border:1px solid rgba(212,43,15,0.2);color:var(--red3)}
-.cpill.and{background:rgba(0,200,128,.07);border:1px solid rgba(0,200,128,.2);color:var(--andr)}
-.cpill.safe{background:rgba(12,168,106,.07);border:1px solid rgba(12,168,106,.2);color:var(--green)}
-.cpill i.ph{font-size:.72rem}
+.scar-timer-lbl{font-size:0.54rem;font-weight:600;color:rgba(255,255,255,0.42);letter-spacing:0.04em;margin-top:1px}
 
-/* ── BENEFITS ── */
-.benefits-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px 12px}
-.bitem{
-  display:flex;align-items:center;gap:8px;
-  padding:5px 0;font-size:.74rem;font-weight:300;color:var(--txt2);
-  border-bottom:1px solid var(--line);
-}
-.bitem:nth-last-child(-n+2){border-bottom:none}
-.bitem i.ph{color:var(--red2);font-size:.9rem;flex-shrink:0;width:14px}
-
-/* ── PROOF LINK ── */
+/* ───────── PROOF LINK ───────── */
 .proof-link{
-  display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--txt);
-  padding:12px 14px;background:var(--bg2);border-radius:var(--r-sm);
-  border:1px solid var(--line);transition:var(--tr);
+  display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);
+  margin-top:10px;padding:14px 15px;background:var(--surface);border-radius:var(--r-md);
+  border:1px solid var(--line);transition:border-color var(--tr);
 }
-.proof-link:hover{border-color:var(--line3);background:var(--bg3)}
-.proof-ico{
-  width:38px;height:38px;border-radius:9px;flex-shrink:0;
-  background:rgba(41,182,246,.08);border:1px solid rgba(41,182,246,.16);
+.proof-link:hover{border-color:var(--line2)}
+.proof-link-ico{
+  width:36px;height:36px;border-radius:9px;flex-shrink:0;
+  background:var(--white);border:1px solid var(--line);
   display:grid;place-items:center;
 }
-.proof-ico i.ph{font-size:1.2rem;color:#29B6F6}
-.proof-meta strong{display:block;font-size:.8rem;font-weight:600;margin-bottom:1px}
-.proof-meta span{font-size:.64rem;color:var(--txt3);font-weight:300;letter-spacing:.02em}
-.proof-arrow{margin-left:auto;color:var(--txt3)}
-.proof-arrow i.ph{font-size:1rem}
+.proof-link-ico svg{width:17px;height:17px;color:var(--ink)}
+.proof-link-meta{flex:1;min-width:0}
+.proof-link-title{font-size:0.82rem;font-weight:700;color:var(--ink);letter-spacing:-0.005em}
+.proof-link-sub{font-size:0.71rem;color:var(--gray1);font-weight:500;margin-top:1px}
+.proof-link-arrow{color:var(--gray2);flex-shrink:0}
+.proof-link-arrow svg{width:15px;height:15px}
 
-/* ══════════════════════
-   ORDER FLOW
-══════════════════════ */
-.flow-label{
-  font-family:var(--f-body);font-size:.58rem;font-weight:700;
-  letter-spacing:.24em;text-transform:uppercase;color:var(--txt3);
-  margin-bottom:10px;display:flex;align-items:center;gap:8px;
+/* ───────── PRICE BLOCK ───────── */
+.price-block{
+  margin-top:14px;padding:26px 22px;
+  background:var(--surface);border-radius:var(--r-lg);
+  text-align:center;animation:rise .6s .08s ease both;
 }
-.flow-label::after{content:'';flex:1;height:1px;background:var(--line)}
+.price-was{
+  font-size:0.82rem;color:var(--gray3);text-decoration:line-through;
+  font-weight:500;margin-bottom:2px;
+}
+.price-now{
+  font-family:var(--f-disp);font-size:3.1rem;font-weight:900;
+  color:var(--ink);letter-spacing:-0.03em;line-height:1;
+}
+.price-now sup{font-size:1.3rem;font-weight:700;top:-1.2em;margin-right:1px}
+.price-sub{font-size:0.76rem;color:var(--gray1);font-weight:500;margin-top:7px}
+.price-divider{height:1px;background:var(--line2);margin:18px 0 16px}
+.price-feats{display:flex;flex-direction:column;gap:9px;text-align:left}
+.pf{display:flex;align-items:center;gap:10px;font-size:0.84rem;font-weight:500;color:var(--ink2)}
+.pf svg{width:17px;height:17px;flex-shrink:0;color:var(--ink)}
 
-.flow{display:flex;flex-direction:column;gap:6px;animation:riseIn .5s .1s ease both}
-
-.step{
-  background:var(--bg1);border:1px solid var(--line);
-  border-radius:var(--r);overflow:hidden;transition:border-color var(--tr);
-}
-.step.is-active{border-color:rgba(212,43,15,0.32)}
-.step.is-done{border-color:rgba(12,168,106,0.2)}
-
-.step-hdr{
-  display:flex;align-items:center;gap:12px;padding:13px 16px;user-select:none;
-}
-.step-num{
-  width:26px;height:26px;border-radius:4px;flex-shrink:0;
-  background:var(--bg3);border:1px solid var(--line);
-  display:grid;place-items:center;
-  font-family:var(--f-display);font-size:.9rem;font-weight:800;
-  color:var(--txt3);transition:all var(--tr);
-}
-.step.is-active .step-num{
-  background:var(--red);border-color:var(--red);color:#fff;
-  box-shadow:0 0 20px rgba(212,43,15,0.4);
-}
-.step.is-done .step-num{background:var(--green);border-color:var(--green);color:#fff}
-.step.is-done .step-num i.ph{font-size:.72rem}
-.step-meta{flex:1;min-width:0}
-.step-title{
-  font-family:var(--f-display);font-size:.92rem;font-weight:700;
-  letter-spacing:.06em;text-transform:uppercase;
-}
-.step-sel{
-  font-size:.66rem;color:var(--txt3);margin-top:2px;font-weight:300;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color var(--tr);
-}
-.step.is-done .step-sel{color:var(--green)}
-.step-edit{
-  font-family:var(--f-display);font-size:.65rem;font-weight:700;
-  letter-spacing:.1em;text-transform:uppercase;
-  color:var(--txt3);padding:5px 10px;border-radius:4px;
-  border:1px solid var(--line);background:none;cursor:pointer;
-  transition:var(--tr);display:none;white-space:nowrap;align-items:center;gap:5px;
-}
-.step-edit:hover{color:var(--txt);border-color:var(--line2)}
-.step.is-done .step-edit{display:flex}
-
-.step-body{padding:0 16px 16px;display:none}
-.step.is-active .step-body{display:block}
-
-/* Platform */
-.plat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.plat-card{
-  border-radius:var(--r-sm);padding:18px 12px 16px;
-  border:1.5px solid var(--line);background:var(--bg2);
-  cursor:pointer;transition:all var(--tr);
-  display:flex;flex-direction:column;align-items:center;gap:7px;
-  position:relative;user-select:none;text-align:center;
-}
-.plat-card:hover{border-color:var(--line2)}
-.plat-card.sel-ios{border-color:var(--red);background:rgba(212,43,15,0.06)}
-.plat-card.sel-and{border-color:var(--andr);background:rgba(0,200,128,0.05)}
-.plat-icon i.ph{font-size:2rem;color:var(--txt3);transition:color var(--tr)}
-.plat-card.sel-ios .plat-icon i.ph{color:var(--red2)}
-.plat-card.sel-and .plat-icon i.ph{color:var(--andr)}
-.plat-name{
-  font-family:var(--f-display);font-size:1.1rem;font-weight:800;
-  letter-spacing:.06em;text-transform:uppercase;
-}
-.plat-spec{font-size:.6rem;color:var(--txt3);font-weight:300;line-height:1.6}
-.plat-tick{
-  position:absolute;top:7px;right:7px;
-  width:16px;height:16px;border-radius:3px;
-  border:1.5px solid var(--line);display:grid;place-items:center;
-  transition:all var(--tr);
-}
-.plat-tick i.ph{font-size:.52rem;color:#fff;opacity:0;transition:opacity .12s}
-.plat-card.sel-ios .plat-tick{background:var(--red);border-color:var(--red)}
-.plat-card.sel-and .plat-tick{background:var(--andr);border-color:var(--andr)}
-.plat-card.sel-ios .plat-tick i.ph,.plat-card.sel-and .plat-tick i.ph{opacity:1}
-
-/* Select field */
-.field-wrap{position:relative}
-.field-wrap select{
-  width:100%;padding:12px 36px 12px 14px;border-radius:var(--r-sm);
-  background:var(--bg2);border:1px solid var(--line);color:var(--txt);
-  font-family:var(--f-body);font-size:.83rem;font-weight:400;
-  appearance:none;-webkit-appearance:none;cursor:pointer;outline:none;transition:var(--tr);
-}
-.field-wrap select:focus{border-color:var(--red);box-shadow:0 0 0 3px var(--rg)}
-.field-wrap::after{
-  content:'\e2f8';font-family:'Phosphor';
-  position:absolute;right:12px;top:50%;transform:translateY(-50%);
-  font-size:.95rem;color:var(--txt3);pointer-events:none;
-}
-.field-wrap select option{background:#111116;color:var(--txt)}
-
-/* Methods */
-.method-list{display:flex;flex-direction:column;gap:6px}
-.method-item{
-  display:flex;align-items:center;gap:11px;padding:11px 13px;
-  background:var(--bg2);border:1.5px solid var(--line);border-radius:var(--r-sm);
-  cursor:pointer;transition:all var(--tr);user-select:none;
-}
-.method-item:hover{border-color:var(--line2)}
-.method-item.is-sel{border-color:var(--red);background:rgba(212,43,15,0.05)}
-.m-ico{width:32px;height:26px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.m-ico i.ph{font-size:1.2rem}
-.m-info{flex:1;min-width:0}
-.m-name{font-size:.78rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.02em}
-.m-desc{font-size:.61rem;color:var(--txt3);font-weight:300;margin-top:1px}
-.m-tag{
-  font-size:.52rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  padding:2px 7px;border-radius:3px;
-  background:var(--rg);color:var(--red3);border:1px solid rgba(212,43,15,.16);flex-shrink:0;
-}
-.m-radio{width:17px;height:17px;border-radius:3px;border:1.5px solid var(--line);display:grid;place-items:center;flex-shrink:0;transition:all var(--tr)}
-.method-item.is-sel .m-radio{background:var(--red);border-color:var(--red)}
-.m-radio i.ph{font-size:.58rem;color:#fff;opacity:0;transition:opacity .12s}
-.method-item.is-sel .m-radio i.ph{opacity:1}
-
-/* Plans */
-.plans-wrap{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.plan-card{
-  border-radius:var(--r-sm);padding:18px 12px 14px;text-align:center;
-  border:1.5px solid var(--line);background:var(--bg2);
-  cursor:pointer;transition:all var(--tr);position:relative;overflow:hidden;user-select:none;
-}
-.plan-card:hover:not(.is-sel){border-color:var(--line2)}
-.plan-card.is-sel.p-mo{border-color:rgba(212,43,15,0.5);background:rgba(212,43,15,0.07)}
-.plan-card.is-sel.p-pm{border-color:var(--gold2);background:rgba(240,165,0,0.06)}
-.plan-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.06),transparent);
-}
-.plan-card.is-sel.p-pm::before{
-  background:linear-gradient(90deg,transparent,rgba(240,165,0,0.3),transparent);
-}
-.plan-chip{
-  font-family:var(--f-display);font-size:.62rem;font-weight:800;
-  letter-spacing:.18em;text-transform:uppercase;
-  padding:3px 9px;border-radius:3px;display:inline-block;margin-bottom:9px;
-}
-.plan-card.p-mo .plan-chip{background:var(--rg);color:var(--red3);border:1px solid rgba(212,43,15,0.2)}
-.plan-card.p-pm .plan-chip{background:rgba(240,165,0,.1);color:var(--gold2);border:1px solid rgba(240,165,0,.22)}
-.plan-price{
-  font-family:var(--f-display);font-size:2.1rem;font-weight:900;
-  line-height:1;letter-spacing:-.01em;
-}
-.plan-card.p-mo .plan-price{color:var(--red2)}
-.plan-card.p-pm .plan-price{color:var(--gold2)}
-.plan-curr{font-size:.58rem;color:var(--txt3);margin-top:2px;letter-spacing:.06em}
-.plan-period{font-size:.62rem;color:var(--txt3);margin-top:3px}
-.plan-best{
-  position:absolute;top:6px;right:6px;
-  background:var(--gold2);color:#000;
-  font-family:var(--f-display);font-size:.5rem;font-weight:800;
-  letter-spacing:.12em;text-transform:uppercase;
-  padding:2px 7px;border-radius:2px;
-}
-.plan-feats{margin-top:10px;display:flex;flex-direction:column;gap:3px}
-.plan-feat{
-  font-size:.59rem;font-weight:300;color:var(--txt3);
-  display:flex;align-items:center;gap:4px;justify-content:center;
-}
-.plan-feat i.ph{font-size:.68rem}
-.plan-card.p-mo .plan-feat i.ph{color:var(--red2)}
-.plan-card.p-pm .plan-feat i.ph{color:var(--gold2)}
-
-.plan-note-banner{
-  display:none;margin-top:8px;padding:9px 12px;border-radius:var(--r-xs);
-  background:var(--greeng);border:1px solid rgba(12,168,106,.2);
-  font-size:.69rem;font-weight:300;color:rgba(12,168,106,.85);line-height:1.5;
-}
-.plan-note-banner.show{display:block}
-
-/* ── SUMMARY ── */
-.summary-block{
-  display:none;margin-top:10px;
-  background:var(--bg1);border:1px solid rgba(240,165,0,.18);
-  border-radius:var(--r);overflow:hidden;animation:riseIn .28s ease both;
-}
-.summary-block.show{display:block}
-.sum-rows{padding:14px 16px}
-.sum-row{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:6px 0;border-bottom:1px solid var(--line);font-size:.77rem;
-}
-.sum-row:last-child{border:none;padding-bottom:0}
-.sum-key{color:var(--txt3);font-weight:300}
-.sum-val{font-weight:600;text-align:right;max-width:58%}
-.sum-total{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:13px 16px;
-  background:linear-gradient(135deg,rgba(240,165,0,.07),rgba(240,165,0,.02));
-  border-top:1px solid rgba(240,165,0,.2);
-}
-.sum-total-label{
-  font-family:var(--f-display);font-size:.7rem;font-weight:700;
-  letter-spacing:.2em;text-transform:uppercase;color:var(--txt3);
-}
-.sum-total-amt{
-  font-family:var(--f-display);font-size:1.3rem;font-weight:900;
-  letter-spacing:.02em;color:var(--gold2);
+/* ───────── SECTION LABEL ───────── */
+.sec-label{
+  font-size:0.7rem;font-weight:600;letter-spacing:0.04em;
+  color:var(--gray1);margin:32px 0 12px;
 }
 
-/* ── PAYMENT ── */
-.pay-section{display:none;margin-top:10px;animation:riseIn .28s ease both}
-.pay-section.show{display:block}
-.pay-card{background:var(--bg1);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+/* ───────── SPEC GRID ───────── */
+.spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;animation:rise .6s .1s ease both}
+.spec-card{
+  background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);
+  padding:16px 15px;
+}
+.spec-ico{
+  width:34px;height:34px;border-radius:9px;background:var(--surface);
+  display:grid;place-items:center;margin-bottom:11px;
+}
+.spec-ico svg{width:17px;height:17px;color:var(--ink)}
+.spec-num{font-family:var(--f-disp);font-size:1.55rem;font-weight:800;letter-spacing:-0.02em;color:var(--ink)}
+.spec-name{font-size:0.74rem;font-weight:600;color:var(--gray1);margin-top:2px}
 
-.pay-card-hdr{
-  display:flex;align-items:center;gap:11px;padding:14px 16px;
+/* ───────── BENEFITS LIST ───────── */
+.benefit-list{
+  background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);
+  overflow:hidden;animation:rise .6s .12s ease both;
+}
+.benefit-row{
+  display:flex;align-items:center;gap:12px;padding:13px 16px;
   border-bottom:1px solid var(--line);
 }
-.pay-ico{
-  width:38px;height:38px;border-radius:9px;display:grid;place-items:center;flex-shrink:0;
+.benefit-row:last-child{border-bottom:none}
+.benefit-ico{
+  width:28px;height:28px;border-radius:8px;background:var(--surface);
+  display:grid;place-items:center;flex-shrink:0;
 }
-.pay-ico i.ph{font-size:1.25rem}
-.pay-card-title{font-size:.84rem;font-weight:600;letter-spacing:.01em;margin-bottom:2px}
-.pay-card-sub{font-size:.65rem;color:var(--txt3);font-weight:300}
-.pay-card-body{padding:14px 16px}
+.benefit-ico svg{width:14px;height:14px;color:var(--ink)}
+.benefit-txt{font-size:0.84rem;font-weight:500;color:var(--ink2)}
 
+/* ───────── PROOF ───────── */
+.proof-strip{
+  display:flex;align-items:center;gap:14px;margin-top:10px;
+  padding:16px;background:var(--surface);border-radius:var(--r-md);
+  animation:rise .6s .14s ease both;
+}
+.proof-num{font-family:var(--f-disp);font-size:1.7rem;font-weight:900;color:var(--ink);letter-spacing:-0.02em;white-space:nowrap}
+.proof-divider{width:1px;height:30px;background:var(--line2)}
+.proof-txt{font-size:0.78rem;color:var(--gray1);font-weight:500;line-height:1.4}
+
+/* ───────── HOW IT WORKS ───────── */
+.flow-steps{display:flex;flex-direction:column;gap:0;animation:rise .6s .16s ease both}
+.flow-step{display:flex;gap:14px;padding:14px 0}
+.flow-line{
+  display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:26px;
+}
+.flow-dot{
+  width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;
+  display:grid;place-items:center;font-family:var(--f-disp);font-size:0.72rem;font-weight:800;
+  flex-shrink:0;
+}
+.flow-stem{width:1px;flex:1;background:var(--line2);margin-top:4px;min-height:18px}
+.flow-step:last-child .flow-stem{display:none}
+.flow-body{padding-top:2px}
+.flow-title{font-size:0.86rem;font-weight:700;color:var(--ink);letter-spacing:-0.005em}
+.flow-desc{font-size:0.79rem;color:var(--gray1);margin-top:3px;line-height:1.5;font-weight:400}
+
+/* ───────── PAYMENT CARD ───────── */
+.pay-card{
+  margin-top:34px;background:var(--ink);border-radius:var(--r-lg);
+  padding:26px 22px 24px;animation:rise .6s .18s ease both;
+}
+.pay-kicker{font-size:0.7rem;font-weight:600;letter-spacing:0.05em;color:rgba(255,255,255,0.5);margin-bottom:8px}
+.pay-title{font-family:var(--f-disp);font-size:1.5rem;font-weight:800;color:#fff;letter-spacing:-0.02em;line-height:1.15}
+.pay-methods{display:flex;gap:8px;margin-top:16px;margin-bottom:18px;flex-wrap:wrap}
+.pay-method-chip{
+  display:flex;align-items:center;gap:6px;
+  padding:7px 12px;border-radius:100px;
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);
+}
+.pay-method-chip svg{width:14px;height:9px}
+.pay-method-chip span{font-size:0.7rem;font-weight:600;color:rgba(255,255,255,0.85)}
 .pay-cta{
-  display:flex;align-items:center;justify-content:center;gap:10px;
-  width:100%;height:52px;border:none;border-radius:var(--r-sm);
-  font-family:var(--f-display);font-size:1rem;font-weight:800;
-  letter-spacing:.12em;text-transform:uppercase;
-  cursor:pointer;transition:all var(--tr);text-decoration:none;
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  width:100%;height:56px;border:none;border-radius:100px;
+  background:#fff;color:var(--ink);
+  font-family:var(--f-disp);font-size:0.98rem;font-weight:800;
+  letter-spacing:-0.005em;cursor:pointer;transition:all var(--tr);
+  text-decoration:none;
 }
-.pay-cta.red-btn{
-  background:linear-gradient(150deg,var(--red),#a51d00);color:#fff;
-  box-shadow:0 4px 22px rgba(212,43,15,0.3);
+.pay-cta:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(0,0,0,0.35)}
+.pay-cta:active{transform:translateY(0)}
+.pay-cta svg{width:17px;height:17px}
+.pay-note{
+  display:flex;align-items:flex-start;gap:9px;margin-top:16px;
 }
-.pay-cta.red-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(212,43,15,0.44)}
-.pay-cta i.ph{font-size:1.1rem}
+.pay-note svg{width:15px;height:15px;color:rgba(255,255,255,0.55);flex-shrink:0;margin-top:1px}
+.pay-note span{font-size:0.73rem;color:rgba(255,255,255,0.55);font-weight:400;line-height:1.55}
+.pay-secure{display:flex;align-items:center;gap:6px;justify-content:center;margin-top:14px}
+.pay-secure svg{width:12px;height:12px;color:rgba(255,255,255,0.4)}
+.pay-secure span{font-size:0.66rem;color:rgba(255,255,255,0.4);font-weight:500;letter-spacing:0.01em}
 
-.data-table{display:flex;flex-direction:column;gap:5px}
-.data-row{
-  display:flex;align-items:center;gap:8px;
-  background:var(--bg2);border-radius:var(--r-xs);padding:10px 12px;
-  border:1px solid var(--line);
+/* ───────── DELIVERY BANNER ───────── */
+.delivery-banner{
+  margin-top:12px;padding:18px 18px;
+  background:var(--white);border:1.5px solid var(--ink);border-radius:var(--r-lg);
+  animation:rise .6s .2s ease both;
 }
-.data-lbl{font-size:.63rem;color:var(--txt3);font-weight:300;min-width:80px;flex-shrink:0;letter-spacing:.02em}
-.data-val{font-size:.78rem;font-weight:600;flex:1;word-break:break-all;letter-spacing:.02em}
-.data-copy{
-  width:28px;height:28px;border-radius:5px;border:1px solid var(--line);
-  background:var(--bg3);color:var(--txt3);
-  cursor:pointer;display:grid;place-items:center;flex-shrink:0;transition:all var(--tr);
-}
-.data-copy:hover{color:var(--txt);border-color:var(--line2)}
-.data-copy.copied{color:var(--green);border-color:rgba(12,168,106,.3);background:rgba(12,168,106,.07)}
-.data-copy i.ph{font-size:.85rem}
-
-.info-banner{
-  display:flex;align-items:center;gap:10px;margin-top:10px;
-  padding:11px 13px;border-radius:var(--r-sm);
-  background:rgba(12,168,106,.06);border:1px solid rgba(12,168,106,.15);
-}
-.info-banner-ico{
-  width:30px;height:30px;border-radius:7px;
-  background:rgba(12,168,106,.1);border:1px solid rgba(12,168,106,.18);
+.db-top{display:flex;align-items:center;gap:11px;margin-bottom:10px}
+.db-ico{
+  width:36px;height:36px;border-radius:10px;background:var(--ink);
   display:grid;place-items:center;flex-shrink:0;
 }
-.info-banner-ico i.ph{font-size:.95rem;color:var(--green)}
-.info-banner-txt strong{display:block;font-size:.76rem;font-weight:600;color:var(--green);margin-bottom:1px}
-.info-banner-txt span{font-size:.65rem;color:var(--txt3);font-weight:300;line-height:1.5}
+.db-ico svg{width:18px;height:18px;color:#fff}
+.db-title{font-family:var(--f-disp);font-size:0.98rem;font-weight:800;color:var(--ink);letter-spacing:-0.01em}
+.db-body{font-size:0.81rem;color:var(--gray1);font-weight:400;line-height:1.6;padding-left:47px}
+.db-body strong{color:var(--ink);font-weight:700}
 
-.pix-block{
-  padding:13px;border-radius:var(--r-sm);
-  background:rgba(41,182,246,.05);border:1px solid rgba(41,182,246,.14);
-  display:flex;align-items:flex-start;gap:11px;
+/* ───────── FOOTER ───────── */
+footer{
+  margin-top:40px;padding-top:22px;border-top:1px solid var(--line);
+  text-align:center;
 }
-.pix-ico{
-  width:36px;height:36px;border-radius:8px;
-  background:rgba(50,188,173,.09);border:1px solid rgba(50,188,173,.2);
-  display:grid;place-items:center;flex-shrink:0;
-}
-.pix-ico i.ph{font-size:1.1rem;color:#32BCAD}
-.pix-txt strong{display:block;font-size:.8rem;font-weight:600;margin-bottom:3px}
-.pix-txt span{font-size:.66rem;color:var(--txt3);line-height:1.5}
+.footer-brand{font-family:var(--f-disp);font-size:0.78rem;font-weight:700;color:var(--gray1);letter-spacing:-0.005em}
+.footer-sub{font-size:0.68rem;color:var(--gray3);font-weight:500;margin-top:4px}
 
-/* ── CONFIRM ── */
-.confirm-section{display:none;margin-top:10px;animation:riseIn .28s ease both}
-.confirm-section.show{display:block}
-
-.confirm-trigger{
-  width:100%;display:flex;align-items:center;gap:12px;
-  padding:14px 16px;border-radius:var(--r);
-  background:var(--bg1);border:1px solid var(--line);cursor:pointer;
-  transition:all var(--tr);text-align:left;
-}
-.confirm-trigger:hover{border-color:rgba(12,168,106,.3);background:rgba(12,168,106,.04)}
-.confirm-trigger-ico{
-  width:38px;height:38px;border-radius:9px;flex-shrink:0;
-  background:rgba(12,168,106,.08);border:1px solid rgba(12,168,106,.18);
-  display:grid;place-items:center;
-}
-.confirm-trigger-ico i.ph{font-size:1.2rem;color:var(--green)}
-.confirm-trigger-meta{flex:1}
-.confirm-trigger-title{font-size:.83rem;font-weight:600;color:var(--green);margin-bottom:2px}
-.confirm-trigger-sub{font-size:.64rem;color:var(--txt3);font-weight:300}
-.confirm-chevron{color:var(--txt3);transition:transform .2s}
-.confirm-chevron i.ph{font-size:1.05rem}
-.confirm-trigger.open .confirm-chevron{transform:rotate(180deg)}
-
-.confirm-panel{
-  display:none;background:var(--bg1);
-  border:1px solid rgba(12,168,106,.15);border-top:none;
-  border-radius:0 0 var(--r) var(--r);padding:16px;margin-top:-1px;
-}
-.confirm-panel.open{display:block;animation:riseIn .22s ease both}
-
-.warn-strip{
-  display:flex;align-items:flex-start;gap:8px;
-  padding:10px 12px;border-radius:var(--r-xs);
-  background:var(--rg);border:1px solid rgba(212,43,15,.18);
-  font-size:.69rem;font-weight:300;color:rgba(255,142,128,.85);line-height:1.6;margin-bottom:14px;
-}
-.warn-strip i.ph{color:var(--red);flex-shrink:0;margin-top:1px;font-size:.9rem}
-
-.cf-field{margin-bottom:10px}
-.cf-label{
-  display:block;font-family:var(--f-display);font-size:.64rem;font-weight:700;
-  letter-spacing:.18em;text-transform:uppercase;color:var(--txt3);margin-bottom:6px;
-}
-.cf-select,.cf-textarea{
-  width:100%;padding:11px 13px;border-radius:var(--r-sm);
-  background:var(--bg2);border:1px solid var(--line);color:var(--txt);
-  font-family:var(--f-body);font-size:.82rem;font-weight:400;
-  outline:none;transition:var(--tr);
-  appearance:none;-webkit-appearance:none;
-}
-.cf-select:focus,.cf-textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px var(--greeng)}
-.cf-select option{background:#111116;color:var(--txt)}
-.cf-textarea{resize:vertical;min-height:64px;font-weight:300;line-height:1.5}
-
-.no-pay-block{
-  padding:12px;background:var(--rg);border:1px solid rgba(212,43,15,.18);
-  border-radius:var(--r-sm);font-size:.73rem;font-weight:300;
-  color:rgba(255,142,128,.85);line-height:1.6;margin-top:8px;
-}
-.no-pay-block i.ph{margin-right:5px;font-size:.88rem}
-
-.send-wa-btn{
-  display:flex;align-items:center;justify-content:center;gap:10px;
-  width:100%;height:52px;border:none;border-radius:var(--r-sm);
-  background:linear-gradient(150deg,#25D366,#128C7E);color:#fff;
-  font-family:var(--f-display);font-size:1rem;font-weight:800;
-  letter-spacing:.12em;text-transform:uppercase;
-  cursor:pointer;transition:all var(--tr);
-  box-shadow:0 4px 18px rgba(18,140,126,.18);margin-top:12px;
-}
-.send-wa-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 28px rgba(18,140,126,.32)}
-.send-wa-btn:disabled{opacity:.28;cursor:not-allowed;transform:none}
-.send-wa-btn i.ph{font-size:1.1rem}
-
-/* ── ANIMATIONS ── */
-@keyframes riseIn{
-  from{opacity:0;transform:translateY(14px)}
+@keyframes rise{
+  from{opacity:0;transform:translateY(12px)}
   to{opacity:1;transform:translateY(0)}
 }
 
-@media(max-width:360px){
-  .plans-wrap{grid-template-columns:1fr}
-  .price-grid{grid-template-columns:1fr}
+@media(max-width:340px){
+  .price-now{font-size:2.6rem}
 }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
-  <a class="hdr-brand" href="#">
-    <span class="hdr-brand-name">JEXE <span>REGEDIT</span></span>
-    <div class="hdr-sep"></div>
-    <span class="hdr-sub">Pagina Oficial</span>
-  </a>
-  <div class="hdr-badge"><i class="ph ph-crown-simple"></i> Premium</div>
+  <div class="hdr-brand">
+    <div class="hdr-mark">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M16.5 2.5c.1 1.2-.35 2.4-1.1 3.3-.78.9-1.95 1.55-3.1 1.45-.13-1.15.4-2.4 1.13-3.2.8-.9 2.05-1.5 3.07-1.55zM21 17.2c-.6 1.35-.9 1.95-1.65 3.15-1.05 1.65-2.55 3.7-4.4 3.72-1.65.02-2.07-1.07-4.3-1.06-2.22.01-2.7 1.08-4.35 1.06-1.85-.02-3.27-1.87-4.32-3.52C-.2 16.4-.55 11.1 1.95 8.4c1.27-1.4 3.1-2.25 4.85-2.27 1.78-.02 2.9 1.05 4.35 1.05 1.43 0 2.32-1.07 4.4-1.07 1.5.02 3.1.8 4.3 2.2-3.78 2.18-3.18 7.5 1.15 8.89z" fill="white"/></svg>
+    </div>
+    <span class="hdr-name">JEXE <span class="light">Regedit</span></span>
+  </div>
+  <span class="hdr-tag">iOS Edition</span>
 </header>
 
 <main>
 
   <!-- HERO -->
   <div class="hero">
-    <div class="hero-eyebrow">ENTREGA INMEDIATA</div>
-    <h1 class="hero-h1">
-      <span class="line1">JEXE</span>
-      <span class="line2">REGEDIT</span>
-      <span class="line3">PREMIUM</span>
-    </h1>
-    <div class="hero-sub">
-      <div class="hero-sub-item"><i class="ph ph-apple-logo"></i><span>iOS 11 – 26.4+</span></div>
-      <div class="hero-sub-item"><i class="ph ph-android-logo"></i><span>Android 8 – 16+</span></div>
-      <div class="hero-sub-item"><i class="ph ph-shield-check"></i><span>Sin root</span></div>
+    <div class="hero-kicker">Edicion exclusiva para iPhone (iOS)</div>
+    <h1 class="hero-h1">AimSuport.<br/><em>Solo para iOS.</em></h1>
+    <p class="hero-p">Los mejores archivos para Free Fire en dispositivos Apple. Una sola compra, acceso inmediato, sin intermediarios.</p>
+    <div class="hero-platform">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M16.5 2.5c.1 1.2-.35 2.4-1.1 3.3-.78.9-1.95 1.55-3.1 1.45-.13-1.15.4-2.4 1.13-3.2.8-.9 2.05-1.5 3.07-1.55zM21 17.2c-.6 1.35-.9 1.95-1.65 3.15-1.05 1.65-2.55 3.7-4.4 3.72-1.65.02-2.07-1.07-4.3-1.06-2.22.01-2.7 1.08-4.35 1.06-1.85-.02-3.27-1.87-4.32-3.52C-.2 16.4-.55 11.1 1.95 8.4c1.27-1.4 3.1-2.25 4.85-2.27 1.78-.02 2.9 1.05 4.35 1.05 1.43 0 2.32-1.07 4.4-1.07 1.5.02 3.1.8 4.3 2.2-3.78 2.18-3.18 7.5 1.15 8.89z" fill="white"/></svg>
+      <span>iOS 11 — 26.4+ · Sin jailbreak</span>
     </div>
-    <div class="hero-divider"></div>
   </div>
 
   <!-- VIDEO -->
@@ -683,582 +337,188 @@ main{position:relative;z-index:1;max-width:480px;width:100%;margin:0 auto;paddin
     <video controls preload="metadata">
       <source src="producto.mp4" type="video/mp4"/>
     </video>
-    <div class="video-overlay-label"><i class="ph ph-play-circle"></i> Vista previa</div>
+    <div class="video-label">Vista previa</div>
   </div>
 
-  <!-- PRICE PREVIEW -->
-  <div class="price-preview">
-    <div class="price-preview-label">Precios</div>
-    <div class="price-grid">
-      <div class="price-card">
-        <div class="pc-plan">Mensual</div>
-        <div class="pc-price">$12</div>
-        <div class="pc-currency">USD</div>
-        <div class="pc-duration">Por mes</div>
-        <div class="pc-features">
-          <div class="pc-feat"><i class="ph ph-check"></i>2 actualizaciones</div>
-          <div class="pc-feat"><i class="ph ph-check"></i>Certificados Premium</div>
-          <div class="pc-feat"><i class="ph ph-check"></i>Sin baneo</div>
-        </div>
+  <!-- SCARCITY -->
+  <div class="scarcity">
+    <div class="scar-top">
+      <span class="scar-label">Disponibilidad</span>
+      <span class="scar-count"><b>149</b> unidades</span>
+    </div>
+    <div class="scar-bottom" style="border-top:none;padding-top:0">
+      <div>
+        <div class="scar-deadline-label">Cierra el</div>
+        <div class="scar-deadline-date">18 de julio, 2026</div>
       </div>
-      <div class="price-card featured">
-        <div class="pc-tag">Mejor opcion</div>
-        <div class="pc-plan">Permanente</div>
-        <div class="pc-price">$32</div>
-        <div class="pc-currency">USD</div>
-        <div class="pc-duration">Vitalicio</div>
-        <div class="pc-features">
-          <div class="pc-feat"><i class="ph ph-check"></i>Actualizaciones ilimitadas</div>
-          <div class="pc-feat"><i class="ph ph-check"></i>Sin vencimiento</div>
-          <div class="pc-feat"><i class="ph ph-check"></i>Soporte prioritario</div>
-        </div>
+      <div class="scar-timer" id="countdown">
+        <div class="scar-timer-unit"><div class="scar-timer-num" id="cd-d">--</div><div class="scar-timer-lbl">DIAS</div></div>
+        <div class="scar-timer-unit"><div class="scar-timer-num" id="cd-h">--</div><div class="scar-timer-lbl">HRS</div></div>
+        <div class="scar-timer-unit"><div class="scar-timer-num" id="cd-m">--</div><div class="scar-timer-lbl">MIN</div></div>
       </div>
     </div>
   </div>
 
-  <!-- PRODUCT INFO -->
-  <div class="sec-label">El producto</div>
-  <div class="surface" style="animation:riseIn .45s .05s ease both;margin-bottom:12px">
-    <div class="compat-row">
-      <span class="cpill ios"><i class="ph ph-apple-logo"></i> iOS 11 – 26.4+</span>
-      <span class="cpill and"><i class="ph ph-android-logo"></i> Android 8 – 16+</span>
-      <span class="cpill safe"><i class="ph ph-shield-check"></i> Sin root</span>
+  <!-- PRICE -->
+  <div class="price-block">
+    <div class="price-was">$32 USD</div>
+    <div class="price-now">$<span id="priceMain">14</span><sup>.99</sup></div>
+    <div class="price-sub">Pago unico · Acceso permanente</div>
+    <div class="price-divider"></div>
+    <div class="price-feats">
+      <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Acceso de por vida, sin renovaciones</div>
+      <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Entrega dentro de esta misma pagina</div>
+      <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Certificado premium incluido</div>
     </div>
-    <div class="benefits-grid">
-      <div class="bitem"><i class="ph ph-lightning"></i><span>Actualizaciones mensuales</span></div>
-      <div class="bitem"><i class="ph ph-crosshair-simple"></i><span>Aimfov 120%</span></div>
-      <div class="bitem"><i class="ph ph-lock-open"></i><span>Aimlock 65%</span></div>
-      <div class="bitem"><i class="ph ph-target"></i><span>Aimassist 65%</span></div>
-      <div class="bitem"><i class="ph ph-certificate"></i><span>Certificados Premium</span></div>
-      <div class="bitem"><i class="ph ph-shield-slash"></i><span>Libre de baneo</span></div>
-      <div class="bitem"><i class="ph ph-prohibit"></i><span>Sin Blacklist</span></div>
-      <div class="bitem"><i class="ph ph-trend-up"></i><span>Sin reinicio de rango</span></div>
+  </div>
+
+  <!-- SPECS -->
+  <div class="sec-label">Parametros de ajuste</div>
+  <div class="spec-grid">
+    <div class="spec-card">
+      <div class="spec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></div>
+      <div class="spec-num">70%</div>
+      <div class="spec-name">Aimlock</div>
+    </div>
+    <div class="spec-card">
+      <div class="spec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 9h6v6H9z"/></svg></div>
+      <div class="spec-num">70%</div>
+      <div class="spec-name">Aim assist</div>
+    </div>
+  </div>
+
+  <!-- BENEFITS -->
+  <div class="sec-label">Incluido en tu compra</div>
+  <div class="benefit-list">
+    <div class="benefit-row">
+      <div class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.5 5.5 21l2-7.5L2 9h7z"/></svg></div>
+      <div class="benefit-txt">Certificados premium, libres de baneo</div>
+    </div>
+    <div class="benefit-row">
+      <div class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/></svg></div>
+      <div class="benefit-txt">Sin blacklist, sin reinicio de rango</div>
+    </div>
+    <div class="benefit-row">
+      <div class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-3-6.7M21 4v5h-5"/></svg></div>
+      <div class="benefit-txt">Actualizaciones permanentes incluidas</div>
+    </div>
+    <div class="benefit-row">
+      <div class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
+      <div class="benefit-txt">Activacion instantanea tras el pago</div>
     </div>
   </div>
 
   <!-- PROOF -->
-  <div class="sec-label">Mas de 1500 compras verificadas</div>
-  <div class="surface" style="padding:12px 14px;margin-bottom:20px;animation:riseIn .45s .08s ease both">
-    <a class="proof-link" href="https://t.me/+56Wdh8JANmJjYzZh" target="_blank" rel="noopener">
-      <div class="proof-ico"><i class="ph ph-telegram-logo"></i></div>
-      <div class="proof-meta">
-        <strong>Referencias publicas</strong>
-        <span>4 anos de historial &nbsp;&middot;&nbsp; +1.500 ventas</span>
-      </div>
-      <div class="proof-arrow"><i class="ph ph-arrow-up-right"></i></div>
-    </a>
+  <div class="proof-strip">
+    <div class="proof-num">5 anos</div>
+    <div class="proof-divider"></div>
+    <div class="proof-txt">de historial verificado en el mercado</div>
+  </div>
+  <div class="proof-strip" style="margin-top:8px">
+    <div class="proof-num">2.500+</div>
+    <div class="proof-divider"></div>
+    <div class="proof-txt">compras completadas y entregadas</div>
   </div>
 
-  <!-- ORDER FLOW -->
-  <div class="flow-label">Arma tu pedido</div>
-  <div class="flow">
+  <a class="proof-link" href="https://t.me/+56Wdh8JANmJjYzZh" target="_blank" rel="noopener">
+    <div class="proof-link-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
+    <div class="proof-link-meta">
+      <div class="proof-link-title">Ver referencias publicas</div>
+      <div class="proof-link-sub">Mas de 2.500 pagos verificables</div>
+    </div>
+    <div class="proof-link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+  </a>
 
-    <!-- 1 PLATFORM -->
-    <div class="step is-active" id="step1">
-      <div class="step-hdr">
-        <div class="step-num" id="si1">1</div>
-        <div class="step-meta">
-          <div class="step-title">Plataforma</div>
-          <div class="step-sel" id="ss1">Selecciona iOS o Android</div>
-        </div>
-        <button class="step-edit" id="ed1" onclick="editStep(1)"><i class="ph ph-pencil-simple"></i> Editar</button>
-      </div>
-      <div class="step-body" id="sb1">
-        <div class="plat-grid">
-          <div class="plat-card" id="platIOS" onclick="selectPlatform('ios')">
-            <div class="plat-tick"><i class="ph ph-check"></i></div>
-            <div class="plat-icon"><i class="ph ph-apple-logo"></i></div>
-            <div class="plat-name">iOS</div>
-            <div class="plat-spec">iPhone &amp; iPad<br/>iOS 11 – 26.4+<br/>Sin jailbreak</div>
-          </div>
-          <div class="plat-card" id="platAND" onclick="selectPlatform('android')">
-            <div class="plat-tick"><i class="ph ph-check"></i></div>
-            <div class="plat-icon"><i class="ph ph-android-logo"></i></div>
-            <div class="plat-name">Android</div>
-            <div class="plat-spec">Cualquier marca<br/>Android 8 – 16+<br/>Sin root</div>
-          </div>
-        </div>
+  <!-- HOW IT WORKS -->
+  <div class="sec-label">Como funciona</div>
+  <div class="flow-steps">
+    <div class="flow-step">
+      <div class="flow-line"><div class="flow-dot">1</div><div class="flow-stem"></div></div>
+      <div class="flow-body">
+        <div class="flow-title">Paga con tu tarjeta</div>
+        <div class="flow-desc">Visa, Mastercard o American Express, de cualquier pais.</div>
       </div>
     </div>
-
-    <!-- 2 COUNTRY -->
-    <div class="step" id="step2">
-      <div class="step-hdr">
-        <div class="step-num" id="si2">2</div>
-        <div class="step-meta">
-          <div class="step-title">Pais</div>
-          <div class="step-sel" id="ss2">Selecciona tu plataforma primero</div>
-        </div>
-        <button class="step-edit" id="ed2" onclick="editStep(2)"><i class="ph ph-pencil-simple"></i> Editar</button>
-      </div>
-      <div class="step-body" id="sb2">
-        <div class="field-wrap">
-          <select id="countrySelect" onchange="onCountry()">
-            <option value="">— Selecciona tu pais —</option>
-            <optgroup label="America Latina">
-              <option value="mx">Mexico</option>
-              <option value="co">Colombia</option>
-              <option value="ar">Argentina</option>
-              <option value="cl">Chile</option>
-              <option value="pe">Peru</option>
-              <option value="ve">Venezuela</option>
-              <option value="ec">Ecuador</option>
-              <option value="bo">Bolivia</option>
-              <option value="py">Paraguay</option>
-              <option value="uy">Uruguay</option>
-              <option value="cr">Costa Rica</option>
-              <option value="pa">Panama</option>
-              <option value="gt">Guatemala</option>
-              <option value="hn">Honduras</option>
-              <option value="sv">El Salvador</option>
-              <option value="ni">Nicaragua</option>
-              <option value="do">Rep. Dominicana</option>
-              <option value="cu">Cuba</option>
-              <option value="br">Brasil</option>
-              <option value="pr">Puerto Rico</option>
-            </optgroup>
-            <optgroup label="Norte America">
-              <option value="us">Estados Unidos</option>
-              <option value="ca">Canada</option>
-            </optgroup>
-            <optgroup label="Europa">
-              <option value="es">Espana</option>
-              <option value="gb">Reino Unido</option>
-              <option value="de">Alemania</option>
-              <option value="fr">Francia</option>
-              <option value="it">Italia</option>
-              <option value="pt">Portugal</option>
-              <option value="nl">Paises Bajos</option>
-              <option value="be">Belgica</option>
-              <option value="ch">Suiza</option>
-              <option value="at">Austria</option>
-              <option value="pl">Polonia</option>
-              <option value="se">Suecia</option>
-              <option value="no">Noruega</option>
-              <option value="tr">Turquia</option>
-            </optgroup>
-            <optgroup label="Asia y Otros">
-              <option value="in">India</option>
-              <option value="ph">Filipinas</option>
-              <option value="ae">Emiratos Arabes</option>
-              <option value="other">Otro pais</option>
-            </optgroup>
-          </select>
-        </div>
+    <div class="flow-step">
+      <div class="flow-line"><div class="flow-dot">2</div><div class="flow-stem"></div></div>
+      <div class="flow-body">
+        <div class="flow-title">No cierres esta pagina</div>
+        <div class="flow-desc">Al confirmar el pago, vuelve aqui mismo para recibir tu acceso.</div>
       </div>
     </div>
-
-    <!-- 3 PAYMENT METHOD -->
-    <div class="step" id="step3">
-      <div class="step-hdr">
-        <div class="step-num" id="si3">3</div>
-        <div class="step-meta">
-          <div class="step-title">Metodo de pago</div>
-          <div class="step-sel" id="ss3">Selecciona tu pais primero</div>
-        </div>
-        <button class="step-edit" id="ed3" onclick="editStep(3)"><i class="ph ph-pencil-simple"></i> Editar</button>
+    <div class="flow-step">
+      <div class="flow-line"><div class="flow-dot">3</div></div>
+      <div class="flow-body">
+        <div class="flow-title">Acceso inmediato</div>
+        <div class="flow-desc">Sin esperas, sin intermediarios, sin mensajes. La entrega ocurre en esta misma pagina.</div>
       </div>
-      <div class="step-body" id="sb3">
-        <div class="method-list" id="methodList"></div>
-      </div>
-    </div>
-
-    <!-- 4 PLAN -->
-    <div class="step" id="step4">
-      <div class="step-hdr">
-        <div class="step-num" id="si4">4</div>
-        <div class="step-meta">
-          <div class="step-title">Plan</div>
-          <div class="step-sel" id="ss4">Selecciona metodo de pago primero</div>
-        </div>
-        <button class="step-edit" id="ed4" onclick="editStep(4)"><i class="ph ph-pencil-simple"></i> Editar</button>
-      </div>
-      <div class="step-body" id="sb4">
-        <div class="plans-wrap" id="plansGrid"></div>
-        <div class="plan-note-banner" id="planNote"></div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- SUMMARY -->
-  <div class="summary-block" id="summaryBlock">
-    <div class="sum-rows">
-      <div class="sum-row"><span class="sum-key">Plataforma</span><span class="sum-val" id="sumPlatform">—</span></div>
-      <div class="sum-row"><span class="sum-key">Pais</span><span class="sum-val" id="sumCountry">—</span></div>
-      <div class="sum-row"><span class="sum-key">Metodo de pago</span><span class="sum-val" id="sumMethod">—</span></div>
-      <div class="sum-row"><span class="sum-key">Plan</span><span class="sum-val" id="sumPlan">—</span></div>
-    </div>
-    <div class="sum-total">
-      <span class="sum-total-label">Total a pagar</span>
-      <span class="sum-total-amt" id="sumTotal">—</span>
     </div>
   </div>
 
   <!-- PAYMENT -->
-  <div class="pay-section" id="paySection">
-    <div class="sec-label" style="margin-top:12px">Realiza tu pago</div>
-    <div class="pay-card" id="payCard"></div>
-  </div>
-
-  <!-- CONFIRM -->
-  <div class="confirm-section" id="confirmSection">
-    <div class="sec-label" style="margin-top:12px">Ya realize mi pago</div>
-    <button class="confirm-trigger" id="confirmTrigger" onclick="toggleConfirm()">
-      <div class="confirm-trigger-ico"><i class="ph ph-whatsapp-logo"></i></div>
-      <div class="confirm-trigger-meta">
-        <div class="confirm-trigger-title">Notificar a JEXE</div>
-        <div class="confirm-trigger-sub">Solo si ya completaste el pago</div>
+  <div class="pay-card">
+    <div class="pay-kicker">Pago unico</div>
+    <div class="pay-title">$14.99 USD por acceso de por vida</div>
+    <div class="pay-methods">
+      <div class="pay-method-chip">
+        <svg viewBox="0 0 48 32" fill="none"><rect width="48" height="32" rx="4" fill="#fff" opacity="0.12"/><path d="M19.5 21.5h-3l1.9-11h3l-1.9 11zm12.4-10.7c-.6-.2-1.5-.5-2.7-.5-3 0-5.1 1.5-5.1 3.7 0 1.6 1.5 2.5 2.7 3 1.2.6 1.6 1 1.6 1.5 0 .8-1 1.1-1.9 1.1-1.3 0-2-.2-3.1-.6l-.4-.2-.5 2.6c.7.3 2 .6 3.4.6 3.2 0 5.3-1.5 5.3-3.8 0-1.3-.8-2.3-2.6-3.1-1.1-.5-1.8-.9-1.8-1.4 0-.5.6-1 1.8-1 1 0 1.8.2 2.4.4l.3.1.5-2.4z" fill="#fff"/></svg>
+        <span>Visa</span>
       </div>
-      <div class="confirm-chevron"><i class="ph ph-caret-down"></i></div>
-    </button>
-    <div class="confirm-panel" id="confirmPanel">
-      <div class="warn-strip">
-        <i class="ph ph-warning"></i>
-        <span><strong style="color:var(--txt)">Solo escribe si ya completaste el pago.</strong> Mensajes sin pago saturan el chat y retrasan la entrega a otros clientes.</span>
+      <div class="pay-method-chip">
+        <svg viewBox="0 0 48 32" fill="none"><circle cx="19" cy="16" r="9" fill="#fff" opacity="0.7"/><circle cx="29" cy="16" r="9" fill="#fff" opacity="0.3"/></svg>
+        <span>Mastercard</span>
       </div>
-      <div class="cf-field">
-        <label class="cf-label">Ya realize el pago</label>
-        <select class="cf-select" id="cfPaid" onchange="onPaidChange()">
-          <option value="">— Selecciona —</option>
-          <option value="si">Si, ya pague</option>
-          <option value="no">No, todavia no</option>
-        </select>
+      <div class="pay-method-chip">
+        <svg viewBox="0 0 48 32" fill="none"><rect x="6" y="9" width="36" height="14" rx="2" stroke="#fff" stroke-width="1.5" opacity="0.7"/></svg>
+        <span>Amex</span>
       </div>
-      <div id="cfFields" style="display:none">
-        <div class="cf-field">
-          <label class="cf-label">Plan que compre</label>
-          <select class="cf-select" id="cfPlan">
-            <option value="">— Selecciona —</option>
-            <option value="Mensual ($12 USD)">Mensual — $12 USD</option>
-            <option value="Permanente ($32 USD)">Permanente — $32 USD</option>
-          </select>
-        </div>
-        <div class="cf-field">
-          <label class="cf-label">Con que pague</label>
-          <select class="cf-select" id="cfMethod">
-            <option value="">— Selecciona —</option>
-            <option>Tarjeta debito/credito (Bold)</option>
-            <option>Nequi</option>
-            <option>Llave / BRE-B</option>
-            <option>CLABE — Transferencia Mexico</option>
-            <option>Binance Pay</option>
-            <option>AstroPay</option>
-            <option>Skrill</option>
-            <option>Remesadora</option>
-            <option>PIX</option>
-          </select>
-        </div>
-        <div class="cf-field">
-          <label class="cf-label">Mi dispositivo</label>
-          <select class="cf-select" id="cfPlat">
-            <option value="">— Selecciona —</option>
-            <option>iOS (iPhone / iPad)</option>
-            <option>Android</option>
-          </select>
-        </div>
-        <div class="cf-field">
-          <label class="cf-label">Nota adicional (opcional)</label>
-          <textarea class="cf-textarea" id="cfNote" placeholder="Numero de orden, referencia del pago, captura, etc."></textarea>
-        </div>
-      </div>
-      <div id="cfNoPayBlock" style="display:none">
-        <div class="no-pay-block">
-          <i class="ph ph-prohibit"></i>
-          <strong>Por favor realiza el pago primero.</strong> Escribe a JEXE unicamente cuando hayas completado la transaccion. Esto ayuda a mantener el servicio agil para todos.
-        </div>
-      </div>
-      <button class="send-wa-btn" id="cfSendBtn" onclick="sendToJexe()" disabled>
-        <i class="ph ph-whatsapp-logo"></i> Enviar confirmacion a JEXE
-      </button>
+    </div>
+    <a href="https://checkout.bold.co/payment/LNK_3J79BJGKPR" target="_blank" rel="noopener" class="pay-cta">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      Pagar $14.99 USD
+    </a>
+    <div class="pay-note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span>Funciona con cualquier tarjeta del mundo. Al completar el pago — no cierres la pagina, la entrega es automatica e inmediata.</span>
+    </div>
+    <div class="pay-secure">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+      <span>Procesado de forma segura por Bold</span>
     </div>
   </div>
+
+  <!-- DELIVERY BANNER -->
+  <div class="delivery-banner">
+    <div class="db-top">
+      <div class="db-ico"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+      <div class="db-title">Entrega inmediata, 24/7</div>
+    </div>
+    <div class="db-body">No hay intermediarios ni tiempos de espera. <strong>No cierres esta pagina</strong> despues de pagar: tu acceso se activa aqui mismo, al instante, a cualquier hora del dia.</div>
+  </div>
+
+  <footer>
+    <div class="footer-brand">JEXE Regedit</div>
+    <div class="footer-sub">Edicion iOS · Disponible hasta el 18 de julio, 2026</div>
+  </footer>
 
 </main>
 
 <script>
-/* ══════════════════════
-   DATA
-══════════════════════ */
-const CARD_LINKS={mo:'https://checkout.bold.co/payment/LNK_0U1NVUMWQK',pm:'https://checkout.bold.co/payment/LNK_9ILGBXLTH7'};
-const ASTROPAY_LINKS={mo:'https://onetouch.astropay.com/payment?external_reference_id=sgnR2c3ZKlH4c6C6W07KhNzmL1i7boF5',pm:'https://onetouch.astropay.com/payment?external_reference_id=LhBnOGPnmTI9rXz8NXuEjiezus2JNDAa'};
-
-const METHODS={
-  card:{name:'Tarjeta Debito / Credito',desc:'Visa &amp; Mastercard — Link Bold seguro',icon:'ph-credit-card',color:'#4FC3F7',bg:'rgba(79,195,247,.1)',bd:'rgba(79,195,247,.18)',tag:'Universal'},
-  astropay:{name:'AstroPay',desc:'Billetera digital internacional',icon:'ph-wallet',color:'#64B5F6',bg:'rgba(100,181,246,.1)',bd:'rgba(100,181,246,.18)',tag:'Digital'},
-  skrill:{name:'Skrill',desc:'Billetera digital global',icon:'ph-coins',color:'#CE93D8',bg:'rgba(206,147,216,.1)',bd:'rgba(206,147,216,.18)',tag:'Digital'},
-  binance:{name:'Binance Pay',desc:'USDT, BTC y mas cryptos',icon:'ph-currency-circle-dollar',color:'#F0B90B',bg:'rgba(240,185,11,.1)',bd:'rgba(240,185,11,.18)',tag:'Crypto'},
-  remittance:{name:'Remesadora',desc:'Remitly, MoneyGram, Western Union',icon:'ph-arrows-left-right',color:'#FFAB91',bg:'rgba(255,171,145,.1)',bd:'rgba(255,171,145,.18)',tag:'Remesa'},
-  clabe:{name:'CLABE — Transferencia MX',desc:'Transferencia bancaria directa Mexico',icon:'ph-bank',color:'#A5D6A7',bg:'rgba(165,214,167,.1)',bd:'rgba(165,214,167,.18)',tag:'Mexico'},
-  nequi:{name:'Nequi',desc:'App Bancolombia — Colombia',icon:'ph-device-mobile',color:'#CE93D8',bg:'rgba(123,45,139,.12)',bd:'rgba(123,45,139,.25)',tag:'Colombia'},
-  llave:{name:'Llave / BRE-B',desc:'Cualquier banco colombiano',icon:'ph-key',color:'#EF9A9A',bg:'rgba(228,32,44,.1)',bd:'rgba(228,32,44,.18)',tag:'Colombia'},
-  pix:{name:'PIX / QR PIX',desc:'Transferencia instantanea Brasil',icon:'ph-qr-code',color:'#32BCAD',bg:'rgba(50,188,173,.1)',bd:'rgba(50,188,173,.18)',tag:'Brasil'},
-};
-
-const CM={mx:['card','clabe','remittance','binance','astropay','skrill'],co:['card','nequi','llave','remittance','binance','astropay','skrill'],ar:['card','astropay','remittance','binance','skrill'],cl:['card','astropay','remittance','binance','skrill'],pe:['card','astropay','remittance','binance','skrill'],ve:['remittance','binance','astropay','card'],br:['pix','card','astropay','remittance','binance','skrill'],us:['card','remittance','binance','skrill'],ca:['card','remittance','binance','skrill'],es:['card','astropay','skrill','remittance','binance'],gb:['card','astropay','skrill','remittance','binance'],cu:['remittance','binance'],other:['card','remittance','binance','astropay','skrill']};
-['ec','bo','py','uy','cr','pa','gt','hn','sv','ni','do','pr'].forEach(c=>CM[c]=['card','remittance','binance','astropay']);
-['de','fr','it','pt','nl','be','ch','at','pl','se','no','tr','in','ph','ae'].forEach(c=>CM[c]=['card','astropay','skrill','remittance','binance']);
-
-const CN={mx:'Mexico',co:'Colombia',ar:'Argentina',cl:'Chile',pe:'Peru',ve:'Venezuela',ec:'Ecuador',bo:'Bolivia',py:'Paraguay',uy:'Uruguay',cr:'Costa Rica',pa:'Panama',gt:'Guatemala',hn:'Honduras',sv:'El Salvador',ni:'Nicaragua',do:'Rep. Dominicana',cu:'Cuba',br:'Brasil',pr:'Puerto Rico',us:'Estados Unidos',ca:'Canada',es:'Espana',gb:'Reino Unido',de:'Alemania',fr:'Francia',it:'Italia',pt:'Portugal',nl:'Paises Bajos',be:'Belgica',ch:'Suiza',at:'Austria',pl:'Polonia',se:'Suecia',no:'Noruega',tr:'Turquia',in:'India',ph:'Filipinas',ae:'Emiratos Arabes',other:'Otro pais'};
-
-function getPricing(country,method){
-  if(country==='mx'){
-    const c=method==='clabe';
-    return{
-      mo:{d:'$220 MXN',u:'$12 USD',n:12},
-      pm:{d:c?'$500 MXN':'$580 MXN',u:'$32 USD',n:32,sp:c},
-      note:c?'Precio especial CLABE: plan Permanente $500 MXN.':'Con CLABE el plan Permanente baja a $500 MXN.'
-    }
+(function(){
+  var deadline = new Date('2026-07-18T23:59:59-05:00').getTime();
+  var d=document.getElementById('cd-d'),h=document.getElementById('cd-h'),m=document.getElementById('cd-m');
+  function tick(){
+    var now=Date.now();
+    var diff=deadline-now;
+    if(diff<=0){d.textContent='0';h.textContent='0';m.textContent='0';return}
+    var days=Math.floor(diff/86400000);
+    var hours=Math.floor((diff%86400000)/3600000);
+    var mins=Math.floor((diff%3600000)/60000);
+    d.textContent=days;h.textContent=hours;m.textContent=mins;
   }
-  if(country==='co'){
-    const l=method==='nequi'||method==='llave';
-    return{
-      mo:{d:'$45.000 COP',u:'$12 USD',n:12},
-      pm:{d:l?'$100.000 COP':'$132.000 COP',u:'$32 USD',n:32,sp:l},
-      note:l?'Precio especial Nequi/Llave: plan Permanente $100.000 COP.':'Con Nequi o Llave el plan Permanente baja a $100.000 COP.'
-    }
-  }
-  return{
-    mo:{d:'$12 USD',u:'$12 USD',n:12},
-    pm:{d:'$32 USD',u:'$32 USD',n:32,sp:false},
-    note:null
-  };
-}
-
-let sel={platform:'',platformLabel:'',country:'',method:'',methodName:'',plan:'',planKey:'',price:'',priceUSD:''};
-
-/* ══════════════════════
-   STEPS
-══════════════════════ */
-function activateStep(n){
-  const s=document.getElementById('step'+n);
-  s.classList.remove('is-done');s.classList.add('is-active');
-  document.getElementById('sb'+n).style.display='block';
-  document.getElementById('si'+n).innerHTML=n;
-  const ed=document.getElementById('ed'+n);if(ed)ed.style.display='none';
-}
-function markDone(n,lbl){
-  const s=document.getElementById('step'+n);
-  s.classList.remove('is-active');s.classList.add('is-done');
-  document.getElementById('sb'+n).style.display='none';
-  document.getElementById('si'+n).innerHTML='<i class="ph ph-check"></i>';
-  document.getElementById('ss'+n).textContent=lbl;
-  const ed=document.getElementById('ed'+n);if(ed)ed.style.display='flex';
-}
-function editStep(n){
-  for(let i=n;i<=4;i++){
-    const s=document.getElementById('step'+i);
-    s.classList.remove('is-done','is-active');
-    document.getElementById('sb'+i).style.display='none';
-    document.getElementById('si'+i).innerHTML=i;
-    const ed=document.getElementById('ed'+i);if(ed)ed.style.display='none';
-  }
-  activateStep(n);
-  if(n<=2){sel.country='';document.getElementById('countrySelect').value=''}
-  if(n<=3){sel.method='';sel.methodName=''}
-  if(n<=4){sel.plan='';sel.planKey='';sel.price='';sel.priceUSD=''}
-  hideSummary();hidePaySection();hideConfirmSection();
-}
-
-function selectPlatform(p){
-  sel.platform=p;sel.platformLabel=p==='ios'?'iOS (iPhone / iPad)':'Android';
-  document.querySelectorAll('.plat-card').forEach(c=>c.classList.remove('sel-ios','sel-and'));
-  document.getElementById(p==='ios'?'platIOS':'platAND').classList.add(p==='ios'?'sel-ios':'sel-and');
-  markDone(1,sel.platformLabel);
-  const s2=document.getElementById('step2');
-  s2.classList.remove('is-done','is-active');
-  document.getElementById('ss2').textContent='Selecciona tu pais';
-  activateStep(2);
-}
-
-function onCountry(){
-  sel.country=document.getElementById('countrySelect').value;
-  if(!sel.country)return;
-  sel.method='';sel.methodName='';sel.plan='';sel.planKey='';sel.price='';sel.priceUSD='';
-  markDone(2,CN[sel.country]||sel.country);
-  renderMethods();
-  document.getElementById('step3').classList.remove('is-done');
-  activateStep(3);
-}
-
-function renderMethods(){
-  const list=document.getElementById('methodList');list.innerHTML='';
-  (CM[sel.country]||CM['other']).forEach(id=>{
-    const m=METHODS[id];if(!m)return;
-    const el=document.createElement('div');el.className='method-item';
-    el.innerHTML=`<div class="m-ico"><i class="ph ${m.icon}" style="color:${m.color}"></i></div><div class="m-info"><div class="m-name">${m.name}</div><div class="m-desc">${m.desc}</div></div><div class="m-tag">${m.tag}</div><div class="m-radio"><i class="ph ph-check"></i></div>`;
-    el.addEventListener('click',()=>{
-      document.querySelectorAll('.method-item').forEach(i=>i.classList.remove('is-sel'));
-      el.classList.add('is-sel');
-      sel.method=id;sel.methodName=m.name.replace(/&amp;/g,'&');
-      sel.plan='';sel.planKey='';sel.price='';sel.priceUSD='';
-      markDone(3,m.name.replace(/&amp;/g,'&'));
-      renderPlans();
-      document.getElementById('step4').classList.remove('is-done');
-      activateStep(4);
-      hideSummary();hidePaySection();hideConfirmSection();
-    });
-    list.appendChild(el);
-  });
-}
-
-const PLAN_DEFS=[
-  {key:'mo',cls:'p-mo',chip:'Mensual',period:'1 mes',feats:['2 actualizaciones','Certificados Premium','Sin baneo']},
-  {key:'pm',cls:'p-pm',chip:'Permanente',period:'Vitalicio',feats:['Actualizaciones ilimitadas','Sin vencimiento','Soporte prioritario'],best:true},
-];
-
-function renderPlans(){
-  const grid=document.getElementById('plansGrid');grid.innerHTML='';
-  const p=getPricing(sel.country,sel.method);
-  const nb=document.getElementById('planNote');
-  p.note?(nb.textContent=p.note,nb.classList.add('show')):nb.classList.remove('show');
-  PLAN_DEFS.forEach(({key,cls,chip,period,feats,best})=>{
-    const d=p[key];
-    const btn=document.createElement('div');
-    btn.className=`plan-card ${cls}`;
-    const featsHTML=feats.map(f=>`<div class="plan-feat"><i class="ph ph-check"></i>${f}</div>`).join('');
-    const [priceNum,...rest]=d.d.split(' ');
-    const curr=rest.join(' ')||'';
-    btn.innerHTML=`${best?'<div class="plan-best">Mejor</div>':''}
-      <div class="plan-chip">${chip}</div>
-      <div class="plan-price">${priceNum}</div>
-      <div class="plan-curr">${curr}</div>
-      <div class="plan-period">${period}</div>
-      ${d.sp?'<div style="font-size:.52rem;color:var(--green);margin-top:3px;font-family:var(--f-body)">Precio especial</div>':''}
-      <div class="plan-feats">${featsHTML}</div>`;
-    btn.addEventListener('click',()=>{
-      document.querySelectorAll('.plan-card').forEach(b=>b.classList.remove('is-sel'));
-      btn.classList.add('is-sel');
-      sel.plan=`${chip} (${period})`;sel.planKey=key;sel.price=d.d;sel.priceUSD=d.u;
-      markDone(4,`${chip} — ${d.d}`);
-      updateSummary();renderPaySection();showConfirmSection();
-    });
-    grid.appendChild(btn);
-  });
-}
-
-function updateSummary(){
-  document.getElementById('sumPlatform').textContent=sel.platformLabel;
-  document.getElementById('sumCountry').textContent=CN[sel.country]||sel.country;
-  document.getElementById('sumMethod').textContent=sel.methodName;
-  document.getElementById('sumPlan').textContent=sel.plan;
-  const tot=sel.price+(sel.price!==sel.priceUSD?' ('+sel.priceUSD+')':'');
-  document.getElementById('sumTotal').textContent=tot;
-  document.getElementById('summaryBlock').classList.add('show');
-}
-function hideSummary(){document.getElementById('summaryBlock').classList.remove('show')}
-
-let _ci=0;
-function dr(label,val){
-  const id='cp'+(++_ci);
-  return `<div class="data-row"><span class="data-lbl">${label}</span><span class="data-val">${val}</span><button class="data-copy" id="${id}" onclick="copyVal('${val.replace(/'/g,"\\'")}','${id}')"><i class="ph ph-copy"></i></button></div>`;
-}
-function copyVal(txt,btnId){
-  const btn=document.getElementById(btnId);
-  navigator.clipboard.writeText(txt).then(()=>{
-    btn.classList.add('copied');btn.querySelector('i.ph').className='ph ph-check';
-    setTimeout(()=>{btn.classList.remove('copied');btn.querySelector('i.ph').className='ph ph-copy'},1800);
-  }).catch(()=>{});
-}
-
-const MSG_ENTREGA='<strong>Entrega inmediata</strong><span>Toma captura del comprobante y notifica a JEXE con el boton de abajo para recibir tu acceso al instante.</span>';
-
-function renderPaySection(){
-  const sec=document.getElementById('paySection'),card=document.getElementById('payCard');
-  const m=sel.method,k=sel.planKey;
-  _ci=0;
-  let hdr='',body='';
-
-  if(m==='card'){
-    const link=CARD_LINKS[k];
-    const lbl=k==='mo'?'Mensual':'Permanente';
-    hdr=`<div class="pay-ico" style="background:rgba(79,195,247,.1);border:1px solid rgba(79,195,247,.18)"><i class="ph ph-credit-card" style="color:#4FC3F7"></i></div><div><div class="pay-card-title">Pago con Tarjeta — Bold</div><div class="pay-card-sub">Link de cobro seguro &nbsp;&middot;&nbsp; ${lbl} &nbsp;&middot;&nbsp; ${sel.price}</div></div>`;
-    body=`<a href="${link}" target="_blank" rel="noopener" class="pay-cta red-btn"><i class="ph ph-credit-card"></i> Pagar ahora — ${sel.price}</a><div class="info-banner"><div class="info-banner-ico"><i class="ph ph-lock-key"></i></div><div class="info-banner-txt">${MSG_ENTREGA}</div></div>`;
-  }
-  else if(m==='nequi'){
-    const amts={mo:'$45.000 COP',pm:'$100.000 COP'};
-    hdr=`<div class="pay-ico" style="background:rgba(123,45,139,.12);border:1px solid rgba(123,45,139,.22)"><i class="ph ph-device-mobile" style="color:#CE93D8"></i></div><div><div class="pay-card-title">Pago con Nequi</div><div class="pay-card-sub">Abre Nequi &rarr; Enviar dinero &rarr; Numero</div></div>`;
-    body=`<div class="data-table">${dr('Numero','3132878955')}${dr('Titular','Juan Aguirre')}${dr('Monto',amts[k])}</div><div class="info-banner"><div class="info-banner-ico"><i class="ph ph-lock-key"></i></div><div class="info-banner-txt">${MSG_ENTREGA}</div></div>`;
-  }
-  else if(m==='llave'){
-    const amts={mo:'$45.000 COP',pm:'$100.000 COP'};
-    hdr=`<div class="pay-ico" style="background:rgba(228,32,44,.1);border:1px solid rgba(228,32,44,.18)"><i class="ph ph-key" style="color:#EF9A9A"></i></div><div><div class="pay-card-title">Pago con Llave / BRE-B</div><div class="pay-card-sub">Cualquier banco colombiano</div></div>`;
-    body=`<div class="data-table">${dr('Entidad','Bold CF')}${dr('Email / ID','mediaspaceapp@gmail.com')}${dr('Titular','Juan Aguirre')}${dr('Monto',amts[k])}</div><div class="info-banner"><div class="info-banner-ico"><i class="ph ph-lock-key"></i></div><div class="info-banner-txt">${MSG_ENTREGA}</div></div>`;
-  }
-  else if(m==='clabe'){
-    const amts={mo:'$220 MXN',pm:'$500 MXN'};
-    hdr=`<div class="pay-ico" style="background:rgba(0,104,71,.12);border:1px solid rgba(0,104,71,.22)"><i class="ph ph-bank" style="color:#A5D6A7"></i></div><div><div class="pay-card-title">Transferencia CLABE — Mexico</div><div class="pay-card-sub">Transferencia bancaria directa &nbsp;&middot;&nbsp; STP</div></div>`;
-    body=`<div class="data-table">${dr('Titular','Juan Pablo Aguirre Grosso')}${dr('CLABE','646180546701915656')}${dr('Entidad','STP')}${dr('Monto',amts[k])}</div><div class="info-banner"><div class="info-banner-ico"><i class="ph ph-lock-key"></i></div><div class="info-banner-txt">${MSG_ENTREGA}</div></div>`;
-  }
-  else if(m==='binance'){
-    const amts={mo:'$12 USDT',pm:'$32 USDT'};
-    hdr=`<div class="pay-ico" style="background:rgba(240,185,11,.1);border:1px solid rgba(240,185,11,.18)"><i class="ph ph-currency-circle-dollar" style="color:#F0B90B"></i></div><div><div class="pay-card-title">Binance Pay</div><div class="pay-card-sub">Busca por ID o usuario en Binance Pay</div></div>`;
-    body=`<div class="data-table">${dr('Binance ID','538653875')}${dr('Usuario','@jexeregedit')}${dr('Monto',amts[k])}</div><div class="info-banner"><div class="info-banner-ico"><i class="ph ph-lock-key"></i></div><div class="info-banner-txt">${MSG_ENTREGA}</div></div>`;
-  }
-  else if(m==='astropay'){
-    const lbl=k==='mo'?'Mensual':'Permanente';
-    hdr=`<div class="pay-ico" style="background:rgba(100,181,246,.1);border:1px solid rgba(100,181,246,.18)"><i class="ph ph-wallet" style="color:#64B5F6"></i></div><div><div class="pay-card-title">AstroPay</div><div class="pay-card-sub">Link de pago directo &nbsp;&middot;&nbsp; ${lbl} &nbsp;&middot;&nbsp; ${sel.price}</div></div>`;
-    body=`<a href="${ASTROPAY_LINKS[k]}" target="_blank" rel="noopener" class="pay-cta red-btn"><i class="ph ph-wallet"></i> Pagar con AstroPay — ${sel.price}</a><div class="info-banner"><div class="info-banner-ico"><i class="ph ph-lock-key"></i></div><div class="info-banner-txt">${MSG_ENTREGA}</div></div>`;
-  }
-  else if(m==='skrill'){
-    const amts={mo:'$12 USD',pm:'$32 USD'};
-    hdr=`<div class="pay-ico" style="background:rgba(206,147,216,.1);border:1px solid rgba(206,147,216,.18)"><i class="ph ph-coins" style="color:#CE93D8"></i></div><div><div class="pay-card-title">Skrill</div><div class="pay-card-sub">Envia el pago a este correo desde tu cuenta Skrill</div></div>`;
-    body=`<div class="data-table">${dr('Email Skrill','juanpabloaguirregrosso@gmail.com')}${dr('Monto',amts[k])}</div><div class="info-banner"><div class="info-banner-ico"><i class="ph ph-lock-key"></i></div><div class="info-banner-txt">${MSG_ENTREGA}</div></div>`;
-  }
-  else if(m==='remittance'){
-    const amts={mo:'$12 USD',pm:'$32 USD'};
-    hdr=`<div class="pay-ico" style="background:rgba(255,171,145,.1);border:1px solid rgba(255,171,145,.18)"><i class="ph ph-arrows-left-right" style="color:#FFAB91"></i></div><div><div class="pay-card-title">Remesadora</div><div class="pay-card-sub">Remitly, MoneyGram, Western Union</div></div>`;
-    body=`<div class="data-table">${dr('Nombre','Juan Pablo Aguirre Grosso')}${dr('Pais destino','Colombia')}${dr('Telefono','+573132878955')}${dr('Num. cuenta','3132878955')}${dr('Billetera','Nequi')}${dr('Tipo cuenta','Ahorros')}${dr('Monto',amts[k])}</div><div class="info-banner"><div class="info-banner-ico"><i class="ph ph-lock-key"></i></div><div class="info-banner-txt">${MSG_ENTREGA}</div></div>`;
-  }
-  else if(m==='pix'){
-    hdr=`<div class="pay-ico" style="background:rgba(50,188,173,.1);border:1px solid rgba(50,188,173,.18)"><i class="ph ph-qr-code" style="color:#32BCAD"></i></div><div><div class="pay-card-title">PIX — Brasil</div><div class="pay-card-sub">Gestion directa con JEXE</div></div>`;
-    body=`<div class="pix-block"><div class="pix-ico"><i class="ph ph-whatsapp-logo"></i></div><div class="pix-txt"><strong>PIX se coordina directamente con JEXE</strong><span>JEXE te entregara los datos del PIX de forma personalizada. Una vez realizado el pago, toma captura del comprobante y notifica a JEXE con el boton de abajo para recibir tu acceso al instante.</span></div></div>`;
-  }
-
-  card.innerHTML=`<div class="pay-card-hdr">${hdr}</div><div class="pay-card-body">${body}</div>`;
-  sec.classList.add('show');
-}
-
-function hidePaySection(){document.getElementById('paySection').classList.remove('show')}
-function showConfirmSection(){document.getElementById('confirmSection').classList.add('show')}
-function hideConfirmSection(){
-  const cs=document.getElementById('confirmSection');
-  cs.classList.remove('show');
-  document.getElementById('confirmPanel').classList.remove('open');
-  document.getElementById('confirmTrigger').classList.remove('open');
-}
-function toggleConfirm(){
-  const panel=document.getElementById('confirmPanel'),trigger=document.getElementById('confirmTrigger');
-  const open=panel.classList.toggle('open');
-  trigger.classList.toggle('open',open);
-}
-function onPaidChange(){
-  const v=document.getElementById('cfPaid').value;
-  const fields=document.getElementById('cfFields');
-  const noBlock=document.getElementById('cfNoPayBlock');
-  const btn=document.getElementById('cfSendBtn');
-  if(v==='si'){fields.style.display='block';noBlock.style.display='none';btn.disabled=false}
-  else if(v==='no'){fields.style.display='none';noBlock.style.display='block';btn.disabled=true}
-  else{fields.style.display='none';noBlock.style.display='none';btn.disabled=true}
-}
-function sendToJexe(){
-  if(document.getElementById('cfPaid').value!=='si')return;
-  const plan=document.getElementById('cfPlan').value||sel.plan||'No especificado';
-  const method=document.getElementById('cfMethod').value||sel.methodName||'No especificado';
-  const plat=document.getElementById('cfPlat').value||sel.platformLabel||'No especificado';
-  const note=document.getElementById('cfNote').value.trim();
-  const msg=
-    'Hola JEXE, ya realize mi pago.\n\n'+
-    '================================\n CONFIRMACION DE PAGO\n================================\n'+
-    'Ya pague: Si\n'+
-    'Plan: '+plan+'\n'+
-    'Metodo: '+method+'\n'+
-    'Plataforma: '+plat+'\n'+
-    (note?'Nota: '+note+'\n':'')+
-    '================================\n'+
-    'Por favor confirmar recibo y enviar acceso. Gracias.';
-  window.open('https://wa.me/573132878955?text='+encodeURIComponent(msg),'_blank','noopener');
-}
+  tick();
+  setInterval(tick,30000);
+})();
 </script>
 </body>
 </html>
