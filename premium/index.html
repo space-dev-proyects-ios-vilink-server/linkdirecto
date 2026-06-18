@@ -4,306 +4,165 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 <meta name="color-scheme" content="light"/>
-<title>JEXE Regedit — iOS Edition</title>
+<title>JEXE Regedit — Detectando dispositivo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@500;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
-
 :root{
-  --white:#FFFFFF;
-  --paper:#FAFAFA;
-  --line:#E5E5E5;
-  --line2:#D9D9D9;
-  --ink:#0A0A0A;
-  --ink2:#1D1D1F;
-  --gray1:#6E6E73;
-  --gray2:#86868B;
-  --gray3:#AEAEB2;
+  --white:#FFFFFF;--line:#E5E5E5;--line2:#D9D9D9;
+  --ink:#0A0A0A;--ink2:#1D1D1F;--gray1:#6E6E73;--gray2:#86868B;--gray3:#AEAEB2;
   --surface:#F5F5F7;
-  --surface2:#EFEFF1;
-  --r-lg:22px;
-  --r-md:16px;
-  --r-sm:11px;
+  --r-lg:22px;--r-md:16px;--r-sm:11px;
   --tr:0.2s cubic-bezier(0.16,1,0.3,1);
-  --f-disp:'Inter Tight',-apple-system,'SF Pro Display',system-ui,sans-serif;
-  --f-body:'Inter',-apple-system,'SF Pro Text',system-ui,sans-serif;
+  --f-disp:'Inter Tight',-apple-system,system-ui,sans-serif;
+  --f-body:'Inter',-apple-system,system-ui,sans-serif;
 }
-
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-@media (prefers-reduced-motion: reduce){*{animation-duration:0.001ms !important;transition-duration:0.001ms !important}}
-
-html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
+html{-webkit-tap-highlight-color:transparent}
 body{
   font-family:var(--f-body);background:var(--white);color:var(--ink);
-  min-height:100dvh;overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
-  padding-bottom:calc(env(safe-area-inset-bottom,0px) + 36px);
+  min-height:100dvh;overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:24px 18px calc(env(safe-area-inset-bottom,0px) + 32px);
 }
 
-:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
-
-/* ───────── HEADER ───────── */
+/* HEADER */
 header{
-  position:sticky;top:0;z-index:90;
+  position:fixed;top:0;left:0;right:0;z-index:90;
   display:flex;align-items:center;justify-content:space-between;
   padding:0 20px;height:54px;
-  background:rgba(255,255,255,0.86);
+  background:rgba(255,255,255,0.88);
   backdrop-filter:blur(20px) saturate(180%);
   -webkit-backdrop-filter:blur(20px) saturate(180%);
   border-bottom:1px solid var(--line);
 }
 .hdr-brand{display:flex;align-items:center;gap:9px}
-.hdr-mark{
-  width:22px;height:22px;border-radius:6px;background:var(--ink);
+.hdr-mark{width:22px;height:22px;border-radius:6px;background:var(--ink);display:grid;place-items:center;flex-shrink:0}
+.hdr-mark svg{width:13px;height:13px}
+.hdr-name{font-family:var(--f-disp);font-size:0.94rem;font-weight:700;letter-spacing:-0.01em;color:var(--ink)}
+.hdr-name .lt{font-weight:500;color:var(--gray1)}
+.hdr-tag{font-size:0.62rem;font-weight:600;letter-spacing:0.05em;color:var(--ink);background:var(--surface);padding:5px 10px;border-radius:100px;border:1px solid var(--line)}
+
+/* WRAP */
+.wrap{
+  width:100%;max-width:400px;
+  text-align:center;
+  animation:rise .55s cubic-bezier(.16,1,.3,1) both;
+  margin-top:54px;
+}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* ICON */
+.device-icon{
+  width:72px;height:72px;border-radius:20px;
+  background:var(--ink);
+  display:grid;place-items:center;
+  margin:0 auto 20px;
+  animation:iconPop .6s cubic-bezier(.34,1.56,.64,1) .08s both;
+}
+@keyframes iconPop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.device-icon svg{width:34px;height:34px}
+
+/* HEADING */
+.detect-title{
+  font-family:var(--f-disp);font-size:1.55rem;font-weight:800;
+  letter-spacing:-0.025em;line-height:1.1;color:var(--ink);
+  margin-bottom:7px;
+}
+.detect-sub{font-size:0.84rem;color:var(--gray1);font-weight:400;line-height:1.5;margin-bottom:28px}
+
+/* PROGRESS */
+.progress-wrap{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:100px;height:5px;overflow:hidden;margin-bottom:12px;
+}
+.progress-bar{
+  height:100%;width:0%;border-radius:100px;
+  background:var(--ink);
+  transition:width .06s linear;
+}
+.status-text{
+  font-size:0.74rem;color:var(--gray2);font-weight:500;
+  min-height:1.2em;margin-bottom:32px;letter-spacing:0.01em;
+}
+
+/* RESULT */
+.result-block{
+  display:none;
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r-lg);padding:20px 18px;margin-bottom:14px;
+  animation:rise .3s ease both;
+  text-align:left;
+}
+.result-block.show{display:block}
+.result-row{display:flex;align-items:center;gap:12px}
+.result-ico{
+  width:38px;height:38px;border-radius:10px;background:var(--ink);
   display:grid;place-items:center;flex-shrink:0;
 }
-.hdr-mark svg{width:12px;height:12px}
-.hdr-name{
-  font-family:var(--f-disp);font-size:0.95rem;font-weight:700;
-  letter-spacing:-0.01em;color:var(--ink);
+.result-ico svg{width:18px;height:18px}
+.result-label{font-size:0.68rem;font-weight:600;letter-spacing:0.04em;color:var(--gray1);margin-bottom:2px}
+.result-val{font-family:var(--f-disp);font-size:1.05rem;font-weight:800;color:var(--ink);letter-spacing:-0.01em}
+.result-confidence{
+  margin-top:14px;padding-top:12px;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:center;
 }
-.hdr-name .light{font-weight:500;color:var(--gray1)}
-.hdr-tag{
-  font-size:0.62rem;font-weight:600;letter-spacing:0.06em;
-  color:var(--ink);background:var(--surface);
-  padding:5px 10px;border-radius:100px;border:1px solid var(--line);
-}
+.conf-label{font-size:0.68rem;font-weight:600;color:var(--gray2)}
+.conf-track{flex:1;height:4px;border-radius:100px;background:var(--line2);margin:0 10px;overflow:hidden}
+.conf-fill{height:100%;border-radius:100px;background:var(--ink);transition:width .6s cubic-bezier(.16,1,.3,1)}
+.conf-pct{font-size:0.72rem;font-weight:700;color:var(--ink);min-width:32px;text-align:right}
 
-main{position:relative;z-index:1;max-width:480px;width:100%;margin:0 auto;padding:0 18px}
+/* CTA */
+.go-btn{
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  width:100%;height:54px;border:none;border-radius:100px;
+  background:var(--ink);color:#fff;
+  font-family:var(--f-disp);font-size:0.96rem;font-weight:800;
+  letter-spacing:-0.005em;cursor:pointer;text-decoration:none;
+  transition:all var(--tr);
+}
+.go-btn:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(0,0,0,0.18)}
+.go-btn:active{transform:translateY(0)}
+.go-btn svg{width:16px;height:16px}
 
-/* ───────── HERO ───────── */
-.hero{padding:40px 0 26px;animation:rise .6s ease both}
-.hero-kicker{
-  font-size:0.72rem;font-weight:600;letter-spacing:0.04em;
-  color:var(--gray1);margin-bottom:14px;
+/* MANUAL */
+.manual{display:none;margin-top:10px;animation:rise .35s ease both}
+.manual.show{display:block}
+.manual-label{
+  font-size:0.68rem;font-weight:600;letter-spacing:0.04em;color:var(--gray1);
+  text-align:center;margin-bottom:10px;
 }
-.hero-h1{
-  font-family:var(--f-disp);
-  font-size:clamp(2.3rem,9.5vw,2.85rem);
-  font-weight:800;line-height:1.04;letter-spacing:-0.025em;
-  color:var(--ink);
+.manual-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.manual-btn{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  padding:16px 12px;border-radius:var(--r-md);
+  background:var(--white);border:1.5px solid var(--line);
+  text-decoration:none;transition:all var(--tr);cursor:pointer;
 }
-.hero-h1 em{
-  font-style:normal;font-weight:800;color:var(--gray2);
-}
-.hero-p{
-  font-size:0.95rem;font-weight:400;line-height:1.55;
-  color:var(--gray1);margin-top:14px;max-width:380px;
-}
-.hero-platform{
-  display:inline-flex;align-items:center;gap:7px;margin-top:20px;
-  padding:7px 13px 7px 9px;border-radius:100px;
-  background:var(--ink);color:var(--white);
-}
-.hero-platform svg{width:14px;height:14px}
-.hero-platform span{font-size:0.75rem;font-weight:600;letter-spacing:0.01em}
-
-/* ───────── VIDEO ───────── */
-.video-wrap{
-  position:relative;border-radius:var(--r-lg);overflow:hidden;
-  background:var(--ink);margin-top:22px;animation:rise .6s .03s ease both;
-  border:1px solid var(--line);
-}
-.video-wrap video{width:100%;display:block;max-height:230px;object-fit:cover}
-.video-label{
-  position:absolute;bottom:10px;left:10px;
-  background:rgba(255,255,255,0.92);backdrop-filter:blur(8px);
-  border-radius:100px;padding:5px 12px;
-  font-size:0.68rem;font-weight:600;color:var(--ink);letter-spacing:0.01em;
-}
-
-/* ───────── SCARCITY BAR ───────── */
-.scarcity{
-  margin-top:24px;padding:18px 18px 16px;
-  background:var(--ink);border-radius:var(--r-lg);
-  animation:rise .6s .05s ease both;
-}
-.scar-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0}
-.scar-label{font-size:0.66rem;font-weight:600;letter-spacing:0.05em;color:rgba(255,255,255,0.5)}
-.scar-count{font-family:var(--f-disp);font-size:1rem;font-weight:800;color:var(--white);letter-spacing:-0.01em}
-.scar-count b{color:#fff}
-.scar-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:13px;margin-top:13px;border-top:1px solid rgba(255,255,255,0.12)}
-.scar-deadline-label{font-size:0.66rem;font-weight:500;color:rgba(255,255,255,0.5)}
-.scar-deadline-date{font-size:0.78rem;font-weight:700;color:#fff;margin-top:1px}
-.scar-timer{display:flex;gap:6px}
-.scar-timer-unit{text-align:center}
-.scar-timer-num{
-  font-family:var(--f-disp);font-size:1.05rem;font-weight:800;color:#fff;
-  min-width:30px;letter-spacing:-0.01em;
-}
-.scar-timer-lbl{font-size:0.54rem;font-weight:600;color:rgba(255,255,255,0.42);letter-spacing:0.04em;margin-top:1px}
-
-/* ───────── PROOF LINK ───────── */
-.proof-link{
-  display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);
-  margin-top:10px;padding:14px 15px;background:var(--surface);border-radius:var(--r-md);
-  border:1px solid var(--line);transition:border-color var(--tr);
-}
-.proof-link:hover{border-color:var(--line2)}
-.proof-link-ico{
-  width:36px;height:36px;border-radius:9px;flex-shrink:0;
-  background:var(--white);border:1px solid var(--line);
+.manual-btn:hover{border-color:var(--line2);background:var(--surface)}
+.manual-btn:active{transform:scale(.98)}
+.manual-btn-ico{
+  width:36px;height:36px;border-radius:10px;background:var(--ink);
   display:grid;place-items:center;
 }
-.proof-link-ico svg{width:17px;height:17px;color:var(--ink)}
-.proof-link-meta{flex:1;min-width:0}
-.proof-link-title{font-size:0.82rem;font-weight:700;color:var(--ink);letter-spacing:-0.005em}
-.proof-link-sub{font-size:0.71rem;color:var(--gray1);font-weight:500;margin-top:1px}
-.proof-link-arrow{color:var(--gray2);flex-shrink:0}
-.proof-link-arrow svg{width:15px;height:15px}
+.manual-btn-ico svg{width:17px;height:17px}
+.manual-btn-name{font-family:var(--f-disp);font-size:0.85rem;font-weight:800;color:var(--ink);letter-spacing:-0.005em}
+.manual-btn-sub{font-size:0.67rem;color:var(--gray1);font-weight:500}
 
-/* ───────── PRICE BLOCK ───────── */
-.price-block{
-  margin-top:14px;padding:26px 22px;
-  background:var(--surface);border-radius:var(--r-lg);
-  text-align:center;animation:rise .6s .08s ease both;
+/* WARN — si la confianza es baja */
+.low-conf-warn{
+  display:none;margin-top:10px;padding:12px 14px;
+  border-radius:var(--r-sm);background:var(--surface);border:1px solid var(--line2);
+  font-size:0.73rem;color:var(--gray1);font-weight:400;line-height:1.55;
+  text-align:left;
 }
-.price-was{
-  font-size:0.82rem;color:var(--gray3);text-decoration:line-through;
-  font-weight:500;margin-bottom:2px;
-}
-.price-now{
-  font-family:var(--f-disp);font-size:3.1rem;font-weight:900;
-  color:var(--ink);letter-spacing:-0.03em;line-height:1;
-}
-.price-now sup{font-size:1.3rem;font-weight:700;top:-1.2em;margin-right:1px}
-.price-sub{font-size:0.76rem;color:var(--gray1);font-weight:500;margin-top:7px}
-.price-divider{height:1px;background:var(--line2);margin:18px 0 16px}
-.price-feats{display:flex;flex-direction:column;gap:9px;text-align:left}
-.pf{display:flex;align-items:center;gap:10px;font-size:0.84rem;font-weight:500;color:var(--ink2)}
-.pf svg{width:17px;height:17px;flex-shrink:0;color:var(--ink)}
+.low-conf-warn.show{display:block}
+.low-conf-warn strong{color:var(--ink);font-weight:700}
 
-/* ───────── SECTION LABEL ───────── */
-.sec-label{
-  font-size:0.7rem;font-weight:600;letter-spacing:0.04em;
-  color:var(--gray1);margin:32px 0 12px;
-}
-
-/* ───────── SPEC GRID ───────── */
-.spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;animation:rise .6s .1s ease both}
-.spec-card{
-  background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);
-  padding:16px 15px;
-}
-.spec-ico{
-  width:34px;height:34px;border-radius:9px;background:var(--surface);
-  display:grid;place-items:center;margin-bottom:11px;
-}
-.spec-ico svg{width:17px;height:17px;color:var(--ink)}
-.spec-num{font-family:var(--f-disp);font-size:1.55rem;font-weight:800;letter-spacing:-0.02em;color:var(--ink)}
-.spec-name{font-size:0.74rem;font-weight:600;color:var(--gray1);margin-top:2px}
-
-/* ───────── BENEFITS LIST ───────── */
-.benefit-list{
-  background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);
-  overflow:hidden;animation:rise .6s .12s ease both;
-}
-.benefit-row{
-  display:flex;align-items:center;gap:12px;padding:13px 16px;
-  border-bottom:1px solid var(--line);
-}
-.benefit-row:last-child{border-bottom:none}
-.benefit-ico{
-  width:28px;height:28px;border-radius:8px;background:var(--surface);
-  display:grid;place-items:center;flex-shrink:0;
-}
-.benefit-ico svg{width:14px;height:14px;color:var(--ink)}
-.benefit-txt{font-size:0.84rem;font-weight:500;color:var(--ink2)}
-
-/* ───────── PROOF ───────── */
-.proof-strip{
-  display:flex;align-items:center;gap:14px;margin-top:10px;
-  padding:16px;background:var(--surface);border-radius:var(--r-md);
-  animation:rise .6s .14s ease both;
-}
-.proof-num{font-family:var(--f-disp);font-size:1.7rem;font-weight:900;color:var(--ink);letter-spacing:-0.02em;white-space:nowrap}
-.proof-divider{width:1px;height:30px;background:var(--line2)}
-.proof-txt{font-size:0.78rem;color:var(--gray1);font-weight:500;line-height:1.4}
-
-/* ───────── HOW IT WORKS ───────── */
-.flow-steps{display:flex;flex-direction:column;gap:0;animation:rise .6s .16s ease both}
-.flow-step{display:flex;gap:14px;padding:14px 0}
-.flow-line{
-  display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:26px;
-}
-.flow-dot{
-  width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;
-  display:grid;place-items:center;font-family:var(--f-disp);font-size:0.72rem;font-weight:800;
-  flex-shrink:0;
-}
-.flow-stem{width:1px;flex:1;background:var(--line2);margin-top:4px;min-height:18px}
-.flow-step:last-child .flow-stem{display:none}
-.flow-body{padding-top:2px}
-.flow-title{font-size:0.86rem;font-weight:700;color:var(--ink);letter-spacing:-0.005em}
-.flow-desc{font-size:0.79rem;color:var(--gray1);margin-top:3px;line-height:1.5;font-weight:400}
-
-/* ───────── PAYMENT CARD ───────── */
-.pay-card{
-  margin-top:34px;background:var(--ink);border-radius:var(--r-lg);
-  padding:26px 22px 24px;animation:rise .6s .18s ease both;
-}
-.pay-kicker{font-size:0.7rem;font-weight:600;letter-spacing:0.05em;color:rgba(255,255,255,0.5);margin-bottom:8px}
-.pay-title{font-family:var(--f-disp);font-size:1.5rem;font-weight:800;color:#fff;letter-spacing:-0.02em;line-height:1.15}
-.pay-methods{display:flex;gap:8px;margin-top:16px;margin-bottom:18px;flex-wrap:wrap}
-.pay-method-chip{
-  display:flex;align-items:center;gap:6px;
-  padding:7px 12px;border-radius:100px;
-  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);
-}
-.pay-method-chip svg{width:14px;height:9px}
-.pay-method-chip span{font-size:0.7rem;font-weight:600;color:rgba(255,255,255,0.85)}
-.pay-cta{
-  display:flex;align-items:center;justify-content:center;gap:9px;
-  width:100%;height:56px;border:none;border-radius:100px;
-  background:#fff;color:var(--ink);
-  font-family:var(--f-disp);font-size:0.98rem;font-weight:800;
-  letter-spacing:-0.005em;cursor:pointer;transition:all var(--tr);
-  text-decoration:none;
-}
-.pay-cta:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(0,0,0,0.35)}
-.pay-cta:active{transform:translateY(0)}
-.pay-cta svg{width:17px;height:17px}
-.pay-note{
-  display:flex;align-items:flex-start;gap:9px;margin-top:16px;
-}
-.pay-note svg{width:15px;height:15px;color:rgba(255,255,255,0.55);flex-shrink:0;margin-top:1px}
-.pay-note span{font-size:0.73rem;color:rgba(255,255,255,0.55);font-weight:400;line-height:1.55}
-.pay-secure{display:flex;align-items:center;gap:6px;justify-content:center;margin-top:14px}
-.pay-secure svg{width:12px;height:12px;color:rgba(255,255,255,0.4)}
-.pay-secure span{font-size:0.66rem;color:rgba(255,255,255,0.4);font-weight:500;letter-spacing:0.01em}
-
-/* ───────── DELIVERY BANNER ───────── */
-.delivery-banner{
-  margin-top:12px;padding:18px 18px;
-  background:var(--white);border:1.5px solid var(--ink);border-radius:var(--r-lg);
-  animation:rise .6s .2s ease both;
-}
-.db-top{display:flex;align-items:center;gap:11px;margin-bottom:10px}
-.db-ico{
-  width:36px;height:36px;border-radius:10px;background:var(--ink);
-  display:grid;place-items:center;flex-shrink:0;
-}
-.db-ico svg{width:18px;height:18px;color:#fff}
-.db-title{font-family:var(--f-disp);font-size:0.98rem;font-weight:800;color:var(--ink);letter-spacing:-0.01em}
-.db-body{font-size:0.81rem;color:var(--gray1);font-weight:400;line-height:1.6;padding-left:47px}
-.db-body strong{color:var(--ink);font-weight:700}
-
-/* ───────── FOOTER ───────── */
-footer{
-  margin-top:40px;padding-top:22px;border-top:1px solid var(--line);
-  text-align:center;
-}
-.footer-brand{font-family:var(--f-disp);font-size:0.78rem;font-weight:700;color:var(--gray1);letter-spacing:-0.005em}
-.footer-sub{font-size:0.68rem;color:var(--gray3);font-weight:500;margin-top:4px}
-
-@keyframes rise{
-  from{opacity:0;transform:translateY(12px)}
-  to{opacity:1;transform:translateY(0)}
-}
-
-@media(max-width:340px){
-  .price-now{font-size:2.6rem}
+.footer-note{
+  margin-top:26px;font-size:0.66rem;color:var(--gray3);font-weight:500;
+  line-height:1.5;
 }
 </style>
 </head>
@@ -314,210 +173,332 @@ footer{
     <div class="hdr-mark">
       <svg viewBox="0 0 24 24" fill="none"><path d="M16.5 2.5c.1 1.2-.35 2.4-1.1 3.3-.78.9-1.95 1.55-3.1 1.45-.13-1.15.4-2.4 1.13-3.2.8-.9 2.05-1.5 3.07-1.55zM21 17.2c-.6 1.35-.9 1.95-1.65 3.15-1.05 1.65-2.55 3.7-4.4 3.72-1.65.02-2.07-1.07-4.3-1.06-2.22.01-2.7 1.08-4.35 1.06-1.85-.02-3.27-1.87-4.32-3.52C-.2 16.4-.55 11.1 1.95 8.4c1.27-1.4 3.1-2.25 4.85-2.27 1.78-.02 2.9 1.05 4.35 1.05 1.43 0 2.32-1.07 4.4-1.07 1.5.02 3.1.8 4.3 2.2-3.78 2.18-3.18 7.5 1.15 8.89z" fill="white"/></svg>
     </div>
-    <span class="hdr-name">JEXE <span class="light">Regedit</span></span>
+    <span class="hdr-name">JEXE <span class="lt">Regedit</span></span>
   </div>
-  <span class="hdr-tag">iOS Edition</span>
+  <span class="hdr-tag">Premium</span>
 </header>
 
-<main>
+<div class="wrap">
 
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hero-kicker">Edicion exclusiva para iPhone (iOS)</div>
-    <h1 class="hero-h1">AimSuport.<br/><em>Solo para iOS.</em></h1>
-    <p class="hero-p">Los mejores archivos para Free Fire en dispositivos Apple. Una sola compra, acceso inmediato, sin intermediarios.</p>
-    <div class="hero-platform">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M16.5 2.5c.1 1.2-.35 2.4-1.1 3.3-.78.9-1.95 1.55-3.1 1.45-.13-1.15.4-2.4 1.13-3.2.8-.9 2.05-1.5 3.07-1.55zM21 17.2c-.6 1.35-.9 1.95-1.65 3.15-1.05 1.65-2.55 3.7-4.4 3.72-1.65.02-2.07-1.07-4.3-1.06-2.22.01-2.7 1.08-4.35 1.06-1.85-.02-3.27-1.87-4.32-3.52C-.2 16.4-.55 11.1 1.95 8.4c1.27-1.4 3.1-2.25 4.85-2.27 1.78-.02 2.9 1.05 4.35 1.05 1.43 0 2.32-1.07 4.4-1.07 1.5.02 3.1.8 4.3 2.2-3.78 2.18-3.18 7.5 1.15 8.89z" fill="white"/></svg>
-      <span>iOS 11 — 26.5+ · Sin jailbreak</span>
-    </div>
+  <div class="device-icon" id="deviceIcon">
+    <!-- Icono neutral — scanning -->
+    <svg id="iconScan" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="3" width="20" height="14" rx="2"/>
+      <path d="M8 21h8M12 17v4"/>
+    </svg>
+    <svg id="iconIOS" style="display:none" viewBox="0 0 24 24" fill="none">
+      <path d="M16.5 2.5c.1 1.2-.35 2.4-1.1 3.3-.78.9-1.95 1.55-3.1 1.45-.13-1.15.4-2.4 1.13-3.2.8-.9 2.05-1.5 3.07-1.55zM21 17.2c-.6 1.35-.9 1.95-1.65 3.15-1.05 1.65-2.55 3.7-4.4 3.72-1.65.02-2.07-1.07-4.3-1.06-2.22.01-2.7 1.08-4.35 1.06-1.85-.02-3.27-1.87-4.32-3.52C-.2 16.4-.55 11.1 1.95 8.4c1.27-1.4 3.1-2.25 4.85-2.27 1.78-.02 2.9 1.05 4.35 1.05 1.43 0 2.32-1.07 4.4-1.07 1.5.02 3.1.8 4.3 2.2-3.78 2.18-3.18 7.5 1.15 8.89z" fill="white"/>
+    </svg>
+    <svg id="iconAndroid" style="display:none" viewBox="0 0 24 24" fill="none">
+      <path d="M6 18L4.5 21M18 18l1.5 3M3.5 12.5c0-4.14 3.36-7.5 7.5-7.5s7.5 3.36 7.5 7.5M2 12.5h1.5M20.5 12.5H22M6.5 6.5l1 1M17.5 6.5l-1 1" stroke="white" stroke-width="1.7" stroke-linecap="round"/>
+    </svg>
   </div>
 
-  <!-- VIDEO -->
-  <div class="video-wrap">
-    <video controls preload="metadata">
-      <source src="producto.mp4" type="video/mp4"/>
-    </video>
-    <div class="video-label">Vista previa</div>
-  </div>
+  <div class="detect-title" id="detectTitle">Identificando<br/>tu dispositivo</div>
+  <div class="detect-sub" id="detectSub">Analizando multiples senales del sistema.<br/>Esto toma menos de 2 segundos.</div>
 
-  <!-- SCARCITY -->
-  <div class="scarcity">
-    <div class="scar-top">
-      <span class="scar-label">Disponibilidad</span>
-      <span class="scar-count"><b>146</b> unidades</span>
-    </div>
-    <div class="scar-bottom" style="border-top:none;padding-top:0">
+  <div class="progress-wrap">
+    <div class="progress-bar" id="bar"></div>
+  </div>
+  <div class="status-text" id="status">Iniciando analisis...</div>
+
+  <!-- RESULTADO -->
+  <div class="result-block" id="resultBlock">
+    <div class="result-row">
+      <div class="result-ico" id="resultIco"></div>
       <div>
-        <div class="scar-deadline-label">Cierra el</div>
-        <div class="scar-deadline-date">18 de julio, 2026</div>
-      </div>
-      <div class="scar-timer" id="countdown">
-        <div class="scar-timer-unit"><div class="scar-timer-num" id="cd-d">--</div><div class="scar-timer-lbl">DIAS</div></div>
-        <div class="scar-timer-unit"><div class="scar-timer-num" id="cd-h">--</div><div class="scar-timer-lbl">HRS</div></div>
-        <div class="scar-timer-unit"><div class="scar-timer-num" id="cd-m">--</div><div class="scar-timer-lbl">MIN</div></div>
+        <div class="result-label">Dispositivo detectado</div>
+        <div class="result-val" id="resultVal">—</div>
       </div>
     </div>
-  </div>
-
-  <!-- PRICE -->
-  <div class="price-block">
-    <div class="price-was">$32 USD</div>
-    <div class="price-now">$<span id="priceMain">14</span><sup>.99</sup></div>
-    <div class="price-sub">Pago unico · Acceso permanente</div>
-    <div class="price-divider"></div>
-    <div class="price-feats">
-      <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Acceso de por vida, sin renovaciones</div>
-      <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Entrega dentro de esta misma pagina</div>
-      <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Certificado premium incluido</div>
+    <div class="result-confidence">
+      <span class="conf-label">Confianza</span>
+      <div class="conf-track"><div class="conf-fill" id="confFill" style="width:0%"></div></div>
+      <span class="conf-pct" id="confPct">0%</span>
     </div>
   </div>
 
-  <!-- SPECS -->
-  <div class="sec-label">Parametros de ajuste</div>
-  <div class="spec-grid">
-    <div class="spec-card">
-      <div class="spec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></div>
-      <div class="spec-num">70%</div>
-      <div class="spec-name">Aimlock</div>
-    </div>
-    <div class="spec-card">
-      <div class="spec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 9h6v6H9z"/></svg></div>
-      <div class="spec-num">70%</div>
-      <div class="spec-name">Aim assist</div>
-    </div>
+  <div class="low-conf-warn" id="lowConfWarn">
+    <strong>Verificacion doble recomendada.</strong> La deteccion automatica no fue conclusiva para tu navegador. Confirma tu dispositivo manualmente abajo para asegurarte de recibir la version correcta.
   </div>
 
-  <!-- BENEFITS -->
-  <div class="sec-label">Incluido en tu compra</div>
-  <div class="benefit-list">
-    <div class="benefit-row">
-      <div class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.5 5.5 21l2-7.5L2 9h7z"/></svg></div>
-      <div class="benefit-txt">Certificados premium, libres de baneo</div>
-    </div>
-    <div class="benefit-row">
-      <div class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/></svg></div>
-      <div class="benefit-txt">Sin blacklist, sin reinicio de rango</div>
-    </div>
-    <div class="benefit-row">
-      <div class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-3-6.7M21 4v5h-5"/></svg></div>
-      <div class="benefit-txt">Actualizaciones permanentes incluidas</div>
-    </div>
-    <div class="benefit-row">
-      <div class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
-      <div class="benefit-txt">Activacion instantanea tras el pago</div>
-    </div>
-  </div>
-
-  <!-- PROOF -->
-  <div class="proof-strip">
-    <div class="proof-num">5 años</div>
-    <div class="proof-divider"></div>
-    <div class="proof-txt">de historial verificado en el mercado</div>
-  </div>
-  <div class="proof-strip" style="margin-top:8px">
-    <div class="proof-num">2.500+</div>
-    <div class="proof-divider"></div>
-    <div class="proof-txt">compras completadas y entregadas</div>
-  </div>
-
-  <a class="proof-link" href="https://t.me/+56Wdh8JANmJjYzZh" target="_blank" rel="noopener">
-    <div class="proof-link-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
-    <div class="proof-link-meta">
-      <div class="proof-link-title">Ver referencias publicas</div>
-      <div class="proof-link-sub">Mas de 2.500 pagos verificables</div>
-    </div>
-    <div class="proof-link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+  <a class="go-btn" id="goBtn" href="#" style="display:none">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    <span id="goBtnTxt">Continuar</span>
   </a>
 
-  <!-- HOW IT WORKS -->
-  <div class="sec-label">Como funciona</div>
-  <div class="flow-steps">
-    <div class="flow-step">
-      <div class="flow-line"><div class="flow-dot">1</div><div class="flow-stem"></div></div>
-      <div class="flow-body">
-        <div class="flow-title">Paga con tu tarjeta</div>
-        <div class="flow-desc">Visa, Mastercard o American Express, de cualquier pais.</div>
-      </div>
-    </div>
-    <div class="flow-step">
-      <div class="flow-line"><div class="flow-dot">2</div><div class="flow-stem"></div></div>
-      <div class="flow-body">
-        <div class="flow-title">No cierres esta pagina</div>
-        <div class="flow-desc">Al confirmar el pago, vuelve aqui mismo para recibir tu acceso.</div>
-      </div>
-    </div>
-    <div class="flow-step">
-      <div class="flow-line"><div class="flow-dot">3</div></div>
-      <div class="flow-body">
-        <div class="flow-title">Acceso inmediato</div>
-        <div class="flow-desc">Sin esperas, sin intermediarios, sin mensajes. La entrega ocurre en esta misma pagina.</div>
-      </div>
+  <div class="manual" id="manualBlock">
+    <div class="manual-label">Confirma tu dispositivo</div>
+    <div class="manual-grid">
+      <a class="manual-btn" href="https://www.link-directo.com/premium/iOS/" id="manualIOS">
+        <div class="manual-btn-ico">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M16.5 2.5c.1 1.2-.35 2.4-1.1 3.3-.78.9-1.95 1.55-3.1 1.45-.13-1.15.4-2.4 1.13-3.2.8-.9 2.05-1.5 3.07-1.55zM21 17.2c-.6 1.35-.9 1.95-1.65 3.15-1.05 1.65-2.55 3.7-4.4 3.72-1.65.02-2.07-1.07-4.3-1.06-2.22.01-2.7 1.08-4.35 1.06-1.85-.02-3.27-1.87-4.32-3.52C-.2 16.4-.55 11.1 1.95 8.4c1.27-1.4 3.1-2.25 4.85-2.27 1.78-.02 2.9 1.05 4.35 1.05 1.43 0 2.32-1.07 4.4-1.07 1.5.02 3.1.8 4.3 2.2-3.78 2.18-3.18 7.5 1.15 8.89z" fill="white"/></svg>
+        </div>
+        <div class="manual-btn-name">iOS</div>
+        <div class="manual-btn-sub">iPhone / iPad</div>
+      </a>
+      <a class="manual-btn" href="https://www.link-directo.com/premium/Android/" id="manualAndroid">
+        <div class="manual-btn-ico">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M6 18L4.5 21M18 18l1.5 3M3.5 12.5c0-4.14 3.36-7.5 7.5-7.5s7.5 3.36 7.5 7.5M2 12.5h1.5M20.5 12.5H22M6.5 6.5l1 1M17.5 6.5l-1 1" stroke="white" stroke-width="1.7" stroke-linecap="round"/></svg>
+        </div>
+        <div class="manual-btn-name">Android</div>
+        <div class="manual-btn-sub">Cualquier marca</div>
+      </a>
     </div>
   </div>
 
-  <!-- PAYMENT -->
-  <div class="pay-card">
-    <div class="pay-kicker">Pago unico</div>
-    <div class="pay-title">$14.99 USD por acceso de por vida</div>
-    <div class="pay-methods">
-      <div class="pay-method-chip">
-        <svg viewBox="0 0 48 32" fill="none"><rect width="48" height="32" rx="4" fill="#fff" opacity="0.12"/><path d="M19.5 21.5h-3l1.9-11h3l-1.9 11zm12.4-10.7c-.6-.2-1.5-.5-2.7-.5-3 0-5.1 1.5-5.1 3.7 0 1.6 1.5 2.5 2.7 3 1.2.6 1.6 1 1.6 1.5 0 .8-1 1.1-1.9 1.1-1.3 0-2-.2-3.1-.6l-.4-.2-.5 2.6c.7.3 2 .6 3.4.6 3.2 0 5.3-1.5 5.3-3.8 0-1.3-.8-2.3-2.6-3.1-1.1-.5-1.8-.9-1.8-1.4 0-.5.6-1 1.8-1 1 0 1.8.2 2.4.4l.3.1.5-2.4z" fill="#fff"/></svg>
-        <span>Visa</span>
-      </div>
-      <div class="pay-method-chip">
-        <svg viewBox="0 0 48 32" fill="none"><circle cx="19" cy="16" r="9" fill="#fff" opacity="0.7"/><circle cx="29" cy="16" r="9" fill="#fff" opacity="0.3"/></svg>
-        <span>Mastercard</span>
-      </div>
-      <div class="pay-method-chip">
-        <svg viewBox="0 0 48 32" fill="none"><rect x="6" y="9" width="36" height="14" rx="2" stroke="#fff" stroke-width="1.5" opacity="0.7"/></svg>
-        <span>Amex</span>
-      </div>
-    </div>
-    <a href="https://checkout.bold.co/payment/LNK_3J79BJGKPR" target="_blank" rel="noopener" class="pay-cta">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-      Pagar $14.99 USD
-    </a>
-    <div class="pay-note">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      <span>Funciona con cualquier tarjeta del mundo. Al completar el pago — no cierres la pagina, la entrega es automatica e inmediata.</span>
-    </div>
-    <div class="pay-secure">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
-      <span>Procesado de forma segura por Bold</span>
-    </div>
-  </div>
+  <div class="footer-note">JEXE Regedit Premium · Entrega inmediata</div>
 
-  <!-- DELIVERY BANNER -->
-  <div class="delivery-banner">
-    <div class="db-top">
-      <div class="db-ico"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-      <div class="db-title">Entrega inmediata, 24/7</div>
-    </div>
-    <div class="db-body">No hay intermediarios ni tiempos de espera. <strong>No cierres esta pagina</strong> despues de pagar: tu acceso se activa aqui mismo, al instante, a cualquier hora del dia.</div>
-  </div>
-
-  <footer>
-    <div class="footer-brand">JEXE Regedit</div>
-    <div class="footer-sub">Edicion iOS · Disponible hasta el 18 de julio, 2026</div>
-  </footer>
-
-</main>
+</div>
 
 <script>
 (function(){
-  var deadline = new Date('2026-07-18T23:59:59-05:00').getTime();
-  var d=document.getElementById('cd-d'),h=document.getElementById('cd-h'),m=document.getElementById('cd-m');
-  function tick(){
-    var now=Date.now();
-    var diff=deadline-now;
-    if(diff<=0){d.textContent='0';h.textContent='0';m.textContent='0';return}
-    var days=Math.floor(diff/86400000);
-    var hours=Math.floor((diff%86400000)/3600000);
-    var mins=Math.floor((diff%3600000)/60000);
-    d.textContent=days;h.textContent=hours;m.textContent=mins;
+
+  var IOS_URL     = 'https://www.link-directo.com/premium/iOS/';
+  var ANDROID_URL = 'https://www.link-directo.com/premium/Android/';
+
+  /* ══════════════════════════════════════════════
+     DETECTOR MULTI-SEÑAL
+     Cada señal tiene peso propio. Resultado final:
+     score ios vs android → ganador por puntos.
+     Confianza = distancia relativa entre scores.
+  ══════════════════════════════════════════════ */
+  function detect() {
+    var ua       = (navigator.userAgent       || '').toString();
+    var platform = (navigator.platform        || '').toString();
+    var vendor   = (navigator.vendor          || '').toString();
+    var appVer   = (navigator.appVersion      || '').toString();
+    var maxTouch = navigator.maxTouchPoints   || 0;
+    var pf       = platform.toLowerCase();
+    var uaL      = ua.toLowerCase();
+
+    var ios = 0, and = 0;
+
+    /* ── SEÑAL 1: User-Agent — indicador primario ── */
+    // Terminales iOS clásicos
+    if (/iphone/i.test(ua))                                   ios += 60;
+    if (/ipod/i.test(ua))                                     ios += 60;
+    if (/ipad/i.test(ua))                                     ios += 60;
+    // CriOS = Chrome en iOS
+    if (/CriOS/i.test(ua))                                    ios += 30;
+    // FxiOS = Firefox en iOS
+    if (/FxiOS/i.test(ua))                                    ios += 30;
+    // OPiOS = Opera en iOS
+    if (/OPiOS/i.test(ua))                                    ios += 25;
+    // EdgiOS = Edge en iOS
+    if (/EdgiOS/i.test(ua))                                   ios += 25;
+    // Android explícito
+    if (/android/i.test(ua))                                  and += 60;
+    // Fabricantes Android populares en UA
+    if (/samsung/i.test(ua))                                  and += 20;
+    if (/xiaomi|miui|redmi/i.test(ua))                        and += 20;
+    if (/huawei|hmscore/i.test(ua))                           and += 20;
+    if (/oppo|realme|vivo|oneplus/i.test(ua))                 and += 15;
+    if (/SamsungBrowser/i.test(ua))                           and += 20;
+    if (/Fennec/i.test(ua))                                   and += 15;  // Firefox viejo Android
+
+    /* ── SEÑAL 2: navigator.platform ── */
+    if (/iphone|ipod|ipad/i.test(platform))                   ios += 30;
+    // macIntel con touch = iPad disfrazado (iOS 13+ "sitio escritorio")
+    if (/macintel|macppc/i.test(platform) && maxTouch > 1)    ios += 40;
+    if (/linux arm/i.test(pf))                                and += 25;
+    if (/android/i.test(pf))                                  and += 25;
+
+    /* ── SEÑAL 3: navigator.vendor ── */
+    // Solo Safari/iOS reporta "Apple Computer, Inc."
+    if (/apple/i.test(vendor) && !/android/i.test(ua))       ios += 18;
+
+    /* ── SEÑAL 4: API exclusiva DeviceMotionEvent.requestPermission
+         Solo existe en iOS 13+ Safari. Es la señal más discriminante. ── */
+    if (typeof DeviceMotionEvent !== 'undefined' &&
+        typeof DeviceMotionEvent.requestPermission === 'function') {
+      ios += 50;  // peso muy alto — prácticamente definitivo
+    }
+
+    /* ── SEÑAL 5: maxTouchPoints heurístico ──
+         Android siempre reporta >0. iOS también.
+         Pero si no hay Android en UA y hay touch → iOS probable. ── */
+    if (maxTouch >= 1 && !/android/i.test(ua) && !/windows/i.test(ua)) {
+      ios += 12;
+    }
+
+    /* ── SEÑAL 6: window.MSStream — NUNCA existe en iOS real ── */
+    if (typeof window.MSStream !== 'undefined') {
+      ios  = 0;  // Windows Phone / IE, no es iOS
+    }
+
+    /* ── SEÑAL 7: CSS media features via matchMedia ── */
+    // iOS Safari no soporta hover = none en táctil verdadero
+    try {
+      if (window.matchMedia) {
+        // Dispositivos sin hover "real" (táctiles)
+        if (window.matchMedia('(hover: none)').matches)          ios += 6;
+        if (window.matchMedia('(pointer: coarse)').matches)      ios += 4;
+      }
+    } catch(e){}
+
+    /* ── SEÑAL 8: Screen resolution típica iOS ──
+         iPhones tienen screen.width ≤ 430 (pt), iPads ≤ 1024 ── */
+    try {
+      var sw = screen.width  || 0;
+      var sh = screen.height || 0;
+      var ratio = window.devicePixelRatio || 1;
+      var maxDim = Math.max(sw, sh);
+      var minDim = Math.min(sw, sh);
+      // Resoluciones lógicas exclusivas de iPhone/iPad
+      var iphoneSizes = [320,375,390,393,414,428,430,768,820,834,1024];
+      if (iphoneSizes.indexOf(minDim) !== -1 && !/android/i.test(ua) && ratio >= 2) {
+        ios += 8;
+      }
+    } catch(e){}
+
+    /* ── SEÑAL 9: navigator.userAgentData (Chromium 90+) ──
+         No disponible en Safari/iOS pero sí en Chrome/Android. ── */
+    try {
+      var uad = navigator.userAgentData;
+      if (uad) {
+        var mobile = uad.mobile;
+        var brands = uad.brands || [];
+        var brandStr = JSON.stringify(brands).toLowerCase();
+        // Si hay userAgentData y el UA no dice iPhone, es Chromium → Android probable
+        if (mobile && !/iphone|ipad|ipod/i.test(ua)) {
+          and += 20;
+        }
+        // Algunos dispositivos Android reportan su plataforma aquí
+        var pl = (uad.platform || '').toLowerCase();
+        if (pl === 'android')  and += 30;
+        if (pl === 'ios')      ios += 30;  // por si acaso algún día
+      }
+    } catch(e){}
+
+    /* ── SEÑAL 10: Comportamiento de WebKit ──
+         window.ApplePaySession solo existe en Safari/iOS/macOS ── */
+    if (typeof window.ApplePaySession !== 'undefined' && !/android/i.test(ua)) {
+      ios += 20;
+    }
+
+    /* ── Calcular confianza ── */
+    var total = ios + and;
+    if (total === 0) return { os: 'unknown', confidence: 0, iosScore: 0, andScore: 0 };
+
+    var winner    = ios >= and ? 'ios' : 'android';
+    var winScore  = Math.max(ios, and);
+    var loseScore = Math.min(ios, and);
+    // Confianza = qué tan dominante es el ganador sobre el total
+    var confidence = Math.round((winScore / total) * 100);
+
+    return { os: winner, confidence: confidence, iosScore: ios, andScore: and };
   }
-  tick();
-  setInterval(tick,30000);
+
+  /* ══════════════════════════════════════════════
+     UI
+  ══════════════════════════════════════════════ */
+  var bar      = document.getElementById('bar');
+  var status   = document.getElementById('status');
+  var goBtn    = document.getElementById('goBtn');
+  var goBtnTxt = document.getElementById('goBtnTxt');
+
+  var msgs = [
+    [18, 'Leyendo User-Agent...'],
+    [36, 'Verificando plataforma del sistema...'],
+    [54, 'Analizando APIs exclusivas del dispositivo...'],
+    [72, 'Cruzando 10 señales independientes...'],
+    [90, 'Calculando nivel de confianza...'],
+    [100,'Listo.']
+  ];
+  var mi = 0, pct = 0;
+
+  var iv = setInterval(function(){
+    pct = Math.min(pct + 1.8, 100);
+    bar.style.width = pct + '%';
+    if (mi < msgs.length && pct >= msgs[mi][0]) {
+      status.textContent = msgs[mi][1];
+      mi++;
+    }
+    if (pct >= 100) { clearInterval(iv); showResult(); }
+  }, 32);
+
+  function showResult() {
+    var result = detect();
+
+    // Cambiar icono del encabezado
+    document.getElementById('iconScan').style.display = 'none';
+    if (result.os === 'ios') {
+      document.getElementById('iconIOS').style.display = 'block';
+    } else if (result.os === 'android') {
+      document.getElementById('iconAndroid').style.display = 'block';
+    } else {
+      document.getElementById('iconScan').style.display = 'block';
+    }
+
+    if (result.os === 'unknown') {
+      status.textContent = 'No se pudo determinar el dispositivo.';
+      document.getElementById('detectTitle').textContent = 'Selecciona tu dispositivo';
+      document.getElementById('detectSub').textContent = 'El detector automatico no fue concluyente para tu navegador.';
+      document.getElementById('manualBlock').classList.add('show');
+      return;
+    }
+
+    // Mostrar bloque de resultado
+    var rb = document.getElementById('resultBlock');
+    rb.classList.add('show');
+
+    var name = result.os === 'ios' ? 'iPhone / iPad (iOS)' : 'Android';
+    document.getElementById('resultVal').textContent = name;
+
+    // Icono dentro del bloque
+    var ricoEl = document.getElementById('resultIco');
+    if (result.os === 'ios') {
+      ricoEl.innerHTML = '<svg viewBox="0 0 24 24" fill="none"><path d="M16.5 2.5c.1 1.2-.35 2.4-1.1 3.3-.78.9-1.95 1.55-3.1 1.45-.13-1.15.4-2.4 1.13-3.2.8-.9 2.05-1.5 3.07-1.55zM21 17.2c-.6 1.35-.9 1.95-1.65 3.15-1.05 1.65-2.55 3.7-4.4 3.72-1.65.02-2.07-1.07-4.3-1.06-2.22.01-2.7 1.08-4.35 1.06-1.85-.02-3.27-1.87-4.32-3.52C-.2 16.4-.55 11.1 1.95 8.4c1.27-1.4 3.1-2.25 4.85-2.27 1.78-.02 2.9 1.05 4.35 1.05 1.43 0 2.32-1.07 4.4-1.07 1.5.02 3.1.8 4.3 2.2-3.78 2.18-3.18 7.5 1.15 8.89z" fill="white"/></svg>';
+    } else {
+      ricoEl.innerHTML = '<svg viewBox="0 0 24 24" fill="none"><path d="M6 18L4.5 21M18 18l1.5 3M3.5 12.5c0-4.14 3.36-7.5 7.5-7.5s7.5 3.36 7.5 7.5M2 12.5h1.5M20.5 12.5H22M6.5 6.5l1 1M17.5 6.5l-1 1" stroke="white" stroke-width="1.7" stroke-linecap="round"/></svg>';
+    }
+
+    // Barra de confianza (animada con delay)
+    setTimeout(function(){
+      document.getElementById('confFill').style.width = result.confidence + '%';
+      document.getElementById('confPct').textContent = result.confidence + '%';
+    }, 120);
+
+    // Umbral de confianza — si < 72%, mostrar advertencia + botones manuales
+    var HIGH_CONF = 72;
+
+    if (result.confidence < HIGH_CONF) {
+      status.textContent = 'Confianza baja — confirma manualmente.';
+      document.getElementById('lowConfWarn').classList.add('show');
+      document.getElementById('manualBlock').classList.add('show');
+    } else {
+      // Confianza alta — mostrar botón de CTA + opcion manual debajo
+      var url = result.os === 'ios' ? IOS_URL : ANDROID_URL;
+      status.textContent = result.os === 'ios'
+        ? 'iOS detectado con alta confianza.'
+        : 'Android detectado con alta confianza.';
+
+      goBtn.href = url;
+      goBtnTxt.textContent = result.os === 'ios'
+        ? 'Ir a version iOS'
+        : 'Ir a version Android';
+      goBtn.style.display = 'flex';
+
+      // Redireccion automatica a los 2.2s para confianza muy alta (>= 88%)
+      if (result.confidence >= 88) {
+        var counter = 2;
+        var civ = setInterval(function(){
+          goBtnTxt.textContent = (result.os === 'ios' ? 'Ir a iOS' : 'Ir a Android') + ' (' + counter + ')';
+          counter--;
+          if (counter < 0) {
+            clearInterval(civ);
+            window.location.href = url;
+          }
+        }, 1000);
+      }
+
+      // Siempre mostrar botones manuales como confirmacion
+      document.getElementById('manualBlock').classList.add('show');
+      document.querySelector('.manual-label').textContent = 'Si el sistema se equivoco, elige aqui:';
+    }
+  }
+
 })();
 </script>
 </body>
