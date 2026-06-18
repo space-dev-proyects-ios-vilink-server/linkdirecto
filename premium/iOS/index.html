@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="color-scheme" content="light"/>
+<title>JEXE Regedit — iOS Edition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --white:#FFFFFF;--paper:#FAFAFA;--line:#E5E5E5;--line2:#D9D9D9;
+  --ink:#0A0A0A;--ink2:#1D1D1F;--gray1:#6E6E73;--gray2:#86868B;--gray3:#AEAEB2;
+  --surface:#F5F5F7;--surface2:#EFEFF1;
+  --r-lg:22px;--r-md:16px;--r-sm:11px;
+  --tr:0.2s cubic-bezier(0.16,1,0.3,1);
+  --f-disp:'Inter Tight',-apple-system,system-ui,sans-serif;
+  --f-body:'Inter',-apple-system,system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
+body{font-family:var(--f-body);background:var(--white);color:var(--ink);min-height:100dvh;overflow-x:hidden;-webkit-font-smoothing:antialiased;padding-bottom:calc(env(safe-area-inset-bottom,0px) + 40px)}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+
+/* HEADER */
+header{position:sticky;top:0;z-index:90;display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:54px;background:rgba(255,255,255,0.88);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--line)}
+.hdr-brand{display:flex;align-items:center;gap:9px}
+.hdr-mark{width:22px;height:22px;border-radius:6px;background:var(--ink);display:grid;place-items:center;flex-shrink:0}
+.hdr-mark svg{width:13px;height:13px}
+.hdr-name{font-family:var(--f-disp);font-size:0.94rem;font-weight:700;letter-spacing:-0.01em;color:var(--ink)}
+.hdr-name .lt{font-weight:500;color:var(--gray1)}
+.hdr-tag{font-size:0.62rem;font-weight:600;letter-spacing:0.05em;color:var(--ink);background:var(--surface);padding:5px 10px;border-radius:100px;border:1px solid var(--line)}
+
+main{position:relative;z-index:1;max-width:480px;width:100%;margin:0 auto;padding:0 18px}
+
+/* HERO */
+.hero{padding:38px 0 24px;animation:rise .6s ease both}
+.hero-kicker{font-size:0.72rem;font-weight:600;letter-spacing:0.04em;color:var(--gray1);margin-bottom:13px}
+.hero-h1{font-family:var(--f-disp);font-size:clamp(2.2rem,9vw,2.8rem);font-weight:800;line-height:1.05;letter-spacing:-0.025em;color:var(--ink)}
+.hero-h1 em{font-style:normal;color:var(--gray2)}
+.hero-p{font-size:0.92rem;font-weight:400;line-height:1.58;color:var(--gray1);margin-top:13px;max-width:380px}
+.hero-platform{display:inline-flex;align-items:center;gap:7px;margin-top:18px;padding:7px 13px 7px 9px;border-radius:100px;background:var(--ink);color:#fff}
+.hero-platform svg{width:13px;height:13px}
+.hero-platform span{font-size:0.74rem;font-weight:600;letter-spacing:0.01em}
+
+/* VIDEO */
+.video-wrap{position:relative;border-radius:var(--r-lg);overflow:hidden;background:var(--ink);margin-top:20px;border:1px solid var(--line);animation:rise .6s .03s ease both}
+.video-wrap video{width:100%;display:block;max-height:230px;object-fit:cover}
+.video-label{position:absolute;bottom:10px;left:10px;background:rgba(255,255,255,0.92);backdrop-filter:blur(8px);border-radius:100px;padding:5px 12px;font-size:0.68rem;font-weight:600;color:var(--ink)}
+
+/* SCARCITY */
+.scarcity{margin-top:14px;padding:17px 18px;background:var(--ink);border-radius:var(--r-lg);animation:rise .6s .05s ease both}
+.scar-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:13px}
+.scar-label{font-size:0.65rem;font-weight:600;letter-spacing:0.05em;color:rgba(255,255,255,0.5)}
+.scar-count{font-family:var(--f-disp);font-size:0.95rem;font-weight:800;color:#fff;letter-spacing:-0.01em}
+.scar-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:13px;border-top:1px solid rgba(255,255,255,0.12)}
+.scar-deadline-label{font-size:0.65rem;font-weight:500;color:rgba(255,255,255,0.5)}
+.scar-deadline-date{font-size:0.77rem;font-weight:700;color:#fff;margin-top:1px}
+.scar-timer{display:flex;gap:7px}
+.scar-timer-unit{text-align:center}
+.scar-timer-num{font-family:var(--f-disp);font-size:1rem;font-weight:800;color:#fff;min-width:28px;letter-spacing:-0.01em}
+.scar-timer-lbl{font-size:0.53rem;font-weight:600;color:rgba(255,255,255,0.4);letter-spacing:0.04em;margin-top:1px}
+
+/* PRICE */
+.price-block{margin-top:12px;padding:24px 20px;background:var(--surface);border-radius:var(--r-lg);text-align:center;animation:rise .6s .07s ease both}
+.price-was{font-size:0.8rem;color:var(--gray3);text-decoration:line-through;font-weight:500;margin-bottom:2px}
+.price-now{font-family:var(--f-disp);font-size:3rem;font-weight:900;color:var(--ink);letter-spacing:-0.03em;line-height:1}
+.price-now sup{font-size:1.25rem;font-weight:700;vertical-align:super;margin-right:1px}
+.price-sub{font-size:0.75rem;color:var(--gray1);font-weight:500;margin-top:6px}
+.price-divider{height:1px;background:var(--line2);margin:16px 0 14px}
+.price-feats{display:flex;flex-direction:column;gap:9px;text-align:left}
+.pf{display:flex;align-items:center;gap:10px;font-size:0.83rem;font-weight:500;color:var(--ink2)}
+.pf svg{width:16px;height:16px;flex-shrink:0;color:var(--ink)}
+
+/* SEC LABEL */
+.sec-label{font-size:0.69rem;font-weight:600;letter-spacing:0.04em;color:var(--gray1);margin:28px 0 11px}
+
+/* SPECS */
+.spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;animation:rise .6s .09s ease both}
+.spec-card{background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);padding:15px 14px}
+.spec-ico{width:32px;height:32px;border-radius:9px;background:var(--surface);display:grid;place-items:center;margin-bottom:10px}
+.spec-ico svg{width:16px;height:16px;color:var(--ink)}
+.spec-num{font-family:var(--f-disp);font-size:1.5rem;font-weight:800;letter-spacing:-0.02em;color:var(--ink)}
+.spec-name{font-size:0.73rem;font-weight:600;color:var(--gray1);margin-top:2px}
+
+/* BENEFITS */
+.benefit-list{background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;animation:rise .6s .11s ease both}
+.benefit-row{display:flex;align-items:center;gap:12px;padding:13px 15px;border-bottom:1px solid var(--line)}
+.benefit-row:last-child{border-bottom:none}
+.benefit-ico{width:27px;height:27px;border-radius:8px;background:var(--surface);display:grid;place-items:center;flex-shrink:0}
+.benefit-ico svg{width:13px;height:13px;color:var(--ink)}
+.benefit-txt{font-size:0.83rem;font-weight:500;color:var(--ink2)}
+
+/* PROOF */
+.proof-strip{display:flex;align-items:center;gap:14px;margin-top:10px;padding:15px;background:var(--surface);border-radius:var(--r-md);animation:rise .6s .13s ease both}
+.proof-num{font-family:var(--f-disp);font-size:1.65rem;font-weight:900;color:var(--ink);letter-spacing:-0.02em;white-space:nowrap}
+.proof-divider{width:1px;height:28px;background:var(--line2)}
+.proof-txt{font-size:0.77rem;color:var(--gray1);font-weight:500;line-height:1.4}
+.proof-link{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);margin-top:8px;padding:13px 14px;background:var(--surface);border-radius:var(--r-md);border:1px solid var(--line);transition:border-color var(--tr);animation:rise .6s .14s ease both}
+.proof-link:hover{border-color:var(--line2)}
+.proof-link-ico{width:34px;height:34px;border-radius:9px;flex-shrink:0;background:var(--white);border:1px solid var(--line);display:grid;place-items:center}
+.proof-link-ico svg{width:16px;height:16px;color:var(--ink)}
+.proof-link-meta{flex:1;min-width:0}
+.proof-link-title{font-size:0.81rem;font-weight:700;color:var(--ink);letter-spacing:-0.005em}
+.proof-link-sub{font-size:0.7rem;color:var(--gray1);font-weight:500;margin-top:1px}
+.proof-link-arrow{color:var(--gray2);flex-shrink:0}
+.proof-link-arrow svg{width:14px;height:14px}
+
+/* HOW IT WORKS */
+.flow-steps{display:flex;flex-direction:column;animation:rise .6s .15s ease both}
+.flow-step{display:flex;gap:14px;padding:13px 0}
+.flow-line{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:26px}
+.flow-dot{width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-family:var(--f-disp);font-size:0.72rem;font-weight:800;flex-shrink:0}
+.flow-stem{width:1px;flex:1;background:var(--line2);margin-top:4px;min-height:16px}
+.flow-step:last-child .flow-stem{display:none}
+.flow-body{padding-top:2px}
+.flow-title{font-size:0.85rem;font-weight:700;color:var(--ink);letter-spacing:-0.005em}
+.flow-desc{font-size:0.78rem;color:var(--gray1);margin-top:3px;line-height:1.5;font-weight:400}
+
+/* PAY CARD (primary) */
+.pay-card{margin-top:30px;background:var(--ink);border-radius:var(--r-lg);padding:24px 20px 22px;animation:rise .6s .17s ease both}
+.pay-kicker{font-size:0.68rem;font-weight:600;letter-spacing:0.05em;color:rgba(255,255,255,0.5);margin-bottom:7px}
+.pay-title{font-family:var(--f-disp);font-size:1.45rem;font-weight:800;color:#fff;letter-spacing:-0.02em;line-height:1.15}
+.pay-chips{display:flex;gap:7px;margin-top:14px;margin-bottom:16px;flex-wrap:wrap}
+.pay-chip{display:flex;align-items:center;gap:5px;padding:6px 11px;border-radius:100px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.13)}
+.pay-chip span{font-size:0.69rem;font-weight:600;color:rgba(255,255,255,0.85)}
+.pay-cta{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;height:54px;border:none;border-radius:100px;background:#fff;color:var(--ink);font-family:var(--f-disp);font-size:0.96rem;font-weight:800;letter-spacing:-0.005em;cursor:pointer;transition:all var(--tr);text-decoration:none}
+.pay-cta:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(0,0,0,0.35)}
+.pay-cta:active{transform:translateY(0)}
+.pay-cta svg{width:16px;height:16px}
+.pay-note{display:flex;align-items:flex-start;gap:8px;margin-top:14px}
+.pay-note svg{width:14px;height:14px;color:rgba(255,255,255,0.5);flex-shrink:0;margin-top:1px}
+.pay-note span{font-size:0.72rem;color:rgba(255,255,255,0.5);font-weight:400;line-height:1.55}
+.pay-secure{display:flex;align-items:center;gap:5px;justify-content:center;margin-top:12px}
+.pay-secure svg{width:11px;height:11px;color:rgba(255,255,255,0.35)}
+.pay-secure span{font-size:0.64rem;color:rgba(255,255,255,0.35);font-weight:500}
+
+/* ALT METHODS TOGGLE */
+.alt-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;padding:12px 14px;border-radius:var(--r-sm);background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.11);cursor:pointer;transition:background var(--tr)}
+.alt-toggle:hover{background:rgba(255,255,255,0.09)}
+.alt-toggle-left{display:flex;align-items:center;gap:9px}
+.alt-toggle-left svg{width:15px;height:15px;color:rgba(255,255,255,0.6)}
+.alt-toggle-left span{font-size:0.77rem;font-weight:600;color:rgba(255,255,255,0.8)}
+.alt-chevron{color:rgba(255,255,255,0.45);transition:transform .2s;flex-shrink:0}
+.alt-chevron svg{width:13px;height:13px}
+.alt-toggle.open .alt-chevron{transform:rotate(180deg)}
+.alt-panel{display:none;margin-top:10px}
+.alt-panel.open{display:block;animation:rise .28s ease both}
+.alt-method-list{display:flex;flex-direction:column;gap:6px}
+.alt-method{display:flex;align-items:center;gap:11px;padding:11px 12px;background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.09);border-radius:var(--r-sm);cursor:pointer;transition:all var(--tr);user-select:none}
+.alt-method:hover{border-color:rgba(255,255,255,0.2)}
+.alt-method.is-sel{border-color:#fff;background:rgba(255,255,255,0.09)}
+.alt-m-ico{width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,0.07);display:grid;place-items:center;flex-shrink:0}
+.alt-m-ico svg{width:14px;height:14px;color:#fff}
+.alt-m-info{flex:1;min-width:0}
+.alt-m-name{font-size:0.78rem;font-weight:600;color:#fff;letter-spacing:-0.005em}
+.alt-m-desc{font-size:0.64rem;color:rgba(255,255,255,0.42);font-weight:400;margin-top:1px}
+.alt-m-tag{font-size:0.57rem;font-weight:700;letter-spacing:0.03em;color:rgba(255,255,255,0.5);background:rgba(255,255,255,0.07);padding:3px 7px;border-radius:100px;flex-shrink:0}
+.alt-m-radio{width:15px;height:15px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.28);display:grid;place-items:center;flex-shrink:0;transition:all var(--tr)}
+.alt-method.is-sel .alt-m-radio{background:#fff;border-color:#fff}
+.alt-m-radio svg{width:7px;height:7px;color:var(--ink);opacity:0;transition:opacity .12s}
+.alt-method.is-sel .alt-m-radio svg{opacity:1}
+.alt-detail{display:none;margin-top:9px;padding:13px;border-radius:var(--r-sm);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09)}
+.alt-detail.show{display:block;animation:rise .22s ease both}
+.alt-detail-title{font-size:0.77rem;font-weight:700;color:#fff;margin-bottom:9px;letter-spacing:-0.005em}
+.alt-data-row{display:flex;align-items:center;gap:8px;padding:8px 10px;margin-bottom:5px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);border-radius:8px}
+.alt-data-row:last-of-type{margin-bottom:0}
+.alt-data-lbl{font-size:0.61rem;color:rgba(255,255,255,0.42);font-weight:500;min-width:76px;flex-shrink:0}
+.alt-data-val{font-size:0.77rem;font-weight:700;color:#fff;flex:1;word-break:break-all}
+.alt-data-copy{width:25px;height:25px;border-radius:6px;border:1px solid rgba(255,255,255,0.13);background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.55);cursor:pointer;display:grid;place-items:center;flex-shrink:0;transition:all var(--tr)}
+.alt-data-copy svg{width:12px;height:12px}
+.alt-data-copy.copied{color:#fff;border-color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.13)}
+.alt-detail-note{font-size:0.69rem;color:rgba(255,255,255,0.42);margin-top:9px;line-height:1.55;font-weight:400}
+.alt-cta{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:48px;border:none;border-radius:100px;margin-top:11px;background:#fff;color:var(--ink);font-family:var(--f-disp);font-size:0.88rem;font-weight:800;letter-spacing:-0.005em;cursor:pointer;transition:all var(--tr);text-decoration:none}
+.alt-cta:hover{transform:translateY(-1px)}
+.alt-cta svg{width:14px;height:14px}
+
+/* WHATSAPP */
+.wa-section{margin-top:10px;animation:rise .6s .19s ease both}
+.wa-trigger{width:100%;display:flex;align-items:center;gap:12px;padding:14px 15px;border-radius:var(--r-lg);background:var(--white);border:1px solid var(--line);cursor:pointer;transition:border-color var(--tr);text-align:left}
+.wa-trigger:hover{border-color:var(--line2)}
+.wa-trigger-ico{width:36px;height:36px;border-radius:10px;flex-shrink:0;background:var(--ink);display:grid;place-items:center}
+.wa-trigger-ico svg{width:17px;height:17px;color:#fff}
+.wa-trigger-meta{flex:1}
+.wa-trigger-title{font-size:0.84rem;font-weight:700;color:var(--ink);letter-spacing:-0.005em}
+.wa-trigger-sub{font-size:0.67rem;color:var(--gray1);font-weight:500;margin-top:2px}
+.wa-chevron{color:var(--gray2);transition:transform .2s;flex-shrink:0}
+.wa-chevron svg{width:14px;height:14px}
+.wa-trigger.open .wa-chevron{transform:rotate(180deg)}
+.wa-panel{display:none;background:var(--white);border:1px solid var(--line);border-top:none;border-radius:0 0 var(--r-lg) var(--r-lg);padding:16px 15px;margin-top:-1px}
+.wa-panel.open{display:block;animation:rise .22s ease both}
+.wa-warn{display:flex;align-items:flex-start;gap:9px;margin-bottom:15px;padding:11px 12px;border-radius:var(--r-sm);background:var(--ink)}
+.wa-warn svg{width:15px;height:15px;color:#fff;flex-shrink:0;margin-top:1px}
+.wa-warn span{font-size:0.73rem;color:#fff;font-weight:400;line-height:1.58}
+.wa-warn span strong{font-weight:800}
+.wa-field{margin-bottom:10px}
+.wa-label{display:block;font-size:0.67rem;font-weight:600;letter-spacing:0.03em;color:var(--gray1);margin-bottom:5px}
+.wa-select,.wa-textarea{width:100%;padding:10px 12px;border-radius:var(--r-sm);background:var(--surface);border:1px solid var(--line);color:var(--ink);font-family:var(--f-body);font-size:0.83rem;font-weight:500;outline:none;transition:var(--tr);appearance:none;-webkit-appearance:none}
+.wa-select:focus,.wa-textarea:focus{border-color:var(--ink)}
+.wa-textarea{resize:vertical;min-height:60px;font-weight:400;line-height:1.5}
+.wa-send-btn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;height:52px;border:none;border-radius:100px;background:var(--ink);color:#fff;font-family:var(--f-disp);font-size:0.9rem;font-weight:800;letter-spacing:-0.005em;cursor:pointer;transition:all var(--tr);margin-top:12px}
+.wa-send-btn:hover:not(:disabled){transform:translateY(-1px)}
+.wa-send-btn:disabled{opacity:0.28;cursor:not-allowed;transform:none}
+.wa-send-btn svg{width:16px;height:16px}
+
+/* DELIVERY */
+.delivery-banner{margin-top:10px;padding:17px;background:var(--white);border:1.5px solid var(--ink);border-radius:var(--r-lg);animation:rise .6s .2s ease both}
+.db-top{display:flex;align-items:center;gap:11px;margin-bottom:9px}
+.db-ico{width:34px;height:34px;border-radius:10px;background:var(--ink);display:grid;place-items:center;flex-shrink:0}
+.db-ico svg{width:17px;height:17px;color:#fff}
+.db-title{font-family:var(--f-disp);font-size:0.95rem;font-weight:800;color:var(--ink);letter-spacing:-0.01em}
+.db-body{font-size:0.8rem;color:var(--gray1);font-weight:400;line-height:1.6;padding-left:45px}
+.db-body strong{color:var(--ink);font-weight:700}
+
+footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-align:center}
+.footer-brand{font-family:var(--f-disp);font-size:0.77rem;font-weight:700;color:var(--gray1)}
+.footer-sub{font-size:0.67rem;color:var(--gray3);font-weight:500;margin-top:4px;margin-bottom:4px}
+
+@keyframes rise{from{opacity:0;transform:translateY(11px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:340px){.price-now{font-size:2.6rem}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr-brand">
+    <div class="hdr-mark">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M16.5 2.5c.1 1.2-.35 2.4-1.1 3.3-.78.9-1.95 1.55-3.1 1.45-.13-1.15.4-2.4 1.13-3.2.8-.9 2.05-1.5 3.07-1.55zM21 17.2c-.6 1.35-.9 1.95-1.65 3.15-1.05 1.65-2.55 3.7-4.4 3.72-1.65.02-2.07-1.07-4.3-1.06-2.22.01-2.7 1.08-4.35 1.06-1.85-.02-3.27-1.87-4.32-3.52C-.2 16.4-.55 11.1 1.95 8.4c1.27-1.4 3.1-2.25 4.85-2.27 1.78-.02 2.9 1.05 4.35 1.05 1.43 0 2.32-1.07 4.4-1.07 1.5.02 3.1.8 4.3 2.2-3.78 2.18-3.18 7.5 1.15 8.89z" fill="white"/></svg>
+    </div>
+    <span class="hdr-name">JEXE <span class="lt">Regedit</span></span>
+  </div>
+  <span class="hdr-tag">iOS Edition</span>
+</header>
+
+<main>
+
+  <div class="hero">
+    <div class="hero-kicker">Edicion exclusiva para iPhone &amp; iPad</div>
+    <h1 class="hero-h1">Aim Support.<br/><em>Solo para iOS.</em></h1>
+    <p class="hero-p">El mejor Regedit para Free Fire en dispositivos Apple. Una sola compra, acceso inmediato, sin intermediarios.</p>
+    <div class="hero-platform">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M16.5 2.5c.1 1.2-.35 2.4-1.1 3.3-.78.9-1.95 1.55-3.1 1.45-.13-1.15.4-2.4 1.13-3.2.8-.9 2.05-1.5 3.07-1.55zM21 17.2c-.6 1.35-.9 1.95-1.65 3.15-1.05 1.65-2.55 3.7-4.4 3.72-1.65.02-2.07-1.07-4.3-1.06-2.22.01-2.7 1.08-4.35 1.06-1.85-.02-3.27-1.87-4.32-3.52C-.2 16.4-.55 11.1 1.95 8.4c1.27-1.4 3.1-2.25 4.85-2.27 1.78-.02 2.9 1.05 4.35 1.05 1.43 0 2.32-1.07 4.4-1.07 1.5.02 3.1.8 4.3 2.2-3.78 2.18-3.18 7.5 1.15 8.89z" fill="white"/></svg>
+      <span>iOS 11 — 26.4+  ·  Sin jailbreak</span>
+    </div>
+  </div>
+
+  <div class="video-wrap">
+    <video controls preload="metadata">
+      <source src="producto.mp4" type="video/mp4"/>
+    </video>
+    <div class="video-label">Vista previa</div>
+  </div>
+
+  <div class="scarcity">
+    <div class="scar-top">
+      <span class="scar-label">Disponibilidad</span>
+      <span class="scar-count">146 unidades</span>
+    </div>
+    <div class="scar-bottom">
+      <div>
+        <div class="scar-deadline-label">Cierra el</div>
+        <div class="scar-deadline-date">18 de julio, 2026</div>
+      </div>
+      <div class="scar-timer">
+        <div class="scar-timer-unit"><div class="scar-timer-num" id="cd-d">--</div><div class="scar-timer-lbl">DIAS</div></div>
+        <div class="scar-timer-unit"><div class="scar-timer-num" id="cd-h">--</div><div class="scar-timer-lbl">HRS</div></div>
+        <div class="scar-timer-unit"><div class="scar-timer-num" id="cd-m">--</div><div class="scar-timer-lbl">MIN</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="price-block">
+    <div class="price-was">$32 USD</div>
+    <div class="price-now"><sup>$</sup>14<sup>.99</sup></div>
+    <div class="price-sub">Pago unico · Acceso permanente</div>
+    <div class="price-divider"></div>
+    <div class="price-feats">
+      <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Acceso de por vida, sin renovaciones</div>
+      <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Entrega dentro de esta misma pagina</div>
+      <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Certificado premium incluido</div>
+    </div>
+  </div>
+
+  <div class="sec-label">Parametros de ajuste</div>
+  <div class="spec-grid">
+    <div class="spec-card">
+      <div class="spec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></div>
+      <div class="spec-num">70%</div>
+      <div class="spec-name">Aimlock</div>
+    </div>
+    <div class="spec-card">
+      <div class="spec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 9h6v6H9z"/></svg></div>
+      <div class="spec-num">70%</div>
+      <div class="spec-name">Aim assist</div>
+    </div>
+  </div>
+
+  <div class="sec-label">Incluido en tu compra</div>
+  <div class="benefit-list">
+    <div class="benefit-row">
+      <div class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5 2 7.5L12 16.5 5.5 21l2-7.5L2 9h7z"/></svg></div>
+      <div class="benefit-txt">Certificados premium, libres de baneo</div>
+    </div>
+    <div class="benefit-row">
+      <div class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/></svg></div>
+      <div class="benefit-txt">Sin blacklist, sin reinicio de rango</div>
+    </div>
+    <div class="benefit-row">
+      <div class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-3-6.7M21 4v5h-5"/></svg></div>
+      <div class="benefit-txt">Actualizaciones permanentes incluidas</div>
+    </div>
+    <div class="benefit-row">
+      <div class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
+      <div class="benefit-txt">Activacion instantanea tras el pago</div>
+    </div>
+  </div>
+
+  <div class="proof-strip">
+    <div class="proof-num">5 años</div>
+    <div class="proof-divider"></div>
+    <div class="proof-txt">de historial verificado en el mercado</div>
+  </div>
+  <div class="proof-strip" style="margin-top:8px">
+    <div class="proof-num">2.500+</div>
+    <div class="proof-divider"></div>
+    <div class="proof-txt">compras completadas y entregadas</div>
+  </div>
+  <a class="proof-link" href="https://t.me/+56Wdh8JANmJjYzZh" target="_blank" rel="noopener">
+    <div class="proof-link-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
+    <div class="proof-link-meta">
+      <div class="proof-link-title">Ver referencias publicas</div>
+      <div class="proof-link-sub">Mas de 2.500 pagos verificables en Telegram</div>
+    </div>
+    <div class="proof-link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+  </a>
+
+  <div class="sec-label">Como funciona</div>
+  <div class="flow-steps">
+    <div class="flow-step">
+      <div class="flow-line"><div class="flow-dot">1</div><div class="flow-stem"></div></div>
+      <div class="flow-body"><div class="flow-title">Paga con tu tarjeta</div><div class="flow-desc">Visa, Mastercard o American Express de cualquier pais. O selecciona otro metodo abajo.</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-line"><div class="flow-dot">2</div><div class="flow-stem"></div></div>
+      <div class="flow-body"><div class="flow-title">No cierres esta pagina</div><div class="flow-desc">Al confirmar el pago, vuelve aqui mismo para recibir tu acceso.</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-line"><div class="flow-dot">3</div></div>
+      <div class="flow-body"><div class="flow-title">Acceso inmediato</div><div class="flow-desc">Sin esperas ni intermediarios. La entrega ocurre en esta misma pagina, las 24 horas.</div></div>
+    </div>
+  </div>
+
+  <div class="sec-label">Realizar pago</div>
+
+  <div class="pay-card">
+    <div class="pay-kicker">Pago principal — recomendado</div>
+    <div class="pay-title">Tarjeta de debito o credito</div>
+    <div class="pay-chips">
+      <div class="pay-chip"><span>Visa</span></div>
+      <div class="pay-chip"><span>Mastercard</span></div>
+      <div class="pay-chip"><span>Amex</span></div>
+      <div class="pay-chip"><span>Cualquier pais</span></div>
+    </div>
+    <a href="https://checkout.bold.co/payment/LNK_3J79BJGKPR" target="_blank" rel="noopener" class="pay-cta">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      Pagar $14.99 USD
+    </a>
+    <div class="pay-note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span>Al completar el pago seras redirigido de vuelta aqui. No cierres la pagina, la entrega es automatica e inmediata.</span>
+    </div>
+    <div class="pay-secure">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+      <span>Procesado de forma segura por Bold</span>
+    </div>
+
+    <!-- ALT METHODS -->
+    <button class="alt-toggle" id="altToggle" onclick="toggleAlt()">
+      <div class="alt-toggle-left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2H2v10l9.29 9.29a1 1 0 001.41 0l6.59-6.59a1 1 0 000-1.41L12 2z"/><path d="M7 7h.01"/></svg>
+        <span>No tengo tarjeta — ver otros metodos</span>
+      </div>
+      <div class="alt-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </button>
+    <div class="alt-panel" id="altPanel">
+      <div class="alt-method-list" id="altMethodList"></div>
+      <div class="alt-detail" id="altDetail"></div>
+    </div>
+  </div>
+
+  <div class="wa-section">
+    <button class="wa-trigger" id="waTrigger" onclick="toggleWa()">
+      <div class="wa-trigger-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65-3.8a9 9 0 111.79 1.72L3 21"/><path d="M9 10c0 5 6 5 6 0"/></svg></div>
+      <div class="wa-trigger-meta">
+        <div class="wa-trigger-title">Ya realice mi pago</div>
+        <div class="wa-trigger-sub">Notificar a JEXE por WhatsApp</div>
+      </div>
+      <div class="wa-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+    </button>
+    <div class="wa-panel" id="waPanel">
+      <div class="wa-warn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <span><strong>Importante:</strong> Solo escribe si ya realizaste el pago y tienes la captura del comprobante lista para adjuntar. Mensajes sin comprobante seran ignorados.</span>
+      </div>
+      <div class="wa-field">
+        <label class="wa-label">Con que metodo pague</label>
+        <select class="wa-select" id="waMethod" onchange="onWaMethodChange()">
+          <option value="">— Selecciona —</option>
+          <option>Tarjeta debito/credito (Bold)</option>
+          <option>Nequi</option>
+          <option>Llave / BRE-B</option>
+          <option>CLABE — Transferencia Mexico</option>
+          <option>Binance Pay</option>
+          <option>AstroPay</option>
+          <option>Skrill</option>
+          <option>Remesadora</option>
+          <option>PIX</option>
+        </select>
+      </div>
+      <div class="wa-field">
+        <label class="wa-label">Nota adicional (opcional)</label>
+        <textarea class="wa-textarea" id="waNote" placeholder="Numero de orden, referencia, o cualquier dato relevante del pago."></textarea>
+      </div>
+      <button class="wa-send-btn" id="waSendBtn" onclick="sendWa()" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65-3.8a9 9 0 111.79 1.72L3 21"/></svg>
+        Enviar confirmacion a JEXE
+      </button>
+    </div>
+  </div>
+
+  <div class="delivery-banner">
+    <div class="db-top">
+      <div class="db-ico"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+      <div class="db-title">Entrega inmediata, 24/7</div>
+    </div>
+    <div class="db-body">Sin intermediarios ni tiempos de espera. <strong>No cierres esta pagina</strong> despues de pagar: tu acceso se activa aqui mismo, al instante, a cualquier hora del dia.</div>
+  </div>
+
+  <footer>
+    <div class="footer-brand">JEXE Regedit</div>
+    <div class="footer-sub">Edicion iOS · Disponible hasta el 18 de julio, 2026</div>
+  </footer>
+
+</main>
+
+<script>
+(function(){
+  var deadline=new Date('2026-07-18T23:59:59-05:00').getTime();
+  var d=document.getElementById('cd-d'),h=document.getElementById('cd-h'),m=document.getElementById('cd-m');
+  function tick(){
+    var diff=deadline-Date.now();
+    if(diff<=0){d.textContent='0';h.textContent='0';m.textContent='0';return}
+    d.textContent=Math.floor(diff/86400000);
+    h.textContent=Math.floor((diff%86400000)/3600000);
+    m.textContent=Math.floor((diff%3600000)/60000);
+  }
+  tick();setInterval(tick,30000);
+})();
+
+var ASTROPAY='https://onetouch.astropay.com/payment?external_reference_id=1MbmXcUGh7sVodoSvQ4YSXLCt9JmxsuN';
+var ALT=[
+  {id:'nequi',name:'Nequi',desc:'App Bancolombia — Colombia',tag:'Colombia',ico:'<circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v8"/>'},
+  {id:'llave',name:'Llave / BRE-B',desc:'Cualquier banco colombiano',tag:'Colombia',ico:'<circle cx="8" cy="8" r="3"/><path d="M10.5 10.5L21 21M15 16l3 3M18 13l3 3"/>'},
+  {id:'clabe',name:'CLABE — Mexico',desc:'Transferencia bancaria directa',tag:'Mexico',ico:'<path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/>'},
+  {id:'astropay',name:'AstroPay',desc:'Billetera digital internacional',tag:'Digital',ico:'<rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h2"/>'},
+  {id:'binance',name:'Binance Pay',desc:'USDT, BTC y mas cryptos',tag:'Crypto',ico:'<circle cx="12" cy="12" r="10"/><path d="M12 6l-3 3 3 3 3-3-3-3zM12 12l-3 3 3 3 3-3-3-3z"/>'},
+  {id:'skrill',name:'Skrill',desc:'Billetera digital global',tag:'Digital',ico:'<circle cx="12" cy="12" r="9"/><path d="M9 12h6M12 9v6"/>'},
+  {id:'remittance',name:'Remesadora',desc:'Remitly, MoneyGram, Western Union',tag:'Remesa',ico:'<path d="M7 16V4M3 8l4-4 4 4M17 8v12M21 16l-4 4-4-4"/>'},
+  {id:'pix',name:'PIX / QR PIX',desc:'Transferencia instantanea Brasil',tag:'Brasil',ico:'<rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/>'},
+];
+var _ci=0;
+function aRow(lbl,val){
+  var id='cp'+(++_ci);
+  return '<div class="alt-data-row"><span class="alt-data-lbl">'+lbl+'</span><span class="alt-data-val">'+val+'</span><button class="alt-data-copy" id="'+id+'" onclick="cpVal(\''+val.replace(/'/g,"\\'")+"','"+id+"')\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\"/><path d=\"M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1\"/></svg></button></div>";
+}
+function cpVal(txt,id){
+  var b=document.getElementById(id);
+  navigator.clipboard.writeText(txt).then(function(){
+    b.classList.add('copied');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+    setTimeout(function(){b.classList.remove('copied');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>'},1800);
+  }).catch(function(){});
+}
+function toggleAlt(){
+  var t=document.getElementById('altToggle'),p=document.getElementById('altPanel');
+  var open=p.classList.toggle('open');t.classList.toggle('open',open);
+  if(open&&!document.getElementById('altMethodList').children.length)renderAlt();
+}
+function renderAlt(){
+  var list=document.getElementById('altMethodList');list.innerHTML='';
+  ALT.forEach(function(m){
+    var el=document.createElement('div');el.className='alt-method';
+    el.innerHTML='<div class="alt-m-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">'+m.ico+'</svg></div><div class="alt-m-info"><div class="alt-m-name">'+m.name+'</div><div class="alt-m-desc">'+m.desc+'</div></div><div class="alt-m-tag">'+m.tag+'</div><div class="alt-m-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="5"/></svg></div>';
+    el.addEventListener('click',function(){
+      document.querySelectorAll('.alt-method').forEach(function(i){i.classList.remove('is-sel')});
+      el.classList.add('is-sel');renderDetail(m.id);
+    });
+    list.appendChild(el);
+  });
+}
+function renderDetail(id){
+  var det=document.getElementById('altDetail');_ci=0;var h='';
+  if(id==='nequi'){
+    h='<div class="alt-detail-title">Pago con Nequi</div>'+aRow('Monto','$52.000 COP')+aRow('Numero','3132878955')+aRow('Titular','Juan Aguirre')+'<div class="alt-detail-note">Abre Nequi, selecciona Enviar dinero e ingresa el numero. Equivale a $14.99 USD.</div>';
+  }else if(id==='llave'){
+    h='<div class="alt-detail-title">Llave / BRE-B</div>'+aRow('Monto','$52.000 COP')+aRow('Entidad','Bold CF')+aRow('Email / ID','mediaspaceapp@gmail.com')+aRow('Titular','Juan Aguirre')+'<div class="alt-detail-note">Disponible desde cualquier banco colombiano. Equivale a $14.99 USD.</div>';
+  }else if(id==='clabe'){
+    h='<div class="alt-detail-title">Transferencia CLABE — Mexico</div>'+aRow('Monto','$260 MXN')+aRow('Titular','Juan Pablo Aguirre Grosso')+aRow('CLABE','646180546701915656')+aRow('Entidad','STP')+'<div class="alt-detail-note">Transferencia bancaria directa via STP. Equivale a $14.99 USD.</div>';
+  }else if(id==='astropay'){
+    h='<div class="alt-detail-title">AstroPay</div><div class="alt-detail-note" style="margin-top:0;margin-bottom:11px">Billetera digital internacional. Paga directo con el enlace por $14.99 USD.</div><a href="'+ASTROPAY+'" target="_blank" rel="noopener" class="alt-cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg>Pagar con AstroPay — $14.99 USD</a>';
+  }else if(id==='binance'){
+    h='<div class="alt-detail-title">Binance Pay</div>'+aRow('Monto','$14.99 USDT')+aRow('Binance ID','538653875')+aRow('Usuario','@jexeregedit')+'<div class="alt-detail-note">Busca por ID o usuario dentro de Binance Pay.</div>';
+  }else if(id==='skrill'){
+    h='<div class="alt-detail-title">Skrill</div>'+aRow('Monto','$14.99 USD')+aRow('Email Skrill','juanpabloaguirregrosso@gmail.com')+'<div class="alt-detail-note">Envia el pago a este correo desde tu cuenta Skrill.</div>';
+  }else if(id==='remittance'){
+    h='<div class="alt-detail-title">Remesadora</div>'+aRow('Monto','$14.99 USD')+aRow('Nombre','Juan Pablo Aguirre Grosso')+aRow('Pais destino','Colombia')+aRow('Telefono','+573132878955')+aRow('Num. cuenta','3132878955')+aRow('Billetera','Nequi')+aRow('Tipo cuenta','Ahorros')+'<div class="alt-detail-note">Disponible via Remitly, MoneyGram o Western Union.</div>';
+  }else if(id==='pix'){
+    h='<div class="alt-detail-title">PIX — Brasil</div><div class="alt-detail-note" style="margin-top:0">El PIX se coordina directamente con JEXE. Notifica por WhatsApp abajo para recibir los datos personalizados equivalentes a $14.99 USD.</div>';
+  }
+  det.innerHTML=h;det.classList.add('show');
+}
+function toggleWa(){
+  var t=document.getElementById('waTrigger'),p=document.getElementById('waPanel');
+  var open=p.classList.toggle('open');t.classList.toggle('open',open);
+}
+function onWaMethodChange(){
+  document.getElementById('waSendBtn').disabled=!document.getElementById('waMethod').value;
+}
+function sendWa(){
+  var method=document.getElementById('waMethod').value;if(!method)return;
+  var note=document.getElementById('waNote').value.trim();
+  var msg='Hola JEXE, ya realice mi pago.\n\n================================\n CONFIRMACION DE PAGO — iOS\n================================\nPlan: Pago unico ($14.99 USD)\nMetodo: '+method+'\nPlataforma: iOS\n'+(note?'Nota: '+note+'\n':'')+'================================\nAdjunto la captura del comprobante en este chat.';
+  window.open('https://wa.me/573132878955?text='+encodeURIComponent(msg),'_blank','noopener');
+}
+</script>
+</body>
+</html>
