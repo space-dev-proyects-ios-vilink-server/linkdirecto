@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>server-premium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+  /* ============================================================
+     JEXE LAUNCHER — design tokens
+     Surface palette: cool graphite, not pure black.
+     Accent: muted copper (brand/selection), signal green only
+     for the single "active" state. No neon, no gradients-for-the-
+     sake-of-gradients.
+     ============================================================ */
+
+  :root{
+    --bg-0: #0b0e13;          /* page base */
+    --bg-1: #11151c;          /* panel base */
+    --bg-2: #161c25;          /* control surface */
+    --bg-3: #1d2531;          /* control surface, raised */
+    --line: #262e3a;          /* hairline borders */
+    --line-soft: #1a212b;
+
+    --text-1: #eef1f5;
+    --text-2: #9aa5b3;
+    --text-3: #5b6675;
+
+    --copper: #c8915c;
+    --copper-soft: #8a6342;
+    --copper-dim: #6b4f37;
+
+    --signal: #45c08a;        /* active / success */
+    --signal-dim: #2c7d59;
+    --danger: #d2654f;
+
+    --radius-lg: 22px;
+    --radius-md: 16px;
+    --radius-sm: 10px;
+
+    --shadow-soft: 0 18px 40px -20px rgba(0,0,0,0.65);
+    --shadow-deep: 0 30px 60px -25px rgba(0,0,0,0.8);
+
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body: 'Outfit', sans-serif;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html,body{
+    margin:0;
+    padding:0;
+    background: var(--bg-0);
+    color: var(--text-1);
+    font-family: var(--font-body);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body{
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 50% -10%, rgba(200,145,92,0.08), transparent 45%),
+      radial-gradient(circle at 85% 15%, rgba(69,192,138,0.04), transparent 40%),
+      var(--bg-0);
+    display:flex;
+    justify-content:center;
+  }
+
+  .screen{
+    width:100%;
+    max-width: 460px;
+    min-height:100vh;
+    position:relative;
+    padding: 38px 22px 48px;
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* subtle film-grain / noise overlay for texture without being loud */
+  .grain{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:0.035;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    z-index: 1;
+  }
+
+  /* ---------------- Header ---------------- */
+
+  .header{
+    text-align:center;
+    margin-bottom: 30px;
+  }
+
+  .eyebrow{
+    display:flex;
+    justify-content:center;
+    gap: 22px;
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 18px;
+    font-weight:600;
+  }
+
+  .eyebrow span{ position:relative; }
+  .eyebrow span:not(:last-child)::after{
+    content:'';
+    position:absolute;
+    right:-11px;
+    top:50%;
+    transform:translateY(-50%);
+    width:3px;
+    height:3px;
+    border-radius:50%;
+    background: var(--text-3);
+  }
+
+  .brand{
+    font-family: var(--font-display);
+    font-size: 54px;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    color: var(--text-1);
+    margin: 0;
+  }
+
+  .brand-accent{ color: var(--copper); }
+
+  .version-row{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    margin-top: 10px;
+  }
+
+  .version-tag{
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-2);
+    letter-spacing: 0.04em;
+    padding: 3px 11px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--bg-1);
+  }
+
+  /* ---------------- Status strip (signature element) ---------------- */
+  /* Encodes the live state of the system: which mode is armed,
+     replacing decorative empty space with real information. */
+
+  .status-strip{
+    margin: 4px 0 28px;
+    padding: 14px 16px;
+    border-radius: var(--radius-md);
+    background: var(--bg-1);
+    border: 1px solid var(--line-soft);
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+
+  .status-dot{
+    width:9px; height:9px;
+    border-radius:50%;
+    background: var(--signal);
+    box-shadow: 0 0 0 4px rgba(69,192,138,0.14);
+    flex-shrink:0;
+    transition: background .25s, box-shadow .25s;
+  }
+
+  .status-strip.none .status-dot{
+    background: var(--text-3);
+    box-shadow: 0 0 0 4px rgba(91,102,117,0.12);
+  }
+
+  .status-text{
+    font-size: 13px;
+    color: var(--text-2);
+    line-height:1.4;
+  }
+
+  .status-text b{
+    color: var(--text-1);
+    font-weight:600;
+  }
+
+  /* ---------------- Option toggles ---------------- */
+
+  .options-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 26px;
+  }
+
+  .option{
+    position:relative;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 16px 14px;
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+    cursor:pointer;
+    user-select:none;
+    transition: border-color .2s ease, background .2s ease, transform .15s ease;
+  }
+
+  .option:active{ transform: scale(0.98); }
+
+  .option.active{
+    border-color: var(--signal-dim);
+    background: linear-gradient(180deg, rgba(69,192,138,0.10), rgba(69,192,138,0.02));
+  }
+
+  .option-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+
+  .option-icon{
+    width:30px;
+    height:30px;
+    border-radius: 9px;
+    background: var(--bg-3);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color: var(--text-2);
+    flex-shrink:0;
+    transition: color .2s, background .2s;
+  }
+
+  .option.active .option-icon{
+    background: rgba(69,192,138,0.16);
+    color: var(--signal);
+  }
+
+  .option-icon svg{ width:16px; height:16px; }
+
+  /* switch */
+  .switch{
+    width: 44px;
+    height: 25px;
+    border-radius: 999px;
+    background: var(--bg-3);
+    border: 1px solid var(--line);
+    position:relative;
+    flex-shrink:0;
+    transition: background .25s ease, border-color .25s ease;
+  }
+
+  .switch::after{
+    content:'';
+    position:absolute;
+    top: 2px;
+    left: 2px;
+    width: 19px;
+    height: 19px;
+    border-radius:50%;
+    background: var(--text-2);
+    transition: transform .25s cubic-bezier(.4,0,.2,1), background .25s ease;
+  }
+
+  .option.active .switch{
+    background: var(--signal-dim);
+    border-color: var(--signal);
+  }
+
+  .option.active .switch::after{
+    transform: translateX(19px);
+    background: #f4fff9;
+  }
+
+  .option-label{
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text-1);
+    letter-spacing:0.01em;
+  }
+
+  .option-sub{
+    font-size: 11px;
+    color: var(--text-3);
+    font-weight:500;
+  }
+
+  .option.active .option-sub{ color: var(--signal); }
+
+  /* ---------------- Notice panel ---------------- */
+
+  .notice{
+    background: var(--bg-1);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-lg);
+    padding: 20px 20px 22px;
+    margin-bottom: 30px;
+  }
+
+  .notice-head{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    margin-bottom: 10px;
+  }
+
+  .notice-head svg{
+    width:16px; height:16px;
+    color: var(--copper);
+    flex-shrink:0;
+  }
+
+  .notice-head span{
+    font-size: 12.5px;
+    font-weight:700;
+    letter-spacing:0.03em;
+    text-transform:uppercase;
+    color: var(--text-2);
+  }
+
+  .notice p{
+    margin:0;
+    font-size: 13.5px;
+    line-height:1.6;
+    color: var(--text-3);
+  }
+
+  .notice b{ color: var(--text-2); font-weight:600; }
+  .notice .handle{ color: var(--copper-soft); font-weight:600; }
+
+  /* ---------------- QR section ---------------- */
+
+  .qr-section{
+    margin-bottom: 34px;
+  }
+
+  .qr-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .qr-card{
+    background: var(--bg-1);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-md);
+    padding: 12px 8px 14px;
+    text-align:center;
+    cursor:pointer;
+    transition: border-color .2s ease, transform .15s ease, background .2s ease;
+    position:relative;
+  }
+
+  .qr-card:active{ transform: scale(0.97); }
+
+  .qr-card.pulse{
+    border-color: var(--copper-soft);
+    background: rgba(200,145,92,0.06);
+  }
+
+  .qr-frame{
+    background: #f4f1ea;
+    border-radius: 9px;
+    padding: 7px;
+    margin: 0 auto 9px;
+    width: 78px;
+    height: 78px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .qr-frame canvas{ width:100%; height:100%; display:block; }
+
+  .qr-name{
+    font-size: 11px;
+    font-weight:600;
+    color: var(--text-2);
+    line-height:1.3;
+  }
+
+  .qr-hint{
+    font-size: 9px;
+    color: var(--text-3);
+    margin-top:3px;
+    font-weight:500;
+    letter-spacing:0.02em;
+  }
+
+  /* ---------------- Start button ---------------- */
+
+  .start-wrap{
+    margin-top:auto;
+    padding-top: 10px;
+  }
+
+  .start-btn{
+    width:100%;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 18px 0;
+    background: linear-gradient(180deg, #232c39, #161c25);
+    border: 1px solid var(--line);
+    color: var(--text-1);
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight:700;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    cursor:pointer;
+    box-shadow: var(--shadow-soft);
+    transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+
+  .start-btn:active{ transform: scale(0.985); }
+
+  .start-btn:disabled{
+    opacity:0.45;
+    cursor:not-allowed;
+  }
+
+  .start-btn svg{ width:18px; height:18px; }
+
+  .start-foot{
+    text-align:center;
+    font-size: 11px;
+    color: var(--text-3);
+    margin-top: 14px;
+    letter-spacing:0.02em;
+  }
+
+  /* ============================================================
+     Internal "tab" overlay — simulates an in-page browser tab.
+     Stays inside the page; never navigates away.
+     ============================================================ */
+
+  .tab-overlay{
+    position:fixed;
+    inset:0;
+    z-index: 50;
+    background: var(--bg-0);
+    display:flex;
+    flex-direction:column;
+    opacity:0;
+    pointer-events:none;
+    transition: opacity .28s ease;
+  }
+
+  .tab-overlay.open{
+    opacity:1;
+    pointer-events:all;
+  }
+
+  .tab-chrome{
+    flex-shrink:0;
+    padding: 14px 14px 12px;
+    background: var(--bg-1);
+    border-bottom: 1px solid var(--line-soft);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+
+  .tab-dot-row{ display:flex; gap:6px; }
+  .tab-dot-row span{
+    width:7px; height:7px; border-radius:50%;
+    background: var(--line);
+  }
+
+  .tab-url{
+    flex:1;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 7px 14px;
+    font-size: 11.5px;
+    color: var(--text-3);
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    display:flex;
+    align-items:center;
+    gap:7px;
+  }
+
+  .tab-url svg{ width:11px; height:11px; flex-shrink:0; color: var(--text-3); }
+
+  .tab-body{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: 40px 28px;
+  }
+
+  .tab-state{
+    text-align:center;
+    max-width: 320px;
+  }
+
+  .spinner{
+    width: 46px;
+    height: 46px;
+    margin: 0 auto 26px;
+    border-radius:50%;
+    border: 3px solid var(--line);
+    border-top-color: var(--copper);
+    animation: spin 0.9s linear infinite;
+  }
+
+  @keyframes spin{ to{ transform: rotate(360deg); } }
+
+  .state-icon{
+    width:54px; height:54px;
+    margin: 0 auto 22px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .state-icon.error{ background: rgba(210,101,79,0.12); }
+  .state-icon.error svg{ width:26px; height:26px; color: var(--danger); }
+
+  .state-icon.ok{ background: rgba(69,192,138,0.12); }
+  .state-icon.ok svg{ width:26px; height:26px; color: var(--signal); }
+
+  .tab-title{
+    font-size: 16px;
+    font-weight:700;
+    color: var(--text-1);
+    margin: 0 0 10px;
+  }
+
+  .tab-desc{
+    font-size: 13.5px;
+    color: var(--text-3);
+    line-height:1.6;
+    margin: 0;
+  }
+
+  .tab-desc b{ color: var(--text-2); }
+
+  .retry-btn{
+    margin-top: 26px;
+    border:none;
+    background: var(--bg-3);
+    border: 1px solid var(--line);
+    color: var(--text-1);
+    font-family: var(--font-body);
+    font-weight:700;
+    font-size: 13px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    padding: 13px 30px;
+    border-radius: 999px;
+    cursor:pointer;
+    transition: transform .15s ease, border-color .2s;
+  }
+
+  .retry-btn:active{ transform: scale(0.97); }
+
+  .conn-meta{
+    display:flex;
+    justify-content:center;
+    gap: 18px;
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .conn-meta div{ text-align:center; }
+  .conn-meta .num{ font-size: 18px; font-weight:700; color: var(--text-1); }
+  .conn-meta .lbl{ font-size: 10px; color: var(--text-3); text-transform:uppercase; letter-spacing:0.05em; margin-top:2px; }
+
+  /* ---------------- Toast (for blocked double-select etc) ---------------- */
+
+  .toast{
+    position:fixed;
+    bottom: 28px;
+    left:50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--bg-3);
+    border: 1px solid var(--line);
+    color: var(--text-1);
+    font-size: 13px;
+    font-weight:500;
+    padding: 13px 20px;
+    border-radius: 999px;
+    box-shadow: var(--shadow-deep);
+    z-index: 80;
+    opacity:0;
+    transition: opacity .25s ease, transform .25s ease;
+    pointer-events:none;
+    max-width: 90%;
+    text-align:center;
+  }
+
+  .toast.show{
+    opacity:1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  /* focus visibility for keyboard users */
+  .option:focus-visible,
+  .qr-card:focus-visible,
+  .start-btn:focus-visible,
+  .retry-btn:focus-visible{
+    outline: 2px solid var(--copper);
+    outline-offset: 2px;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<div class="screen">
+
+  <header class="header">
+    <div class="eyebrow">
+      <span>No Ban</span>
+      <span>No Black</span>
+      <span>No Problem</span>
+    </div>
+    <h1 class="brand">DeepAim<span class="brand-accent">.</span></h1>
+    <div class="version-row">
+      <span class="version-tag">premium</span>
+    </div>
+  </header>
+
+  <div class="status-strip none" id="statusStrip">
+    <span class="status-dot"></span>
+    <span class="status-text" id="statusText">Ningún modo armado — selecciona una opción para continuar</span>
+  </div>
+
+  <div class="options-grid" id="optionsGrid">
+    <!-- options injected by JS -->
+  </div>
+
+
+
+  <div class="qr-section">
+    <div class="qr-grid" id="qrGrid">
+      <!-- qr cards injected by JS -->
+    </div>
+  </div>
+
+  <div class="start-wrap">
+    <button class="start-btn" id="startBtn" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      Start
+    </button>
+    <div class="start-foot">Inicia la opción activa de forma segura</div>
+  </div>
+
+</div>
+
+<!-- Internal tab overlay (never leaves the page) -->
+<div class="tab-overlay" id="tabOverlay">
+  <div class="tab-chrome">
+    <div class="tab-dot-row"><span></span><span></span><span></span></div>
+    <div class="tab-url" id="tabUrl">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <span id="tabUrlText">conectando…</span>
+    </div>
+  </div>
+  <div class="tab-body">
+    <div class="tab-state" id="tabState"><!-- dynamic --></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+
+  /* ============================================================
+     CONFIG — reemplaza estos enlaces genéricos por los reales
+     ============================================================ */
+
+  const OPTIONS = [
+    {
+      id: 'opt-deeplink-a',
+      label: 'DMO2',
+      sub: 'Main 2 options',
+      url: 'freefire://config/import?data=%7B%22patch%22%3A%22OB54%22%2C%22version%22%3A%222.5%22%2C%22type%22%3A%22sensitivity_profile%22%2C%22params%22%3A%7B%22GeneralSensitivity%22%3A2040.0%2C%22CameraSensitivity%22%3A1880.0%2C%22FreeLookSensitivity%22%3A95.0%2C%22ThirdPersonSensitivity%22%3A2040.0%2C%22FirstPersonSensitivity%22%3A1820.0%2C%22CameraAcceleration%22%3A0.15%2C%22CameraDeadZone%22%3A0.008%2C%22CameraFOVSensitivity%22%3A1900.0%2C%22HorizontalSensitivity%22%3A1880.0%2C%22VerticalSensitivity%22%3A1820.0%2C%22ADSBaseSensitivity%22%3A1650.0%2C%22ADSMultiplier%22%3A0.75%2C%22ADSTransitionMultiplier%22%3A0.85%2C%22HipFireToADSSpeed%22%3A8.5%2C%22ADSToHipFireSpeed%22%3A9.0%2C%22AimResponseCurve%22%3A1.2%2C%22AimEasing%22%3A0.98%2C%22AimAcceleration%22%3A0.18%2C%22AimMaxSpeed%22%3A450.0%2C%22IronSightSensitivity%22%3A680.0%2C%22RedDotSensitivity%22%3A1650.0%2C%22HolographicSensitivity%22%3A630.0%2C%22TwoXScopeSensitivity%22%3A520.0%2C%22ThreeXScopeSensitivity%22%3A480.0%2C%22FourXScopeSensitivity%22%3A420.0%2C%22ScopeTransitionSpeed%22%3A9.2%2C%22USP_Sensitivity%22%3A920.0%2C%22USP2_Sensitivity%22%3A920.0%2C%22DesertEagle_Sensitivity%22%3A1880.0%2C%22G18_Sensitivity%22%3A2040.0%2C%22M1873_Sensitivity%22%3A1900.0%2C%22M500_Sensitivity%22%3A860.0%2C%22M1917_Sensitivity%22%3A910.0%2C%22HealingPistol_Sensitivity%22%3A950.0%2C%22Flamethrower_Sensitivity%22%3A780.0%2C%22Gyro_USP%22%3A105.0%2C%22Gyro_USP2%22%3A105.0%2C%22Gyro_DesertEagle%22%3A980.0%2C%22Gyro_G18%22%3A95.0%2C%22Gyro_M1873%22%3A102.0%2C%22Gyro_M500%22%3A980.0%2C%22Gyro_M1917%22%3A103.0%2C%22Gyro_HealingPistol%22%3A110.0%2C%22Gyro_Flamethrower%22%3A88.0%2C%22M1014_Sensitivity%22%3A950.0%2C%22SPAS12_Sensitivity%22%3A930.0%2C%22M1887_Sensitivity%22%3A980.0%2C%22MAG7_Sensitivity%22%3A940.0%2C%22M590_Sensitivity%22%3A960.0%2C%22Trogon_Sensitivity%22%3A920.0%2C%22ChargeBuster_Sensitivity%22%3A1900.0%2C%22Gyro_M1014%22%3A108.0%2C%22Gyro_SPAS12%22%3A105.0%2C%22Gyro_M1887%22%3A112.0%2C%22Gyro_MAG7%22%3A107.0%2C%22Gyro_M590%22%3A110.0%2C%22Gyro_Trogon%22%3A104.0%2C%22Gyro_ChargeBuster%22%3A102.0%2C%22UMP_Sensitivity%22%3A1820.0%2C%22MP5_Sensitivity%22%3A840.0%2C%22MP40_Sensitivity%22%3A830.0%2C%22P90_Sensitivity%22%3A800.0%2C%22Thompson_Sensitivity%22%3A810.0%2C%22Vector_Sensitivity%22%3A780.0%2C%22UZI_Sensitivity%22%3A1820.0%2C%22MAC10_Sensitivity%22%3A790.0%2C%22Bizon_Sensitivity%22%3A830.0%2C%22CG15_Sensitivity%22%3A810.0%2C%22Gyro_UMP%22%3A920.0%2C%22Gyro_MP5%22%3A94.0%2C%22Gyro_MP40%22%3A93.0%2C%22Gyro_P90%22%3A88.0%2C%22Gyro_Thompson%22%3A90.0%2C%22Gyro_Vector%22%3A86.0%2C%22Gyro_UZI%22%3A920.0%2C%22Gyro_MAC10%22%3A88.0%2C%22Gyro_Bizon%22%3A93.0%2C%22Gyro_CG15%22%3A90.0%2C%22M4A1_Sensitivity%22%3A750.0%2C%22AK47_Sensitivity%22%3A720.0%2C%22SCAR_Sensitivity%22%3A740.0%2C%22FAMAS_Sensitivity%22%3A730.0%2C%22M14_Sensitivity%22%3A700.0%2C%22XM8_Sensitivity%22%3A760.0%2C%22AN94_Sensitivity%22%3A740.0%2C%22AUG_Sensitivity%22%3A750.0%2C%22Parafal_Sensitivity%22%3A710.0%2C%22Kingfisher_Sensitivity%22%3A770.0%2C%22G36_Sensitivity%22%3A760.0%2C%22Groza_Sensitivity%22%3A730.0%2C%22SVD_Sensitivity%22%3A680.0%2C%22Woodpecker_Sensitivity%22%3A690.0%2C%22SKS_Sensitivity%22%3A700.0%2C%22AC80_Sensitivity%22%3A750.0%2C%22Winchester_Sensitivity%22%3A670.0%2C%22Gyro_M4A1%22%3A84.0%2C%22Gyro_AK47%22%3A80.0%2C%22Gyro_SCAR%22%3A83.0%2C%22Gyro_FAMAS%22%3A82.0%2C%22Gyro_M14%22%3A78.0%2C%22Gyro_XM8%22%3A850.0%2C%22Gyro_AN94%22%3A83.0%2C%22Gyro_AUG%22%3A84.0%2C%22Gyro_Parafal%22%3A79.0%2C%22Gyro_Kingfisher%22%3A86.0%2C%22Gyro_G36%22%3A850.0%2C%22Gyro_Groza%22%3A82.0%2C%22AWM_Sensitivity%22%3A55.0%2C%22Kar98k_Sensitivity%22%3A58.0%2C%22M82B_Sensitivity%22%3A52.0%2C%22SVD_Sensitivity_2%22%3A620.0%2C%22Woodpecker_Sensitivity_2%22%3A600.0%2C%22Gyro_AWM%22%3A65.0%2C%22Gyro_Kar98k%22%3A68.0%2C%22Gyro_M82B%22%3A62.0%2C%22GyroIronSight%22%3A95.0%2C%22GyroRedDot%22%3A920.0%2C%22GyroHolographic%22%3A90.0%2C%22Gyro2x%22%3A75.0%2C%22Gyro3x%22%3A68.0%2C%22Gyro4x%22%3A60.0%2C%22TouchscreenSensitivity%22%3A8.8%2C%22LeftJoystickSensitivity%22%3A8.5%2C%22RightJoystickSensitivity%22%3A9.0%2C%22JoystickDeadZone%22%3A0.012%2C%22JoystickResponseCurve%22%3A1.15%2C%22TouchResponseRate%22%3A240.0%2C%22TouchSampleRate%22%3A240.0%2C%22TouchPressureSensitivity%22%3A0.85%2C%22TouchMultitouchTracking%22%3A1.0%2C%22FireButtonResponse%22%3A9.5%2C%22ScopeButtonResponse%22%3A9.2%2C%22CrouchJumpButtonResponse%22%3A9.8%2C%22ReloadButtonResponse%22%3A8.5%2C%22InventoryButtonResponse%22%3A8.0%2C%22GrenadeButtonResponse%22%3A9.0%2C%22MeleeButtonResponse%22%3A9.5%2C%22AimAssistStrength%22%3A6.5%2C%22AimAssistWindowSize%22%3A7.2%2C%22AimAssistSlowdownMultiplier%22%3A0.98%2C%22AimAssistMagnetism%22%3A0.98%2C%22AimAssistFriction%22%3A0.65%2C%22AimAssistRange%22%3A850.0%2C%22AimAssistHeadshotBonus%22%3A1.15%2C%22AimAssistTargetSwitchSpeed%22%3A0.88%2C%22RecoilControlMultiplier%22%3A3.2%2C%22VerticalRecoilCompensation%22%3A3.8%2C%22HorizontalRecoilCompensation%22%3A2.5%2C%22RecoilRecoverySpeed%22%3A4.5%2C%22RecoilStabilization%22%3A3.5%2C%22RecoilPatternRecognition%22%3A0.75%2C%22FirstShotRecoilMultiplier%22%3A0.85%2C%22RecoilShakeReduction%22%3A0.65%2C%22GyroscopeEnabled%22%3A1.0%2C%22GyroscopeGeneralSensitivity%22%3A95.0%2C%22GyroscopeADSMultiplier%22%3A0.68%2C%22GyroEnableOnADS%22%3A1.0%2C%22GyroAlwaysOn%22%3A0.0%2C%22GyroVerticalMultiplier%22%3A0.92%2C%22GyroHorizontalMultiplier%22%3A1.0%2C%22GyroYawRate%22%3A1.08%2C%22GyroPitchRate%22%3A0.95%2C%22GyroRollCompensation%22%3A0.75%2C%22GyroSmoothingFactor%22%3A0.22%2C%22GyroDeadZone%22%3A0.015%2C%22GyroFlickBoost%22%3A1.25%2C%22GyroCalibrationX%22%3A0.0%2C%22GyroCalibrationY%22%3A0.0%2C%22GyroCalibrationZ%22%3A0.0%2C%22AggressiveSensitivity%22%3A950.0%2C%22PassiveSensitivity%22%3A700.0%2C%22CloseCombatSensitivity%22%3A980.0%2C%22MidRangeSensitivity%22%3A80.0%2C%22LongRangeSensitivity%22%3A58.0%2C%22SniperSensitivity%22%3A48.0%2C%22TwoFingerSensitivity%22%3A750.0%2C%22ThreeFingerSensitivity%22%3A1820.0%2C%22FourFingerSensitivity%22%3A1880.0%2C%22ClawGripSensitivity%22%3A1900.0%2C%22ThumbGripSensitivity%22%3A780.0%2C%22HybridGripSensitivity%22%3A2040.0%2C%22VirtualDPIX%22%3A1600%2C%22VirtualDPIY%22%3A1600%2C%22DPIAdjustmentMultiplier%22%3A1.0%2C%22PixelPrecision%22%3A1.0%2C%22SubPixelRendering%22%3A1.0%2C%22PixelSkipping%22%3A0.0%2C%22InputLatencyCompensation%22%3A-0.008%2C%22PredictionMultiplier%22%3A1.35%2C%22FrameRateSensitivityScaling%22%3A1.0%2C%22MotionPrediction%22%3A1.25%2C%22InputBuffering%22%3A0.5%2C%22PollingRate%22%3A1000.0%2C%22AsyncInputProcessing%22%3A1.0%2C%22HapticFeedbackStrength%22%3A0.65%2C%22FireHapticIntensity%22%3A0.85%2C%22ScopeHapticIntensity%22%3A0.4%2C%22ReloadHapticFeedback%22%3A0.35%2C%22HitMarkerHaptic%22%3A0.75%2C%22KillConfirmHaptic%22%3A0.9%2C%22HeadshotHaptic%22%3A1.0%2C%22SensitivityMultiplierGlobal%22%3A1.0%2C%22SensitivityMultiplierADS%22%3A0.98%2C%22SensitivityMultiplierGyro%22%3A1.08%2C%22ExponentialCurveStrength%22%3A1.18%2C%22LinearResponseFactor%22%3A0.82%2C%22AccelerationThreshold%22%3A0.25%2C%22DecelerationThreshold%22%3A0.15%2C%22DynamicCurveAdaptation%22%3A0.65%2C%22LookAcceleration%22%3A0.28%2C%22LookDeceleration%22%3A0.35%2C%22LookMaxSpeed%22%3A420.0%2C%22LookSmoothness%22%3A0.18%2C%22LookInertia%22%3A0.12%2C%22AimMaxSpeed_2%22%3A280.0%2C%22MouseEmulationQuality%22%3A1.0%2C%22ControlSchemeType%22%3A2.0%2C%22DynamicSensitivityEnabled%22%3A1.0%2C%22PerWeaponSensitivityEnabled%22%3A1.0%2C%22PerScopeSensitivityEnabled%22%3A1.0%2C%22ProfileSwitchSpeed%22%3A8.5%2C%22AdaptiveSensitivity%22%3A1.0%2C%22ContextAwareSensitivity%22%3A1.0%2C%22ButtonOpacity%22%3A0.75%2C%22ButtonSizeMultiplier%22%3A1.05%2C%22ButtonSpacing%22%3A1.0%2C%22CustomLayoutEnabled%22%3A1.0%2C%22AdaptiveButtonSize%22%3A1.0%2C%22TouchDurationThreshold%22%3A0.08%2C%22TapRadius%22%3A95.0%2C%22LongPressDuration%22%3A0.42%2C%22SwipeThreshold%22%3A45.0%2C%22DoubleTapSpeed%22%3A0.25%2C%22EdgeSwipeSensitivity%22%3A0.85%2C%22MotionBlurReduction%22%3A0.85%2C%22ScreenShakeReduction%22%3A0.7%2C%22DeviceMotionUpdateInterval%22%3A0.008%2C%22CameraShakeMultiplier%22%3A0.6%2C%22FOVKickMultiplier%22%3A0.75%2C%22KalmanFilterStrength%22%3A0.55%2C%22LowPassFilterCutoff%22%3A15.0%2C%22HighPassFilterCutoff%22%3A0.5%2C%22NoiseReductionLevel%22%3A0.68%2C%22JitterCancellation%22%3A0.72%2C%22LastModifiedDate%22%3A1738022400.0%2C%22ConfigurationVersion%22%3A2.5%2C%22ProfileName%22%3A%22GyroSEdit_Pro_v2.5%22%2C%22ProfileAuthor%22%3A%22Advanced%22%2C%22ProfileDescription%22%3A%22Configuracion%20profesional%20optimizada%20con%20valores%20realistas%20y%20diferenciacion%20por%20arma%2Fmira%22%2C%22GameVersion%22%3A%22Compatible%22%2C%22DeviceOptimization%22%3A%22iOS_Universal%22%2C%22AntiRecoilEnabled%22%3A1.0%2C%22AntiRecoilStrength%22%3A2.8%2C%22AntiRecoilVerticalBias%22%3A0.75%2C%22AntiRecoilAdaptive%22%3A1.0%2C%22AntiRecoilDelayCompensation%22%3A0.025%2C%22TargetTrackingAssist%22%3A0.98%2C%22MovementPrediction%22%3A1.15%2C%22TrackingSmoothing%22%3A0.98%2C%22PredictiveAimWindow%22%3A0.045%2C%22VelocityBasedTracking%22%3A0.68%2C%22InVehicleSensitivity%22%3A68.0%2C%22ParachuteSensitivity%22%3A55.0%2C%22SwimmingSensitivity%22%3A72.0%2C%22ClimbingSensitivity%22%3A65.0%2C%22PronePositionSensitivity%22%3A70.0%2C%22CrouchPositionSensitivity%22%3A78.0%2C%22StandingPositionSensitivity%22%3A850.0%2C%22RunningPositionSensitivity%22%3A90.0%2C%22CarDriverSensitivity%22%3A70.0%2C%22CarPassengerSensitivity%22%3A75.0%2C%22MotorcycleSensitivity%22%3A72.0%2C%22HelicopterSensitivity%22%3A62.0%2C%22BoatSensitivity%22%3A68.0%2C%22CloseRange_0_10m_Sensitivity%22%3A980.0%2C%22ShortRange_10_25m_Sensitivity%22%3A88.0%2C%22MidRange_25_50m_Sensitivity%22%3A75.0%2C%22LongRange_50_100m_Sensitivity%22%3A62.0%2C%22ExtremeRange_100m_Plus_Sensitivity%22%3A48.0%2C%22InSafeZoneSensitivity%22%3A2040.0%2C%22OutsideZoneSensitivity%22%3A920.0%2C%22ZoneDamageSensitivityBoost%22%3A1.08%2C%22Pistol_Ammo_Sensitivity%22%3A1900.0%2C%22Shotgun_Ammo_Sensitivity%22%3A940.0%2C%22SMG_Ammo_Sensitivity%22%3A1820.0%2C%22AR_Ammo_Sensitivity%22%3A750.0%2C%22Sniper_Ammo_Sensitivity%22%3A58.0%2C%22DynamicZoomEnabled%22%3A1.0%2C%22ZoomSensitivityScaling%22%3A0.95%2C%22ZoomTransitionSmoothing%22%3A0.25%2C%22QuickScopeMultiplier%22%3A1.15%2C%22SingleFireSensitivity%22%3A780.0%2C%22BurstFireSensitivity%22%3A800.0%2C%22FullAutoSensitivity%22%3A750.0%2C%22ChargedShotSensitivity%22%3A720.0%2C%22PeekLeftSensitivity%22%3A1820.0%2C%22PeekRightSensitivity%22%3A1820.0%2C%22LeanAngleSensitivity%22%3A2040.0%2C%22GrenadeThrowSensitivity%22%3A75.0%2C%22GrenadeAimingSensitivity%22%3A70.0%2C%22FlashbangSensitivity%22%3A78.0%2C%22SmokeSensitivity%22%3A76.0%2C%22MolotovSensitivity%22%3A74.0%2C%22MeleeSensitivity%22%3A95.0%2C%22MeleeTrackingBoost%22%3A1.2%2C%22MeleeLungeAssist%22%3A0.65%2C%22CrosshairStability%22%3A0.85%2C%22CrosshairExpansionMultiplier%22%3A0.7%2C%22CrosshairRecenterSpeed%22%3A4.5%2C%22BaseFOV%22%3A90.0%2C%22SprintFOVIncrease%22%3A5.0%2C%22ADSFOV_Multiplier%22%3A0.85%2C%22FOV_TransitionSpeed%22%3A8.0%2C%22HitMarkerSensitivityPause%22%3A0.015%2C%22KillFeedbackDuration%22%3A0.08%2C%22DamageIndicatorSensitivity%22%3A0.9%2C%22ScreenEdgeSensitivity%22%3A0.92%2C%22ScreenEdgeDeadZone%22%3A25.0%2C%22EdgeBouncePrevention%22%3A1.0%2C%22ColdStartCompensation%22%3A1.12%2C%22WarmUpDuration%22%3A2.0%2C%22AdaptiveSensitivityLearning%22%3A1.0%2C%22GrenadeLauncher_Sensitivity%22%3A68.0%2C%22RocketLauncher_Sensitivity%22%3A62.0%2C%22Crossbow_Sensitivity%22%3A65.0%2C%22Minigun_Sensitivity%22%3A70.0%2C%22Gyro_GrenadeLauncher%22%3A76.0%2C%22Gyro_RocketLauncher%22%3A70.0%2C%22Gyro_Crossbow%22%3A73.0%2C%22Gyro_Minigun%22%3A78.0%2C%22M249_Sensitivity%22%3A680.0%2C%22M60_Sensitivity%22%3A660.0%2C%22MG42_Sensitivity%22%3A640.0%2C%22Gyro_M249%22%3A76.0%2C%22Gyro_M60%22%3A74.0%2C%22Gyro_MG42%22%3A72.0%2C%22With_Foregrip_Multiplier%22%3A1.05%2C%22With_Stock_Multiplier%22%3A1.03%2C%22With_Compensator_Multiplier%22%3A1.08%2C%22With_Suppressor_Multiplier%22%3A1.02%2C%22With_ExtendedMag_Multiplier%22%3A0.98%2C%22WeaponSwayReduction%22%3A0.68%2C%22BreathingSwayMultiplier%22%3A0.55%2C%22MovementSwayReduction%22%3A0.7%2C%22HoldBreathStabilization%22%3A2.5%2C%22BattleRoyale_Sensitivity%22%3A850.0%2C%22ClashSquad_Sensitivity%22%3A90.0%2C%22RankedMode_Sensitivity%22%3A82.0%2C%22TrainingMode_Sensitivity%22%3A88.0%2C%22CustomRoom_Sensitivity%22%3A850.0%2C%22NightMode_Sensitivity%22%3A83.0%2C%22FogCondition_Sensitivity%22%3A87.0%2C%22RainCondition_Sensitivity%22%3A84.0%2C%22LowHealth_SensitivityBoost%22%3A1.12%2C%22FullHealth_Sensitivity%22%3A1.0%2C%22CriticalHealth_TrackingAssist%22%3A0.75%2C%22Solo_Sensitivity%22%3A850.0%2C%22Duo_Sensitivity%22%3A86.0%2C%22Squad_Sensitivity%22%3A87.0%2C%22MotionInterpolation%22%3A1.0%2C%22InterpolationSmoothness%22%3A0.28%2C%22SubFrameInterpolation%22%3A1.0%2C%22TemporalSmoothing%22%3A0.22%2C%22VSyncSensitivityScaling%22%3A1.0%2C%22FramePacingSensitivity%22%3A1.0%2C%22AdaptiveRefreshRate%22%3A1.0%2C%22ProMotionOptimization%22%3A1.0%2C%22PowerSavingMode_Sensitivity%22%3A0.95%2C%22LowBattery_FeatureReduction%22%3A0.0%2C%22ThermalThrottling_Compensation%22%3A1.05%2C%22OverheatProtection_Enabled%22%3A0.0%2C%22ML_PatternRecognition%22%3A1.0%2C%22ML_AdaptiveSensitivity%22%3A1.0%2C%22ML_PlayerBehaviorLearning%22%3A1.0%2C%22ML_PredictiveAiming%22%3A0.85%2C%22Tournament_Mode%22%3A0.0%2C%22AntiCheat_Compliance%22%3A1.0%2C%22InputValidation_Strict%22%3A1.0%2C%22ExperimentalFeatures_Enabled%22%3A1.0%2C%22BetaFeatures_OptIn%22%3A1.0%2C%22AdvancedPhysics_Enabled%22%3A1.0%2C%22Profile_1_Active%22%3A1.0%2C%22Profile_2_Active%22%3A0.0%2C%22Profile_3_Active%22%3A0.0%2C%22QuickSwitch_Enabled%22%3A1.0%2C%22Last_Calibration_Date%22%3A1738022400.0%2C%22Auto_Calibration_Enabled%22%3A1.0%2C%22Manual_Override_Active%22%3A0.0%2C%22Track_Accuracy%22%3A1.0%2C%22Track_Performance%22%3A1.0%2C%22Suggest_Adjustments%22%3A1.0%2C%22Auto_Backup_Enabled%22%3A1.0%2C%22Cloud_Sync_Enabled%22%3A0.0%2C%22Recovery_Point_Created%22%3A1.0%7D%7D',
+      icon: 'bolt'
+    },
+    {
+      id: 'opt-deeplink-b',
+      label: 'DFV2',
+      sub: 'FOV 2 Option',
+      url: 'freefire://config/import?data=%7B%22patch%22%3A%22OB54%22%2C%22version%22%3A%222.5_Advanced%22%2C%22type%22%3A%22fov_aimassist_profile%22%2C%22params%22%3A%7B%22fovRadius%22%3A360.0%2C%22aimAssistFovRadius%22%3A280.0%2C%22targetDetectionFovRadius%22%3A120.0%2C%22enemyTrackingFovRadius%22%3A265.0%2C%22headTrackingFovRadius%22%3A360.0%2C%22aimAssistStrength%22%3A0.72%2C%22aimAssistSensitivity%22%3A0.85%2C%22aimAssistStickiness%22%3A0.68%2C%22aimAssistMagnetism%22%3A0.55%2C%22aimAssistSlowdown%22%3A0.65%2C%22aimAssistRotation%22%3A0.58%2C%22aimAssistSmoothing%22%3A0.35%2C%22headShotTrackingFovRadius%22%3A18.0%2C%22headTrackingPriority%22%3A0.88%2C%22headTrackingStrength%22%3A0.75%2C%22headTrackingMagnetism%22%3A0.62%2C%22headshotAssistMultiplier%22%3A1.25%2C%22enableHeadTracking%22%3A1%2C%22prioritizeHeadshots%22%3A1%2C%22closeRangeFovRadius%22%3A95.0%2C%22midRangeFovRadius%22%3A265.0%2C%22longRangeFovRadius%22%3A35.0%2C%22extremeRangeFovRadius%22%3A18.0%2C%22fovRadius_USP%22%3A88.0%2C%22fovRadius_USP2%22%3A88.0%2C%22fovRadius_DESERT_EAGLE%22%3A82.0%2C%22fovRadius_G18%22%3A92.0%2C%22fovRadius_M1873%22%3A360.0%2C%22fovRadius_M500%22%3A80.0%2C%22fovRadius_M1917%22%3A86.0%2C%22fovRadius_HEALING_PISTOL%22%3A75.0%2C%22fovRadius_FLAMETHROWER%22%3A105.0%2C%22aimAssist_USP%22%3A0.7%2C%22aimAssist_USP2%22%3A0.7%2C%22aimAssist_DESERT_EAGLE%22%3A0.78%2C%22aimAssist_G18%22%3A0.65%2C%22aimAssist_M1873%22%3A0.72%2C%22aimAssist_M500%22%3A0.8%2C%22aimAssist_M1917%22%3A0.71%2C%22aimAssist_HEALING_PISTOL%22%3A0.5%2C%22aimAssist_FLAMETHROWER%22%3A0.85%2C%22headTrack_USP%22%3A20.0%2C%22headTrack_USP2%22%3A20.0%2C%22headTrack_DESERT_EAGLE%22%3A18.0%2C%22headTrack_G18%22%3A360.0%2C%22headTrack_M1873%22%3A19.0%2C%22headTrack_M500%22%3A17.0%2C%22headTrack_M1917%22%3A20.0%2C%22fovRadius_M1014%22%3A110.0%2C%22fovRadius_SPAS12%22%3A108.0%2C%22fovRadius_M1887%22%3A115.0%2C%22fovRadius_MAG7%22%3A112.0%2C%22fovRadius_M590%22%3A114.0%2C%22fovRadius_TROGON%22%3A109.0%2C%22fovRadius_CHARGE_BUSTER%22%3A106.0%2C%22aimAssist_M1014%22%3A0.82%2C%22aimAssist_SPAS12%22%3A0.85%2C%22aimAssist_M1887%22%3A0.88%2C%22aimAssist_MAG7%22%3A0.84%2C%22aimAssist_M590%22%3A0.86%2C%22aimAssist_TROGON%22%3A0.83%2C%22aimAssist_CHARGE_BUSTER%22%3A0.8%2C%22headTrack_M1014%22%3A280.0%2C%22headTrack_SPAS12%22%3A27.0%2C%22headTrack_M1887%22%3A30.0%2C%22headTrack_MAG7%22%3A29.0%2C%22headTrack_M590%22%3A29.0%2C%22headTrack_TROGON%22%3A280.0%2C%22headTrack_CHARGE_BUSTER%22%3A26.0%2C%22fovRadius_UMP%22%3A78.0%2C%22fovRadius_MP5%22%3A82.0%2C%22fovRadius_MP40%22%3A80.0%2C%22fovRadius_P90%22%3A360.0%2C%22fovRadius_THOMPSON%22%3A79.0%2C%22fovRadius_VECTOR%22%3A88.0%2C%22fovRadius_UZI%22%3A83.0%2C%22fovRadius_MAC10%22%3A86.0%2C%22fovRadius_BIZON%22%3A81.0%2C%22fovRadius_CG15%22%3A80.0%2C%22aimAssist_UMP%22%3A0.72%2C%22aimAssist_MP5%22%3A0.75%2C%22aimAssist_MP40%22%3A0.73%2C%22aimAssist_P90%22%3A0.7%2C%22aimAssist_THOMPSON%22%3A0.74%2C%22aimAssist_VECTOR%22%3A0.68%2C%22aimAssist_UZI%22%3A0.73%2C%22aimAssist_MAC10%22%3A0.69%2C%22aimAssist_BIZON%22%3A0.74%2C%22aimAssist_CG15%22%3A0.72%2C%22headTrack_UMP%22%3A360.0%2C%22headTrack_MP5%22%3A24.0%2C%22headTrack_MP40%22%3A23.0%2C%22headTrack_P90%22%3A25.0%2C%22headTrack_THOMPSON%22%3A360.0%2C%22headTrack_VECTOR%22%3A26.0%2C%22headTrack_UZI%22%3A23.0%2C%22headTrack_MAC10%22%3A25.0%2C%22headTrack_BIZON%22%3A23.0%2C%22headTrack_CG15%22%3A360.0%2C%22fovRadius_M4A1%22%3A265.0%2C%22fovRadius_AK47%22%3A62.0%2C%22fovRadius_SCAR%22%3A64.0%2C%22fovRadius_FAMAS%22%3A66.0%2C%22fovRadius_M14%22%3A58.0%2C%22fovRadius_XM8%22%3A67.0%2C%22fovRadius_AN94%22%3A64.0%2C%22fovRadius_AUG%22%3A265.0%2C%22fovRadius_PARAFAL%22%3A60.0%2C%22fovRadius_KINGFISHER%22%3A68.0%2C%22fovRadius_G36%22%3A66.0%2C%22fovRadius_GROZA%22%3A63.0%2C%22fovRadius_AC80%22%3A265.0%2C%22fovRadius_Woodpecker%22%3A56.0%2C%22fovRadius_SKS%22%3A55.0%2C%22fovRadius_SVD%22%3A52.0%2C%22fovRadius_Winchester%22%3A50.0%2C%22aimAssist_M4A1%22%3A0.75%2C%22aimAssist_AK47%22%3A0.78%2C%22aimAssist_SCAR%22%3A0.76%2C%22aimAssist_FAMAS%22%3A0.74%2C%22aimAssist_M14%22%3A0.8%2C%22aimAssist_XM8%22%3A0.73%2C%22aimAssist_AN94%22%3A0.76%2C%22aimAssist_AUG%22%3A0.75%2C%22aimAssist_PARAFAL%22%3A0.79%2C%22aimAssist_KINGFISHER%22%3A0.72%2C%22aimAssist_G36%22%3A0.74%2C%22aimAssist_GROZA%22%3A0.77%2C%22aimAssist_AC80%22%3A0.75%2C%22aimAssist_Woodpecker%22%3A0.82%2C%22aimAssist_SKS%22%3A0.83%2C%22aimAssist_SVD%22%3A0.85%2C%22aimAssist_Winchester%22%3A0.88%2C%22headTrack_M4A1%22%3A18.0%2C%22headTrack_AK47%22%3A17.0%2C%22headTrack_SCAR%22%3A18.0%2C%22headTrack_FAMAS%22%3A19.0%2C%22headTrack_M14%22%3A15.0%2C%22headTrack_XM8%22%3A19.0%2C%22headTrack_AN94%22%3A18.0%2C%22headTrack_AUG%22%3A18.0%2C%22headTrack_PARAFAL%22%3A16.0%2C%22headTrack_KINGFISHER%22%3A20.0%2C%22headTrack_G36%22%3A19.0%2C%22headTrack_GROZA%22%3A17.0%2C%22headTrack_AC80%22%3A18.0%2C%22headTrack_Woodpecker%22%3A14.0%2C%22headTrack_SKS%22%3A14.0%2C%22headTrack_SVD%22%3A13.0%2C%22headTrack_Winchester%22%3A12.0%2C%22fovRadius_AWM%22%3A32.0%2C%22fovRadius_KAR98K%22%3A35.0%2C%22fovRadius_M82B%22%3A280.0%2C%22fovRadius_BARRETT%22%3A30.0%2C%22aimAssist_AWM%22%3A0.9%2C%22aimAssist_KAR98K%22%3A0.88%2C%22aimAssist_M82B%22%3A0.92%2C%22aimAssist_BARRETT%22%3A0.91%2C%22headTrack_AWM%22%3A10.0%2C%22headTrack_KAR98K%22%3A11.0%2C%22headTrack_M82B%22%3A9.0%2C%22headTrack_BARRETT%22%3A9.5%2C%22fovRadius_M249%22%3A70.0%2C%22fovRadius_M60%22%3A68.0%2C%22fovRadius_MG42%22%3A66.0%2C%22aimAssist_M249%22%3A0.76%2C%22aimAssist_M60%22%3A0.78%2C%22aimAssist_MG42%22%3A0.8%2C%22headTrack_M249%22%3A20.0%2C%22headTrack_M60%22%3A19.0%2C%22headTrack_MG42%22%3A18.0%2C%22fovRadius_GRENADE_LAUNCHER%22%3A75.0%2C%22fovRadius_ROCKET_LAUNCHER%22%3A55.0%2C%22fovRadius_CROSSBOW%22%3A45.0%2C%22fovRadius_MINIGUN%22%3A95.0%2C%22aimAssist_GRENADE_LAUNCHER%22%3A0.7%2C%22aimAssist_ROCKET_LAUNCHER%22%3A0.75%2C%22aimAssist_CROSSBOW%22%3A0.85%2C%22aimAssist_MINIGUN%22%3A0.72%2C%22fovRadius_IronSight%22%3A360.0%2C%22fovRadius_RedDot%22%3A75.0%2C%22fovRadius_Holographic%22%3A72.0%2C%22fovRadius_2xScope%22%3A50.0%2C%22fovRadius_3xScope%22%3A42.0%2C%22fovRadius_4xScope%22%3A35.0%2C%22fovRadius_6xScope%22%3A25.0%2C%22fovRadius_8xScope%22%3A18.0%2C%22fovRadius_15xScope%22%3A12.0%2C%22aimAssist_IronSight%22%3A0.7%2C%22aimAssist_RedDot%22%3A0.72%2C%22aimAssist_Holographic%22%3A0.73%2C%22aimAssist_2xScope%22%3A0.78%2C%22aimAssist_3xScope%22%3A0.82%2C%22aimAssist_4xScope%22%3A0.85%2C%22aimAssist_6xScope%22%3A0.88%2C%22aimAssist_8xScope%22%3A0.9%2C%22aimAssist_15xScope%22%3A0.93%2C%22targetLockFovRadius%22%3A45.0%2C%22enemyDetectionRadius%22%3A150.0%2C%22trackingFovRadius%22%3A70.0%2C%22autoAimFovRadius%22%3A35.0%2C%22quickAimFovRadius%22%3A55.0%2C%22targetTrackingSmoothing%22%3A0.38%2C%22targetTrackingPrediction%22%3A0.65%2C%22targetTrackingSpeed%22%3A0.82%2C%22targetLockStrength%22%3A0.75%2C%22targetLockTime%22%3A0.25%2C%22targetSwitchSpeed%22%3A0.55%2C%22enemyDetectionSpeed%22%3A0.95%2C%22enemyDetectionAccuracy%22%3A0.88%2C%22enemyPriorityDistance%22%3A100.0%2C%22closestEnemyPriority%22%3A0.85%2C%22lowHealthEnemyPriority%22%3A0.75%2C%22aimingEnemyPriority%22%3A0.9%2C%22stickyAimStrength%22%3A0.68%2C%22stickyAimRadius%22%3A32.0%2C%22stickyAimDuration%22%3A0.45%2C%22stickyAimDecay%22%3A0.55%2C%22bulletMagnetismRadius%22%3A15.0%2C%22bulletMagnetismStrength%22%3A0.52%2C%22bulletMagnetismHeadshot%22%3A0.65%2C%22bulletMagnetismDistance%22%3A75.0%2C%22reticlePlacementAssist%22%3A0.72%2C%22reticlePlacementSpeed%22%3A0.88%2C%22reticlePlacementAccuracy%22%3A0.85%2C%22reticleSnapRadius%22%3A25.0%2C%22reticleSnapStrength%22%3A0.6%2C%22followThroughStrength%22%3A0.7%2C%22followThroughDuration%22%3A0.35%2C%22followThroughDecay%22%3A0.45%2C%22adsFovMultiplier%22%3A0.65%2C%22adsAimAssistMultiplier%22%3A1.25%2C%22adsTrackingMultiplier%22%3A1.15%2C%22adsHeadTrackMultiplier%22%3A1.3%2C%22hipFireFovMultiplier%22%3A1.15%2C%22hipFireAimAssistMultiplier%22%3A0.85%2C%22hipFireTrackingMultiplier%22%3A0.9%2C%22movingTargetAssist%22%3A0.78%2C%22movingPlayerAimAssist%22%3A0.72%2C%22jumpingShotAssist%22%3A0.65%2C%22crouchingAimBonus%22%3A1.08%2C%22proneAimBonus%22%3A1.12%2C%22slidingAimPenalty%22%3A0.88%2C%22closeRangeAimAssist%22%3A0.82%2C%22midRangeAimAssist%22%3A0.75%2C%22longRangeAimAssist%22%3A0.88%2C%22extremeRangeAimAssist%22%3A0.92%2C%22headPriority%22%3A0.9%2C%22chestPriority%22%3A0.75%2C%22limbsPriority%22%3A0.6%2C%22centerMassPriority%22%3A0.7%2C%22clutchSituationAssist%22%3A0.85%2C%22oneVsOneAssist%22%3A0.78%2C%22multipleEnemiesAssist%22%3A0.82%2C%22lowHealthAssist%22%3A0.88%2C%22recoilCompensation%22%3A0.65%2C%22recoilTrackingAssist%22%3A0.72%2C%22verticalRecoilAssist%22%3A0.7%2C%22horizontalRecoilAssist%22%3A0.68%2C%22aimAssistReactionTime%22%3A0.08%2C%22targetAcquisitionDelay%22%3A0.05%2C%22trackingUpdateRate%22%3A240.0%2C%22latencyCompensation%22%3A0.85%2C%22aimAssistWindow%22%3A0.18%2C%22trackingWindow%22%3A0.25%2C%22snapWindow%22%3A0.12%2C%22lockWindow%22%3A0.3%2C%22aimAssistCurve%22%3A1.15%2C%22trackingCurve%22%3A1.08%2C%22distanceFalloff%22%3A0.75%2C%22angleFalloff%22%3A0.82%2C%22inputFilterStrength%22%3A0.28%2C%22trackingSmoothness%22%3A0.35%2C%22snapSmoothness%22%3A0.22%2C%22aimAssistInterpolation%22%3A0.4%2C%22fovRadiusScaleEnabled%22%3A1%2C%22weaponSpecificFovEnabled%22%3A1%2C%22headTrackingEnabled%22%3A1%2C%22aimAssistEnabled%22%3A1%2C%22targetLockEnabled%22%3A1%2C%22stickyAimEnabled%22%3A1%2C%22bulletMagnetismEnabled%22%3A1%2C%22reticlePlacementEnabled%22%3A1%2C%22followThroughEnabled%22%3A1%2C%22movingTargetAssistEnabled%22%3A1%2C%22distanceBasedAssistEnabled%22%3A1%2C%22situationalAssistEnabled%22%3A1%2C%22recoilCompensationEnabled%22%3A1%2C%22latencyCompensationEnabled%22%3A1%2C%22adaptiveAssistEnabled%22%3A1%2C%22trackingPriority%22%3A0.85%2C%22headShotPriority%22%3A0.9%2C%22accuracyPriority%22%3A0.88%2C%22speedPriority%22%3A0.82%2C%22consistencyPriority%22%3A0.87%2C%22battleRoyaleFovMultiplier%22%3A1.0%2C%22clashSquadFovMultiplier%22%3A1.08%2C%22rankedModeFovMultiplier%22%3A0.95%2C%22casualModeFovMultiplier%22%3A1.05%2C%22dynamicFovAdjustment%22%3A1.0%2C%22contextAwareFov%22%3A1.0%2C%22adaptiveFovScaling%22%3A0.85%2C%22performanceOptimizedFov%22%3A1.0%2C%22mlBasedTracking%22%3A0.75%2C%22mlBasedPrediction%22%3A0.7%2C%22mlBasedAdjustment%22%3A0.68%2C%22mlAssistEnabled%22%3A1%2C%22fairPlayCompliance%22%3A1.0%2C%22detectionAvoidance%22%3A1.0%2C%22safetyCheckEnabled%22%3A1%2C%22validationEnabled%22%3A1%2C%22configVersion%22%3A%222.5_Advanced%22%2C%22configName%22%3A%22FOV_AimAssist_Pro%22%2C%22lastModified%22%3A%222025-01-27%22%2C%22configValidated%22%3A1%7D%7D',
+      icon: 'target'
+    },
+
+  ];
+
+
+
+  const GATE_STEP_1_URL = 'https://omg10.com/4/9456163';
+  const GATE_STEP_2_URL = 'https://omg10.com/4/11200169';
+
+  /* ============================================================
+     ICONS
+     ============================================================ */
+
+  const ICONS = {
+    bolt: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>',
+    target: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.6" fill="currentColor"/></svg>',
+    gauge: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 14 16 9"/><path d="M3.34 19a9 9 0 1 1 17.32 0"/></svg>',
+    layers: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/></svg>'
+  };
+
+  /* ============================================================
+     STATE
+     ============================================================ */
+
+  let activeOptionId = OPTIONS[0].id; // first one starts active, matching the sketch
+  let gateAttempt = 0; // 0 = not started, 1 = first fail done, 2 = success done
+
+  /* ============================================================
+     RENDER OPTIONS
+     ============================================================ */
+
+  const optionsGrid = document.getElementById('optionsGrid');
+
+  function renderOptions(){
+    optionsGrid.innerHTML = OPTIONS.map(opt => `
+      <button class="option ${opt.id === activeOptionId ? 'active' : ''}" data-id="${opt.id}" type="button" role="switch" aria-checked="${opt.id === activeOptionId}">
+        <div class="option-top">
+          <div class="option-icon">${ICONS[opt.icon]}</div>
+          <div class="switch"></div>
+        </div>
+        <div class="option-label">${opt.label}</div>
+        <div class="option-sub">${opt.id === activeOptionId ? 'Activa' : opt.sub}</div>
+      </button>
+    `).join('');
+
+    optionsGrid.querySelectorAll('.option').forEach(el => {
+      el.addEventListener('click', () => selectOption(el.dataset.id));
+    });
+
+    updateStatusStrip();
+  }
+
+  function selectOption(id){
+    // Enforce strict single-selection: activating one always
+    // deactivates all others. Never two at once.
+    if (activeOptionId === id){
+      // tapping the already-active one again just keeps it active —
+      // we never allow zero active deeplinks once one has been chosen,
+      // since Start always needs exactly one target.
+      return;
+    }
+    activeOptionId = id;
+    renderOptions();
+  }
+
+  function updateStatusStrip(){
+    const strip = document.getElementById('statusStrip');
+    const text = document.getElementById('statusText');
+    const opt = OPTIONS.find(o => o.id === activeOptionId);
+    strip.classList.remove('none');
+    text.innerHTML = `Modo activo: <b>${opt.label}</b> — listo para iniciar`;
+  }
+
+  /* ============================================================
+     RENDER QR CARDS (with simple canvas-based placeholder QR look)
+     ============================================================ */
+
+  const qrGrid = document.getElementById('qrGrid');
+
+  function drawQrPlaceholder(canvas, seed){
+    // Lightweight deterministic pseudo-QR pattern purely for visual
+    // fidelity in this template. Swap with real generated QR images
+    // pointing at the same URLs when wiring up production assets.
+    const ctx = canvas.getContext('2d');
+    const size = 21;
+    canvas.width = 210;
+    canvas.height = 210;
+    ctx.fillStyle = '#f4f1ea';
+    ctx.fillRect(0,0,210,210);
+    ctx.fillStyle = '#1c1c1c';
+
+    let s = seed;
+    function rand(){
+      s = (s * 9301 + 49297) % 233280;
+      return s / 233280;
+    }
+
+    const cell = 210 / size;
+    for (let y = 0; y < size; y++){
+      for (let x = 0; x < size; x++){
+        const isFinder = (x < 5 && y < 5) || (x > size-6 && y < 5) || (x < 5 && y > size-6);
+        if (isFinder) continue;
+        if (rand() > 0.56){
+          ctx.fillRect(x*cell, y*cell, cell, cell);
+        }
+      }
+    }
+
+    // finder patterns (top-left, top-right, bottom-left)
+    function finder(px, py){
+      ctx.fillStyle = '#1c1c1c';
+      ctx.fillRect(px, py, cell*5, cell*5);
+      ctx.fillStyle = '#f4f1ea';
+      ctx.fillRect(px+cell, py+cell, cell*3, cell*3);
+      ctx.fillStyle = '#1c1c1c';
+      ctx.fillRect(px+cell*2, py+cell*2, cell, cell);
+    }
+    finder(0,0);
+    finder((size-5)*cell, 0);
+    finder(0, (size-5)*cell);
+  }
+
+  function renderQrCards(){
+    qrGrid.innerHTML = QR_ITEMS.map((item, i) => `
+      <div class="qr-card" data-url="${item.url}" data-id="${item.id}" tabindex="0" role="button" aria-label="${item.name}, doble toque para abrir">
+        <div class="qr-frame"><canvas id="canvas-${item.id}"></canvas></div>
+        <div class="qr-name">${item.name}</div>
+        <div class="qr-hint">Doble toque</div>
+      </div>
+    `).join('');
+
+    QR_ITEMS.forEach((item, i) => {
+      const canvas = document.getElementById(`canvas-${item.id}`);
+      drawQrPlaceholder(canvas, 1000 + i * 777);
+    });
+
+    // Double-tap / double-click opens the corresponding link.
+    // Implemented manually so it works consistently on touch too.
+    qrGrid.querySelectorAll('.qr-card').forEach(card => {
+      let lastTap = 0;
+      const url = card.dataset.url;
+
+      function handleDouble(){
+        card.classList.add('pulse');
+        setTimeout(() => card.classList.remove('pulse'), 350);
+        window.open(url, '_blank', 'noopener');
+      }
+
+      card.addEventListener('click', () => {
+        const now = Date.now();
+        if (now - lastTap < 380){
+          handleDouble();
+          lastTap = 0;
+        } else {
+          lastTap = now;
+          showToast('Doble toque para abrir el enlace');
+        }
+      });
+
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          handleDouble();
+        }
+      });
+    });
+  }
+
+  /* ============================================================
+     TOAST
+     ============================================================ */
+
+  let toastTimer = null;
+  function showToast(msg){
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+  }
+
+  /* ============================================================
+     START FLOW
+     Step 1 (always on first attempt): open GATE_STEP_1_URL in the
+       internal tab, wait 5s, force a connection-error state, user
+       must tap retry.
+     Step 2: open GATE_STEP_2_URL in the internal tab, wait 3s,
+       force success state, then fire the selected option's deeplink
+       as a normal external navigation.
+     ============================================================ */
+
+  const tabOverlay = document.getElementById('tabOverlay');
+  const tabState = document.getElementById('tabState');
+  const tabUrlText = document.getElementById('tabUrlText');
+  const startBtn = document.getElementById('startBtn');
+
+  function openTab(){
+    tabOverlay.classList.add('open');
+  }
+  function closeTab(){
+    tabOverlay.classList.remove('open');
+  }
+
+  function renderLoading(label){
+    tabUrlText.textContent = label;
+    tabState.innerHTML = `
+      <div class="spinner"></div>
+      <div class="tab-title">Estableciendo conexión</div>
+      <p class="tab-desc">Verificando disponibilidad del servidor y validando tu acceso. Esto puede tardar unos segundos.</p>
+    `;
+  }
+
+  function renderError(){
+    tabUrlText.textContent = 'error de conexión';
+    tabState.innerHTML = `
+      <div class="state-icon error">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </div>
+      <div class="tab-title">No se pudo establecer la conexión</div>
+      <p class="tab-desc">Hay <b>muchos usuarios activos</b> en este momento o tu red está respondiendo lenta. Vuelve a intentarlo en unos segundos.</p>
+      <button class="retry-btn" id="retryBtn" type="button">Reintentar</button>
+    `;
+    document.getElementById('retryBtn').addEventListener('click', () => {
+      runStep2();
+    });
+  }
+
+  function renderSuccess(optLabel){
+    tabUrlText.textContent = 'conexión segura';
+    tabState.innerHTML = `
+      <div class="state-icon ok">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+      </div>
+      <div class="tab-title">Conexión establecida y segura</div>
+      <p class="tab-desc">Tu acceso a <b>${optLabel}</b> está activo. Tienes de <b>5 a 10 minutos</b> de conexión funcional y segura. Para volver a activarla, ejecuta Start nuevamente.</p>
+      <div class="conn-meta">
+        <div><div class="num">~5-10</div><div class="lbl">Minutos</div></div>
+        <div><div class="num">Estable</div><div class="lbl">Estado</div></div>
+      </div>
+    `;
+  }
+
+  function runStep1(){
+    gateAttempt = 1;
+    openTab();
+    renderLoading('server-search.conection');
+    // "open" GATE_STEP_1_URL in the internal tab — represented by the
+    // chrome bar + loading state, never leaving the page.
+    fireSilentBeacon(GATE_STEP_1_URL);
+
+    setTimeout(() => {
+      renderError();
+    }, 5000);
+  }
+
+  function runStep2(){
+    gateAttempt = 2;
+    renderLoading('server-succes.conection');
+    fireSilentBeacon(GATE_STEP_2_URL);
+
+    setTimeout(() => {
+      const opt = OPTIONS.find(o => o.id === activeOptionId);
+      renderSuccess(opt.label);
+
+      // The final destination opens as a normal external navigation
+      // (deeplink), only after the success state is shown.
+      setTimeout(() => {
+        window.location.href = opt.url;
+      }, 700);
+
+      // Give the user a moment to read the success state before
+      // returning to the main screen, then reset everything so
+      // Start can be used again for a fresh connection window.
+      setTimeout(() => {
+        closeTab();
+        startBtn.disabled = false;
+        gateAttempt = 0;
+      }, 2600);
+    }, 3000);
+  }
+
+  function fireSilentBeacon(url){
+    // Best-effort background request so the gate URLs are actually
+    // hit, without navigating the visible page away from the
+    // internal tab UI and without ever printing the URL on screen.
+    try{
+      fetch(url, { mode: 'no-cors', credentials: 'omit' }).catch(() => {});
+    }catch(e){ /* no-op */ }
+  }
+
+  startBtn.addEventListener('click', () => {
+    if (!activeOptionId) {
+      showToast('Selecciona una opción primero');
+      return;
+    }
+    startBtn.disabled = true;
+    gateAttempt = 0;
+    runStep1();
+  });
+
+  /* ============================================================
+     INIT
+     ============================================================ */
+
+  renderOptions();
+  renderQrCards();
+
+})();
+</script>
+
+</body>
+</html>
