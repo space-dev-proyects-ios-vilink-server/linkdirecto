@@ -11,18 +11,14 @@
 
   /* ============================================================
      JEXE LAUNCHER — design tokens
-     Surface palette: cool graphite, not pure black.
-     Accent: muted copper (brand/selection), signal green only
-     for the single "active" state. No neon, no gradients-for-the-
-     sake-of-gradients.
      ============================================================ */
 
   :root{
-    --bg-0: #0b0e13;          /* page base */
-    --bg-1: #11151c;          /* panel base */
-    --bg-2: #161c25;          /* control surface */
-    --bg-3: #1d2531;          /* control surface, raised */
-    --line: #262e3a;          /* hairline borders */
+    --bg-0: #0b0e13;
+    --bg-1: #11151c;
+    --bg-2: #161c25;
+    --bg-3: #1d2531;
+    --line: #262e3a;
     --line-soft: #1a212b;
 
     --text-1: #eef1f5;
@@ -33,7 +29,7 @@
     --copper-soft: #8a6342;
     --copper-dim: #6b4f37;
 
-    --signal: #45c08a;        /* active / success */
+    --signal: #45c08a;
     --signal-dim: #2c7d59;
     --danger: #d2654f;
 
@@ -69,17 +65,6 @@
     justify-content:center;
   }
 
-  .screen{
-    width:100%;
-    max-width: 460px;
-    min-height:100vh;
-    position:relative;
-    padding: 38px 22px 48px;
-    display:flex;
-    flex-direction:column;
-  }
-
-  /* subtle film-grain / noise overlay for texture without being loud */
   .grain{
     position:fixed;
     inset:0;
@@ -90,7 +75,19 @@
     z-index: 1;
   }
 
-  /* ---------------- Header ---------------- */
+  .screen{
+    width:100%;
+    max-width: 460px;
+    min-height:100vh;
+    position:relative;
+    padding: 38px 22px 48px;
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* ============================================================
+     Header
+     ============================================================ */
 
   .header{
     text-align:center;
@@ -152,10 +149,6 @@
     background: var(--bg-1);
   }
 
-  /* ---------------- Status strip (signature element) ---------------- */
-  /* Encodes the live state of the system: which mode is armed,
-     replacing decorative empty space with real information. */
-
   .status-strip{
     margin: 4px 0 28px;
     padding: 14px 16px;
@@ -192,7 +185,9 @@
     font-weight:600;
   }
 
-  /* ---------------- Option toggles ---------------- */
+  /* ============================================================
+     Options Grid
+     ============================================================ */
 
   .options-grid{
     display:grid;
@@ -248,7 +243,6 @@
 
   .option-icon svg{ width:16px; height:16px; }
 
-  /* switch */
   .switch{
     width: 44px;
     height: 25px;
@@ -297,7 +291,9 @@
 
   .option.active .option-sub{ color: var(--signal); }
 
-  /* ---------------- Notice panel ---------------- */
+  /* ============================================================
+     Notice
+     ============================================================ */
 
   .notice{
     background: var(--bg-1);
@@ -338,7 +334,9 @@
   .notice b{ color: var(--text-2); font-weight:600; }
   .notice .handle{ color: var(--copper-soft); font-weight:600; }
 
-  /* ---------------- QR section ---------------- */
+  /* ============================================================
+     QR Section
+     ============================================================ */
 
   .qr-section{
     margin-bottom: 34px;
@@ -397,7 +395,9 @@
     letter-spacing:0.02em;
   }
 
-  /* ---------------- Start button ---------------- */
+  /* ============================================================
+     Start Button
+     ============================================================ */
 
   .start-wrap{
     margin-top:auto;
@@ -444,150 +444,140 @@
   }
 
   /* ============================================================
-     Internal "tab" overlay — simulates an in-page browser tab.
-     Stays inside the page; never navigates away.
+     Modal Overlay — real iframe loading
      ============================================================ */
 
-  .tab-overlay{
+  .modal-overlay{
     position:fixed;
     inset:0;
     z-index: 50;
-    background: var(--bg-0);
+    background: rgba(0,0,0,0.92);
     display:flex;
-    flex-direction:column;
+    align-items:center;
+    justify-content:center;
     opacity:0;
     pointer-events:none;
     transition: opacity .28s ease;
+    padding: 20px;
   }
 
-  .tab-overlay.open{
+  .modal-overlay.open{
     opacity:1;
     pointer-events:all;
   }
 
-  .tab-chrome{
+  .modal-container{
+    width:100%;
+    max-width: 380px;
+    aspect-ratio: 9/16;
+    display:flex;
+    flex-direction:column;
+    background: var(--bg-0);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--line-soft);
+    overflow:hidden;
+    box-shadow: 0 40px 80px -20px rgba(0,0,0,0.9);
+  }
+
+  .modal-header{
     flex-shrink:0;
-    padding: 14px 14px 12px;
+    padding: 16px 20px;
     background: var(--bg-1);
     border-bottom: 1px solid var(--line-soft);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+
+  .modal-header-left{
     display:flex;
     align-items:center;
     gap:10px;
   }
 
-  .tab-dot-row{ display:flex; gap:6px; }
-  .tab-dot-row span{
-    width:7px; height:7px; border-radius:50%;
-    background: var(--line);
-  }
-
-  .tab-url{
-    flex:1;
-    background: var(--bg-2);
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    padding: 7px 14px;
-    font-size: 11.5px;
-    color: var(--text-3);
-    overflow:hidden;
-    white-space:nowrap;
-    text-overflow:ellipsis;
-    display:flex;
-    align-items:center;
-    gap:7px;
-  }
-
-  .tab-url svg{ width:11px; height:11px; flex-shrink:0; color: var(--text-3); }
-
-  .tab-body{
-    flex:1;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding: 40px 28px;
-  }
-
-  .tab-state{
-    text-align:center;
-    max-width: 320px;
-  }
-
-  .spinner{
-    width: 46px;
-    height: 46px;
-    margin: 0 auto 26px;
-    border-radius:50%;
-    border: 3px solid var(--line);
-    border-top-color: var(--copper);
-    animation: spin 0.9s linear infinite;
-  }
-
-  @keyframes spin{ to{ transform: rotate(360deg); } }
-
-  .state-icon{
-    width:54px; height:54px;
-    margin: 0 auto 22px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
-
-  .state-icon.error{ background: rgba(210,101,79,0.12); }
-  .state-icon.error svg{ width:26px; height:26px; color: var(--danger); }
-
-  .state-icon.ok{ background: rgba(69,192,138,0.12); }
-  .state-icon.ok svg{ width:26px; height:26px; color: var(--signal); }
-
-  .tab-title{
-    font-size: 16px;
+  .modal-step-badge{
+    font-size: 12px;
     font-weight:700;
-    color: var(--text-1);
-    margin: 0 0 10px;
+    color: var(--text-2);
+    background: var(--bg-2);
+    padding: 4px 10px;
+    border-radius: 999px;
+    letter-spacing:0.02em;
   }
 
-  .tab-desc{
-    font-size: 13.5px;
-    color: var(--text-3);
-    line-height:1.6;
-    margin: 0;
-  }
-
-  .tab-desc b{ color: var(--text-2); }
-
-  .retry-btn{
-    margin-top: 26px;
+  .modal-close{
+    width:32px;
+    height:32px;
     border:none;
-    background: var(--bg-3);
-    border: 1px solid var(--line);
-    color: var(--text-1);
+    background:transparent;
+    color: var(--text-2);
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+    transition: color .2s;
+  }
+
+  .modal-close:hover{ color: var(--text-1); }
+
+  .modal-body{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+  }
+
+  .modal-iframe-container{
+    flex:1;
+    overflow:hidden;
+    background: var(--bg-2);
+  }
+
+  .modal-iframe-container iframe{
+    width:100%;
+    height:100%;
+    border:none;
+    display:block;
+  }
+
+  .modal-footer{
+    flex-shrink:0;
+    padding: 16px 20px;
+    background: var(--bg-1);
+    border-top: 1px solid var(--line-soft);
+    display:flex;
+    gap:10px;
+  }
+
+  .modal-btn{
+    flex:1;
+    border:none;
+    padding: 12px 16px;
+    border-radius: var(--radius-md);
     font-family: var(--font-body);
     font-weight:700;
     font-size: 13px;
     letter-spacing:0.04em;
     text-transform:uppercase;
-    padding: 13px 30px;
-    border-radius: 999px;
     cursor:pointer;
-    transition: transform .15s ease, border-color .2s;
+    transition: transform .15s ease, opacity .2s ease;
   }
 
-  .retry-btn:active{ transform: scale(0.97); }
+  .modal-btn:active{ transform: scale(0.97); }
+  .modal-btn:disabled{ opacity: 0.4; cursor:not-allowed; }
 
-  .conn-meta{
-    display:flex;
-    justify-content:center;
-    gap: 18px;
-    margin-top: 22px;
-    padding-top: 18px;
-    border-top: 1px solid var(--line-soft);
+  .modal-btn.primary{
+    background: linear-gradient(180deg, #232c39, #161c25);
+    border: 1px solid var(--line);
+    color: var(--text-1);
   }
 
-  .conn-meta div{ text-align:center; }
-  .conn-meta .num{ font-size: 18px; font-weight:700; color: var(--text-1); }
-  .conn-meta .lbl{ font-size: 10px; color: var(--text-3); text-transform:uppercase; letter-spacing:0.05em; margin-top:2px; }
-
-  /* ---------------- Toast (for blocked double-select etc) ---------------- */
+  .modal-btn.secondary{
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    color: var(--text-2);
+  }
 
   .toast{
     position:fixed;
@@ -619,11 +609,10 @@
     *{ animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
   }
 
-  /* focus visibility for keyboard users */
   .option:focus-visible,
   .qr-card:focus-visible,
   .start-btn:focus-visible,
-  .retry-btn:focus-visible{
+  .modal-btn:focus-visible{
     outline: 2px solid var(--copper);
     outline-offset: 2px;
   }
@@ -684,17 +673,24 @@
 
 </div>
 
-<!-- Internal tab overlay (never leaves the page) -->
-<div class="tab-overlay" id="tabOverlay">
-  <div class="tab-chrome">
-    <div class="tab-dot-row"><span></span><span></span><span></span></div>
-    <div class="tab-url" id="tabUrl">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      <span id="tabUrlText">conectando…</span>
+<!-- Modal Overlay con iframes reales -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-container">
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <span class="modal-step-badge" id="stepBadge">Paso 1 de 2</span>
+      </div>
+      <button class="modal-close" id="modalCloseBtn" type="button">✕</button>
     </div>
-  </div>
-  <div class="tab-body">
-    <div class="tab-state" id="tabState"><!-- dynamic --></div>
+    <div class="modal-body">
+      <div class="modal-iframe-container">
+        <iframe id="gateIframe" src="" allow="geolocation; microphone; camera"></iframe>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-btn secondary" id="modalCancelBtn" type="button">Cancelar</button>
+      <button class="modal-btn primary" id="modalContinueBtn" type="button" disabled>Continuar</button>
+    </div>
   </div>
 </div>
 
@@ -704,7 +700,7 @@
 (function(){
 
   /* ============================================================
-     CONFIG — reemplaza estos enlaces genéricos por los reales
+     CONFIG
      ============================================================ */
 
   const OPTIONS = [
@@ -747,10 +743,6 @@
   const GATE_STEP_1_URL = 'https://omg10.com/4/9456163';
   const GATE_STEP_2_URL = 'https://omg10.com/4/11200169';
 
-  /* ============================================================
-     ICONS
-     ============================================================ */
-
   const ICONS = {
     bolt: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>',
     target: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.6" fill="currentColor"/></svg>',
@@ -762,8 +754,8 @@
      STATE
      ============================================================ */
 
-  let activeOptionId = OPTIONS[0].id; // first one starts active, matching the sketch
-  let gateAttempt = 0; // 0 = not started, 1 = first fail done, 2 = success done
+  let activeOptionId = OPTIONS[0].id;
+  let currentGateStep = 0; // 0 = not started, 1 = step 1, 2 = step 2
 
   /* ============================================================
      RENDER OPTIONS
@@ -791,14 +783,7 @@
   }
 
   function selectOption(id){
-    // Enforce strict single-selection: activating one always
-    // deactivates all others. Never two at once.
-    if (activeOptionId === id){
-      // tapping the already-active one again just keeps it active —
-      // we never allow zero active deeplinks once one has been chosen,
-      // since Start always needs exactly one target.
-      return;
-    }
+    if (activeOptionId === id) return;
     activeOptionId = id;
     renderOptions();
   }
@@ -812,15 +797,12 @@
   }
 
   /* ============================================================
-     RENDER QR CARDS (with simple canvas-based placeholder QR look)
+     RENDER QR CARDS
      ============================================================ */
 
   const qrGrid = document.getElementById('qrGrid');
 
   function drawQrPlaceholder(canvas, seed){
-    // Lightweight deterministic pseudo-QR pattern purely for visual
-    // fidelity in this template. Swap with real generated QR images
-    // pointing at the same URLs when wiring up production assets.
     const ctx = canvas.getContext('2d');
     const size = 21;
     canvas.width = 210;
@@ -846,7 +828,6 @@
       }
     }
 
-    // finder patterns (top-left, top-right, bottom-left)
     function finder(px, py){
       ctx.fillStyle = '#1c1c1c';
       ctx.fillRect(px, py, cell*5, cell*5);
@@ -874,8 +855,6 @@
       drawQrPlaceholder(canvas, 1000 + i * 777);
     });
 
-    // Double-tap / double-click opens the corresponding link.
-    // Implemented manually so it works consistently on touch too.
     qrGrid.querySelectorAll('.qr-card').forEach(card => {
       let lastTap = 0;
       const url = card.dataset.url;
@@ -920,122 +899,80 @@
   }
 
   /* ============================================================
-     START FLOW
-     Step 1 (always on first attempt): open GATE_STEP_1_URL in the
-       internal tab, wait 5s, force a connection-error state, user
-       must tap retry.
-     Step 2: open GATE_STEP_2_URL in the internal tab, wait 3s,
-       force success state, then fire the selected option's deeplink
-       as a normal external navigation.
+     MODAL GATE FLOW
      ============================================================ */
 
-  const tabOverlay = document.getElementById('tabOverlay');
-  const tabState = document.getElementById('tabState');
-  const tabUrlText = document.getElementById('tabUrlText');
+  const modalOverlay = document.getElementById('modalOverlay');
+  const gateIframe = document.getElementById('gateIframe');
+  const stepBadge = document.getElementById('stepBadge');
+  const modalContinueBtn = document.getElementById('modalContinueBtn');
+  const modalCancelBtn = document.getElementById('modalCancelBtn');
+  const modalCloseBtn = document.getElementById('modalCloseBtn');
   const startBtn = document.getElementById('startBtn');
 
-  function openTab(){
-    tabOverlay.classList.add('open');
-  }
-  function closeTab(){
-    tabOverlay.classList.remove('open');
+  function openModal(){
+    modalOverlay.classList.add('open');
   }
 
-  function renderLoading(label){
-    tabUrlText.textContent = label;
-    tabState.innerHTML = `
-      <div class="spinner"></div>
-      <div class="tab-title">Estableciendo conexión</div>
-      <p class="tab-desc">Verificando disponibilidad del servidor y validando tu acceso. Esto puede tardar unos segundos.</p>
-    `;
+  function closeModal(){
+    modalOverlay.classList.remove('open');
+    gateIframe.src = '';
+    currentGateStep = 0;
+    modalContinueBtn.disabled = true;
   }
 
-  function renderError(){
-    tabUrlText.textContent = 'error de conexión';
-    tabState.innerHTML = `
-      <div class="state-icon error">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-      </div>
-      <div class="tab-title">No se pudo establecer la conexión</div>
-      <p class="tab-desc">Hay <b>muchos usuarios activos</b> en este momento o tu red está respondiendo lenta. Vuelve a intentarlo en unos segundos.</p>
-      <button class="retry-btn" id="retryBtn" type="button">Reintentar</button>
-    `;
-    document.getElementById('retryBtn').addEventListener('click', () => {
-      runStep2();
-    });
+  function loadGateStep(step){
+    currentGateStep = step;
+    const url = step === 1 ? GATE_STEP_1_URL : GATE_STEP_2_URL;
+    
+    stepBadge.textContent = `Paso ${step} de 2`;
+    modalContinueBtn.disabled = true;
+    modalContinueBtn.textContent = step === 1 ? 'Continuar' : 'Finalizar';
+    
+    gateIframe.src = url;
+    
+    // Enable continue button after iframe loads (or after timeout)
+    const enableTimer = setTimeout(() => {
+      modalContinueBtn.disabled = false;
+    }, 2000);
+    
+    gateIframe.onload = () => {
+      clearTimeout(enableTimer);
+      modalContinueBtn.disabled = false;
+    };
   }
 
-  function renderSuccess(optLabel){
-    tabUrlText.textContent = 'conexión segura';
-    tabState.innerHTML = `
-      <div class="state-icon ok">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-      </div>
-      <div class="tab-title">Conexión establecida y segura</div>
-      <p class="tab-desc">Tu acceso a <b>${optLabel}</b> está activo. Tienes de <b>5 a 10 minutos</b> de conexión funcional y segura. Para volver a activarla, ejecuta Start nuevamente.</p>
-      <div class="conn-meta">
-        <div><div class="num">~5-10</div><div class="lbl">Minutos</div></div>
-        <div><div class="num">Estable</div><div class="lbl">Estado</div></div>
-      </div>
-    `;
-  }
-
-  function runStep1(){
-    gateAttempt = 1;
-    openTab();
-    renderLoading('servidor-seguro.conexion');
-    // "open" GATE_STEP_1_URL in the internal tab — represented by the
-    // chrome bar + loading state, never leaving the page.
-    fireSilentBeacon(GATE_STEP_1_URL);
-
-    setTimeout(() => {
-      renderError();
-    }, 5000);
-  }
-
-  function runStep2(){
-    gateAttempt = 2;
-    renderLoading('servidor-seguro.conexion');
-    fireSilentBeacon(GATE_STEP_2_URL);
-
-    setTimeout(() => {
+  function handleContinue(){
+    if (currentGateStep === 1){
+      loadGateStep(2);
+    } else if (currentGateStep === 2){
+      // Dispara el deeplink automáticamente
+      closeModal();
       const opt = OPTIONS.find(o => o.id === activeOptionId);
-      renderSuccess(opt.label);
-
-      // The final destination opens as a normal external navigation
-      // (deeplink), only after the success state is shown.
-      setTimeout(() => {
-        window.location.href = opt.url;
-      }, 700);
-
-      // Give the user a moment to read the success state before
-      // returning to the main screen, then reset everything so
-      // Start can be used again for a fresh connection window.
-      setTimeout(() => {
-        closeTab();
-        startBtn.disabled = false;
-        gateAttempt = 0;
-      }, 2600);
-    }, 3000);
+      window.location.href = opt.url;
+    }
   }
 
-  function fireSilentBeacon(url){
-    // Best-effort background request so the gate URLs are actually
-    // hit, without navigating the visible page away from the
-    // internal tab UI and without ever printing the URL on screen.
-    try{
-      fetch(url, { mode: 'no-cors', credentials: 'omit' }).catch(() => {});
-    }catch(e){ /* no-op */ }
-  }
+  modalContinueBtn.addEventListener('click', handleContinue);
+  modalCancelBtn.addEventListener('click', closeModal);
+  modalCloseBtn.addEventListener('click', closeModal);
 
   startBtn.addEventListener('click', () => {
-    if (!activeOptionId) {
+    if (!activeOptionId){
       showToast('Selecciona una opción primero');
       return;
     }
     startBtn.disabled = true;
-    gateAttempt = 0;
-    runStep1();
+    openModal();
+    loadGateStep(1);
+    
+    // Re-enable start button if modal is closed without completion
+    const checkClose = setInterval(() => {
+      if (!modalOverlay.classList.contains('open')){
+        clearInterval(checkClose);
+        startBtn.disabled = false;
+      }
+    }, 100);
   });
 
   /* ============================================================
