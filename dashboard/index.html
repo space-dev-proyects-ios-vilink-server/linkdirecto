@@ -5,452 +5,425 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Ahorro Familiar · Exchange</title>
 <style>
-  :root{
-    --bg:#0B0E11;
-    --card:#181A20;
-    --card2:#1E2126;
-    --border:#2B3139;
-    --yellow:#FCD535;
-    --yellow-dim:#7A6418;
-    --text:#EAECEF;
-    --text-dim:#848E9C;
-    --text-faint:#5E6673;
-    --green:#0ECB81;
-    --red:#F6465D;
-    --radius:14px;
-  }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  html,body{
-    background:var(--bg);
-    color:var(--text);
-    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing:antialiased;
-    width:100%;
-    overflow-x:hidden;
-  }
-  .screen{
-    max-width:430px;
-    margin:0 auto;
-    min-height:100vh;
-    background:var(--bg);
-    position:relative;
-    padding-bottom:90px;
-  }
+:root{
+  --bg:#0B0E11; --card:#181A20; --card2:#1E2126; --border:#2B3139;
+  --yellow:#FCD535; --text:#EAECEF; --text-dim:#848E9C; --text-faint:#5E6673;
+  --green:#0ECB81; --red:#F6465D; --radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;width:100%;overflow-x:hidden;}
+.screen{max-width:430px;margin:0 auto;min-height:100vh;background:var(--bg);padding-bottom:90px;}
 
-  /* ---- status bar ---- */
-  .statusbar{
-    display:flex; justify-content:space-between; align-items:center;
-    padding:18px 22px 8px;
-    font-size:17px; font-weight:600;
-  }
-  .statusbar .right{ display:flex; align-items:center; gap:6px; }
-  .battery{
-    background:var(--yellow); color:#000; font-size:12px; font-weight:700;
-    border-radius:4px; padding:2px 6px;
-  }
+.statusbar{display:flex;justify-content:space-between;align-items:center;padding:18px 22px 8px;font-size:17px;font-weight:600;}
+.statusbar .right{display:flex;align-items:center;gap:6px;}
+.battery{background:var(--yellow);color:#000;font-size:12px;font-weight:700;border-radius:4px;padding:2px 6px;}
 
-  /* ---- top nav ---- */
-  .topnav{
-    display:flex; align-items:center; justify-content:space-between;
-    padding:6px 18px 14px;
-  }
-  .topnav .icon{ width:24px; height:24px; opacity:.9; flex-shrink:0;}
-  .tabs{
-    display:flex; background:var(--card); border-radius:20px; padding:4px;
-  }
-  .tabs span{
-    padding:9px 18px; font-size:15px; border-radius:16px; color:var(--text-dim); font-weight:600;
-  }
-  .tabs span.active{ background:#2B3139; color:var(--text); }
-  .nav-icons{ display:flex; gap:16px; align-items:center; position:relative;}
-  .badge{
-    position:absolute; top:-6px; right:-10px;
-    background:var(--yellow); color:#000; font-size:10px; font-weight:700;
-    border-radius:8px; padding:1px 5px;
-  }
+.topnav{display:flex;align-items:center;justify-content:space-between;padding:6px 18px 14px;}
+.topnav .icon{width:24px;height:24px;opacity:.9;flex-shrink:0;}
+.tabs{display:flex;background:var(--card);border-radius:20px;padding:4px;}
+.tabs span{padding:9px 18px;font-size:15px;border-radius:16px;color:var(--text-dim);font-weight:600;}
+.tabs span.active{background:#2B3139;color:var(--text);}
+.nav-icons{display:flex;gap:16px;align-items:center;position:relative;}
+.badge{position:absolute;top:-6px;right:-10px;background:var(--yellow);color:#000;font-size:10px;font-weight:700;border-radius:8px;padding:1px 5px;}
 
-  /* ---- search ---- */
-  .search{
-    margin:6px 18px 18px;
-    background:var(--card);
-    border-radius:12px;
-    padding:13px 16px;
-    display:flex; align-items:center; justify-content:space-between;
-    color:var(--text-dim); font-size:15px;
-  }
+.search{margin:6px 18px 18px;background:var(--card);border-radius:12px;padding:13px 16px;display:flex;align-items:center;justify-content:space-between;color:var(--text-dim);font-size:15px;}
 
-  /* ---- balance ---- */
-  .balance-section{ padding:0 18px 18px; }
-  .balance-label{
-    display:flex; align-items:center; gap:6px;
-    color:var(--text-dim); font-size:14.5px; margin-bottom:10px;
-  }
-  .balance-row{ display:flex; align-items:center; justify-content:space-between; gap:14px; }
-  .balance-amount{ font-size:38px; font-weight:700; letter-spacing:-0.5px; }
-  .btn-deposit{
-    background:var(--yellow); color:#000; font-weight:700; font-size:15.5px;
-    border:none; border-radius:10px; padding:13px 22px; flex-shrink:0;
-  }
-  .pnl-row{ margin-top:10px; font-size:14px; color:var(--text-dim); display:flex; align-items:center; gap:6px;}
-  .pnl-neg{ color:var(--red); }
-  .pnl-pos{ color:var(--green); }
+.balance-section{padding:0 18px 18px;}
+.balance-label{display:flex;align-items:center;gap:6px;color:var(--text-dim);font-size:14.5px;margin-bottom:10px;}
+.balance-row{display:flex;align-items:center;justify-content:space-between;gap:14px;}
+.balance-amount{font-size:34px;font-weight:700;letter-spacing:-0.5px;}
+.btn-deposit{background:var(--yellow);color:#000;font-weight:700;font-size:15.5px;border:none;border-radius:10px;padding:13px 22px;flex-shrink:0;}
+.pnl-row{margin-top:10px;font-size:14px;color:var(--text-dim);display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.pnl-pos{color:var(--green);}
 
-  /* ---- quick actions ---- */
-  .quick-actions{
-    display:flex; justify-content:space-between;
-    padding:6px 22px 22px;
-  }
-  .qa{ display:flex; flex-direction:column; align-items:center; gap:9px; }
-  .qa .ic{
-    width:52px; height:52px; border-radius:50%; background:var(--card);
-    display:flex; align-items:center; justify-content:center;
-  }
-  .qa span{ font-size:12.5px; color:var(--text-dim); }
+.quick-actions{display:flex;justify-content:space-between;padding:6px 22px 22px;}
+.qa{display:flex;flex-direction:column;align-items:center;gap:9px;}
+.qa .ic{width:52px;height:52px;border-radius:50%;background:var(--card);display:flex;align-items:center;justify-content:center;}
+.qa span{font-size:12.5px;color:var(--text-dim);}
 
-  /* ===== AHORRO FAMILIAR MODULE ===== */
-  .module-header{
-    margin:8px 18px 14px;
-    display:flex; align-items:center; justify-content:space-between;
-  }
-  .module-title{
-    font-size:19px; font-weight:700; display:flex; align-items:center; gap:8px;
-  }
-  .module-sub{ font-size:13px; color:var(--text-dim); margin-top:2px; }
+.product-card{margin:0 18px 16px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;}
+.product-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;}
+.coin-id{display:flex;align-items:center;gap:10px;}
+.coin-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0;}
+.coin-icon.usdc{background:#2775CA;color:#fff;}
+.coin-icon.u{background:var(--yellow);color:#000;}
+.coin-name{font-size:16px;font-weight:700;}
+.coin-term{font-size:12.5px;color:var(--text-dim);margin-top:2px;}
+.apr-pill{background:rgba(14,203,129,0.12);color:var(--green);font-weight:700;font-size:14px;padding:6px 12px;border-radius:8px;text-align:right;}
+.apr-pill small{display:block;font-weight:500;font-size:10.5px;color:var(--text-dim);margin-top:1px;}
 
-  .product-card{
-    margin:0 18px 16px;
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:18px;
-  }
-  .product-top{
-    display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px;
-  }
-  .coin-id{ display:flex; align-items:center; gap:10px; }
-  .coin-icon{
-    width:36px; height:36px; border-radius:50%;
-    display:flex; align-items:center; justify-content:center;
-    font-weight:700; font-size:14px; flex-shrink:0;
-  }
-  .coin-icon.usdt{ background:#26A17B; color:#fff; }
-  .coin-icon.usdc{ background:#2775CA; color:#fff; }
-  .coin-icon.u{ background:var(--yellow); color:#000; }
-  .coin-name{ font-size:16px; font-weight:700; }
-  .coin-term{ font-size:12.5px; color:var(--text-dim); margin-top:2px;}
-  .apr-pill{
-    background:rgba(14,203,129,0.12); color:var(--green);
-    font-weight:700; font-size:14px; padding:6px 12px; border-radius:8px;
-    text-align:right;
-  }
-  .apr-pill small{ display:block; font-weight:500; font-size:10.5px; color:var(--text-dim); margin-top:1px;}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.stat-box{background:var(--card2);border-radius:10px;padding:11px 13px;}
+.stat-box .lbl{font-size:11.5px;color:var(--text-dim);margin-bottom:4px;}
+.stat-box .val{font-size:15.5px;font-weight:700;}
+.stat-box .val.green{color:var(--green);}
+.stat-box .val.yellow{color:var(--yellow);}
 
-  .stat-grid{
-    display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;
-  }
-  .stat-box{
-    background:var(--card2); border-radius:10px; padding:11px 13px;
-  }
-  .stat-box .lbl{ font-size:11.5px; color:var(--text-dim); margin-bottom:4px; }
-  .stat-box .val{ font-size:15.5px; font-weight:700; }
-  .stat-box .val.green{ color:var(--green); }
+/* Live ticker */
+.live-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(14,203,129,0.1);border:1px solid rgba(14,203,129,0.25);border-radius:6px;padding:3px 9px;font-size:11.5px;color:var(--green);font-weight:600;margin-bottom:12px;}
+.pulse{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 1.4s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.7);}}
 
-  .lock-banner{
-    display:flex; align-items:flex-start; gap:9px;
-    background:rgba(252,213,53,0.07);
-    border:1px solid rgba(252,213,53,0.25);
-    border-radius:10px; padding:11px 12px;
-    margin-bottom:14px;
-  }
-  .lock-banner svg{ flex-shrink:0; margin-top:1px; }
-  .lock-banner p{ font-size:12.5px; color:#D8C26B; line-height:1.5; }
-  .lock-banner b{ color:var(--yellow); }
+.live-ticker-box{background:linear-gradient(135deg,rgba(14,203,129,0.06) 0%,rgba(14,203,129,0.02) 100%);border:1px solid rgba(14,203,129,0.2);border-radius:10px;padding:13px 14px;margin-bottom:14px;}
+.ltb-label{font-size:11px;color:var(--text-dim);margin-bottom:4px;font-weight:600;letter-spacing:.3px;}
+.ltb-val{font-size:22px;font-weight:700;color:var(--green);font-variant-numeric:tabular-nums;letter-spacing:-0.3px;}
+.ltb-sub{font-size:11px;color:var(--text-dim);margin-top:3px;}
 
-  .progress-wrap{ margin-bottom:6px; }
-  .progress-labels{
-    display:flex; justify-content:space-between; font-size:11.5px; color:var(--text-dim); margin-bottom:6px;
-  }
-  .progress-track{
-    height:7px; background:var(--card2); border-radius:5px; overflow:hidden;
-  }
-  .progress-fill{
-    height:100%; border-radius:5px;
-    background:linear-gradient(90deg, var(--yellow), #ffe27a);
-  }
-  .progress-pct{ text-align:right; font-size:11px; color:var(--text-faint); margin-top:5px;}
+.lock-banner{display:flex;align-items:flex-start;gap:9px;background:rgba(252,213,53,0.07);border:1px solid rgba(252,213,53,0.25);border-radius:10px;padding:11px 12px;margin-bottom:14px;}
+.lock-banner svg{flex-shrink:0;margin-top:1px;}
+.lock-banner p{font-size:12.5px;color:#D8C26B;line-height:1.5;}
+.lock-banner b{color:var(--yellow);}
 
-  .toggle-row{
-    display:flex; justify-content:space-between; align-items:center;
-    margin-top:14px; cursor:pointer; -webkit-tap-highlight-color:transparent;
-  }
-  .toggle-row .lbl{ font-size:13.5px; color:var(--text-dim); font-weight:600; }
-  .chevron{ transition:transform .25s ease; color:var(--text-dim);}
-  .chevron.open{ transform:rotate(180deg); }
+.progress-wrap{margin-bottom:6px;}
+.progress-labels{display:flex;justify-content:space-between;font-size:11.5px;color:var(--text-dim);margin-bottom:6px;}
+.progress-track{height:8px;background:var(--card2);border-radius:5px;overflow:hidden;}
+.progress-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--yellow),#ffe27a);transition:width 1s ease;}
+.progress-pct{text-align:right;font-size:11px;color:var(--text-faint);margin-top:5px;}
 
-  .daily-table-wrap{
-    max-height:0; overflow:hidden; transition:max-height .35s ease;
-  }
-  .daily-table-wrap.open{ max-height:1400px; }
-  .daily-scroll{
-    margin-top:12px; max-height:380px; overflow-y:auto;
-    border-radius:10px; border:1px solid var(--border);
-  }
-  table.daily{
-    width:100%; border-collapse:collapse; font-size:12.5px;
-  }
-  table.daily thead th{
-    position:sticky; top:0; background:#22252B; color:var(--text-dim);
-    font-weight:600; font-size:11px; text-align:right; padding:9px 10px;
-    border-bottom:1px solid var(--border);
-  }
-  table.daily thead th:first-child{ text-align:left; }
-  table.daily td{
-    padding:8px 10px; text-align:right; border-bottom:1px solid #20242b;
-    color:var(--text);
-    white-space:nowrap;
-  }
-  table.daily td:first-child{ text-align:left; color:var(--text-dim); }
-  table.daily tr.today td{ background:rgba(252,213,53,0.08); color:var(--yellow); font-weight:700; }
-  table.daily tr.future td{ color:var(--text-faint); }
-  table.daily td.profit{ color:var(--green); }
-  table.daily tr.future td.profit{ color:#2e5c46; }
-  .daily-scroll::-webkit-scrollbar{ width:5px; }
-  .daily-scroll::-webkit-scrollbar-thumb{ background:#3a3f47; border-radius:4px; }
+.countdown-row{display:flex;gap:8px;margin-top:10px;margin-bottom:14px;}
+.cd-box{flex:1;background:var(--card2);border-radius:8px;padding:8px 6px;text-align:center;}
+.cd-num{font-size:20px;font-weight:700;color:var(--text);font-variant-numeric:tabular-nums;}
+.cd-lbl{font-size:9.5px;color:var(--text-faint);margin-top:2px;font-weight:600;letter-spacing:.3px;}
 
-  .section-divider{
-    margin:26px 18px 14px; display:flex; align-items:center; gap:10px;
-  }
-  .section-divider .line{ flex:1; height:1px; background:var(--border); }
-  .section-divider span{ font-size:12px; color:var(--text-faint); font-weight:600; letter-spacing:.5px;}
+.toggle-row{display:flex;justify-content:space-between;align-items:center;margin-top:14px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.toggle-row .lbl{font-size:13.5px;color:var(--text-dim);font-weight:600;}
+.chevron{transition:transform .25s ease;color:var(--text-dim);}
+.chevron.open{transform:rotate(180deg);}
 
-  .bottomnav{
-    position:fixed; bottom:0; left:0; right:0;
-    max-width:430px; margin:0 auto;
-    background:#14161A; border-top:1px solid var(--border);
-    display:flex; justify-content:space-around; padding:10px 0 22px;
-  }
-  .bn-item{ display:flex; flex-direction:column; align-items:center; gap:4px; }
-  .bn-item span{ font-size:11px; color:var(--text-dim); }
-  .bn-item.active span{ color:var(--text); font-weight:600; }
+.daily-table-wrap{max-height:0;overflow:hidden;transition:max-height .4s ease;}
+.daily-table-wrap.open{max-height:1600px;}
+.daily-scroll{margin-top:12px;max-height:400px;overflow-y:auto;border-radius:10px;border:1px solid var(--border);}
+table.daily{width:100%;border-collapse:collapse;font-size:12.5px;}
+table.daily thead th{position:sticky;top:0;background:#22252B;color:var(--text-dim);font-weight:600;font-size:11px;text-align:right;padding:9px 10px;border-bottom:1px solid var(--border);}
+table.daily thead th:first-child{text-align:left;}
+table.daily td{padding:8px 10px;text-align:right;border-bottom:1px solid #20242b;color:var(--text);white-space:nowrap;}
+table.daily td:first-child{text-align:left;color:var(--text-dim);}
+table.daily tr.is-today td{background:rgba(252,213,53,0.1);font-weight:700;}
+table.daily tr.is-today td:first-child{color:var(--yellow);}
+table.daily tr.is-today td.profit{color:var(--green);}
+table.daily tr.past td{color:var(--text);}
+table.daily tr.future td{color:var(--text-faint);}
+table.daily td.profit{color:var(--green);}
+table.daily tr.future td.profit{color:#2e5c46;}
+.daily-scroll::-webkit-scrollbar{width:5px;}
+.daily-scroll::-webkit-scrollbar-thumb{background:#3a3f47;border-radius:4px;}
 
-  .legend-note{
-    margin:10px 18px 0; font-size:11.5px; color:var(--text-faint); line-height:1.5; text-align:center;
-  }
+.section-divider{margin:22px 18px 14px;display:flex;align-items:center;gap:10px;}
+.section-divider .line{flex:1;height:1px;background:var(--border);}
+.section-divider span{font-size:12px;color:var(--text-faint);font-weight:600;letter-spacing:.5px;}
+
+.bottomnav{position:fixed;bottom:0;left:0;right:0;max-width:430px;margin:0 auto;background:#14161A;border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:10px 0 22px;}
+.bn-item{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.bn-item span{font-size:11px;color:var(--text-dim);}
+.bn-item.active span{color:var(--text);font-weight:600;}
+
+.legend-note{margin:10px 18px 24px;font-size:11.5px;color:var(--text-faint);line-height:1.5;text-align:center;}
 </style>
 </head>
 <body>
 <div class="screen">
 
+<div class="statusbar">
+  <span id="clock"></span>
+  <div class="right">
 
-  <!-- top nav -->
-  <div class="topnav">
-    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#EAECEF" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-    <div class="tabs">
-      <span class="active">Exchange</span>
-      <span>Billetera</span>
-    </div>
-    <div class="nav-icons">
-      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#EAECEF" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-      <div style="position:relative;">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#EAECEF" stroke-width="1.8"><path d="M21 11.5a8.5 8.5 0 11-3.8-7.1L21 3l-1.2 3.6A8.46 8.46 0 0121 11.5z"/></svg>
-        <span class="badge">99+</span>
+
+
+  </div>
+</div>
+
+<div class="topnav">
+  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#EAECEF" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+  <div class="tabs"><span class="active">Exchange</span><span>Billetera</span></div>
+  <div class="nav-icons">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#EAECEF" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+    <div style="position:relative;"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#EAECEF" stroke-width="1.8"><path d="M21 11.5a8.5 8.5 0 11-3.8-7.1L21 3l-1.2 3.6A8.46 8.46 0 0121 11.5z"/></svg><span class="badge">99+</span></div>
+  </div>
+</div>
+
+<div class="search">
+  <span>Earn · bloqueado</span>
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#848E9C" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+</div>
+
+<div class="balance-section">
+  <div class="balance-label">Valor total bloqueado (COP) <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#848E9C" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg></div>
+  <div class="balance-row">
+    <div class="balance-amount" id="totalBalance">Cargando...</div>
+    <button class="btn-deposit">Depositar</button>
+  </div>
+  <div class="pnl-row">Crecimiento total hoy&nbsp;<span class="pnl-pos" id="todayGrowth">...</span></div>
+</div>
+
+<div class="quick-actions">
+  <div class="qa"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EAECEF" stroke-width="1.8"><path d="M12 2v6M9 5h6l2 4H7l2-4z"/><path d="M5 9h14l1 11a2 2 0 01-2 2H6a2 2 0 01-2-2L5 9z"/></svg></div><span>Earn</span></div>
+  <div class="qa"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EAECEF" stroke-width="1.8"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/><path d="M18 8v5M15.5 10.5h5"/></svg></div><span>Referido</span></div>
+  <div class="qa"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EAECEF" stroke-width="1.8"><circle cx="7" cy="7" r="3"/><circle cx="17" cy="17" r="3"/><path d="M4 18c0-2.5 1.5-4 3-4M20 6c0 2.5-1.5 4-3 4"/></svg></div><span>P2P</span></div>
+  <div class="qa"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EAECEF" stroke-width="1.8"><path d="M7 7h11l-3-3M17 17H6l3 3"/></svg></div><span>Transferir</span></div>
+  <div class="qa"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EAECEF" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><circle cx="17.5" cy="17.5" r="3.5"/></svg></div><span>Más</span></div>
+</div>
+
+<div class="section-divider"><div class="line"></div><span>PRODUCTOS DE AHORRO BLOQUEADO</span><div class="line"></div></div>
+
+<!-- CARD 1: USDC David Daniel -->
+<div class="product-card">
+  <div class="product-top">
+    <div class="coin-id">
+      <div class="coin-icon usdc">$</div>
+      <div>
+        <div class="coin-name">USDC · David Daniel</div>
+        <div class="coin-term">3 month · Blocked until Sep 26, 2026</div>
       </div>
     </div>
+    <div class="apr-pill">6,18%<small>mensual</small></div>
   </div>
 
-  <!-- search -->
-  <div class="search">
-    <span>Earn — bloqueado</span>
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#848E9C" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+  <div class="live-badge"><div class="pulse"></div>EARN</div>
+
+  <div class="live-ticker-box">
+    <div class="ltb-label">SALDO ACTUAL</div>
+    <div class="ltb-val" id="c1-live">$ 1.500.000</div>
+    <div class="ltb-sub" id="c1-live-sub">+$ 0 ganancia acumulada</div>
   </div>
 
-  <!-- balance -->
-  <div class="balance-section">
-    <div class="balance-label">Valor total bloqueado (COP) <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#848E9C" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg></div>
-    <div class="balance-row">
-      <div class="balance-amount" id="totalBalance">$ 9.678.492</div>
-      <button class="btn-deposit">Depositar</button>
-    </div>
-    <div class="pnl-row">Crecimiento de hoy <span class="pnl-pos" id="todayGrowth">+$ 26.371,90 (+0,27%)</span> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0ECB81" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg></div>
+  <div class="stat-grid">
+    <div class="stat-box"><div class="lbl">Dinero base</div><div class="val">$ 1.500.000</div></div>
+    <div class="stat-box"><div class="lbl">Ganancia total al final</div><div class="val green">+$ 278.100</div></div>
+    <div class="stat-box"><div class="lbl">Día actual del plazo</div><div class="val yellow" id="c1-daynum">Día 0</div></div>
+    <div class="stat-box"><div class="lbl">Días restantes</div><div class="val" id="c1-remaining">92 días</div></div>
   </div>
 
-  <!-- quick actions -->
-  <div class="quick-actions">
-    <div class="qa"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EAECEF" stroke-width="1.8"><path d="M12 2v6M9 5h6l2 4H7l2-4z"/><path d="M5 9h14l1 11a2 2 0 01-2 2H6a2 2 0 01-2-2L5 9z"/></svg></div><span>Earn</span></div>
-    <div class="qa"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EAECEF" stroke-width="1.8"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/><path d="M18 8v5M15.5 10.5h5"/></svg></div><span>Referido</span></div>
-    <div class="qa"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EAECEF" stroke-width="1.8"><circle cx="7" cy="7" r="3"/><circle cx="17" cy="17" r="3"/><path d="M4 18c0-2.5 1.5-4 3-4M20 6c0 2.5-1.5 4-3 4"/></svg></div><span>P2P</span></div>
-    <div class="qa"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EAECEF" stroke-width="1.8"><path d="M7 7h11l-3-3M17 17H6l3 3"/></svg></div><span>Transferir</span></div>
-    <div class="qa"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EAECEF" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><circle cx="17.5" cy="17.5" r="3.5"/></svg></div><span>Más</span></div>
+  <div class="lock-banner">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FCD535" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+    <p><b>Dinero base, ganancias y crecimiento quedan bloqueados</b> hasta el 26 de septiembre de 2026. No se puede retirar antes de la fecha límite.</p>
   </div>
 
-  <div class="section-divider"><div class="line"></div><span>PRODUCTOS DE AHORRO BLOQUEADO</span><div class="line"></div></div>
+  <div class="progress-wrap">
+    <div class="progress-labels"><span>26 jun 2026</span><span>26 sep 2026</span></div>
+    <div class="progress-track"><div class="progress-fill" id="c1-bar" style="width:0%"></div></div>
+    <div class="progress-pct" id="c1-pct">Calculando...</div>
+  </div>
 
-  <!-- ============ CASE 1: USDC ============ -->
-  <div class="product-card" id="card1">
-    <div class="product-top">
-      <div class="coin-id">
-        <div class="coin-icon usdc">$</div>
-        <div>
-          <div class="coin-name">USDC · David Daniel</div>
-          <div class="coin-term">3 meses · bloqueado hasta el 26 sep 2026</div>
-        </div>
-      </div>
-      <div class="apr-pill">6,18%<small>mensual</small></div>
-    </div>
+  <div class="countdown-row">
+    <div class="cd-box"><div class="cd-num" id="c1-dd">--</div><div class="cd-lbl">DÍAS</div></div>
+    <div class="cd-box"><div class="cd-num" id="c1-hh">--</div><div class="cd-lbl">HORAS</div></div>
+    <div class="cd-box"><div class="cd-num" id="c1-mm">--</div><div class="cd-lbl">MIN</div></div>
+    <div class="cd-box"><div class="cd-num" id="c1-ss">--</div><div class="cd-lbl">SEG</div></div>
+  </div>
 
-    <div class="stat-grid">
-      <div class="stat-box"><div class="lbl">Dinero base</div><div class="val">$ 1.000.000</div></div>
-      <div class="stat-box"><div class="lbl">Ganancia total al final</div><div class="val green">+$ 185.400</div></div>
-      <div class="stat-box"><div class="lbl">Crecimiento acumulado hoy</div><div class="val green" id="c1-today-profit">+$ 0</div></div>
-      <div class="stat-box"><div class="lbl">Valor total hoy</div><div class="val" id="c1-today-total">$ 1.000.000</div></div>
-    </div>
+  <div class="toggle-row" onclick="toggleTable(1)">
+    <span class="lbl">Ver crecimiento día por día (92 días)</span>
+    <svg class="chevron" id="chev1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#848E9C" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg>
+  </div>
+  <div class="daily-table-wrap" id="wrap1">
+    <div class="daily-scroll"><table class="daily"><thead><tr><th>Fecha</th><th>Día</th><th>Ganancia</th><th>Saldo total</th></tr></thead><tbody id="tbody1"></tbody></table></div>
+  </div>
+</div>
 
-    <div class="lock-banner">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FCD535" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
-      <p><b>Dinero base, ganancias y crecimiento quedan bloqueados</b> hasta el 26 de septiembre de 2026. No se puede retirar antes de la fecha límite.</p>
-    </div>
-
-    <div class="progress-wrap">
-      <div class="progress-labels"><span>26 jun 2026</span><span>26 sep 2026</span></div>
-      <div class="progress-track"><div class="progress-fill" id="c1-progress" style="width:0%"></div></div>
-      <div class="progress-pct" id="c1-progress-pct">Día 0 de 92 · 0,0%</div>
-    </div>
-
-    <div class="toggle-row" onclick="toggleTable('1')">
-      <span class="lbl">Ver crecimiento día por día (92 días)</span>
-      <svg class="chevron" id="chev1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#848E9C" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg>
-    </div>
-    <div class="daily-table-wrap" id="wrap1">
-      <div class="daily-scroll">
-        <table class="daily">
-          <thead><tr><th>Fecha</th><th>Día</th><th>Ganancia</th><th>Saldo total</th></tr></thead>
-          <tbody id="tbody1"></tbody>
-        </table>
+<!-- CARD 2: U Pablo -->
+<div class="product-card">
+  <div class="product-top">
+    <div class="coin-id">
+      <div class="coin-icon u">U</div>
+      <div>
+        <div class="coin-name">U · Pablo</div>
+        <div class="coin-term">6 month · Blocked until dec 26, 2026</div>
       </div>
     </div>
+    <div class="apr-pill">8,56%<small>mensual</small></div>
   </div>
 
-  <!-- ============ CASE 2: U ============ -->
-  <div class="product-card" id="card2">
-    <div class="product-top">
-      <div class="coin-id">
-        <div class="coin-icon u">U</div>
-        <div>
-          <div class="coin-name">U · Pablo</div>
-          <div class="coin-term">6 meses · bloqueado hasta el 26 dic 2026</div>
-        </div>
-      </div>
-      <div class="apr-pill">8,56%<small>mensual</small></div>
-    </div>
+  <div class="live-badge"><div class="pulse"></div>EARN</div>
 
-    <div class="stat-grid">
-      <div class="stat-box"><div class="lbl">Dinero base</div><div class="val">$ 8.678.492</div></div>
-      <div class="stat-box"><div class="lbl">Ganancia total al final</div><div class="val green">+$ 4.457.273</div></div>
-      <div class="stat-box"><div class="lbl">Crecimiento acumulado hoy</div><div class="val green" id="c2-today-profit">+$ 0</div></div>
-      <div class="stat-box"><div class="lbl">Valor total hoy</div><div class="val" id="c2-today-total">$ 8.678.492</div></div>
-    </div>
-
-    <div class="lock-banner">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FCD535" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
-      <p><b>Dinero base, ganancias y crecimiento quedan bloqueados</b> hasta el 26 de diciembre de 2026. No se puede retirar antes de la fecha límite.</p>
-    </div>
-
-    <div class="progress-wrap">
-      <div class="progress-labels"><span>26 jun 2026</span><span>26 dic 2026</span></div>
-      <div class="progress-track"><div class="progress-fill" id="c2-progress" style="width:0%"></div></div>
-      <div class="progress-pct" id="c2-progress-pct">Día 0 de 183 · 0,0%</div>
-    </div>
-
-    <div class="toggle-row" onclick="toggleTable('2')">
-      <span class="lbl">Ver crecimiento día por día (183 días)</span>
-      <svg class="chevron" id="chev2" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#848E9C" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg>
-    </div>
-    <div class="daily-table-wrap" id="wrap2">
-      <div class="daily-scroll">
-        <table class="daily">
-          <thead><tr><th>Fecha</th><th>Día</th><th>Ganancia</th><th>Saldo total</th></tr></thead>
-          <tbody id="tbody2"></tbody>
-        </table>
-      </div>
-    </div>
+  <div class="live-ticker-box">
+    <div class="ltb-label">SALDO ACTUAL</div>
+    <div class="ltb-val" id="c2-live">$ 8.678.492</div>
+    <div class="ltb-sub" id="c2-live-sub">+$ 0 ganancia acumulada</div>
   </div>
 
-  <div class="legend-note">Tasas mensuales fijas aplicadas de forma lineal día a día. El capital, la ganancia acumulada y el crecimiento total no se pueden retirar ni mover hasta cumplirse la fecha de desbloqueo.</div>
-
-  <!-- bottom nav -->
-  <div class="bottomnav">
-    <div class="bn-item active">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EAECEF" stroke-width="1.8"><path d="M3 11l9-8 9 8M5 10v9a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1v-9"/></svg>
-      <span>Inicio</span>
-    </div>
-    <div class="bn-item">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#848E9C" stroke-width="1.8"><path d="M3 17l5-5 4 4 8-8"/><path d="M15 8h5v5"/></svg>
-      <span>Mercados</span>
-    </div>
-    <div class="bn-item">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#848E9C" stroke-width="1.8"><path d="M4 19V9M12 19V5M20 19v-7"/></svg>
-      <span>Trade</span>
-    </div>
-    <div class="bn-item">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#848E9C" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 10h8M8 14h5"/></svg>
-      <span>Futuros</span>
-    </div>
-    <div class="bn-item">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#848E9C" stroke-width="1.8"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h6M9 11h6"/></svg>
-      <span>Activos</span>
-    </div>
+  <div class="stat-grid">
+    <div class="stat-box"><div class="lbl">Dinero base</div><div class="val">$ 8.678.492</div></div>
+    <div class="stat-box"><div class="lbl">Ganancia total al final</div><div class="val green">+$ 4.457.273</div></div>
+    <div class="stat-box"><div class="lbl">Día actual del plazo</div><div class="val yellow" id="c2-daynum">Día 0</div></div>
+    <div class="stat-box"><div class="lbl">Días restantes</div><div class="val" id="c2-remaining">183 días</div></div>
   </div>
+
+  <div class="lock-banner">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FCD535" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
+    <p><b>Dinero base, ganancias y crecimiento quedan bloqueados</b> hasta el 26 de diciembre de 2026. No se puede retirar antes de la fecha límite.</p>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-labels"><span>26 jun 2026</span><span>26 dic 2026</span></div>
+    <div class="progress-track"><div class="progress-fill" id="c2-bar" style="width:0%"></div></div>
+    <div class="progress-pct" id="c2-pct">Calculando...</div>
+  </div>
+
+  <div class="countdown-row">
+    <div class="cd-box"><div class="cd-num" id="c2-dd">--</div><div class="cd-lbl">DÍAS</div></div>
+    <div class="cd-box"><div class="cd-num" id="c2-hh">--</div><div class="cd-lbl">HORAS</div></div>
+    <div class="cd-box"><div class="cd-num" id="c2-mm">--</div><div class="cd-lbl">MIN</div></div>
+    <div class="cd-box"><div class="cd-num" id="c2-ss">--</div><div class="cd-lbl">SEG</div></div>
+  </div>
+
+  <div class="toggle-row" onclick="toggleTable(2)">
+    <span class="lbl">Ver crecimiento día por día (183 días)</span>
+    <svg class="chevron" id="chev2" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#848E9C" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg>
+  </div>
+  <div class="daily-table-wrap" id="wrap2">
+    <div class="daily-scroll"><table class="daily"><thead><tr><th>Fecha</th><th>Día</th><th>Ganancia</th><th>Saldo total</th></tr></thead><tbody id="tbody2"></tbody></table></div>
+  </div>
+</div>
+
+<div class="legend-note">Fixed monthly rates. Earnings and growth locked until the maturity date.</div>
+
+<div class="bottomnav">
+  <div class="bn-item active"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EAECEF" stroke-width="1.8"><path d="M3 11l9-8 9 8M5 10v9a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1v-9"/></svg><span>Inicio</span></div>
+  <div class="bn-item"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#848E9C" stroke-width="1.8"><path d="M3 17l5-5 4 4 8-8"/><path d="M15 8h5v5"/></svg><span>Mercados</span></div>
+  <div class="bn-item"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#848E9C" stroke-width="1.8"><path d="M4 19V9M12 19V5M20 19v-7"/></svg><span>Trade</span></div>
+  <div class="bn-item"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#848E9C" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 10h8M8 14h5"/></svg><span>Futuros</span></div>
+  <div class="bn-item"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#848E9C" stroke-width="1.8"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h6M9 11h6"/></svg><span>Activos</span></div>
+</div>
 
 </div>
 
 <script>
-const DATA1 = {"base": 1000000, "rate": 6.18, "months": 3, "start": "2026-06-26", "end": "2026-09-26", "days": 92, "totalProfit": 185400.0, "rows": [[0, 0.0, 1000000.0], [1, 2015.22, 1002015.22], [2, 4030.43, 1004030.43], [3, 6045.65, 1006045.65], [4, 8060.87, 1008060.87], [5, 10076.09, 1010076.09], [6, 12091.3, 1012091.3], [7, 14106.52, 1014106.52], [8, 16121.74, 1016121.74], [9, 18136.96, 1018136.96], [10, 20152.17, 1020152.17], [11, 22167.39, 1022167.39], [12, 24182.61, 1024182.61], [13, 26197.83, 1026197.83], [14, 28213.04, 1028213.04], [15, 30228.26, 1030228.26], [16, 32243.48, 1032243.48], [17, 34258.7, 1034258.7], [18, 36273.91, 1036273.91], [19, 38289.13, 1038289.13], [20, 40304.35, 1040304.35], [21, 42319.57, 1042319.57], [22, 44334.78, 1044334.78], [23, 46350.0, 1046350.0], [24, 48365.22, 1048365.22], [25, 50380.43, 1050380.43], [26, 52395.65, 1052395.65], [27, 54410.87, 1054410.87], [28, 56426.09, 1056426.09], [29, 58441.3, 1058441.3], [30, 60456.52, 1060456.52], [31, 62471.74, 1062471.74], [32, 64486.96, 1064486.96], [33, 66502.17, 1066502.17], [34, 68517.39, 1068517.39], [35, 70532.61, 1070532.61], [36, 72547.83, 1072547.83], [37, 74563.04, 1074563.04], [38, 76578.26, 1076578.26], [39, 78593.48, 1078593.48], [40, 80608.7, 1080608.7], [41, 82623.91, 1082623.91], [42, 84639.13, 1084639.13], [43, 86654.35, 1086654.35], [44, 88669.57, 1088669.57], [45, 90684.78, 1090684.78], [46, 92700.0, 1092700.0], [47, 94715.22, 1094715.22], [48, 96730.43, 1096730.43], [49, 98745.65, 1098745.65], [50, 100760.87, 1100760.87], [51, 102776.09, 1102776.09], [52, 104791.3, 1104791.3], [53, 106806.52, 1106806.52], [54, 108821.74, 1108821.74], [55, 110836.96, 1110836.96], [56, 112852.17, 1112852.17], [57, 114867.39, 1114867.39], [58, 116882.61, 1116882.61], [59, 118897.83, 1118897.83], [60, 120913.04, 1120913.04], [61, 122928.26, 1122928.26], [62, 124943.48, 1124943.48], [63, 126958.7, 1126958.7], [64, 128973.91, 1128973.91], [65, 130989.13, 1130989.13], [66, 133004.35, 1133004.35], [67, 135019.57, 1135019.57], [68, 137034.78, 1137034.78], [69, 139050.0, 1139050.0], [70, 141065.22, 1141065.22], [71, 143080.43, 1143080.43], [72, 145095.65, 1145095.65], [73, 147110.87, 1147110.87], [74, 149126.09, 1149126.09], [75, 151141.3, 1151141.3], [76, 153156.52, 1153156.52], [77, 155171.74, 1155171.74], [78, 157186.96, 1157186.96], [79, 159202.17, 1159202.17], [80, 161217.39, 1161217.39], [81, 163232.61, 1163232.61], [82, 165247.83, 1165247.83], [83, 167263.04, 1167263.04], [84, 169278.26, 1169278.26], [85, 171293.48, 1171293.48], [86, 173308.7, 1173308.7], [87, 175323.91, 1175323.91], [88, 177339.13, 1177339.13], [89, 179354.35, 1179354.35], [90, 181369.57, 1181369.57], [91, 183384.78, 1183384.78], [92, 185400.0, 1185400.0]]};
+const DATA1 = {"base": 1500000, "rate": 6.18, "months": 3, "start": "2026-06-26", "end": "2026-09-26", "days": 92, "totalProfit": 278100.0, "rows": [[0, 0.0, 1500000.0], [1, 3022.83, 1503022.83], [2, 6045.65, 1506045.65], [3, 9068.48, 1509068.48], [4, 12091.3, 1512091.3], [5, 15114.13, 1515114.13], [6, 18136.96, 1518136.96], [7, 21159.78, 1521159.78], [8, 24182.61, 1524182.61], [9, 27205.43, 1527205.43], [10, 30228.26, 1530228.26], [11, 33251.09, 1533251.09], [12, 36273.91, 1536273.91], [13, 39296.74, 1539296.74], [14, 42319.57, 1542319.57], [15, 45342.39, 1545342.39], [16, 48365.22, 1548365.22], [17, 51388.04, 1551388.04], [18, 54410.87, 1554410.87], [19, 57433.7, 1557433.7], [20, 60456.52, 1560456.52], [21, 63479.35, 1563479.35], [22, 66502.17, 1566502.17], [23, 69525.0, 1569525.0], [24, 72547.83, 1572547.83], [25, 75570.65, 1575570.65], [26, 78593.48, 1578593.48], [27, 81616.3, 1581616.3], [28, 84639.13, 1584639.13], [29, 87661.96, 1587661.96], [30, 90684.78, 1590684.78], [31, 93707.61, 1593707.61], [32, 96730.43, 1596730.43], [33, 99753.26, 1599753.26], [34, 102776.09, 1602776.09], [35, 105798.91, 1605798.91], [36, 108821.74, 1608821.74], [37, 111844.57, 1611844.57], [38, 114867.39, 1614867.39], [39, 117890.22, 1617890.22], [40, 120913.04, 1620913.04], [41, 123935.87, 1623935.87], [42, 126958.7, 1626958.7], [43, 129981.52, 1629981.52], [44, 133004.35, 1633004.35], [45, 136027.17, 1636027.17], [46, 139050.0, 1639050.0], [47, 142072.83, 1642072.83], [48, 145095.65, 1645095.65], [49, 148118.48, 1648118.48], [50, 151141.3, 1651141.3], [51, 154164.13, 1654164.13], [52, 157186.96, 1657186.96], [53, 160209.78, 1660209.78], [54, 163232.61, 1663232.61], [55, 166255.43, 1666255.43], [56, 169278.26, 1669278.26], [57, 172301.09, 1672301.09], [58, 175323.91, 1675323.91], [59, 178346.74, 1678346.74], [60, 181369.57, 1681369.57], [61, 184392.39, 1684392.39], [62, 187415.22, 1687415.22], [63, 190438.04, 1690438.04], [64, 193460.87, 1693460.87], [65, 196483.7, 1696483.7], [66, 199506.52, 1699506.52], [67, 202529.35, 1702529.35], [68, 205552.17, 1705552.17], [69, 208575.0, 1708575.0], [70, 211597.83, 1711597.83], [71, 214620.65, 1714620.65], [72, 217643.48, 1717643.48], [73, 220666.3, 1720666.3], [74, 223689.13, 1723689.13], [75, 226711.96, 1726711.96], [76, 229734.78, 1729734.78], [77, 232757.61, 1732757.61], [78, 235780.43, 1735780.43], [79, 238803.26, 1738803.26], [80, 241826.09, 1741826.09], [81, 244848.91, 1744848.91], [82, 247871.74, 1747871.74], [83, 250894.57, 1750894.57], [84, 253917.39, 1753917.39], [85, 256940.22, 1756940.22], [86, 259963.04, 1759963.04], [87, 262985.87, 1762985.87], [88, 266008.7, 1766008.7], [89, 269031.52, 1769031.52], [90, 272054.35, 1772054.35], [91, 275077.17, 1775077.17], [92, 278100.0, 1778100.0]]};
 const DATA2 = {"base": 8678492, "rate": 8.56, "months": 6, "start": "2026-06-26", "end": "2026-12-26", "days": 183, "totalProfit": 4457273.49, "rows": [[0, 0.0, 8678492.0], [1, 24356.69, 8702848.69], [2, 48713.37, 8727205.37], [3, 73070.06, 8751562.06], [4, 97426.74, 8775918.74], [5, 121783.43, 8800275.43], [6, 146140.11, 8824632.11], [7, 170496.8, 8848988.8], [8, 194853.49, 8873345.49], [9, 219210.17, 8897702.17], [10, 243566.86, 8922058.86], [11, 267923.54, 8946415.54], [12, 292280.23, 8970772.23], [13, 316636.91, 8995128.91], [14, 340993.6, 9019485.6], [15, 365350.29, 9043842.29], [16, 389706.97, 9068198.97], [17, 414063.66, 9092555.66], [18, 438420.34, 9116912.34], [19, 462777.03, 9141269.03], [20, 487133.71, 9165625.71], [21, 511490.4, 9189982.4], [22, 535847.09, 9214339.09], [23, 560203.77, 9238695.77], [24, 584560.46, 9263052.46], [25, 608917.14, 9287409.14], [26, 633273.83, 9311765.83], [27, 657630.52, 9336122.52], [28, 681987.2, 9360479.2], [29, 706343.89, 9384835.89], [30, 730700.57, 9409192.57], [31, 755057.26, 9433549.26], [32, 779413.94, 9457905.94], [33, 803770.63, 9482262.63], [34, 828127.32, 9506619.32], [35, 852484.0, 9530976.0], [36, 876840.69, 9555332.69], [37, 901197.37, 9579689.37], [38, 925554.06, 9604046.06], [39, 949910.74, 9628402.74], [40, 974267.43, 9652759.43], [41, 998624.12, 9677116.12], [42, 1022980.8, 9701472.8], [43, 1047337.49, 9725829.49], [44, 1071694.17, 9750186.17], [45, 1096050.86, 9774542.86], [46, 1120407.54, 9798899.54], [47, 1144764.23, 9823256.23], [48, 1169120.92, 9847612.92], [49, 1193477.6, 9871969.6], [50, 1217834.29, 9896326.29], [51, 1242190.97, 9920682.97], [52, 1266547.66, 9945039.66], [53, 1290904.34, 9969396.34], [54, 1315261.03, 9993753.03], [55, 1339617.72, 10018109.72], [56, 1363974.4, 10042466.4], [57, 1388331.09, 10066823.09], [58, 1412687.77, 10091179.77], [59, 1437044.46, 10115536.46], [60, 1461401.14, 10139893.14], [61, 1485757.83, 10164249.83], [62, 1510114.52, 10188606.52], [63, 1534471.2, 10212963.2], [64, 1558827.89, 10237319.89], [65, 1583184.57, 10261676.57], [66, 1607541.26, 10286033.26], [67, 1631897.94, 10310389.94], [68, 1656254.63, 10334746.63], [69, 1680611.32, 10359103.32], [70, 1704968.0, 10383460.0], [71, 1729324.69, 10407816.69], [72, 1753681.37, 10432173.37], [73, 1778038.06, 10456530.06], [74, 1802394.75, 10480886.75], [75, 1826751.43, 10505243.43], [76, 1851108.12, 10529600.12], [77, 1875464.8, 10553956.8], [78, 1899821.49, 10578313.49], [79, 1924178.17, 10602670.17], [80, 1948534.86, 10627026.86], [81, 1972891.55, 10651383.55], [82, 1997248.23, 10675740.23], [83, 2021604.92, 10700096.92], [84, 2045961.6, 10724453.6], [85, 2070318.29, 10748810.29], [86, 2094674.97, 10773166.97], [87, 2119031.66, 10797523.66], [88, 2143388.35, 10821880.35], [89, 2167745.03, 10846237.03], [90, 2192101.72, 10870593.72], [91, 2216458.4, 10894950.4], [92, 2240815.09, 10919307.09], [93, 2265171.77, 10943663.77], [94, 2289528.46, 10968020.46], [95, 2313885.15, 10992377.15], [96, 2338241.83, 11016733.83], [97, 2362598.52, 11041090.52], [98, 2386955.2, 11065447.2], [99, 2411311.89, 11089803.89], [100, 2435668.57, 11114160.57], [101, 2460025.26, 11138517.26], [102, 2484381.95, 11162873.95], [103, 2508738.63, 11187230.63], [104, 2533095.32, 11211587.32], [105, 2557452.0, 11235944.0], [106, 2581808.69, 11260300.69], [107, 2606165.37, 11284657.37], [108, 2630522.06, 11309014.06], [109, 2654878.75, 11333370.75], [110, 2679235.43, 11357727.43], [111, 2703592.12, 11382084.12], [112, 2727948.8, 11406440.8], [113, 2752305.49, 11430797.49], [114, 2776662.17, 11455154.17], [115, 2801018.86, 11479510.86], [116, 2825375.55, 11503867.55], [117, 2849732.23, 11528224.23], [118, 2874088.92, 11552580.92], [119, 2898445.6, 11576937.6], [120, 2922802.29, 11601294.29], [121, 2947158.98, 11625650.98], [122, 2971515.66, 11650007.66], [123, 2995872.35, 11674364.35], [124, 3020229.03, 11698721.03], [125, 3044585.72, 11723077.72], [126, 3068942.4, 11747434.4], [127, 3093299.09, 11771791.09], [128, 3117655.78, 11796147.78], [129, 3142012.46, 11820504.46], [130, 3166369.15, 11844861.15], [131, 3190725.83, 11869217.83], [132, 3215082.52, 11893574.52], [133, 3239439.2, 11917931.2], [134, 3263795.89, 11942287.89], [135, 3288152.58, 11966644.58], [136, 3312509.26, 11991001.26], [137, 3336865.95, 12015357.95], [138, 3361222.63, 12039714.63], [139, 3385579.32, 12064071.32], [140, 3409936.0, 12088428.0], [141, 3434292.69, 12112784.69], [142, 3458649.38, 12137141.38], [143, 3483006.06, 12161498.06], [144, 3507362.75, 12185854.75], [145, 3531719.43, 12210211.43], [146, 3556076.12, 12234568.12], [147, 3580432.8, 12258924.8], [148, 3604789.49, 12283281.49], [149, 3629146.18, 12307638.18], [150, 3653502.86, 12331994.86], [151, 3677859.55, 12356351.55], [152, 3702216.23, 12380708.23], [153, 3726572.92, 12405064.92], [154, 3750929.6, 12429421.6], [155, 3775286.29, 12453778.29], [156, 3799642.98, 12478134.98], [157, 3823999.66, 12502491.66], [158, 3848356.35, 12526848.35], [159, 3872713.03, 12551205.03], [160, 3897069.72, 12575561.72], [161, 3921426.4, 12599918.4], [162, 3945783.09, 12624275.09], [163, 3970139.78, 12648631.78], [164, 3994496.46, 12672988.46], [165, 4018853.15, 12697345.15], [166, 4043209.83, 12721701.83], [167, 4067566.52, 12746058.52], [168, 4091923.21, 12770415.21], [169, 4116279.89, 12794771.89], [170, 4140636.58, 12819128.58], [171, 4164993.26, 12843485.26], [172, 4189349.95, 12867841.95], [173, 4213706.63, 12892198.63], [174, 4238063.32, 12916555.32], [175, 4262420.01, 12940912.01], [176, 4286776.69, 12965268.69], [177, 4311133.38, 12989625.38], [178, 4335490.06, 13013982.06], [179, 4359846.75, 13038338.75], [180, 4384203.43, 13062695.43], [181, 4408560.12, 13087052.12], [182, 4432916.81, 13111408.81], [183, 4457273.49, 13135765.49]]};
 
-function fmtCOP(n){
-  return '$ ' + Math.round(n).toLocaleString('es-CO');
-}
-function fmtCOPplus(n){
-  return '+$ ' + Math.round(n).toLocaleString('es-CO');
-}
-function fmtDate(startISO, dayIdx){
+// ── helpers ──────────────────────────────────────────────
+function cop(n){ return '\$ ' + Math.round(n).toLocaleString('es-CO'); }
+function copPlus(n){ return '+\$ ' + n.toLocaleString('es-CO', {minimumFractionDigits:2,maximumFractionDigits:2}); }
+function pad(n){ return String(Math.floor(n)).padStart(2,'0'); }
+
+function dateParts(startISO, dayIdx){
   const d = new Date(startISO + 'T00:00:00');
   d.setDate(d.getDate() + dayIdx);
-  const months = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
-  return d.getDate() + ' ' + months[d.getMonth()];
+  const m = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  return d.getDate() + ' ' + m[d.getMonth()];
 }
 
-function renderTable(data, tbodyId){
+function todayDayIdx(startISO){
+  const start = new Date(startISO + 'T00:00:00');
+  const now   = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  return Math.max(0, Math.round((today - start) / 86400000));
+}
+
+// Fraction of current day elapsed (0.0–1.0) — makes ticker grow continuously
+function dayFraction(){
+  const now = new Date();
+  const secs = now.getHours()*3600 + now.getMinutes()*60 + now.getSeconds();
+  return secs / 86400;
+}
+
+// ── render day table ─────────────────────────────────────
+function renderTable(data, tbodyId, todayIdx){
   const tbody = document.getElementById(tbodyId);
+  if(!tbody) return;
   let html = '';
   data.rows.forEach(row => {
-    const [dayIdx, profit, total] = row;
-    const cls = dayIdx === 0 ? 'today' : (dayIdx > 0 && dayIdx === data.todayIdx ? 'today' : (dayIdx > data.todayIdx ? 'future' : ''));
-    html += `<tr class="${cls}"><td>${fmtDate(data.start, dayIdx)}</td><td>${dayIdx}</td><td class="profit">${fmtCOPplus(profit)}</td><td>${fmtCOP(total)}</td></tr>`;
+    const [di, profit, total] = row;
+    let cls = di < todayIdx ? 'past' : di === todayIdx ? 'is-today' : 'future';
+    html += '<tr class="'+cls+'"><td>'+dateParts(data.start,di)+'</td><td>'+di+'</td><td class="profit">'+copPlus(profit)+'</td><td>'+cop(total)+'</td></tr>';
   });
   tbody.innerHTML = html;
+  // scroll table to today row
+  setTimeout(()=>{
+    const rows = tbody.querySelectorAll('tr');
+    if(rows[todayIdx]) rows[todayIdx].scrollIntoView({block:'center',behavior:'smooth'});
+  },400);
 }
 
 function toggleTable(n){
-  const wrap = document.getElementById('wrap'+n);
-  const chev = document.getElementById('chev'+n);
-  wrap.classList.toggle('open');
-  chev.classList.toggle('open');
+  document.getElementById('wrap'+n).classList.toggle('open');
+  document.getElementById('chev'+n).classList.toggle('open');
+}
+
+// ── live update ───────────────────────────────────────────
+function computeLive(data){
+  const totalDays = data.days;
+  const totalProfit = data.totalProfit;
+  const base = data.base;
+  const profitPerDay = totalProfit / totalDays;
+  const profitPerSec = totalProfit / (totalDays * 86400);
+
+  const todayIdx = todayDayIdx(data.start);
+  const fraction = dayFraction();
+
+  // Clamp: after end date show final value, before start show base
+  let elapsedDays = Math.min(todayIdx + fraction, totalDays);
+  elapsedDays = Math.max(0, elapsedDays);
+
+  const profitNow = profitPerSec * elapsedDays * 86400;
+  const totalNow  = base + profitNow;
+
+  // Countdown to end
+  const endDate  = new Date(data.end + 'T00:00:00');
+  const msLeft   = endDate - new Date();
+  const secsLeft = Math.max(0, Math.floor(msLeft/1000));
+  const dLeft    = Math.floor(secsLeft/86400);
+  const hLeft    = Math.floor((secsLeft%86400)/3600);
+  const mLeft    = Math.floor((secsLeft%3600)/60);
+  const sLeft    = secsLeft%60;
+
+  // Progress bar %
+  const pct = Math.min(100, (elapsedDays/totalDays)*100);
+
+  return { totalNow, profitNow, todayIdx: Math.min(todayIdx, totalDays), pct,
+           dLeft, hLeft, mLeft, sLeft, profitPerDay, totalDays };
+}
+
+function update(){
+  const now = new Date();
+
+  // Clock
+  document.getElementById('clock').textContent =
+    pad(now.getHours())+':'+pad(now.getMinutes());
+
+  const r1 = computeLive(DATA1);
+  const r2 = computeLive(DATA2);
+
+  // ── Card 1 ──
+  document.getElementById('c1-live').textContent = cop(r1.totalNow);
+  document.getElementById('c1-live-sub').textContent = copPlus(r1.profitNow) + ' ganancia acumulada';
+  document.getElementById('c1-daynum').textContent  = 'Día ' + r1.todayIdx;
+  document.getElementById('c1-remaining').textContent = r1.dLeft + ' días';
+  document.getElementById('c1-bar').style.width = r1.pct.toFixed(2)+'%';
+  document.getElementById('c1-pct').textContent = 'Día '+r1.todayIdx+' de '+DATA1.days+' · '+r1.pct.toFixed(1)+'%';
+  document.getElementById('c1-dd').textContent = pad(r1.dLeft);
+  document.getElementById('c1-hh').textContent = pad(r1.hLeft);
+  document.getElementById('c1-mm').textContent = pad(r1.mLeft);
+  document.getElementById('c1-ss').textContent = pad(r1.sLeft);
+
+  // ── Card 2 ──
+  document.getElementById('c2-live').textContent = cop(r2.totalNow);
+  document.getElementById('c2-live-sub').textContent = copPlus(r2.profitNow) + ' ganancia acumulada';
+  document.getElementById('c2-daynum').textContent  = 'Día ' + r2.todayIdx;
+  document.getElementById('c2-remaining').textContent = r2.dLeft + ' días';
+  document.getElementById('c2-bar').style.width = r2.pct.toFixed(2)+'%';
+  document.getElementById('c2-pct').textContent = 'Día '+r2.todayIdx+' de '+DATA2.days+' · '+r2.pct.toFixed(1)+'%';
+  document.getElementById('c2-dd').textContent = pad(r2.dLeft);
+  document.getElementById('c2-hh').textContent = pad(r2.hLeft);
+  document.getElementById('c2-mm').textContent = pad(r2.mLeft);
+  document.getElementById('c2-ss').textContent = pad(r2.sLeft);
+
+  // ── Header totals ──
+  document.getElementById('totalBalance').textContent = cop(r1.totalNow + r2.totalNow);
+  document.getElementById('todayGrowth').textContent =
+    copPlus(r1.profitPerDay + r2.profitPerDay) +
+    ' (+' + (((r1.profitPerDay + r2.profitPerDay)/(DATA1.base+DATA2.base))*100).toFixed(3) + '% hoy)';
 }
 
 function init(){
-  DATA1.todayIdx = 0;
-  DATA2.todayIdx = 0;
-  renderTable(DATA1, 'tbody1');
-  renderTable(DATA2, 'tbody2');
+  // Render tables once
+  const ti1 = Math.min(todayDayIdx(DATA1.start), DATA1.days);
+  const ti2 = Math.min(todayDayIdx(DATA2.start), DATA2.days);
+  renderTable(DATA1,'tbody1', ti1);
+  renderTable(DATA2,'tbody2', ti2);
 
-  document.getElementById('c1-progress').style.width = '0%';
-  document.getElementById('c2-progress').style.width = '0%';
-  document.getElementById('c1-progress-pct').textContent = `Día 0 de ${DATA1.days} · 0,0%`;
-  document.getElementById('c2-progress-pct').textContent = `Día 0 de ${DATA2.days} · 0,0%`;
-
-  const totalBase = DATA1.base + DATA2.base;
-  document.getElementById('totalBalance').textContent = fmtCOP(totalBase);
+  update();
+  setInterval(update, 1000); // update every second
 }
 init();
 </script>
