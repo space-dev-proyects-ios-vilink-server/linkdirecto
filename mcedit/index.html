@@ -5,57 +5,78 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>MCEdit - Editor de Discos Musicales Minecraft</title>
+<title>MCEdit - Editor de Discos Musicales</title>
 <style>
 :root {
   --dirt: #8B6914;
-  --dirt-dark: #6B4F10;
+  --dirt-dark: #5C4410;
   --grass: #5D8C35;
   --grass-dark: #3F6F23;
   --stone: #7F7F7F;
   --stone-dark: #4A4A4A;
+  --stone-light: #A5A5A5;
   --wood: #BC9862;
   --wood-dark: #8B693F;
+  --wood-darker: #5C3A22;
+  --oak-plank: #A9834B;
   --obsidian: #1C1A26;
-  --bedrock: #0F0E16;
+  --bedrock: #100F17;
   --gold: #FFD83D;
   --iron: #D8D8D8;
   --diamond: #4BE3E0;
   --redstone: #D33A2C;
-  --emerald: #00FF00;
-  --parchment: #D4C4A8;
-  --ink: #2B2210;
+  --emerald: #17C93F;
+  --netherrack: #6B2A1E;
+  --panel: #C6C6C6;
+  --panel-dark: #8B8B8B;
+  --panel-shadow: #373737;
+  --panel-light: #FFFFFF;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
 body {
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
   background: var(--bedrock);
   color: #fff;
   min-height: 100vh;
-  overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   background-image:
-    linear-gradient(0deg, rgba(139,105,20,0.3) 0%, transparent 30%),
-    repeating-linear-gradient(90deg, transparent, transparent 16px, rgba(0,0,0,0.1) 16px, rgba(0,0,0,0.1) 18px);
+    radial-gradient(circle at 15% 8%, rgba(139,105,20,0.18) 0%, transparent 40%),
+    repeating-linear-gradient(90deg, transparent, transparent 15px, rgba(0,0,0,0.15) 15px, rgba(0,0,0,0.15) 16px),
+    repeating-linear-gradient(0deg, transparent, transparent 15px, rgba(0,0,0,0.1) 15px, rgba(0,0,0,0.1) 16px);
+  padding-bottom: 90px;
 }
 
-/* Header Minecraft */
+/* --- 9-slice GUI panel look, Minecraft inventory style --- */
+.gui-panel {
+  background: var(--panel);
+  border-top: 3px solid var(--panel-light);
+  border-left: 3px solid var(--panel-light);
+  border-right: 3px solid var(--panel-shadow);
+  border-bottom: 3px solid var(--panel-shadow);
+  box-shadow: inset 0 0 0 2px #555;
+  color: #1a1a1a;
+}
+
+.slot-well {
+  background: var(--panel-dark);
+  border-top: 2px solid var(--panel-shadow);
+  border-left: 2px solid var(--panel-shadow);
+  border-right: 2px solid #efefef;
+  border-bottom: 2px solid #efefef;
+}
+
+/* Header */
 .minecraft-header {
   background: linear-gradient(180deg, #3F6F23 0%, #2D5A18 100%);
-  border-bottom: 6px solid #1C3A10;
-  padding: 16px;
+  border-bottom: 5px solid #1C3A10;
+  padding: 14px 16px;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-  image-rendering: pixelated;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.6);
 }
 
 .header-inner {
@@ -66,522 +87,422 @@ body {
   gap: 12px;
 }
 
-.dirt-block {
-  width: 48px;
-  height: 48px;
-  background: linear-gradient(135deg, var(--dirt) 0%, var(--dirt-dark) 100%);
-  border: 4px solid #5C3A10;
-  box-shadow: inset 0 0 0 2px rgba(255,255,255,0.1);
-  image-rendering: pixelated;
-  position: relative;
+.grass-block {
+  width: 46px;
+  height: 46px;
   flex-shrink: 0;
+  position: relative;
+  border: 3px solid #1a1a1a;
+  background: linear-gradient(180deg, #6FA83B 0%, #6FA83B 32%, #8B6914 32%, #6B4F10 100%);
+  box-shadow: inset -3px -3px 0 rgba(0,0,0,0.35), inset 3px 3px 0 rgba(255,255,255,0.15);
 }
-
-.dirt-block::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 24px;
-  height: 24px;
-  background: var(--diamond);
-  border: 2px solid #0B7C79;
-  border-radius: 50%;
-  box-shadow: 0 0 10px var(--diamond);
+.grass-block::after{
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:34%;
+  background: repeating-linear-gradient(90deg, rgba(0,0,0,0.08) 0 3px, transparent 3px 7px);
 }
 
 .header-title h1 {
   font-family: 'Georgia', serif;
-  font-size: 24px;
+  font-size: 23px;
   color: #FFD700;
-  text-shadow: 3px 3px 0 #000;
-  letter-spacing: 2px;
-  margin: 0;
+  text-shadow: 2px 2px 0 #000;
+  letter-spacing: 1.5px;
 }
 
 .header-title p {
-  font-size: 12px;
-  color: #A8D870;
+  font-size: 11.5px;
+  color: #BEE79A;
   margin-top: 2px;
   text-shadow: 1px 1px 0 #000;
 }
 
 .version-tag {
-  background: rgba(0,0,0,0.5);
-  border: 2px solid #000;
-  padding: 4px 8px;
-  font-size: 10px;
+  background: rgba(0,0,0,0.45);
+  border: 1px solid #000;
+  padding: 3px 7px;
+  font-size: 9.5px;
   color: var(--diamond);
   margin-top: 6px;
   display: inline-block;
   font-family: 'Courier New', monospace;
 }
 
-/* Contenido principal */
-.main-content {
+/* Hotbar-style tab nav */
+.hotbar-nav {
+  max-width: 800px;
+  margin: 14px auto 0;
+  padding: 0 16px;
+  display: flex;
+  gap: 8px;
+}
+
+.hotbar-tab {
   flex: 1;
+  padding: 10px 8px;
+  background: linear-gradient(180deg, #8B8B8B 0%, #6B6B6B 100%);
+  border-top: 2px solid #C6C6C6;
+  border-left: 2px solid #C6C6C6;
+  border-right: 2px solid #3a3a3a;
+  border-bottom: 2px solid #3a3a3a;
+  color: #eee;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  cursor: pointer;
+  text-shadow: 1px 1px 0 #000;
+}
+
+.hotbar-tab.active {
+  background: linear-gradient(180deg, #5D8C35 0%, #3F6F23 100%);
+  border-top-color: #A8D870;
+  color: #fff;
+  box-shadow: inset 0 0 0 2px rgba(0,0,0,0.3);
+}
+
+.hotbar-icon { width: 16px; height: 16px; flex-shrink:0; }
+
+/* Main */
+.main-content {
   max-width: 800px;
   margin: 0 auto;
-  padding: 20px 16px;
-  min-height: 100vh;
+  padding: 18px 16px;
 }
+
+.view { display: none; }
+.view.active { display: block; }
 
 .section-header {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 24px;
-  padding: 12px;
-  background: rgba(0,0,0,0.3);
+  margin-bottom: 18px;
+  padding: 10px 12px;
+  background: rgba(0,0,0,0.35);
   border: 2px solid #333;
 }
 
 .jukebox-icon {
-  width: 40px;
-  height: 40px;
-  background: var(--wood);
-  border: 3px solid #5C3A10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  color: #000;
+  width: 36px;
+  height: 36px;
   flex-shrink: 0;
+  background: linear-gradient(180deg, var(--wood) 0%, var(--wood-dark) 100%);
+  border: 2px solid #3a2413;
+  position: relative;
+}
+.jukebox-icon::after{
+  content:'';
+  position:absolute; inset:8px;
+  border-radius:50%;
+  background:#1a1a1a;
+  box-shadow: 0 0 0 2px #000;
+}
+.jukebox-icon::before{
+  content:'';
+  position:absolute; top:50%; left:50%;
+  width:4px; height:4px; border-radius:50%;
+  background:#000;
+  transform:translate(-50%,-50%);
+  z-index:2;
+}
+
+.chest-icon {
+  width: 36px; height: 36px; flex-shrink:0; position:relative;
+  background: linear-gradient(180deg, var(--wood) 0%, var(--wood-dark) 100%);
+  border: 2px solid #3a2413;
+}
+.chest-icon::before{
+  content:''; position:absolute; top:42%; left:0; right:0; height:3px; background:#3a2413;
+}
+.chest-icon::after{
+  content:''; position:absolute; top:38%; left:44%; width:12%; height:10px; background:#c9a545; border:1px solid #3a2413;
 }
 
 .section-header h2 {
   font-family: 'Georgia', serif;
-  font-size: 18px;
+  font-size: 16px;
   color: var(--gold);
   text-shadow: 2px 2px 0 #000;
 }
 
-/* Grid de discos */
+/* Disc grid */
 .disc-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+  gap: 10px;
 }
 
 .disc-slot {
   background: linear-gradient(180deg, var(--stone) 0%, var(--stone-dark) 100%);
-  border: 3px solid #000;
-  padding: 12px;
+  border-top: 2px solid #B0B0B0;
+  border-left: 2px solid #B0B0B0;
+  border-right: 2px solid #2a2a2a;
+  border-bottom: 2px solid #2a2a2a;
+  padding: 10px;
   cursor: pointer;
-  transition: all 0.1s ease;
-  box-shadow: 0 4px 0 rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+  box-shadow: 0 3px 0 rgba(0,0,0,0.4);
   position: relative;
 }
 
-.disc-slot:hover {
-  background: linear-gradient(180deg, #999 0%, #666 100%);
-}
-
-.disc-slot:active {
-  transform: translateY(2px);
-  box-shadow: 0 2px 0 rgba(0,0,0,0.4);
-}
-
-.disc-slot.custom {
-  border-color: var(--gold);
-  box-shadow: 0 0 15px rgba(255,215,0,0.3), 0 4px 0 rgba(0,0,0,0.4);
-}
-
-.disc-slot.custom::after {
-  content: '';
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  width: 12px;
-  height: 12px;
-  background: var(--emerald);
-  border: 2px solid #000;
-}
+.disc-slot:active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(0,0,0,0.4); }
 
 .disc-art {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto 8px;
+  width: 74px;
+  height: 74px;
+  margin: 0 auto 7px;
   border-radius: 50%;
-  border: 3px solid #000;
+  border: 2px solid #000;
   overflow: hidden;
-  background: #1a1a1a;
-  position: relative;
+  background: #0d0d0d;
 }
 
-.disc-art img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+.disc-art img { width: 100%; height: 100%; object-fit: cover; }
 
 .disc-name {
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: bold;
   text-align: center;
   color: #fff;
   text-shadow: 1px 1px 0 #000;
+  line-height: 1.25;
 }
 
-.disc-version {
-  font-size: 10px;
-  color: #aaa;
+.disc-sub {
+  font-size: 9px;
+  color: #9a9a9a;
   text-align: center;
   margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
 }
 
-/* Panel inferior */
-.backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.7);
-  z-index: 200;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-
-.backdrop.active {
-  opacity: 1;
-  pointer-events: all;
-}
-
-.editor-sheet {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 201;
-  background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
-  border-top: 5px solid var(--dirt-dark);
-  box-shadow: 0 -8px 20px rgba(0,0,0,0.8);
-  transform: translateY(100%);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  max-height: 85vh;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-.editor-sheet.active {
-  transform: translateY(0);
-}
-
-.sheet-header {
-  padding: 16px;
-  border-bottom: 2px solid #333;
+/* History / Trash */
+.pack-card {
   display: flex;
   align-items: center;
   gap: 12px;
-  position: sticky;
-  top: 0;
-  background: #2a2a2a;
-  z-index: 10;
+  padding: 10px;
+  margin-bottom: 8px;
+  background: linear-gradient(180deg, #3a3a3a 0%, #262626 100%);
+  border-top: 2px solid #555;
+  border-left: 2px solid #555;
+  border-right: 2px solid #111;
+  border-bottom: 2px solid #111;
+  cursor: pointer;
 }
 
-.sheet-disc-preview {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  border: 3px solid #000;
-  overflow: hidden;
-  flex-shrink: 0;
+.pack-thumb {
+  width: 44px; height: 44px; border-radius: 50%; border: 2px solid #000; flex-shrink: 0; overflow: hidden;
 }
+.pack-thumb img { width: 100%; height: 100%; object-fit: cover; }
 
-.sheet-disc-preview img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+.pack-info { flex: 1; min-width: 0; }
+.pack-info .pname { font-size: 13px; font-weight: bold; color: #fff; text-shadow: 1px 1px 0 #000; }
+.pack-info .pmeta { font-size: 10.5px; color: #999; margin-top: 2px; }
 
-.sheet-info h3 {
-  font-family: 'Georgia', serif;
-  font-size: 18px;
-  color: var(--gold);
+.icon-btn {
+  width: 34px; height: 34px; flex-shrink: 0;
+  background: linear-gradient(180deg, #6B6B6B 0%, #444 100%);
+  border-top: 2px solid #999; border-left: 2px solid #999;
+  border-right: 2px solid #111; border-bottom: 2px solid #111;
+  display: flex; align-items: center; justify-content: center;
 }
+.icon-btn.danger { background: linear-gradient(180deg, #C9432F 0%, #7A1C14 100%); }
+.icon-btn.ok { background: linear-gradient(180deg, var(--grass) 0%, var(--grass-dark) 100%); }
+.icon-btn svg { width: 16px; height: 16px; }
 
-.sheet-info p {
-  font-size: 12px;
-  color: #999;
+.empty-state {
+  text-align: center;
+  padding: 30px 16px;
+  color: #888;
+  font-size: 13px;
+  border: 2px dashed #444;
 }
+.empty-state .empty-icon { width: 40px; height: 40px; margin: 0 auto 10px; opacity: 0.5; }
+
+.subtab-row { display:flex; gap:8px; margin-bottom: 14px; }
+.subtab {
+  flex:1; text-align:center; padding: 8px; font-size: 11.5px; font-weight:bold; letter-spacing:0.4px;
+  background: linear-gradient(180deg, #555 0%, #333 100%);
+  color:#ccc; cursor:pointer; border: 2px solid #1a1a1a;
+}
+.subtab.active { background: linear-gradient(180deg, var(--wood) 0%, var(--wood-dark) 100%); color:#2B2210; }
+.limit-note { font-size: 10px; color:#777; text-align:right; margin-bottom:10px; }
+
+/* Panels */
+.backdrop {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200;
+  opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
+}
+.backdrop.active { opacity: 1; pointer-events: all; }
+
+.editor-sheet {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 201;
+  background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
+  border-top: 4px solid var(--dirt-dark);
+  box-shadow: 0 -8px 20px rgba(0,0,0,0.8);
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  max-height: 88vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.editor-sheet.active { transform: translateY(0); }
+
+.sheet-header {
+  padding: 14px 16px; border-bottom: 2px solid #333;
+  display: flex; align-items: center; gap: 12px;
+  position: sticky; top: 0; background: #2a2a2a; z-index: 10;
+}
+.sheet-disc-preview { width: 52px; height: 52px; border-radius: 50%; border: 2px solid #000; overflow: hidden; flex-shrink: 0; }
+.sheet-disc-preview img { width: 100%; height: 100%; object-fit: cover; }
+.sheet-info h3 { font-family: 'Georgia', serif; font-size: 16px; color: var(--gold); text-shadow: 1px 1px 0 #000; }
+.sheet-info p { font-size: 11px; color: #999; }
 
 .close-sheet {
-  margin-left: auto;
-  width: 32px;
-  height: 32px;
-  background: var(--redstone);
-  border: 2px solid #7A1C14;
-  color: #fff;
-  font-size: 16px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+  margin-left: auto; width: 30px; height: 30px;
+  background: linear-gradient(180deg, var(--redstone) 0%, #7A1C14 100%);
+  border-top: 2px solid #f28b7f; border-left: 2px solid #f28b7f;
+  border-right: 2px solid #4a0e08; border-bottom: 2px solid #4a0e08;
+  color: #fff; font-size: 14px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
 
-.sheet-body {
-  padding: 16px;
-}
+.sheet-body { padding: 16px; }
 
-.info-box {
-  background: rgba(0,0,0,0.3);
-  border: 2px solid #444;
-  padding: 12px;
-  margin-bottom: 16px;
-}
+.info-box { background: rgba(0,0,0,0.3); border: 2px solid #444; padding: 12px; margin-bottom: 16px; }
+.info-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid #333; gap: 10px; }
+.info-row:last-child { border-bottom: none; }
+.info-label { font-size: 10.5px; color: #999; text-transform: uppercase; letter-spacing: 0.3px; }
+.info-value { font-size: 11.5px; color: var(--diamond); font-family: 'Courier New', monospace; text-align: right; word-break: break-all; }
+.compatibility-note { font-size: 10.5px; color: var(--emerald); margin-top: 8px; padding-top: 8px; border-top: 1px dashed #333; }
 
-.info-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px solid #333;
-}
-
-.info-row:last-child {
-  border-bottom: none;
-}
-
-.info-label {
-  font-size: 11px;
-  color: #999;
-  text-transform: uppercase;
-}
-
-.info-value {
-  font-size: 12px;
-  color: var(--diamond);
-  font-family: 'Courier New', monospace;
-}
-
-.compatibility-note {
-  font-size: 11px;
-  color: var(--emerald);
-  margin-top: 8px;
-  padding-top: 8px;
-  border-top: 1px dashed #333;
-}
-
-/* Botones estilo Minecraft */
 .mc-button {
-  width: 100%;
-  padding: 14px;
-  border: 3px solid #000;
-  font-family: 'Georgia', serif;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-bottom: 10px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: all 0.1s ease;
-  box-shadow: 0 4px 0 rgba(0,0,0,0.4);
-  color: #fff;
+  width: 100%; padding: 13px; border: none;
+  font-family: 'Georgia', serif; font-size: 13.5px; font-weight: bold;
+  cursor: pointer; margin-bottom: 9px; text-transform: uppercase; letter-spacing: 0.8px;
+  color: #fff; position: relative;
 }
-
-.mc-button:active {
-  transform: translateY(3px);
-  box-shadow: 0 1px 0 rgba(0,0,0,0.4);
-}
-
-.mc-button:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-.btn-stone {
-  background: linear-gradient(180deg, var(--stone) 0%, var(--stone-dark) 100%);
-  color: #fff;
-}
+.mc-button:active { transform: translateY(2px); }
+.mc-button:disabled { opacity: 0.4; cursor: not-allowed; }
 
 .btn-wood {
   background: linear-gradient(180deg, var(--wood) 0%, var(--wood-dark) 100%);
   color: #2B2210;
+  border-top: 2px solid #DEC08A; border-left: 2px solid #DEC08A;
+  border-right: 2px solid #5C4222; border-bottom: 2px solid #5C4222;
 }
-
 .btn-grass {
   background: linear-gradient(180deg, var(--grass) 0%, var(--grass-dark) 100%);
+  border-top: 2px solid #92C464; border-left: 2px solid #92C464;
+  border-right: 2px solid #21400F; border-bottom: 2px solid #21400F;
 }
-
 .btn-gold {
   background: linear-gradient(180deg, var(--gold) 0%, #B8952F 100%);
   color: #2B2210;
+  border-top: 2px solid #FFF0A0; border-left: 2px solid #FFF0A0;
+  border-right: 2px solid #6B551A; border-bottom: 2px solid #6B551A;
+}
+.btn-stone {
+  background: linear-gradient(180deg, var(--stone) 0%, var(--stone-dark) 100%);
+  border-top: 2px solid #B0B0B0; border-left: 2px solid #B0B0B0;
+  border-right: 2px solid #2a2a2a; border-bottom: 2px solid #2a2a2a;
 }
 
 .file-indicator {
-  background: rgba(0,0,0,0.5);
-  border: 2px solid #555;
-  padding: 10px;
-  font-size: 12px;
-  color: #aaa;
-  margin: 10px 0;
-  word-break: break-all;
-  display: none;
+  background: rgba(0,0,0,0.5); border: 2px solid #555; padding: 9px;
+  font-size: 11.5px; color: #aaa; margin: 10px 0; word-break: break-all; display: none;
 }
+.file-indicator.show { display: block; }
 
-.file-indicator.show {
-  display: block;
-}
+.progress-section { display: none; margin: 16px 0; }
+.progress-section.show { display: block; }
+.progress-label { font-size: 11.5px; color: #aaa; margin-bottom: 8px; }
+.xp-bar { height: 16px; background: #000; border: 2px solid #333; display: flex; gap: 2px; padding: 2px; }
+.xp-segment { flex: 1; background: #333; transition: background 0.25s ease; }
+.xp-segment.filled { background: linear-gradient(180deg, var(--emerald) 0%, #0a7a24 100%); }
 
-/* Barra de progreso estilo XP */
-.progress-section {
-  display: none;
-  margin: 16px 0;
-}
+.result-section { display: none; margin-top: 16px; }
+.result-section.show { display: block; }
 
-.progress-section.show {
-  display: block;
+/* Camouflaged creator sign */
+.creator-sign {
+  max-width: 800px; margin: 22px auto 0; padding: 0 16px;
+  display: flex; justify-content: center;
 }
-
-.progress-label {
-  font-size: 12px;
-  color: #aaa;
-  margin-bottom: 8px;
+.sign-post {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: linear-gradient(180deg, var(--oak-plank) 0%, #7a5c30 100%);
+  border-top: 2px solid #c9a25f; border-left: 2px solid #c9a25f;
+  border-right: 2px solid #4a3618; border-bottom: 2px solid #4a3618;
+  padding: 9px 16px 9px 12px;
+  color: #2b2210;
+  font-size: 11.5px;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
 }
-
-.xp-bar {
-  height: 18px;
-  background: #000;
-  border: 2px solid #333;
-  display: flex;
-  gap: 2px;
-  padding: 2px;
+.sign-post::after{
+  content:''; position:absolute; left:50%; bottom:-9px; transform:translateX(-50%);
+  width: 6px; height: 9px; background: var(--wood-darker);
 }
-
-.xp-segment {
-  flex: 1;
-  background: #333;
-  transition: background 0.3s ease;
-}
-
-.xp-segment.filled {
-  background: linear-gradient(180deg, var(--emerald) 0%, #008800 100%);
-}
-
-.result-section {
-  display: none;
-  margin-top: 16px;
-}
-
-.result-section.show {
-  display: block;
-}
-
-/* Tutorial */
-.tutorial-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  z-index: 300;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-
-.tutorial-card {
-  background: linear-gradient(180deg, #3a3a2a 0%, #2a2a1a 100%);
-  border: 5px solid #5C3A10;
-  box-shadow: 0 8px 0 rgba(0,0,0,0.5), inset 0 0 20px rgba(0,0,0,0.3);
-  max-width: 420px;
-  width: 100%;
-  padding: 24px;
-  image-rendering: pixelated;
-}
-
-.tutorial-icon {
-  width: 64px;
-  height: 64px;
-  margin: 0 auto 16px;
-  background: var(--obsidian);
-  border: 4px solid #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 32px;
-  color: var(--diamond);
-  box-shadow: 0 0 15px rgba(75,227,224,0.3);
-}
-
-.tutorial-title {
-  font-family: 'Georgia', serif;
-  font-size: 20px;
-  color: var(--gold);
-  text-align: center;
-  margin-bottom: 12px;
-  text-shadow: 2px 2px 0 #000;
-}
-
-.tutorial-text {
-  font-size: 15px;
-  color: #ddd;
-  text-align: center;
-  line-height: 1.5;
-  min-height: 70px;
-}
-
-.tutorial-dots {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin: 16px 0;
-}
-
-.tutorial-dot {
-  width: 10px;
-  height: 10px;
-  background: #555;
-  border: 2px solid #000;
-}
-
-.tutorial-dot.active {
-  background: var(--gold);
-}
-
-.tutorial-nav {
-  display: flex;
-  gap: 8px;
-}
-
-.tutorial-checkbox {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  justify-content: center;
-  margin-top: 12px;
-  font-size: 13px;
-  color: #aaa;
-}
+.sign-note-icon { width: 14px; height: 14px; flex-shrink:0; }
 
 /* Footer */
 .minecraft-footer {
-  text-align: center;
-  padding: 20px;
-  font-size: 11px;
-  color: #666;
-  border-top: 2px solid #222;
-  margin-top: 20px;
+  text-align: center; padding: 20px 16px 10px;
+  font-size: 10.5px; color: #5c5c5c; margin-top: 10px;
 }
 
+/* Coachmark tutorial */
+.coach-overlay { position: fixed; inset: 0; z-index: 400; display: none; }
+.coach-overlay.active { display: block; }
+.coach-hole {
+  position: absolute;
+  border: 3px solid var(--gold);
+  box-shadow: 0 0 0 3000px rgba(0,0,0,0.82);
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+  pointer-events: none;
+}
+.coach-tip {
+  position: absolute;
+  max-width: 280px;
+  background: linear-gradient(180deg, #3a3a2a 0%, #2a2a1a 100%);
+  border: 3px solid #5C3A10;
+  box-shadow: 0 6px 0 rgba(0,0,0,0.5);
+  padding: 14px;
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+.coach-tip .ct-title { font-family:'Georgia',serif; font-size: 14px; color: var(--gold); margin-bottom:6px; text-shadow: 1px 1px 0 #000; }
+.coach-tip .ct-text { font-size: 12.5px; color: #ddd; line-height: 1.4; }
+.coach-arrow {
+  position: absolute; width: 14px; height: 14px;
+  background: linear-gradient(180deg, #3a3a2a 0%, #2a2a1a 100%);
+  border: 3px solid #5C3A10;
+  border-bottom: none; border-right: none;
+  transform: rotate(45deg);
+}
+.coach-nav { display:flex; justify-content: space-between; align-items:center; margin-top: 12px; gap:8px; }
+.coach-dots { display:flex; gap:5px; }
+.coach-dot { width: 7px; height: 7px; background:#555; border:1px solid #000; }
+.coach-dot.active { background: var(--gold); }
+.coach-btn {
+  padding: 7px 12px; font-size: 11px; font-weight:bold; cursor:pointer;
+  background: linear-gradient(180deg, var(--grass) 0%, var(--grass-dark) 100%);
+  border-top: 2px solid #92C464; border-bottom: 2px solid #21400F;
+  color:#fff; text-transform: uppercase;
+}
+.coach-skip { font-size: 10.5px; color:#888; text-decoration: underline; cursor:pointer; }
+
 @media (max-width: 600px) {
-  .disc-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-  
-  .disc-slot {
-    padding: 10px;
-  }
-  
-  .disc-art {
-    width: 60px;
-    height: 60px;
-  }
-  
-  .header-title h1 {
-    font-size: 20px;
-  }
+  .disc-grid { grid-template-columns: repeat(2, 1fr); gap: 9px; }
+  .disc-art { width: 58px; height: 58px; }
+  .header-title h1 { font-size: 19px; }
 }
 </style>
 </head>
@@ -589,29 +510,67 @@ body {
 
 <header class="minecraft-header">
   <div class="header-inner">
-    <div class="dirt-block"></div>
+    <div class="grass-block"></div>
     <div class="header-title">
       <h1>MCEdit</h1>
       <p>Personaliza los discos musicales de Minecraft Bedrock</p>
-      <div class="version-tag">Compatible: Bedrock 1.16.0+ | Datos actualizados 07/2026</div>
+      <div class="version-tag" id="versionTag">Compatible: Bedrock 1.16.0+</div>
     </div>
   </div>
 </header>
 
-<main class="main-content">
-  <div class="section-header">
-    <div class="jukebox-icon">♫</div>
-    <h2>Selecciona un disco para personalizar</h2>
+<nav class="hotbar-nav">
+  <div class="hotbar-tab active" id="tabDiscos" data-view="discos">
+    <svg class="hotbar-icon" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7" fill="#1a1a1a" stroke="#fff" stroke-width="1"/><circle cx="8" cy="8" r="2.4" fill="#FFD83D"/></svg>
+    Discos
   </div>
-  
-  <div class="disc-grid" id="discGrid"></div>
-  
-  <footer class="minecraft-footer">
-    MCEdit no esta afiliado a Mojang Studios ni a Microsoft. Minecraft es una marca registrada de Mojang Synergies AB.<br>
-    Los identificadores de sonido corresponden a las versiones oficiales de Minecraft Bedrock Edition.<br>
-    Formatos soportados: MP3, WAV, OGG, M4A, AAC, FLAC y mas.
-  </footer>
+  <div class="hotbar-tab" id="tabHistorial" data-view="historial">
+    <svg class="hotbar-icon" viewBox="0 0 16 16"><rect x="2" y="6" width="12" height="8" fill="#BC9862" stroke="#fff" stroke-width="1"/><rect x="2" y="6" width="12" height="2" fill="#8B693F"/><rect x="7" y="7.2" width="2" height="1.6" fill="#333"/></svg>
+    Historial
+  </div>
+</nav>
+
+<main class="main-content">
+
+  <!-- Vista: Discos -->
+  <div class="view active" id="viewDiscos">
+    <div class="section-header">
+      <div class="jukebox-icon"></div>
+      <h2>Selecciona un disco para personalizar</h2>
+    </div>
+    <div class="disc-grid" id="discGrid"></div>
+  </div>
+
+  <!-- Vista: Historial -->
+  <div class="view" id="viewHistorial">
+    <div class="section-header">
+      <div class="chest-icon"></div>
+      <h2 id="histTitle">Paquetes guardados</h2>
+    </div>
+
+    <div class="subtab-row">
+      <div class="subtab active" id="subtabSaved">Guardados</div>
+      <div class="subtab" id="subtabTrash">Papelera</div>
+    </div>
+    <div class="limit-note" id="limitNote">Maximo 5 guardados</div>
+
+    <div id="historyList"></div>
+  </div>
+
 </main>
+
+<div class="creator-sign">
+  <a class="sign-post" id="creatorSign" target="_blank" rel="noopener">
+    <svg class="sign-note-icon" viewBox="0 0 16 16"><rect x="1" y="2" width="10" height="9" fill="#e8dcb8" stroke="#3a2f18" stroke-width="1"/><line x1="3" y1="4.5" x2="9" y2="4.5" stroke="#3a2f18" stroke-width="1"/><line x1="3" y1="6.5" x2="9" y2="6.5" stroke="#3a2f18" stroke-width="1"/><line x1="3" y1="8.5" x2="7" y2="8.5" stroke="#3a2f18" stroke-width="1"/></svg>
+    Canal del creador
+  </a>
+</div>
+
+<footer class="minecraft-footer">
+  MCEdit no esta afiliado a Mojang Studios ni a Microsoft. Minecraft es una marca registrada de Mojang Synergies AB.<br>
+  Los identificadores de sonido corresponden a Minecraft Bedrock Edition.<br>
+  Formatos soportados: MP3, WAV, OGG, M4A, AAC, FLAC y mas.
+</footer>
 
 <!-- Panel de edicion -->
 <div class="backdrop" id="backdrop"></div>
@@ -625,202 +584,184 @@ body {
     </div>
     <button class="close-sheet" id="closeSheet">X</button>
   </div>
-  
+
   <div class="sheet-body">
     <div class="info-box">
-      <div class="info-row">
-        <span class="info-label">ID del Sonido</span>
-        <span class="info-value" id="soundId">-</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">Ruta del Archivo</span>
-        <span class="info-value" id="soundPath">-</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">Formato de Salida</span>
-        <span class="info-value">WAV / 44.1kHz / Mono</span>
-      </div>
-      <div class="compatibility-note" id="compatNote">
-        Compatible con Minecraft Bedrock 1.16.0 en adelante.
-      </div>
+      <div class="info-row"><span class="info-label">ID del Sonido</span><span class="info-value" id="soundId">-</span></div>
+      <div class="info-row"><span class="info-label">Ruta del Archivo</span><span class="info-value" id="soundPath">-</span></div>
+      <div class="info-row"><span class="info-label">Formato de Salida</span><span class="info-value">WAV / 44.1kHz / Mono</span></div>
+      <div class="compatibility-note" id="compatNote">Compatible con Minecraft Bedrock 1.16.0 en adelante.</div>
     </div>
-    
-    <button class="mc-button btn-wood" id="selectFileBtn">
-      Seleccionar archivo de audio
-    </button>
-    
+
+    <button class="mc-button btn-wood" id="selectFileBtn">Seleccionar archivo de audio</button>
+
     <input type="file" id="fileInput" accept="audio/*,video/*,.mp3,.wav,.ogg,.m4a,.aac,.flac,.wma,.aiff,.caf,.m4r,.3gp" style="display:none;">
     <input type="file" id="fileInputAll" accept="*/*" style="display:none;">
-    
+
     <div class="file-indicator" id="fileIndicator"></div>
-    
+
     <div class="progress-section" id="progressSection">
       <div class="progress-label" id="progressLabel">Preparando...</div>
       <div class="xp-bar" id="xpBar">
-        <div class="xp-segment"></div>
-        <div class="xp-segment"></div>
-        <div class="xp-segment"></div>
-        <div class="xp-segment"></div>
-        <div class="xp-segment"></div>
-        <div class="xp-segment"></div>
-        <div class="xp-segment"></div>
-        <div class="xp-segment"></div>
+        <div class="xp-segment"></div><div class="xp-segment"></div><div class="xp-segment"></div><div class="xp-segment"></div>
+        <div class="xp-segment"></div><div class="xp-segment"></div><div class="xp-segment"></div><div class="xp-segment"></div>
       </div>
     </div>
-    
-    <button class="mc-button btn-gold" id="convertBtn" disabled>
-      Convertir y generar paquete .mcpack
-    </button>
-    
+
+    <button class="mc-button btn-gold" id="convertBtn" disabled>Convertir y generar paquete .mcpack</button>
+
     <div class="result-section" id="resultSection">
       <div class="info-box" style="border-color: var(--grass);">
-        <div class="info-row">
-          <span class="info-label">Paquete Generado</span>
-          <span class="info-value" id="resultFileName">-</span>
-        </div>
-        <div style="font-size:12px;color:#aaa;margin-top:8px;">
-          El paquete incluye manifest.json, sonido en formato WAV, y pack_icon.png
-        </div>
+        <div class="info-row"><span class="info-label">Paquete Generado</span><span class="info-value" id="resultFileName">-</span></div>
+        <div style="font-size:11.5px;color:#aaa;margin-top:8px;">El paquete incluye manifest.json, sonido en formato WAV, y pack_icon.png. Se guardo automaticamente en tu Historial.</div>
       </div>
-      
-      <button class="mc-button btn-grass" id="downloadBtn">
-        Descargar y abrir en Minecraft
-      </button>
-      
-      <button class="mc-button btn-stone" id="resetBtn">
-        Personalizar otro disco
-      </button>
-      
-      <div class="info-box" style="font-size:12px;color:#aaa;">
+      <button class="mc-button btn-grass" id="downloadBtn">Descargar y abrir en Minecraft</button>
+      <button class="mc-button btn-stone" id="resetBtn">Personalizar otro disco</button>
+      <div class="info-box" style="font-size:11.5px;color:#aaa;">
         <strong>Instrucciones:</strong> Abre el archivo .mcpack descargado. Minecraft se abrira automaticamente y te ofrecera importar el paquete de recursos.
       </div>
     </div>
   </div>
 </div>
 
-<!-- Tutorial -->
-<div class="tutorial-overlay" id="tutorialOverlay" style="display:none;">
-  <div class="tutorial-card">
-    <div class="tutorial-icon" id="tutorialIcon">★</div>
-    <div class="tutorial-title" id="tutorialTitle">Bienvenido a MCEdit</div>
-    <div class="tutorial-text" id="tutorialText"></div>
-    <div class="tutorial-dots" id="tutorialDots"></div>
-    <div class="tutorial-nav">
-      <button class="mc-button btn-stone" id="tutorialPrev" style="display:none;">Anterior</button>
-      <button class="mc-button btn-grass" id="tutorialNext">Siguiente</button>
+<!-- Tutorial coachmark -->
+<div class="coach-overlay" id="coachOverlay">
+  <div class="coach-hole" id="coachHole"></div>
+  <div class="coach-arrow" id="coachArrow"></div>
+  <div class="coach-tip" id="coachTip">
+    <div class="ct-title" id="coachTitle">Bienvenido</div>
+    <div class="ct-text" id="coachText">texto</div>
+    <div class="coach-dots" id="coachDots"></div>
+    <div class="coach-nav">
+      <span class="coach-skip" id="coachSkip">No mostrar de nuevo</span>
+      <button class="coach-btn" id="coachNext">Siguiente</button>
     </div>
-    <label class="tutorial-checkbox">
-      <input type="checkbox" id="dontShowAgain">
-      No mostrar este tutorial nuevamente
-    </label>
   </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
-// Datos completos de discos de Minecraft Bedrock
+// ===================== CATALOGO DE DISCOS (Bedrock, actualizado) =====================
+// Colores basados en la descripcion oficial de materiales de cada disco (netherrack, cobre,
+// tuff, sculk, etc.) recreados de forma original: no son texturas extraidas del juego.
 const DISCS = [
-  {id:"13", name:"13", sound:"record.13", color:"#8B8B8B", stripe:"#6B6B6B", version:"Todas las versiones", classic:true},
-  {id:"cat", name:"Cat", sound:"record.cat", color:"#E8A6C1", stripe:"#C8849F", version:"Todas las versiones", classic:true},
-  {id:"blocks", name:"Blocks", sound:"record.blocks", color:"#C98A4B", stripe:"#A66C35", version:"Todas las versiones", classic:true},
-  {id:"chirp", name:"Chirp", sound:"record.chirp", color:"#E0C34A", stripe:"#B89F35", version:"Todas las versiones", classic:true},
-  {id:"far", name:"Far", sound:"record.far", color:"#4B8EE0", stripe:"#3570B8", version:"Todas las versiones", classic:true},
-  {id:"mall", name:"Mall", sound:"record.mall", color:"#9A6AD8", stripe:"#7B4FB8", version:"Todas las versiones", classic:true},
-  {id:"mellohi", name:"Mellohi", sound:"record.mellohi", color:"#E0E0E0", stripe:"#B8B8B8", version:"Todas las versiones", classic:true},
-  {id:"stal", name:"Stal", sound:"record.stal", color:"#C9C9A0", stripe:"#A6A680", version:"Todas las versiones", classic:true},
-  {id:"strad", name:"Strad", sound:"record.strad", color:"#7A5330", stripe:"#5C3D22", version:"Todas las versiones", classic:true},
-  {id:"ward", name:"Ward", sound:"record.ward", color:"#4C6B52", stripe:"#354C3A", version:"Todas las versiones", classic:true},
-  {id:"11", name:"11", sound:"record.11", color:"#2B2B2B", stripe:"#1A1A1A", version:"Todas las versiones", classic:true},
-  {id:"wait", name:"Wait", sound:"record.wait", color:"#5AA0C9", stripe:"#3D7DA6", version:"Todas las versiones", classic:true},
-  {id:"pigstep", name:"Pigstep", sound:"record.pigstep", color:"#C9482F", stripe:"#A63522", version:"1.16+", classic:false},
-  {id:"otherside", name:"Otherside", sound:"record.otherside", color:"#3AA0D8", stripe:"#2880B0", version:"1.18+", classic:false},
-  {id:"5", name:"5", sound:"record.5", color:"#5A4A8A", stripe:"#3D3068", version:"1.19+", classic:false},
-  {id:"relic", name:"Relic", sound:"record.relic", color:"#A0432F", stripe:"#803522", version:"1.20+", classic:false},
-  {id:"precipice", name:"Precipice", sound:"record.precipice", color:"#7A9A8A", stripe:"#5C7A6A", version:"1.21+", classic:false},
-  {id:"creator", name:"Creator", sound:"record.creator", color:"#C98A3A", stripe:"#A66C28", version:"1.21+", classic:false},
-  {id:"creator_music_box", name:"Creator (Music Box)", sound:"record.creator_music_box", color:"#D8A84A", stripe:"#B88835", version:"1.21+", classic:false}
+  {id:"13", name:"13", sound:"record.13", base:"#3d3d3d", ring:"#2b2b2b", center:"#6b2c2c", version:"Todas las versiones", note:"Disco clasico. Suena al encontrar un cofre de mazmorra."},
+  {id:"cat", name:"Cat", sound:"record.cat", base:"#3d3d3d", ring:"#2b2b2b", center:"#c9793f", version:"Todas las versiones", note:"Disco clasico, compuesto por C418."},
+  {id:"blocks", name:"Blocks", sound:"record.blocks", base:"#3d3d3d", ring:"#2b2b2b", center:"#4a6b3d", version:"Todas las versiones", note:"Disco clasico, compuesto por C418."},
+  {id:"chirp", name:"Chirp", sound:"record.chirp", base:"#3d3d3d", ring:"#2b2b2b", center:"#c9a53f", version:"Todas las versiones", note:"Disco clasico, compuesto por C418."},
+  {id:"far", name:"Far", sound:"record.far", base:"#3d3d3d", ring:"#2b2b2b", center:"#3f5f8c", version:"Todas las versiones", note:"Disco clasico, compuesto por C418."},
+  {id:"mall", name:"Mall", sound:"record.mall", base:"#3d3d3d", ring:"#2b2b2b", center:"#8c3f7a", version:"Todas las versiones", note:"Disco clasico, compuesto por C418."},
+  {id:"mellohi", name:"Mellohi", sound:"record.mellohi", base:"#3d3d3d", ring:"#2b2b2b", center:"#c9c9c9", version:"Todas las versiones", note:"Disco clasico, compuesto por C418."},
+  {id:"stal", name:"Stal", sound:"record.stal", base:"#3d3d3d", ring:"#2b2b2b", center:"#a89968", version:"Todas las versiones", note:"Disco clasico, compuesto por C418."},
+  {id:"strad", name:"Strad", sound:"record.strad", base:"#3d3d3d", ring:"#2b2b2b", center:"#6b4423", version:"Todas las versiones", note:"Disco clasico, compuesto por C418."},
+  {id:"ward", name:"Ward", sound:"record.ward", base:"#3d3d3d", ring:"#2b2b2b", center:"#3f5c46", version:"Todas las versiones", note:"Disco clasico, compuesto por C418."},
+  {id:"11", name:"11", sound:"record.11", base:"#2b2b2b", ring:"#1a1a1a", center:"#1a0808", cracked:true, version:"Todas las versiones", note:"Disco agrietado. El unico disco clasico sin acortar."},
+  {id:"wait", name:"Wait", sound:"record.wait", base:"#3d3d3d", ring:"#2b2b2b", center:"#4f7ea8", version:"Todas las versiones", note:"Antes llamado 'Where are we now'."},
+  {id:"pigstep", name:"Pigstep", sound:"record.pigstep", base:"#7a2314", ring:"#4a1209", center:"#d4af37", version:"1.16+", note:"Disco de netherrack con centro dorado. Se obtiene en cofres de bastion."},
+  {id:"otherside", name:"otherside", sound:"record.otherside", base:"#3d3d3d", ring:"#2b2b2b", center:"multicolor", version:"1.18+", note:"Compuesto por Lena Raine. Se encuentra en mazmorras, ciudades antiguas y fortalezas."},
+  {id:"5", name:"5", sound:"record.5", base:"#0a3d3d", ring:"#062626", center:"#0ff0dc", glow:true, version:"1.19+", note:"Anillo bioluminiscente tipo sculk. Es el unico disco craftable."},
+  {id:"relic", name:"Relic", sound:"record.relic", base:"#8c3a2a", ring:"#5c2418", center:"#a8d4e8", version:"1.20+", note:"Disco color ladrillo con centro azul cielo palido."},
+  {id:"creator", name:"Creator", sound:"record.creator", base:"#b87333", ring:"#8a5220", center:"#d4af37", version:"1.21+", note:"Disco de cobre con centro dorado. Se obtiene en boveda."},
+  {id:"creator_music_box", name:"Creator (Music Box)", sound:"record.creator_music_box", base:"#a8632c", ring:"#7a481f", center:"#d4af37", version:"1.21+", note:"Version caja musical. Se encuentra en macetas de camaras de prueba."},
+  {id:"precipice", name:"Precipice", sound:"record.precipice", base:"#6e6a5e", ring:"#4a473e", center:"#b87333", version:"1.21+", note:"Disco de tuff con anillo de cobre oxidado."},
+  {id:"tears", name:"Tears", sound:"record.tears", base:"#e8e4d8", ring:"#c9c4b0", center:"#dcd8c8", version:"1.21.60+", note:"Compuesto por Amos Roddy. Lo sueltan los ghast al reflejar su bola de fuego."},
+  {id:"lava_chicken", name:"Lava Chicken", sound:"record.lava_chicken", base:"#c0392b", ring:"#7a1f14", center:"#f0ede0", version:"1.21.60+", note:"Version de 'Steve's Lava Chicken'. La sueltan los jockeys de pollo zombie."},
+  {id:"bounce", name:"Bounce", sound:"record.bounce", base:"#4a3f8c", ring:"#2e2758", center:"#f2a65a", version:"26.30+", note:"Compuesto por fingerspit. Se encuentra en vagonetas de cuevas de azufre."}
 ];
 
-// Generar textura de disco realista
+// ===================== TEXTURAS PROCEDURALES (originales, estilo Minecraft) =====================
 function generateDiscTexture(disc) {
   const canvas = document.createElement('canvas');
-  canvas.width = 200;
-  canvas.height = 200;
+  canvas.width = 200; canvas.height = 200;
   const ctx = canvas.getContext('2d');
-  
-  // Disco base
-  ctx.beginPath();
-  ctx.arc(100, 100, 95, 0, Math.PI * 2);
-  ctx.fillStyle = '#1a1a1a';
-  ctx.fill();
-  
-  // Anillos del disco
-  for (let i = 0; i < 20; i++) {
+
+  ctx.beginPath(); ctx.arc(100,100,95,0,Math.PI*2); ctx.fillStyle = '#141414'; ctx.fill();
+
+  for (let i = 0; i < 18; i++) {
     ctx.beginPath();
-    ctx.arc(100, 100, 92 - i * 4.5, 0, Math.PI * 2);
-    ctx.strokeStyle = i % 2 === 0 ? '#252525' : '#1f1f1f';
-    ctx.lineWidth = 2;
+    ctx.arc(100, 100, 92 - i * 4.6, 0, Math.PI * 2);
+    ctx.strokeStyle = i % 2 === 0 ? disc.base : disc.ring;
+    ctx.lineWidth = 2.4;
     ctx.stroke();
   }
-  
-  // Banda de color principal
-  ctx.beginPath();
-  ctx.arc(100, 100, 55, 0, Math.PI * 2);
-  ctx.fillStyle = disc.color;
-  ctx.fill();
-  
-  // Banda secundaria
-  ctx.beginPath();
-  ctx.arc(100, 100, 40, 0, Math.PI * 2);
-  ctx.fillStyle = disc.stripe;
-  ctx.fill();
-  
-  // Centro negro
-  ctx.beginPath();
-  ctx.arc(100, 100, 22, 0, Math.PI * 2);
-  ctx.fillStyle = '#1a1a1a';
-  ctx.fill();
-  
-  // Agujero central
-  ctx.beginPath();
-  ctx.arc(100, 100, 7, 0, Math.PI * 2);
-  ctx.fillStyle = '#000';
-  ctx.fill();
-  
-  // Efecto de brillo
-  const gradient = ctx.createRadialGradient(75, 75, 5, 100, 100, 95);
-  gradient.addColorStop(0, 'rgba(255,255,255,0.15)');
-  gradient.addColorStop(1, 'rgba(255,255,255,0)');
-  ctx.beginPath();
-  ctx.arc(100, 100, 95, 0, Math.PI * 2);
-  ctx.fillStyle = gradient;
-  ctx.fill();
-  
+
+  ctx.beginPath(); ctx.arc(100,100,52,0,Math.PI*2); ctx.fillStyle = disc.base; ctx.fill();
+
+  if (disc.center === "multicolor") {
+    const g = ctx.createConicGradient ? ctx.createConicGradient(0,100,100) : null;
+    if (g) {
+      ["#c9432f","#e0c34a","#5aa0c9","#8c3f7a","#4a6b3d","#c9432f"].forEach((c,i)=>g.addColorStop(i/5,c));
+      ctx.beginPath(); ctx.arc(100,100,26,0,Math.PI*2); ctx.fillStyle = g; ctx.fill();
+    } else {
+      ctx.beginPath(); ctx.arc(100,100,26,0,Math.PI*2); ctx.fillStyle = "#8c3f7a"; ctx.fill();
+    }
+  } else {
+    ctx.beginPath(); ctx.arc(100,100,26,0,Math.PI*2);
+    ctx.fillStyle = disc.center; ctx.fill();
+    if (disc.glow) {
+      ctx.shadowColor = disc.center; ctx.shadowBlur = 18;
+      ctx.beginPath(); ctx.arc(100,100,26,0,Math.PI*2); ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+  }
+
+  ctx.beginPath(); ctx.arc(100,100,20,0,Math.PI*2); ctx.fillStyle = '#141414'; ctx.fill();
+  ctx.beginPath(); ctx.arc(100,100,6,0,Math.PI*2); ctx.fillStyle = '#000'; ctx.fill();
+
+  if (disc.cracked) {
+    ctx.strokeStyle = 'rgba(140,30,20,0.85)';
+    ctx.lineWidth = 1.6;
+    ctx.beginPath();
+    ctx.moveTo(60,45); ctx.lineTo(90,80); ctx.lineTo(75,110); ctx.lineTo(105,140);
+    ctx.moveTo(130,50); ctx.lineTo(110,90); ctx.lineTo(140,120);
+    ctx.stroke();
+  }
+
+  const gradient = ctx.createRadialGradient(75,75,5,100,100,95);
+  gradient.addColorStop(0,'rgba(255,255,255,0.14)');
+  gradient.addColorStop(1,'rgba(255,255,255,0)');
+  ctx.beginPath(); ctx.arc(100,100,95,0,Math.PI*2); ctx.fillStyle = gradient; ctx.fill();
+
   return canvas.toDataURL();
 }
 
-// Construir grid de discos
 const discGrid = document.getElementById('discGrid');
 const discTextures = {};
 
 DISCS.forEach(disc => {
   const texture = generateDiscTexture(disc);
   discTextures[disc.id] = texture;
-  
+
   const slot = document.createElement('div');
   slot.className = 'disc-slot';
   slot.innerHTML = `
-    <div class="disc-art">
-      <img src="${texture}" alt="${disc.name}">
-    </div>
+    <div class="disc-art"><img src="${texture}" alt="${disc.name}"></div>
     <div class="disc-name">${disc.name}</div>
-    <div class="disc-version">${disc.version}</div>
+    <div class="disc-sub">${disc.version}</div>
   `;
   slot.addEventListener('click', () => openEditor(disc));
+  slot.dataset.discId = disc.id;
   discGrid.appendChild(slot);
 });
 
-// Estado de la aplicacion
+// ===================== NAV DE VISTAS =====================
+const tabDiscos = document.getElementById('tabDiscos');
+const tabHistorial = document.getElementById('tabHistorial');
+const viewDiscos = document.getElementById('viewDiscos');
+const viewHistorial = document.getElementById('viewHistorial');
+
+tabDiscos.addEventListener('click', () => switchView('discos'));
+tabHistorial.addEventListener('click', () => switchView('historial'));
+
+function switchView(v) {
+  tabDiscos.classList.toggle('active', v === 'discos');
+  tabHistorial.classList.toggle('active', v === 'historial');
+  viewDiscos.classList.toggle('active', v === 'discos');
+  viewHistorial.classList.toggle('active', v === 'historial');
+  if (v === 'historial') renderHistoryList();
+}
+
+// ===================== ESTADO EDITOR =====================
 let currentDisc = null;
 let audioBuffer = null;
 let selectedFileName = '';
@@ -832,21 +773,19 @@ function openEditor(disc) {
   currentDisc = disc;
   audioBuffer = null;
   selectedFileName = '';
-  
+
   document.getElementById('sheetPreview').innerHTML = `<img src="${discTextures[disc.id]}" style="width:100%;height:100%;object-fit:cover;">`;
   document.getElementById('sheetTitle').textContent = `Disco: ${disc.name}`;
   document.getElementById('sheetSubtitle').textContent = disc.version;
   document.getElementById('soundId').textContent = disc.sound;
   document.getElementById('soundPath').textContent = `sounds/mcedit/${disc.id}.wav`;
-  document.getElementById('compatNote').textContent = disc.classic ? 
-    'Compatible con Minecraft Bedrock 1.16.0 en adelante. Disco clasico, funciona en cualquier version.' :
-    `Disco añadido en la version ${disc.version}. Compatible con Minecraft Bedrock 1.16.0+.`;
-  
+  document.getElementById('compatNote').textContent = disc.note + ' Compatible con Minecraft Bedrock 1.16.0+.';
+
   document.getElementById('fileIndicator').classList.remove('show');
   document.getElementById('progressSection').classList.remove('show');
   document.getElementById('resultSection').classList.remove('show');
   document.getElementById('convertBtn').disabled = true;
-  
+
   backdrop.classList.add('active');
   editorSheet.classList.add('active');
 }
@@ -859,48 +798,38 @@ function closeEditor() {
 document.getElementById('closeSheet').addEventListener('click', closeEditor);
 backdrop.addEventListener('click', closeEditor);
 
-// Manejo de archivos
+// ===================== ARCHIVOS DE AUDIO =====================
 const fileInput = document.getElementById('fileInput');
 const fileInputAll = document.getElementById('fileInputAll');
 const selectFileBtn = document.getElementById('selectFileBtn');
 
 selectFileBtn.addEventListener('click', () => {
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
                 (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-  
-  if (isIOS) {
-    fileInputAll.click();
-  } else {
-    fileInput.click();
-  }
+  if (isIOS) fileInputAll.click(); else fileInput.click();
 });
 
 async function processFile(file) {
   if (!file) return;
-  
   selectedFileName = file.name;
   document.getElementById('fileIndicator').textContent = `Archivo: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
   document.getElementById('fileIndicator').classList.add('show');
   document.getElementById('progressSection').classList.add('show');
   document.getElementById('resultSection').classList.remove('show');
   document.getElementById('convertBtn').disabled = true;
-  
+
   updateProgress('Leyendo archivo de audio...', 2);
-  
+
   try {
     const arrayBuffer = await file.arrayBuffer();
-    
     updateProgress('Decodificando audio...', 4);
-    
+
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     let decodedData;
-    
     try {
       decodedData = await audioCtx.decodeAudioData(arrayBuffer.slice(0));
     } catch (decodeError) {
       updateProgress('Probando formato alternativo...', 3);
-      
-      // Intentar como blob
       const blob = new Blob([arrayBuffer]);
       const url = URL.createObjectURL(blob);
       const response = await fetch(url);
@@ -908,284 +837,462 @@ async function processFile(file) {
       decodedData = await audioCtx.decodeAudioData(newBuffer);
       URL.revokeObjectURL(url);
     }
-    
+
     updateProgress('Convirtiendo a WAV 44.1kHz mono...', 6);
-    
     const offlineCtx = new OfflineAudioContext(1, Math.ceil(decodedData.duration * 44100), 44100);
     const source = offlineCtx.createBufferSource();
     source.buffer = decodedData;
     source.connect(offlineCtx.destination);
     source.start(0);
-    
+
     audioBuffer = await offlineCtx.startRendering();
     audioCtx.close();
-    
+
     updateProgress('Listo para convertir', 8);
     document.getElementById('convertBtn').disabled = false;
-    
   } catch (error) {
     console.error('Error:', error);
     updateProgress('Error: No se pudo procesar el archivo. Intente con otro formato.', 0);
   }
 }
 
-fileInput.addEventListener('change', (e) => {
-  if (e.target.files[0]) processFile(e.target.files[0]);
-});
-
-fileInputAll.addEventListener('change', (e) => {
-  if (e.target.files[0]) processFile(e.target.files[0]);
-});
+fileInput.addEventListener('change', (e) => { if (e.target.files[0]) processFile(e.target.files[0]); });
+fileInputAll.addEventListener('change', (e) => { if (e.target.files[0]) processFile(e.target.files[0]); });
 
 function updateProgress(text, filledSegments) {
   document.getElementById('progressLabel').textContent = text;
-  const segments = document.querySelectorAll('#xpBar .xp-segment');
-  segments.forEach((seg, i) => {
-    seg.classList.toggle('filled', i < filledSegments);
-  });
+  document.querySelectorAll('#xpBar .xp-segment').forEach((seg, i) => seg.classList.toggle('filled', i < filledSegments));
 }
 
-// Codificar WAV
 function encodeWAV(audioBuffer) {
   const samples = audioBuffer.getChannelData(0);
   const buffer = new ArrayBuffer(44 + samples.length * 2);
   const view = new DataView(buffer);
-  
-  function writeString(offset, string) {
-    for (let i = 0; i < string.length; i++) {
-      view.setUint8(offset + i, string.charCodeAt(i));
-    }
-  }
-  
-  writeString(0, 'RIFF');
-  view.setUint32(4, 36 + samples.length * 2, true);
-  writeString(8, 'WAVE');
-  writeString(12, 'fmt ');
-  view.setUint32(16, 16, true);
-  view.setUint16(20, 1, true);
-  view.setUint16(22, 1, true);
-  view.setUint32(24, 44100, true);
-  view.setUint32(28, 44100 * 2, true);
-  view.setUint16(32, 2, true);
-  view.setUint16(34, 16, true);
-  writeString(36, 'data');
-  view.setUint32(40, samples.length * 2, true);
-  
+  function writeString(offset, string) { for (let i = 0; i < string.length; i++) view.setUint8(offset + i, string.charCodeAt(i)); }
+  writeString(0, 'RIFF'); view.setUint32(4, 36 + samples.length * 2, true); writeString(8, 'WAVE');
+  writeString(12, 'fmt '); view.setUint32(16, 16, true); view.setUint16(20, 1, true); view.setUint16(22, 1, true);
+  view.setUint32(24, 44100, true); view.setUint32(28, 44100 * 2, true); view.setUint16(32, 2, true); view.setUint16(34, 16, true);
+  writeString(36, 'data'); view.setUint32(40, samples.length * 2, true);
   let offset = 44;
   for (let i = 0; i < samples.length; i++) {
     const sample = Math.max(-1, Math.min(1, samples[i]));
     view.setInt16(offset, sample < 0 ? sample * 0x8000 : sample * 0x7FFF, true);
     offset += 2;
   }
-  
   return buffer;
 }
 
-// Generar paquete
 document.getElementById('convertBtn').addEventListener('click', async () => {
   if (!audioBuffer || !currentDisc) return;
-  
   const btn = document.getElementById('convertBtn');
   btn.disabled = true;
-  
+
   updateProgress('Creando manifest.json...', 3);
-  
   const zip = new JSZip();
   const uuid1 = crypto.randomUUID();
   const uuid2 = crypto.randomUUID();
-  
+
   const manifest = {
     format_version: 2,
-    header: {
-      description: `MCEdit - Disco "${currentDisc.name}" personalizado`,
-      name: `MCEdit - ${currentDisc.name}`,
-      uuid: uuid1,
-      version: [1, 0, 0],
-      min_engine_version: [1, 16, 0]
-    },
-    modules: [{
-      description: `Reemplazo de audio para ${currentDisc.sound}`,
-      type: "resources",
-      uuid: uuid2,
-      version: [1, 0, 0]
-    }],
+    header: { description: `MCEdit - Disco "${currentDisc.name}" personalizado`, name: `MCEdit - ${currentDisc.name}`, uuid: uuid1, version: [1,0,0], min_engine_version: [1,16,0] },
+    modules: [{ description: `Reemplazo de audio para ${currentDisc.sound}`, type: "resources", uuid: uuid2, version: [1,0,0] }],
     metadata: { authors: ["MCEdit"] }
   };
-  
   zip.file("manifest.json", JSON.stringify(manifest, null, 2));
-  
+
   updateProgress('Configurando definiciones de sonido...', 5);
-  
-  const soundDefs = {
-    format_version: "1.14.0",
-    sound_definitions: {
-      [currentDisc.sound]: {
-        category: "record",
-        sounds: [`sounds/mcedit/${currentDisc.id}`]
-      }
-    }
-  };
-  
+  const soundDefs = { format_version: "1.14.0", sound_definitions: { [currentDisc.sound]: { category: "record", sounds: [`sounds/mcedit/${currentDisc.id}`] } } };
   zip.file("sounds/sound_definitions.json", JSON.stringify(soundDefs, null, 2));
-  
+
   updateProgress('Codificando audio WAV...', 6);
-  
   const wavData = encodeWAV(audioBuffer);
   zip.file(`sounds/mcedit/${currentDisc.id}.wav`, wavData);
-  
+
   updateProgress('Generando icono del pack...', 7);
-  
   const iconCanvas = document.createElement('canvas');
-  iconCanvas.width = 128;
-  iconCanvas.height = 128;
+  iconCanvas.width = 128; iconCanvas.height = 128;
   const iconCtx = iconCanvas.getContext('2d');
-  
-  const img = new Image();
-  img.src = discTextures[currentDisc.id];
-  
-  await new Promise((resolve) => {
-    img.onload = () => {
-      iconCtx.drawImage(img, 0, 0, 128, 128);
-      resolve();
-    };
-  });
-  
-  const iconBlob = await new Promise(resolve => {
-    iconCanvas.toBlob(resolve, 'image/png');
-  });
-  
+  const img = new Image(); img.src = discTextures[currentDisc.id];
+  await new Promise((resolve) => { img.onload = () => { iconCtx.drawImage(img,0,0,128,128); resolve(); }; });
+  const iconBlob = await new Promise(resolve => iconCanvas.toBlob(resolve, 'image/png'));
   zip.file("pack_icon.png", iconBlob);
-  
+
   updateProgress('Creando archivo .mcpack...', 8);
-  
   const zipBlob = await zip.generateAsync({type: "blob"});
   const fileName = `MCEdit_${currentDisc.id}.mcpack`;
-  
+
   updateProgress('Completado', 8);
-  
   document.getElementById('resultFileName').textContent = fileName;
   document.getElementById('resultSection').classList.add('show');
-  
-  document.getElementById('downloadBtn').onclick = () => {
-    const url = URL.createObjectURL(zipBlob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = fileName;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(() => URL.revokeObjectURL(url), 5000);
-  };
-  
+
+  // Guardar en historial (IndexedDB)
+  await saveToHistory({
+    discId: currentDisc.id,
+    discName: currentDisc.name,
+    fileName,
+    sourceName: selectedFileName,
+    date: Date.now(),
+    thumb: discTextures[currentDisc.id],
+    blob: zipBlob
+  });
+
+  document.getElementById('downloadBtn').onclick = () => triggerDownload(zipBlob, fileName);
   btn.disabled = false;
 });
 
+function triggerDownload(blob, fileName) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = fileName;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 5000);
+}
+
 document.getElementById('resetBtn').addEventListener('click', closeEditor);
 
-// Prevenir zoom en iOS
-document.addEventListener('touchmove', function(e) {
-  if (e.touches.length > 1) {
-    e.preventDefault();
-  }
-}, { passive: false });
+// ===================== ALMACENAMIENTO: HISTORIAL Y PAPELERA (IndexedDB) =====================
+const DB_NAME = 'mcedit_store';
+const HISTORY_LIMIT = 5;
+const TRASH_LIMIT = 15;
+let dbPromise = null;
 
+function openDB() {
+  if (dbPromise) return dbPromise;
+  dbPromise = new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, 1);
+    req.onupgradeneeded = () => {
+      const db = req.result;
+      if (!db.objectStoreNames.contains('history')) db.createObjectStore('history', { keyPath: 'key' });
+      if (!db.objectStoreNames.contains('trash')) db.createObjectStore('trash', { keyPath: 'key' });
+    };
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+  return dbPromise;
+}
+
+async function storeGetAll(storeName) {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(storeName, 'readonly');
+    const store = tx.objectStore(storeName);
+    const req = store.getAll();
+    req.onsuccess = () => resolve(req.result.sort((a,b) => b.date - a.date));
+    req.onerror = () => reject(req.error);
+  });
+}
+
+async function storePut(storeName, record) {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(storeName, 'readwrite');
+    tx.objectStore(storeName).put(record);
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+async function storeDelete(storeName, key) {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(storeName, 'readwrite');
+    tx.objectStore(storeName).delete(key);
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+async function saveToHistory(entry) {
+  entry.key = 'h_' + entry.date + '_' + Math.random().toString(36).slice(2,7);
+  await storePut('history', entry);
+
+  // Aplicar limite de 5: el mas antiguo que sobre pasa al historial recortado (no a la papelera,
+  // solo se descarta silenciosamente para no acumular basura fuera del limite pedido)
+  let items = await storeGetAll('history');
+  if (items.length > HISTORY_LIMIT) {
+    const overflow = items.slice(HISTORY_LIMIT);
+    for (const o of overflow) await storeDelete('history', o.key);
+  }
+}
+
+async function moveToTrash(key) {
+  const items = await storeGetAll('history');
+  const item = items.find(i => i.key === key);
+  if (!item) return;
+  await storeDelete('history', key);
+  item.key = 't_' + Date.now() + '_' + Math.random().toString(36).slice(2,7);
+  item.deletedDate = Date.now();
+  await storePut('trash', item);
+
+  let trashItems = await storeGetAll('trash');
+  if (trashItems.length > TRASH_LIMIT) {
+    const overflow = trashItems.slice(TRASH_LIMIT);
+    for (const o of overflow) await storeDelete('trash', o.key);
+  }
+  renderHistoryList();
+}
+
+async function restoreFromTrash(key) {
+  const items = await storeGetAll('trash');
+  const item = items.find(i => i.key === key);
+  if (!item) return;
+  await storeDelete('trash', key);
+  item.key = 'h_' + Date.now() + '_' + Math.random().toString(36).slice(2,7);
+  await storePut('history', item);
+
+  let historyItems = await storeGetAll('history');
+  if (historyItems.length > HISTORY_LIMIT) {
+    const overflow = historyItems.slice(HISTORY_LIMIT);
+    for (const o of overflow) await storeDelete('history', o.key);
+  }
+  renderHistoryList();
+}
+
+async function deleteForever(key) {
+  await storeDelete('trash', key);
+  renderHistoryList();
+}
+
+function formatDate(ts) {
+  const d = new Date(ts);
+  return d.toLocaleDateString('es-CO', { day:'2-digit', month:'short' }) + ' - ' + d.toLocaleTimeString('es-CO', { hour:'2-digit', minute:'2-digit' });
+}
+
+const trashIconSVG = `<svg viewBox="0 0 16 16" fill="none"><path d="M3 4h10M6 4V2.5h4V4M4 4l.6 9.5a1 1 0 0 0 1 .9h4.8a1 1 0 0 0 1-.9L12 4" stroke="#fff" stroke-width="1.3"/></svg>`;
+const restoreIconSVG = `<svg viewBox="0 0 16 16" fill="none"><path d="M3 8a5 5 0 1 1 1.5 3.6" stroke="#fff" stroke-width="1.3"/><path d="M3 8V4.5M3 8h3.5" stroke="#fff" stroke-width="1.3"/></svg>`;
+const skullIconSVG = `<svg viewBox="0 0 16 16" fill="none"><path d="M3 6a5 5 0 0 1 10 0v3l1 1.5-1.5.7.3 1.3H4.2l.3-1.3L3 10.5 4 9V6Z" stroke="#fff" stroke-width="1.2"/><circle cx="6" cy="7" r="0.9" fill="#fff"/><circle cx="10" cy="7" r="0.9" fill="#fff"/></svg>`;
+const applyIconSVG = `<svg viewBox="0 0 16 16" fill="none"><path d="M4 8.5 6.8 11 12 4.5" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const emptyChestSVG = `<svg viewBox="0 0 16 16" fill="none"><rect x="2" y="6" width="12" height="8" fill="none" stroke="#888" stroke-width="1.2"/><rect x="2" y="6" width="12" height="2.4" fill="none" stroke="#888" stroke-width="1.2"/></svg>`;
+
+const subtabSaved = document.getElementById('subtabSaved');
+const subtabTrash = document.getElementById('subtabTrash');
+let currentSubtab = 'saved';
+
+subtabSaved.addEventListener('click', () => { currentSubtab='saved'; subtabSaved.classList.add('active'); subtabTrash.classList.remove('active'); renderHistoryList(); });
+subtabTrash.addEventListener('click', () => { currentSubtab='trash'; subtabTrash.classList.add('active'); subtabSaved.classList.remove('active'); renderHistoryList(); });
+
+async function renderHistoryList() {
+  const list = document.getElementById('historyList');
+  const limitNote = document.getElementById('limitNote');
+  list.innerHTML = '';
+
+  if (currentSubtab === 'saved') {
+    limitNote.textContent = 'Maximo 5 guardados - toca uno para volver a descargarlo y aplicarlo';
+    const items = await storeGetAll('history');
+    if (items.length === 0) {
+      list.innerHTML = `<div class="empty-state"><div class="empty-icon">${emptyChestSVG}</div>No has guardado ningun paquete todavia.<br>Personaliza un disco para verlo aqui.</div>`;
+      return;
+    }
+    items.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'pack-card';
+      card.innerHTML = `
+        <div class="pack-thumb"><img src="${item.thumb}"></div>
+        <div class="pack-info">
+          <div class="pname">${item.fileName}</div>
+          <div class="pmeta">Disco: ${item.discName} - ${formatDate(item.date)}</div>
+        </div>
+        <div class="icon-btn ok" title="Aplicar">${applyIconSVG}</div>
+        <div class="icon-btn danger" title="Eliminar">${trashIconSVG}</div>
+      `;
+      card.querySelector('.ok').addEventListener('click', (e) => { e.stopPropagation(); triggerDownload(item.blob, item.fileName); });
+      card.querySelector('.danger').addEventListener('click', (e) => { e.stopPropagation(); moveToTrash(item.key); });
+      card.addEventListener('click', () => triggerDownload(item.blob, item.fileName));
+      list.appendChild(card);
+    });
+  } else {
+    limitNote.textContent = 'Maximo 15 en papelera - restaura o elimina para siempre';
+    const items = await storeGetAll('trash');
+    if (items.length === 0) {
+      list.innerHTML = `<div class="empty-state"><div class="empty-icon">${skullIconSVG}</div>La papelera esta vacia.</div>`;
+      return;
+    }
+    items.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'pack-card';
+      card.innerHTML = `
+        <div class="pack-thumb"><img src="${item.thumb}"></div>
+        <div class="pack-info">
+          <div class="pname">${item.fileName}</div>
+          <div class="pmeta">Disco: ${item.discName} - eliminado ${formatDate(item.deletedDate)}</div>
+        </div>
+        <div class="icon-btn ok" title="Restaurar">${restoreIconSVG}</div>
+        <div class="icon-btn danger" title="Eliminar para siempre">${trashIconSVG}</div>
+      `;
+      card.querySelector('.ok').addEventListener('click', (e) => { e.stopPropagation(); restoreFromTrash(item.key); });
+      card.querySelector('.danger').addEventListener('click', (e) => { e.stopPropagation(); deleteForever(item.key); });
+      list.appendChild(card);
+    });
+  }
+}
+
+// ===================== BOTON CAMUFLADO AL CANAL =====================
+document.getElementById('creatorSign').href = "https://youtube.com/@jexeregedit?si=HbV-YqSDT6o_xHNy";
+
+// ===================== PREVENIR ZOOM EN IOS =====================
+document.addEventListener('touchmove', function(e) { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
 let lastTouchEnd = 0;
 document.addEventListener('touchend', function(e) {
   const now = Date.now();
-  if (now - lastTouchEnd <= 300) {
-    e.preventDefault();
-  }
+  if (now - lastTouchEnd <= 300) e.preventDefault();
   lastTouchEnd = now;
 }, false);
 
-// Tutorial
-const TUTORIAL_KEY = 'mcedit_tutorial_v2';
-const tutorialSteps = [
+// ===================== TUTORIAL COACHMARK (señala elementos reales) =====================
+const TUTORIAL_KEY = 'mcedit_tutorial_v3';
+const coachOverlay = document.getElementById('coachOverlay');
+const coachHole = document.getElementById('coachHole');
+const coachTip = document.getElementById('coachTip');
+const coachArrow = document.getElementById('coachArrow');
+const coachDots = document.getElementById('coachDots');
+const coachTitle = document.getElementById('coachTitle');
+const coachText = document.getElementById('coachText');
+const coachNext = document.getElementById('coachNext');
+const coachSkip = document.getElementById('coachSkip');
+
+let coachStep = 0;
+let dontShowFlag = false;
+
+const coachSteps = [
   {
-    icon: '★',
     title: 'Bienvenido a MCEdit',
-    text: 'Personaliza los discos musicales de Minecraft con tus propias canciones. Compatible con Minecraft Bedrock Edition 1.16.0 y superior.'
+    text: 'Vamos a mostrarte donde tocar en cada paso. Sigue las flechas doradas.',
+    target: null,
+    before: () => { switchView('discos'); closeEditor(); }
   },
   {
-    icon: '♫',
-    title: 'Paso 1: Elige un disco',
-    text: 'Selecciona cualquiera de los discos disponibles. Todos los discos clasicos y nuevos de Minecraft Bedrock estan disponibles para personalizar.'
+    title: 'Paso 1: elige un disco',
+    text: 'Toca cualquier disco de la lista. Los nombres y colores coinciden con los discos reales del juego.',
+    target: () => discGrid.querySelector('.disc-slot'),
+    before: () => { switchView('discos'); closeEditor(); }
   },
   {
-    icon: '♪',
-    title: 'Paso 2: Selecciona tu musica',
-    text: 'Elige un archivo de audio desde tu dispositivo. Formatos soportados: MP3, WAV, OGG, M4A, AAC, FLAC y muchos mas. El sistema lo convertira automaticamente.'
+    title: 'Paso 2: selecciona tu musica',
+    text: 'Aqui eliges el archivo de audio de tu dispositivo. Se convierte automaticamente al formato del juego.',
+    target: () => selectFileBtn,
+    before: () => { const firstDisc = DISCS[0]; openEditor(firstDisc); }
   },
   {
-    icon: '⬡',
-    title: 'Paso 3: Genera el paquete',
-    text: 'El sistema creara un archivo .mcpack con todos los archivos necesarios: manifest.json, sonido en formato WAV, y icono del pack.'
+    title: 'Paso 3: genera el paquete',
+    text: 'Cuando el audio este listo, este boton crea tu archivo .mcpack con todo lo necesario.',
+    target: () => document.getElementById('convertBtn'),
+    before: () => {}
   },
   {
-    icon: '✓',
-    title: 'Paso 4: Instala en Minecraft',
-    text: 'Descarga el archivo .mcpack y abrilo. Minecraft se abrira automaticamente y te ofrecera importar el paquete de recursos. El disco reproducira tu musica.'
+    title: 'Paso 4: revisa tu historial',
+    text: 'Aqui vuelves a ver tus ultimos paquetes. Tocando uno lo descargas y lo abres en Minecraft de nuevo.',
+    target: () => tabHistorial,
+    before: () => { closeEditor(); switchView('discos'); }
+  },
+  {
+    title: 'Listo',
+    text: 'Eso es todo. Explora los discos cuando quieras.',
+    target: null,
+    before: () => { switchView('discos'); }
   }
 ];
 
-let currentStep = 0;
-const tutorialOverlay = document.getElementById('tutorialOverlay');
-const tutorialDots = document.getElementById('tutorialDots');
-
-// Crear dots
-tutorialSteps.forEach(() => {
+coachSteps.forEach(() => {
   const dot = document.createElement('span');
-  dot.className = 'tutorial-dot';
-  tutorialDots.appendChild(dot);
+  dot.className = 'coach-dot';
+  coachDots.appendChild(dot);
 });
 
 function showTutorial() {
-  const hide = localStorage.getItem(TUTORIAL_KEY);
-  if (!hide) {
-    tutorialOverlay.style.display = 'flex';
-    renderTutorial();
+  if (localStorage.getItem(TUTORIAL_KEY)) return;
+  coachOverlay.classList.add('active');
+  coachStep = 0;
+  renderCoachStep();
+}
+
+function renderCoachStep() {
+  const step = coachSteps[coachStep];
+  if (step.before) step.before();
+
+  coachTitle.textContent = step.title;
+  coachText.textContent = step.text;
+  coachNext.textContent = coachStep === coachSteps.length - 1 ? 'Comenzar' : 'Siguiente';
+
+  const dots = coachDots.querySelectorAll('.coach-dot');
+  dots.forEach((d,i) => d.classList.toggle('active', i === coachStep));
+
+  requestAnimationFrame(() => positionCoach(step));
+}
+
+function positionCoach(step) {
+  const targetEl = step.target ? step.target() : null;
+
+  if (!targetEl) {
+    coachHole.style.display = 'none';
+    coachArrow.style.display = 'none';
+    coachTip.style.left = '50%';
+    coachTip.style.top = '50%';
+    coachTip.style.transform = 'translate(-50%,-50%)';
+    return;
+  }
+
+  const rect = targetEl.getBoundingClientRect();
+  coachHole.style.display = 'block';
+  coachArrow.style.display = 'block';
+
+  const pad = 6;
+  coachHole.style.left = (rect.left - pad) + 'px';
+  coachHole.style.top = (rect.top - pad) + 'px';
+  coachHole.style.width = (rect.width + pad*2) + 'px';
+  coachHole.style.height = (rect.height + pad*2) + 'px';
+
+  const tipWidth = 280;
+  let tipLeft = rect.left + rect.width/2 - tipWidth/2;
+  tipLeft = Math.max(12, Math.min(tipLeft, window.innerWidth - tipWidth - 12));
+
+  const spaceBelow = window.innerHeight - rect.bottom;
+  let placeBelow = spaceBelow > 180;
+  let tipTop = placeBelow ? rect.bottom + 22 : rect.top - 22;
+
+  coachTip.style.transform = 'none';
+  coachTip.style.left = tipLeft + 'px';
+
+  if (placeBelow) {
+    coachTip.style.top = tipTop + 'px';
+  } else {
+    coachTip.style.top = 'auto';
+    coachTip.style.bottom = (window.innerHeight - rect.top + 22) + 'px';
+  }
+  if (placeBelow) coachTip.style.bottom = 'auto';
+
+  const arrowLeft = Math.min(Math.max(rect.left + rect.width/2 - 7, tipLeft + 14), tipLeft + tipWidth - 28);
+  coachArrow.style.left = arrowLeft + 'px';
+  if (placeBelow) {
+    coachArrow.style.top = (rect.bottom + 8) + 'px';
+  } else {
+    coachArrow.style.top = (rect.top - 22) + 'px';
+    coachArrow.style.transform = 'rotate(225deg)';
   }
 }
 
-function renderTutorial() {
-  const step = tutorialSteps[currentStep];
-  document.getElementById('tutorialIcon').textContent = step.icon;
-  document.getElementById('tutorialTitle').textContent = step.title;
-  document.getElementById('tutorialText').textContent = step.text;
-  
-  const dots = tutorialDots.querySelectorAll('.tutorial-dot');
-  dots.forEach((dot, i) => {
-    dot.classList.toggle('active', i === currentStep);
-  });
-  
-  document.getElementById('tutorialPrev').style.display = currentStep === 0 ? 'none' : 'block';
-  document.getElementById('tutorialNext').textContent = currentStep === tutorialSteps.length - 1 ? 'Comenzar' : 'Siguiente';
-}
-
-document.getElementById('tutorialNext').addEventListener('click', () => {
-  if (currentStep < tutorialSteps.length - 1) {
-    currentStep++;
-    renderTutorial();
+coachNext.addEventListener('click', () => {
+  if (coachStep < coachSteps.length - 1) {
+    coachStep++;
+    renderCoachStep();
   } else {
     finishTutorial();
   }
 });
 
-document.getElementById('tutorialPrev').addEventListener('click', () => {
-  if (currentStep > 0) {
-    currentStep--;
-    renderTutorial();
-  }
+coachSkip.addEventListener('click', () => {
+  localStorage.setItem(TUTORIAL_KEY, '1');
+  finishTutorial();
 });
 
 function finishTutorial() {
-  if (document.getElementById('dontShowAgain').checked) {
-    localStorage.setItem(TUTORIAL_KEY, '1');
-  }
-  tutorialOverlay.style.display = 'none';
+  coachOverlay.classList.remove('active');
+  closeEditor();
+  switchView('discos');
 }
 
-// Iniciar tutorial
+window.addEventListener('resize', () => { if (coachOverlay.classList.contains('active')) positionCoach(coachSteps[coachStep]); });
+
+renderHistoryList();
 showTutorial();
 </script>
 </body>
