@@ -1221,13 +1221,25 @@ function renderCoachStep() {
 
 function positionCoach(step) {
   const targetEl = step.target ? step.target() : null;
+  const margin = 12;
 
   if (!targetEl) {
     coachHole.style.display = 'none';
     coachArrow.style.display = 'none';
-    coachTip.style.left = '50%';
-    coachTip.style.top = '50%';
-    coachTip.style.transform = 'translate(-50%,-50%)';
+    coachTip.style.transform = 'none';
+    coachTip.style.bottom = 'auto';
+    // Center it, but clamp so it never leaves the viewport.
+    coachTip.style.left = '-9999px';
+    coachTip.style.top = '-9999px';
+    requestAnimationFrame(() => {
+      const tipRect = coachTip.getBoundingClientRect();
+      let left = (window.innerWidth - tipRect.width) / 2;
+      let top = (window.innerHeight - tipRect.height) / 2;
+      left = Math.max(margin, Math.min(left, window.innerWidth - tipRect.width - margin));
+      top = Math.max(margin, Math.min(top, window.innerHeight - tipRect.height - margin));
+      coachTip.style.left = left + 'px';
+      coachTip.style.top = top + 'px';
+    });
     return;
   }
 
@@ -1241,33 +1253,52 @@ function positionCoach(step) {
   coachHole.style.width = (rect.width + pad*2) + 'px';
   coachHole.style.height = (rect.height + pad*2) + 'px';
 
-  const tipWidth = 280;
-  let tipLeft = rect.left + rect.width/2 - tipWidth/2;
-  tipLeft = Math.max(12, Math.min(tipLeft, window.innerWidth - tipWidth - 12));
-
-  const spaceBelow = window.innerHeight - rect.bottom;
-  let placeBelow = spaceBelow > 180;
-  let tipTop = placeBelow ? rect.bottom + 22 : rect.top - 22;
-
+  // Render off-screen first so we can measure its real height (text length varies).
   coachTip.style.transform = 'none';
-  coachTip.style.left = tipLeft + 'px';
+  coachTip.style.bottom = 'auto';
+  coachTip.style.left = '-9999px';
+  coachTip.style.top = '-9999px';
 
-  if (placeBelow) {
+  requestAnimationFrame(() => {
+    const tipRect = coachTip.getBoundingClientRect();
+    const tipWidth = tipRect.width;
+    const tipHeight = tipRect.height;
+
+    // Decide above/below based on which side actually has room for the full tip.
+    const spaceBelow = window.innerHeight - rect.bottom;
+    const spaceAbove = rect.top;
+    const placeBelow = spaceBelow >= tipHeight + 30 || spaceBelow >= spaceAbove;
+
+    let tipTop = placeBelow ? rect.bottom + 22 : rect.top - tipHeight - 22;
+    // Always clamp fully inside the viewport, no matter where the target sits.
+    tipTop = Math.max(margin, Math.min(tipTop, window.innerHeight - tipHeight - margin));
+
+    let tipLeft = rect.left + rect.width/2 - tipWidth/2;
+    tipLeft = Math.max(margin, Math.min(tipLeft, window.innerWidth - tipWidth - margin));
+
+    coachTip.style.left = tipLeft + 'px';
     coachTip.style.top = tipTop + 'px';
-  } else {
-    coachTip.style.top = 'auto';
-    coachTip.style.bottom = (window.innerHeight - rect.top + 22) + 'px';
-  }
-  if (placeBelow) coachTip.style.bottom = 'auto';
 
-  const arrowLeft = Math.min(Math.max(rect.left + rect.width/2 - 7, tipLeft + 14), tipLeft + tipWidth - 28);
-  coachArrow.style.left = arrowLeft + 'px';
-  if (placeBelow) {
-    coachArrow.style.top = (rect.bottom + 8) + 'px';
-  } else {
-    coachArrow.style.top = (rect.top - 22) + 'px';
-    coachArrow.style.transform = 'rotate(225deg)';
-  }
+    const arrowLeft = Math.min(Math.max(rect.left + rect.width/2 - 7, tipLeft + 14), tipLeft + tipWidth - 28);
+    coachArrow.style.left = arrowLeft + 'px';
+
+    // Only draw the arrow when the tip actually landed adjacent to the target;
+    // if it had to be clamped far away, hide the arrow instead of pointing at empty space.
+    const tipActuallyBelow = tipTop >= rect.bottom - 4;
+    const tipActuallyAbove = tipTop + tipHeight <= rect.top + 4;
+
+    if (tipActuallyBelow) {
+      coachArrow.style.display = 'block';
+      coachArrow.style.top = (rect.bottom + 8) + 'px';
+      coachArrow.style.transform = 'rotate(45deg)';
+    } else if (tipActuallyAbove) {
+      coachArrow.style.display = 'block';
+      coachArrow.style.top = (tipTop + tipHeight - 6) + 'px';
+      coachArrow.style.transform = 'rotate(225deg)';
+    } else {
+      coachArrow.style.display = 'none';
+    }
+  });
 }
 
 coachNext.addEventListener('click', () => {
