@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>server-premium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+
+  /* ============================================================
+     JEXE LAUNCHER — design tokens
+     Surface palette: cool graphite, not pure black.
+     Accent: muted copper (brand/selection), signal green for the
+     active/unlocked state, danger red for the locked state.
+     ============================================================ */
+
+  :root{
+    --bg-0: #0b0e13;
+    --bg-1: #11151c;
+    --bg-2: #161c25;
+    --bg-3: #1d2531;
+    --line: #262e3a;
+    --line-soft: #1a212b;
+
+    --text-1: #eef1f5;
+    --text-2: #9aa5b3;
+    --text-3: #5b6675;
+
+    --copper: #c8915c;
+    --copper-soft: #8a6342;
+    --copper-dim: #6b4f37;
+
+    --signal: #45c08a;
+    --signal-dim: #2c7d59;
+    --danger: #d2654f;
+    --danger-dim: #7a3c30;
+
+    --radius-lg: 22px;
+    --radius-md: 16px;
+    --radius-sm: 10px;
+
+    --shadow-soft: 0 18px 40px -20px rgba(0,0,0,0.65);
+    --shadow-deep: 0 30px 60px -25px rgba(0,0,0,0.8);
+
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body: 'Outfit', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html,body{
+    margin:0;
+    padding:0;
+    background: var(--bg-0);
+    color: var(--text-1);
+    font-family: var(--font-body);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body{
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 50% -10%, rgba(200,145,92,0.08), transparent 45%),
+      radial-gradient(circle at 85% 15%, rgba(69,192,138,0.04), transparent 40%),
+      var(--bg-0);
+    display:flex;
+    justify-content:center;
+  }
+
+  .screen{
+    width:100%;
+    max-width: 460px;
+    min-height:100vh;
+    position:relative;
+    padding: 38px 22px 48px;
+    display:flex;
+    flex-direction:column;
+  }
+
+  .grain{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:0.035;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    z-index: 1;
+  }
+
+  /* ---------------- Header ---------------- */
+
+  .header{
+    text-align:center;
+    margin-bottom: 26px;
+  }
+
+  .eyebrow{
+    display:flex;
+    justify-content:center;
+    gap: 22px;
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 18px;
+    font-weight:600;
+  }
+
+  .eyebrow span{ position:relative; }
+  .eyebrow span:not(:last-child)::after{
+    content:'';
+    position:absolute;
+    right:-11px;
+    top:50%;
+    transform:translateY(-50%);
+    width:3px;
+    height:3px;
+    border-radius:50%;
+    background: var(--text-3);
+  }
+
+  .brand{
+    font-family: var(--font-display);
+    font-size: 54px;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    color: var(--text-1);
+    margin: 0;
+  }
+
+  .brand-accent{ color: var(--copper); }
+
+  .version-row{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    margin-top: 10px;
+  }
+
+  .version-tag{
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-2);
+    letter-spacing: 0.04em;
+    padding: 3px 11px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--bg-1);
+  }
+
+  /* ---------------- Trial counter (signature element) ---------------- */
+  /* Encodes the one fact that governs the whole panel: how much of
+     the trial window is left. Everything else defers to this. */
+
+  .trial-card{
+    margin: 4px 0 22px;
+    padding: 18px 18px 16px;
+    border-radius: var(--radius-lg);
+    background: var(--bg-1);
+    border: 1px solid var(--line-soft);
+    position:relative;
+    overflow:hidden;
+  }
+
+  .trial-card::before{
+    content:'';
+    position:absolute;
+    top:0; left:0; right:0;
+    height:2px;
+    background: var(--signal);
+    transition: background .3s ease;
+  }
+
+  .trial-card.locked::before{ background: var(--danger); }
+
+  .trial-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom: 12px;
+  }
+
+  .trial-label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size: 11.5px;
+    font-weight:700;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    color: var(--text-2);
+  }
+
+  .trial-label svg{ width:14px; height:14px; color: var(--signal); flex-shrink:0; }
+  .trial-card.locked .trial-label svg{ color: var(--danger); }
+
+  .trial-pill{
+    font-size: 10.5px;
+    font-weight:700;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(69,192,138,0.12);
+    color: var(--signal);
+    border: 1px solid rgba(69,192,138,0.28);
+  }
+
+  .trial-card.locked .trial-pill{
+    background: rgba(210,101,79,0.12);
+    color: var(--danger);
+    border-color: rgba(210,101,79,0.28);
+  }
+
+  .trial-clock{
+    font-family: var(--font-mono);
+    font-size: 30px;
+    font-weight:700;
+    letter-spacing: 0.02em;
+    color: var(--text-1);
+    line-height:1;
+    margin-bottom: 8px;
+  }
+
+  .trial-clock span{ color: var(--text-3); font-size: 16px; margin: 0 2px; }
+
+  .trial-sub{
+    font-size: 12.5px;
+    color: var(--text-3);
+    line-height:1.5;
+  }
+
+  .trial-sub b{ color: var(--text-2); font-weight:600; }
+
+  .trial-range{
+    display:flex;
+    justify-content:space-between;
+    margin-top: 14px;
+    padding-top: 13px;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .trial-range div{ text-align:left; }
+  .trial-range .r-lbl{ font-size: 9.5px; color: var(--text-3); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:3px; }
+  .trial-range .r-val{ font-size: 12px; color: var(--text-2); font-weight:600; font-family: var(--font-mono); }
+  .trial-range .r-end{ text-align:right; }
+
+  /* ---------------- Locked overlay on the controls ---------------- */
+
+  .controls-block{
+    position:relative;
+    transition: opacity .25s ease;
+  }
+
+  .controls-block.disabled{
+    opacity: 0.35;
+    pointer-events: none;
+    filter: grayscale(0.4);
+  }
+
+  .locked-banner{
+    display:none;
+    align-items:center;
+    gap:10px;
+    background: rgba(210,101,79,0.08);
+    border: 1px solid rgba(210,101,79,0.25);
+    border-radius: var(--radius-md);
+    padding: 13px 15px;
+    margin-bottom: 18px;
+  }
+
+  .locked-banner.show{ display:flex; }
+
+  .locked-banner svg{ width:18px; height:18px; color: var(--danger); flex-shrink:0; }
+
+  .locked-banner p{
+    margin:0;
+    font-size: 12.5px;
+    line-height:1.5;
+    color: var(--text-2);
+  }
+
+  .locked-banner b{ color: var(--text-1); }
+
+  /* ---------------- Option toggles ---------------- */
+
+  .options-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .option{
+    position:relative;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 16px 14px;
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+    cursor:pointer;
+    user-select:none;
+    transition: border-color .2s ease, background .2s ease, transform .15s ease;
+  }
+
+  .option:active{ transform: scale(0.98); }
+
+  .option.active{
+    border-color: var(--signal-dim);
+    background: linear-gradient(180deg, rgba(69,192,138,0.10), rgba(69,192,138,0.02));
+  }
+
+  .option-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+
+  .option-icon{
+    width:30px;
+    height:30px;
+    border-radius: 9px;
+    background: var(--bg-3);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color: var(--text-2);
+    flex-shrink:0;
+    transition: color .2s, background .2s;
+  }
+
+  .option.active .option-icon{
+    background: rgba(69,192,138,0.16);
+    color: var(--signal);
+  }
+
+  .option-icon svg{ width:16px; height:16px; }
+
+  .switch{
+    width: 44px;
+    height: 25px;
+    border-radius: 999px;
+    background: var(--bg-3);
+    border: 1px solid var(--line);
+    position:relative;
+    flex-shrink:0;
+    transition: background .25s ease, border-color .25s ease;
+  }
+
+  .switch::after{
+    content:'';
+    position:absolute;
+    top: 2px;
+    left: 2px;
+    width: 19px;
+    height: 19px;
+    border-radius:50%;
+    background: var(--text-2);
+    transition: transform .25s cubic-bezier(.4,0,.2,1), background .25s ease;
+  }
+
+  .option.active .switch{
+    background: var(--signal-dim);
+    border-color: var(--signal);
+  }
+
+  .option.active .switch::after{
+    transform: translateX(19px);
+    background: #f4fff9;
+  }
+
+  .option-label{
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text-1);
+    letter-spacing:0.01em;
+  }
+
+  .option-sub{
+    font-size: 11px;
+    color: var(--text-3);
+    font-weight:500;
+  }
+
+  .option.active .option-sub{ color: var(--signal); }
+
+  /* ---------------- Start button ---------------- */
+
+  .start-wrap{
+    padding-top: 2px;
+  }
+
+  .start-btn{
+    width:100%;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 18px 0;
+    background: linear-gradient(180deg, #232c39, #161c25);
+    border: 1px solid var(--line);
+    color: var(--text-1);
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight:700;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    cursor:pointer;
+    box-shadow: var(--shadow-soft);
+    transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+
+  .start-btn:active{ transform: scale(0.985); }
+
+  .start-btn:disabled{
+    opacity:0.45;
+    cursor:not-allowed;
+  }
+
+  .start-btn svg{ width:18px; height:18px; }
+
+  .start-foot{
+    text-align:center;
+    font-size: 11px;
+    color: var(--text-3);
+    margin-top: 14px;
+    letter-spacing:0.02em;
+  }
+
+  /* ---------------- Divider ---------------- */
+
+  .section-divider{
+    display:flex;
+    align-items:center;
+    gap: 12px;
+    margin: 30px 0 18px;
+  }
+
+  .section-divider::before,
+  .section-divider::after{
+    content:'';
+    flex:1;
+    height:1px;
+    background: var(--line-soft);
+  }
+
+  .section-divider span{
+    font-size: 10.5px;
+    font-weight:700;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color: var(--text-3);
+    white-space:nowrap;
+  }
+
+  /* ---------------- Purchase block ---------------- */
+
+  .purchase-block{
+    margin-bottom: 8px;
+  }
+
+  .buy-btn{
+    width:100%;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 18px 0;
+    background: linear-gradient(180deg, #d9a06a, var(--copper));
+    color: #1b1206;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight:800;
+    letter-spacing:0.03em;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    cursor:pointer;
+    box-shadow: 0 18px 32px -16px rgba(200,145,92,0.55);
+    transition: transform .15s ease, box-shadow .2s ease;
+    text-decoration:none;
+  }
+
+  .buy-btn:active{ transform: scale(0.985); }
+  .buy-btn svg{ width:18px; height:18px; flex-shrink:0; }
+
+  .buy-price{
+    text-align:center;
+    font-size: 11.5px;
+    color: var(--text-3);
+    margin-top: 12px;
+    letter-spacing:0.01em;
+  }
+
+  .buy-price b{ color: var(--text-2); font-weight:700; }
+
+  /* ---------------- Alt payment toggle ---------------- */
+
+  .alt-toggle{
+    width:100%;
+    margin-top: 18px;
+    background: transparent;
+    border: none;
+    border-top: 1px solid var(--line-soft);
+    padding: 16px 0 0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap: 8px;
+    cursor:pointer;
+    color: var(--text-3);
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight:600;
+    letter-spacing:0.02em;
+  }
+
+  .alt-toggle svg{
+    width:14px; height:14px;
+    transition: transform .25s ease;
+  }
+
+  .alt-toggle.open svg{ transform: rotate(180deg); }
+
+  .alt-panel{
+    display:grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows .3s ease;
+  }
+
+  .alt-panel.open{ grid-template-rows: 1fr; }
+
+  .alt-panel-inner{ overflow:hidden; }
+
+  .alt-methods{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding-top: 16px;
+  }
+
+  .alt-method{
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 14px 8px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap: 8px;
+    cursor:pointer;
+    transition: border-color .2s ease, background .2s ease, transform .15s ease;
+    text-align:center;
+  }
+
+  .alt-method:active{ transform: scale(0.97); }
+
+  .alt-method.selected{
+    border-color: var(--copper-soft);
+    background: rgba(200,145,92,0.08);
+  }
+
+  .alt-method-icon{
+    width:32px;
+    height:32px;
+    border-radius: 9px;
+    background: var(--bg-3);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color: var(--text-2);
+  }
+
+  .alt-method.selected .alt-method-icon{
+    background: rgba(200,145,92,0.18);
+    color: var(--copper);
+  }
+
+  .alt-method-icon svg{ width:15px; height:15px; }
+
+  .alt-method-name{
+    font-size: 11.5px;
+    font-weight:700;
+    color: var(--text-1);
+  }
+
+  /* detail card that appears under the three method buttons */
+
+  .method-detail{
+    display:none;
+    margin-top: 14px;
+    background: var(--bg-1);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-md);
+    padding: 16px 16px 14px;
+  }
+
+  .method-detail.show{ display:block; }
+
+  .md-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom: 12px;
+  }
+
+  .md-head-left{
+    display:flex;
+    align-items:center;
+    gap:9px;
+  }
+
+  .md-head-left svg{ width:16px; height:16px; color: var(--copper); }
+
+  .md-head-left span{
+    font-size: 12.5px;
+    font-weight:700;
+    color: var(--text-1);
+  }
+
+  .md-amount{
+    font-family: var(--font-mono);
+    font-size: 15px;
+    font-weight:700;
+    color: var(--copper);
+  }
+
+  .md-rows{
+    display:flex;
+    flex-direction:column;
+    gap: 9px;
+    margin-bottom: 12px;
+  }
+
+  .md-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  .md-row-left{ display:flex; flex-direction:column; gap:2px; min-width:0; }
+  .md-row-lbl{ font-size: 9.5px; color: var(--text-3); text-transform:uppercase; letter-spacing:0.05em; }
+  .md-row-val{
+    font-size: 13px;
+    color: var(--text-1);
+    font-weight:600;
+    font-family: var(--font-mono);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .copy-btn{
+    flex-shrink:0;
+    width: 30px;
+    height: 30px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-3);
+    border: 1px solid var(--line);
+    color: var(--text-2);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition: color .2s, border-color .2s, background .2s;
+  }
+
+  .copy-btn svg{ width:14px; height:14px; }
+
+  .copy-btn.copied{
+    color: var(--signal);
+    border-color: var(--signal-dim);
+    background: rgba(69,192,138,0.1);
+  }
+
+  .md-note{
+    font-size: 11.5px;
+    color: var(--text-3);
+    line-height:1.55;
+    margin:0;
+  }
+
+  .md-note b{ color: var(--text-2); font-weight:600; }
+
+  /* ---------------- Toast ---------------- */
+
+  .toast{
+    position:fixed;
+    bottom: 28px;
+    left:50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--bg-3);
+    border: 1px solid var(--line);
+    color: var(--text-1);
+    font-size: 13px;
+    font-weight:500;
+    padding: 13px 20px;
+    border-radius: 999px;
+    box-shadow: var(--shadow-deep);
+    z-index: 80;
+    opacity:0;
+    transition: opacity .25s ease, transform .25s ease;
+    pointer-events:none;
+    max-width: 90%;
+    text-align:center;
+  }
+
+  .toast.show{
+    opacity:1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  .option:focus-visible,
+  .start-btn:focus-visible,
+  .buy-btn:focus-visible,
+  .alt-toggle:focus-visible,
+  .alt-method:focus-visible,
+  .copy-btn:focus-visible{
+    outline: 2px solid var(--copper);
+    outline-offset: 2px;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<div class="screen">
+
+  <header class="header">
+    <div class="eyebrow">
+      <span>No Ban</span>
+      <span>No Black</span>
+      <span>No Problem</span>
+    </div>
+    <h1 class="brand">DeepAim2<span class="brand-accent">.</span></h1>
+    <div class="version-row">
+      <span class="version-tag">premium</span>
+    </div>
+  </header>
+
+  <!-- Trial counter: the single source of truth for lock state -->
+  <div class="trial-card" id="trialCard">
+    <div class="trial-top">
+      <div class="trial-label" id="trialLabel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        <span>Periodo de prueba</span>
+      </div>
+      <span class="trial-pill" id="trialPill">Activo</span>
+    </div>
+    <div class="trial-clock" id="trialClock">--<span>:</span>--<span>:</span>--</div>
+    <div class="trial-sub" id="trialSub">Calculando tiempo restante…</div>
+    <div class="trial-range">
+      <div>
+        <div class="r-lbl">Inicio</div>
+        <div class="r-val">12 jul, 10:30 pm</div>
+      </div>
+      <div class="r-end">
+        <div class="r-lbl">Cierre</div>
+        <div class="r-val">13 jul, 10:30 am</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="locked-banner" id="lockedBanner">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+    <p>El periodo de prueba de este panel <b>ha terminado</b>. Compra la versión completa para seguir usándolo.</p>
+  </div>
+
+  <div class="controls-block" id="controlsBlock">
+
+    <div class="options-grid" id="optionsGrid">
+      <!-- options injected by JS -->
+    </div>
+
+    <div class="start-wrap">
+      <button class="start-btn" id="startBtn" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Start
+      </button>
+      <div class="start-foot">Inicia la opción activa de forma inmediata</div>
+    </div>
+
+  </div>
+
+  <div class="section-divider"><span>Versión completa</span></div>
+
+  <div class="purchase-block">
+    <a class="buy-btn" href="https://checkout.bold.co/payment/LNK_EI68EKIH2M" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2.5"/><path d="M2 10h20"/></svg>
+      Comprar con tarjeta
+    </a>
+    <div class="buy-price">Débito o crédito, <b>cualquier país, cualquier banco</b> · $14.99 USD</div>
+
+    <button class="alt-toggle" id="altToggle" type="button">
+      <span>¿No puedes pagar con tarjeta? Ver otros métodos</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+
+    <div class="alt-panel" id="altPanel">
+      <div class="alt-panel-inner">
+        <div class="alt-methods" id="altMethods">
+          <!-- alt methods injected by JS -->
+        </div>
+
+        <!-- Nequi -->
+        <div class="method-detail" id="detail-nequi">
+          <div class="md-head">
+            <div class="md-head-left">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><circle cx="8" cy="14" r="1.4" fill="currentColor" stroke="none"/></svg>
+              <span>Nequi</span>
+            </div>
+            <div class="md-amount">$52.000 COP</div>
+          </div>
+          <div class="md-rows">
+            <div class="md-row">
+              <div class="md-row-left"><div class="md-row-lbl">Número</div><div class="md-row-val">3132878955</div></div>
+              <button class="copy-btn" data-copy="3132878955" type="button" aria-label="Copiar número">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              </button>
+            </div>
+            <div class="md-row">
+              <div class="md-row-left"><div class="md-row-lbl">Titular</div><div class="md-row-val">Juan Aguirre</div></div>
+            </div>
+          </div>
+          <p class="md-note">Abre Nequi, selecciona <b>Enviar dinero</b> e ingresa el número. Equivale a $14.99 USD.</p>
+        </div>
+
+        <!-- Binance -->
+        <div class="method-detail" id="detail-binance">
+          <div class="md-head">
+            <div class="md-head-left">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 3.5 3.5L12 9 8.5 5.5 12 2Z"/><path d="m5.5 8.5 3.5 3.5-3.5 3.5L2 12l3.5-3.5Z"/><path d="m18.5 8.5 3.5 3.5-3.5 3.5L15 12l3.5-3.5Z"/><path d="m12 15 3.5 3.5L12 22l-3.5-3.5L12 15Z"/></svg>
+              <span>Binance Pay</span>
+            </div>
+            <div class="md-amount">$14.99 USDT</div>
+          </div>
+          <div class="md-rows">
+            <div class="md-row">
+              <div class="md-row-left"><div class="md-row-lbl">Binance ID</div><div class="md-row-val">538653875</div></div>
+              <button class="copy-btn" data-copy="538653875" type="button" aria-label="Copiar ID">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              </button>
+            </div>
+            <div class="md-row">
+              <div class="md-row-left"><div class="md-row-lbl">Usuario</div><div class="md-row-val">@jexeregedit</div></div>
+              <button class="copy-btn" data-copy="@jexeregedit" type="button" aria-label="Copiar usuario">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              </button>
+            </div>
+          </div>
+          <p class="md-note">Busca por <b>ID o usuario</b> dentro de Binance Pay.</p>
+        </div>
+
+        <!-- CLABE -->
+        <div class="method-detail" id="detail-clabe">
+          <div class="md-head">
+            <div class="md-head-left">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M4 21V9l8-6 8 6v12"/><path d="M9 21v-6h6v6"/></svg>
+              <span>CLABE — México</span>
+            </div>
+            <div class="md-amount">$260 MXN</div>
+          </div>
+          <div class="md-rows">
+            <div class="md-row">
+              <div class="md-row-left"><div class="md-row-lbl">Titular</div><div class="md-row-val">Juan Pablo Aguirre Grosso</div></div>
+            </div>
+            <div class="md-row">
+              <div class="md-row-left"><div class="md-row-lbl">CLABE</div><div class="md-row-val">646180546701915656</div></div>
+              <button class="copy-btn" data-copy="646180546701915656" type="button" aria-label="Copiar CLABE">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              </button>
+            </div>
+            <div class="md-row">
+              <div class="md-row-left"><div class="md-row-lbl">Entidad</div><div class="md-row-val">STP</div></div>
+            </div>
+          </div>
+          <p class="md-note">Transferencia bancaria directa vía STP. Equivale a $14.99 USD.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+
+  /* ============================================================
+     CONFIG
+     ============================================================ */
+
+  const OPTIONS = [
+    {
+      id: 'opt-deeplink-a',
+      label: 'DMO2',
+      sub: 'Main 2 options',
+      url: 'freefire://config/import?data=%7B%22patch%22%3A%22OB54%22%2C%22version%22%3A%222.5%22%2C%22type%22%3A%22sensitivity_profile%22%2C%22params%22%3A%7B%22GeneralSensitivity%22%3A2040.0%2C%22CameraSensitivity%22%3A1880.0%2C%22FreeLookSensitivity%22%3A95.0%2C%22ThirdPersonSensitivity%22%3A2040.0%2C%22FirstPersonSensitivity%22%3A1820.0%2C%22CameraAcceleration%22%3A0.15%2C%22CameraDeadZone%22%3A0.008%2C%22CameraFOVSensitivity%22%3A1900.0%2C%22HorizontalSensitivity%22%3A1880.0%2C%22VerticalSensitivity%22%3A1820.0%2C%22ADSBaseSensitivity%22%3A1650.0%2C%22ADSMultiplier%22%3A0.75%2C%22ADSTransitionMultiplier%22%3A0.85%2C%22HipFireToADSSpeed%22%3A8.5%2C%22ADSToHipFireSpeed%22%3A9.0%2C%22AimResponseCurve%22%3A1.2%2C%22AimEasing%22%3A0.98%2C%22AimAcceleration%22%3A0.18%2C%22AimMaxSpeed%22%3A450.0%2C%22IronSightSensitivity%22%3A680.0%2C%22RedDotSensitivity%22%3A1650.0%2C%22HolographicSensitivity%22%3A630.0%2C%22TwoXScopeSensitivity%22%3A520.0%2C%22ThreeXScopeSensitivity%22%3A480.0%2C%22FourXScopeSensitivity%22%3A420.0%2C%22ScopeTransitionSpeed%22%3A9.2%2C%22USP_Sensitivity%22%3A920.0%2C%22USP2_Sensitivity%22%3A920.0%2C%22DesertEagle_Sensitivity%22%3A1880.0%2C%22G18_Sensitivity%22%3A2040.0%2C%22M1873_Sensitivity%22%3A1900.0%2C%22M500_Sensitivity%22%3A860.0%2C%22M1917_Sensitivity%22%3A910.0%2C%22HealingPistol_Sensitivity%22%3A950.0%2C%22Flamethrower_Sensitivity%22%3A780.0%2C%22Gyro_USP%22%3A105.0%2C%22Gyro_USP2%22%3A105.0%2C%22Gyro_DesertEagle%22%3A980.0%2C%22Gyro_G18%22%3A95.0%2C%22Gyro_M1873%22%3A102.0%2C%22Gyro_M500%22%3A980.0%2C%22Gyro_M1917%22%3A103.0%2C%22Gyro_HealingPistol%22%3A110.0%2C%22Gyro_Flamethrower%22%3A88.0%2C%22M1014_Sensitivity%22%3A950.0%2C%22SPAS12_Sensitivity%22%3A930.0%2C%22M1887_Sensitivity%22%3A980.0%2C%22MAG7_Sensitivity%22%3A940.0%2C%22M590_Sensitivity%22%3A960.0%2C%22Trogon_Sensitivity%22%3A920.0%2C%22ChargeBuster_Sensitivity%22%3A1900.0%2C%22Gyro_M1014%22%3A108.0%2C%22Gyro_SPAS12%22%3A105.0%2C%22Gyro_M1887%22%3A112.0%2C%22Gyro_MAG7%22%3A107.0%2C%22Gyro_M590%22%3A110.0%2C%22Gyro_Trogon%22%3A104.0%2C%22Gyro_ChargeBuster%22%3A102.0%2C%22UMP_Sensitivity%22%3A1820.0%2C%22MP5_Sensitivity%22%3A840.0%2C%22MP40_Sensitivity%22%3A830.0%2C%22P90_Sensitivity%22%3A800.0%2C%22Thompson_Sensitivity%22%3A810.0%2C%22Vector_Sensitivity%22%3A780.0%2C%22UZI_Sensitivity%22%3A1820.0%2C%22MAC10_Sensitivity%22%3A790.0%2C%22Bizon_Sensitivity%22%3A830.0%2C%22CG15_Sensitivity%22%3A810.0%2C%22Gyro_UMP%22%3A920.0%2C%22Gyro_MP5%22%3A94.0%2C%22Gyro_MP40%22%3A93.0%2C%22Gyro_P90%22%3A88.0%2C%22Gyro_Thompson%22%3A90.0%2C%22Gyro_Vector%22%3A86.0%2C%22Gyro_UZI%22%3A920.0%2C%22Gyro_MAC10%22%3A88.0%2C%22Gyro_Bizon%22%3A93.0%2C%22Gyro_CG15%22%3A90.0%2C%22M4A1_Sensitivity%22%3A750.0%2C%22AK47_Sensitivity%22%3A720.0%2C%22SCAR_Sensitivity%22%3A740.0%2C%22FAMAS_Sensitivity%22%3A730.0%2C%22M14_Sensitivity%22%3A700.0%2C%22XM8_Sensitivity%22%3A760.0%2C%22AN94_Sensitivity%22%3A740.0%2C%22AUG_Sensitivity%22%3A750.0%2C%22Parafal_Sensitivity%22%3A710.0%2C%22Kingfisher_Sensitivity%22%3A770.0%2C%22G36_Sensitivity%22%3A760.0%2C%22Groza_Sensitivity%22%3A730.0%2C%22SVD_Sensitivity%22%3A680.0%2C%22Woodpecker_Sensitivity%22%3A690.0%2C%22SKS_Sensitivity%22%3A700.0%2C%22AC80_Sensitivity%22%3A750.0%2C%22Winchester_Sensitivity%22%3A670.0%2C%22Gyro_M4A1%22%3A84.0%2C%22Gyro_AK47%22%3A80.0%2C%22Gyro_SCAR%22%3A83.0%2C%22Gyro_FAMAS%22%3A82.0%2C%22Gyro_M14%22%3A78.0%2C%22Gyro_XM8%22%3A850.0%2C%22Gyro_AN94%22%3A83.0%2C%22Gyro_AUG%22%3A84.0%2C%22Gyro_Parafal%22%3A79.0%2C%22Gyro_Kingfisher%22%3A86.0%2C%22Gyro_G36%22%3A850.0%2C%22Gyro_Groza%22%3A82.0%2C%22AWM_Sensitivity%22%3A55.0%2C%22Kar98k_Sensitivity%22%3A58.0%2C%22M82B_Sensitivity%22%3A52.0%2C%22SVD_Sensitivity_2%22%3A620.0%2C%22Woodpecker_Sensitivity_2%22%3A600.0%2C%22Gyro_AWM%22%3A65.0%2C%22Gyro_Kar98k%22%3A68.0%2C%22Gyro_M82B%22%3A62.0%2C%22GyroIronSight%22%3A95.0%2C%22GyroRedDot%22%3A920.0%2C%22GyroHolographic%22%3A90.0%2C%22Gyro2x%22%3A75.0%2C%22Gyro3x%22%3A68.0%2C%22Gyro4x%22%3A60.0%2C%22TouchscreenSensitivity%22%3A8.8%2C%22LeftJoystickSensitivity%22%3A8.5%2C%22RightJoystickSensitivity%22%3A9.0%2C%22JoystickDeadZone%22%3A0.012%2C%22JoystickResponseCurve%22%3A1.15%2C%22TouchResponseRate%22%3A240.0%2C%22TouchSampleRate%22%3A240.0%2C%22TouchPressureSensitivity%22%3A0.85%2C%22TouchMultitouchTracking%22%3A1.0%2C%22FireButtonResponse%22%3A9.5%2C%22ScopeButtonResponse%22%3A9.2%2C%22CrouchJumpButtonResponse%22%3A9.8%2C%22ReloadButtonResponse%22%3A8.5%2C%22InventoryButtonResponse%22%3A8.0%2C%22GrenadeButtonResponse%22%3A9.0%2C%22MeleeButtonResponse%22%3A9.5%2C%22AimAssistStrength%22%3A6.5%2C%22AimAssistWindowSize%22%3A7.2%2C%22AimAssistSlowdownMultiplier%22%3A0.98%2C%22AimAssistMagnetism%22%3A0.98%2C%22AimAssistFriction%22%3A0.65%2C%22AimAssistRange%22%3A850.0%2C%22AimAssistHeadshotBonus%22%3A1.15%2C%22AimAssistTargetSwitchSpeed%22%3A0.88%2C%22RecoilControlMultiplier%22%3A3.2%2C%22VerticalRecoilCompensation%22%3A3.8%2C%22HorizontalRecoilCompensation%22%3A2.5%2C%22RecoilRecoverySpeed%22%3A4.5%2C%22RecoilStabilization%22%3A3.5%2C%22RecoilPatternRecognition%22%3A0.75%2C%22FirstShotRecoilMultiplier%22%3A0.85%2C%22RecoilShakeReduction%22%3A0.65%2C%22GyroscopeEnabled%22%3A1.0%2C%22GyroscopeGeneralSensitivity%22%3A95.0%2C%22GyroscopeADSMultiplier%22%3A0.68%2C%22GyroEnableOnADS%22%3A1.0%2C%22GyroAlwaysOn%22%3A0.0%2C%22GyroVerticalMultiplier%22%3A0.92%2C%22GyroHorizontalMultiplier%22%3A1.0%2C%22GyroYawRate%22%3A1.08%2C%22GyroPitchRate%22%3A0.95%2C%22GyroRollCompensation%22%3A0.75%2C%22GyroSmoothingFactor%22%3A0.22%2C%22GyroDeadZone%22%3A0.015%2C%22GyroFlickBoost%22%3A1.25%2C%22GyroCalibrationX%22%3A0.0%2C%22GyroCalibrationY%22%3A0.0%2C%22GyroCalibrationZ%22%3A0.0%2C%22AggressiveSensitivity%22%3A950.0%2C%22PassiveSensitivity%22%3A700.0%2C%22CloseCombatSensitivity%22%3A980.0%2C%22MidRangeSensitivity%22%3A80.0%2C%22LongRangeSensitivity%22%3A58.0%2C%22SniperSensitivity%22%3A48.0%2C%22TwoFingerSensitivity%22%3A750.0%2C%22ThreeFingerSensitivity%22%3A1820.0%2C%22FourFingerSensitivity%22%3A1880.0%2C%22ClawGripSensitivity%22%3A1900.0%2C%22ThumbGripSensitivity%22%3A780.0%2C%22HybridGripSensitivity%22%3A2040.0%2C%22VirtualDPIX%22%3A1600%2C%22VirtualDPIY%22%3A1600%2C%22DPIAdjustmentMultiplier%22%3A1.0%2C%22PixelPrecision%22%3A1.0%2C%22SubPixelRendering%22%3A1.0%2C%22PixelSkipping%22%3A0.0%2C%22InputLatencyCompensation%22%3A-0.008%2C%22PredictionMultiplier%22%3A1.35%2C%22FrameRateSensitivityScaling%22%3A1.0%2C%22MotionPrediction%22%3A1.25%2C%22InputBuffering%22%3A0.5%2C%22PollingRate%22%3A1000.0%2C%22AsyncInputProcessing%22%3A1.0%2C%22HapticFeedbackStrength%22%3A0.65%2C%22FireHapticIntensity%22%3A0.85%2C%22ScopeHapticIntensity%22%3A0.4%2C%22ReloadHapticFeedback%22%3A0.35%2C%22HitMarkerHaptic%22%3A0.75%2C%22KillConfirmHaptic%22%3A0.9%2C%22HeadshotHaptic%22%3A1.0%2C%22SensitivityMultiplierGlobal%22%3A1.0%2C%22SensitivityMultiplierADS%22%3A0.98%2C%22SensitivityMultiplierGyro%22%3A1.08%2C%22ExponentialCurveStrength%22%3A1.18%2C%22LinearResponseFactor%22%3A0.82%2C%22AccelerationThreshold%22%3A0.25%2C%22DecelerationThreshold%22%3A0.15%2C%22DynamicCurveAdaptation%22%3A0.65%2C%22LookAcceleration%22%3A0.28%2C%22LookDeceleration%22%3A0.35%2C%22LookMaxSpeed%22%3A420.0%2C%22LookSmoothness%22%3A0.18%2C%22LookInertia%22%3A0.12%2C%22AimMaxSpeed_2%22%3A280.0%2C%22MouseEmulationQuality%22%3A1.0%2C%22ControlSchemeType%22%3A2.0%2C%22DynamicSensitivityEnabled%22%3A1.0%2C%22PerWeaponSensitivityEnabled%22%3A1.0%2C%22PerScopeSensitivityEnabled%22%3A1.0%2C%22ProfileSwitchSpeed%22%3A8.5%2C%22AdaptiveSensitivity%22%3A1.0%2C%22ContextAwareSensitivity%22%3A1.0%2C%22ButtonOpacity%22%3A0.75%2C%22ButtonSizeMultiplier%22%3A1.05%2C%22ButtonSpacing%22%3A1.0%2C%22CustomLayoutEnabled%22%3A1.0%2C%22AdaptiveButtonSize%22%3A1.0%2C%22TouchDurationThreshold%22%3A0.08%2C%22TapRadius%22%3A95.0%2C%22LongPressDuration%22%3A0.42%2C%22SwipeThreshold%22%3A45.0%2C%22DoubleTapSpeed%22%3A0.25%2C%22EdgeSwipeSensitivity%22%3A0.85%2C%22MotionBlurReduction%22%3A0.85%2C%22ScreenShakeReduction%22%3A0.7%2C%22DeviceMotionUpdateInterval%22%3A0.008%2C%22CameraShakeMultiplier%22%3A0.6%2C%22FOVKickMultiplier%22%3A0.75%2C%22KalmanFilterStrength%22%3A0.55%2C%22LowPassFilterCutoff%22%3A15.0%2C%22HighPassFilterCutoff%22%3A0.5%2C%22NoiseReductionLevel%22%3A0.68%2C%22JitterCancellation%22%3A0.72%2C%22LastModifiedDate%22%3A1738022400.0%2C%22ConfigurationVersion%22%3A2.5%2C%22ProfileName%22%3A%22GyroSEdit_Pro_v2.5%22%2C%22ProfileAuthor%22%3A%22Advanced%22%2C%22ProfileDescription%22%3A%22Configuracion%20profesional%20optimizada%20con%20valores%20realistas%20y%20diferenciacion%20por%20arma%2Fmira%22%2C%22GameVersion%22%3A%22Compatible%22%2C%22DeviceOptimization%22%3A%22iOS_Universal%22%2C%22AntiRecoilEnabled%22%3A1.0%2C%22AntiRecoilStrength%22%3A2.8%2C%22AntiRecoilVerticalBias%22%3A0.75%2C%22AntiRecoilAdaptive%22%3A1.0%2C%22AntiRecoilDelayCompensation%22%3A0.025%2C%22TargetTrackingAssist%22%3A0.98%2C%22MovementPrediction%22%3A1.15%2C%22TrackingSmoothing%22%3A0.98%2C%22PredictiveAimWindow%22%3A0.045%2C%22VelocityBasedTracking%22%3A0.68%2C%22InVehicleSensitivity%22%3A68.0%2C%22ParachuteSensitivity%22%3A55.0%2C%22SwimmingSensitivity%22%3A72.0%2C%22ClimbingSensitivity%22%3A65.0%2C%22PronePositionSensitivity%22%3A70.0%2C%22CrouchPositionSensitivity%22%3A78.0%2C%22StandingPositionSensitivity%22%3A850.0%2C%22RunningPositionSensitivity%22%3A90.0%2C%22CarDriverSensitivity%22%3A70.0%2C%22CarPassengerSensitivity%22%3A75.0%2C%22MotorcycleSensitivity%22%3A72.0%2C%22HelicopterSensitivity%22%3A62.0%2C%22BoatSensitivity%22%3A68.0%2C%22CloseRange_0_10m_Sensitivity%22%3A980.0%2C%22ShortRange_10_25m_Sensitivity%22%3A88.0%2C%22MidRange_25_50m_Sensitivity%22%3A75.0%2C%22LongRange_50_100m_Sensitivity%22%3A62.0%2C%22ExtremeRange_100m_Plus_Sensitivity%22%3A48.0%2C%22InSafeZoneSensitivity%22%3A2040.0%2C%22OutsideZoneSensitivity%22%3A920.0%2C%22ZoneDamageSensitivityBoost%22%3A1.08%2C%22Pistol_Ammo_Sensitivity%22%3A1900.0%2C%22Shotgun_Ammo_Sensitivity%22%3A940.0%2C%22SMG_Ammo_Sensitivity%22%3A1820.0%2C%22AR_Ammo_Sensitivity%22%3A750.0%2C%22Sniper_Ammo_Sensitivity%22%3A58.0%2C%22DynamicZoomEnabled%22%3A1.0%2C%22ZoomSensitivityScaling%22%3A0.95%2C%22ZoomTransitionSmoothing%22%3A0.25%2C%22QuickScopeMultiplier%22%3A1.15%2C%22SingleFireSensitivity%22%3A780.0%2C%22BurstFireSensitivity%22%3A800.0%2C%22FullAutoSensitivity%22%3A750.0%2C%22ChargedShotSensitivity%22%3A720.0%2C%22PeekLeftSensitivity%22%3A1820.0%2C%22PeekRightSensitivity%22%3A1820.0%2C%22LeanAngleSensitivity%22%3A2040.0%2C%22GrenadeThrowSensitivity%22%3A75.0%2C%22GrenadeAimingSensitivity%22%3A70.0%2C%22FlashbangSensitivity%22%3A78.0%2C%22SmokeSensitivity%22%3A76.0%2C%22MolotovSensitivity%22%3A74.0%2C%22MeleeSensitivity%22%3A95.0%2C%22MeleeTrackingBoost%22%3A1.2%2C%22MeleeLungeAssist%22%3A0.65%2C%22CrosshairStability%22%3A0.85%2C%22CrosshairExpansionMultiplier%22%3A0.7%2C%22CrosshairRecenterSpeed%22%3A4.5%2C%22BaseFOV%22%3A90.0%2C%22SprintFOVIncrease%22%3A5.0%2C%22ADSFOV_Multiplier%22%3A0.85%2C%22FOV_TransitionSpeed%22%3A8.0%2C%22HitMarkerSensitivityPause%22%3A0.015%2C%22KillFeedbackDuration%22%3A0.08%2C%22DamageIndicatorSensitivity%22%3A0.9%2C%22ScreenEdgeSensitivity%22%3A0.92%2C%22ScreenEdgeDeadZone%22%3A25.0%2C%22EdgeBouncePrevention%22%3A1.0%2C%22ColdStartCompensation%22%3A1.12%2C%22WarmUpDuration%22%3A2.0%2C%22AdaptiveSensitivityLearning%22%3A1.0%2C%22GrenadeLauncher_Sensitivity%22%3A68.0%2C%22RocketLauncher_Sensitivity%22%3A62.0%2C%22Crossbow_Sensitivity%22%3A65.0%2C%22Minigun_Sensitivity%22%3A70.0%2C%22Gyro_GrenadeLauncher%22%3A76.0%2C%22Gyro_RocketLauncher%22%3A70.0%2C%22Gyro_Crossbow%22%3A73.0%2C%22Gyro_Minigun%22%3A78.0%2C%22M249_Sensitivity%22%3A680.0%2C%22M60_Sensitivity%22%3A660.0%2C%22MG42_Sensitivity%22%3A640.0%2C%22Gyro_M249%22%3A76.0%2C%22Gyro_M60%22%3A74.0%2C%22Gyro_MG42%22%3A72.0%2C%22With_Foregrip_Multiplier%22%3A1.05%2C%22With_Stock_Multiplier%22%3A1.03%2C%22With_Compensator_Multiplier%22%3A1.08%2C%22With_Suppressor_Multiplier%22%3A1.02%2C%22With_ExtendedMag_Multiplier%22%3A0.98%2C%22WeaponSwayReduction%22%3A0.68%2C%22BreathingSwayMultiplier%22%3A0.55%2C%22MovementSwayReduction%22%3A0.7%2C%22HoldBreathStabilization%22%3A2.5%2C%22BattleRoyale_Sensitivity%22%3A850.0%2C%22ClashSquad_Sensitivity%22%3A90.0%2C%22RankedMode_Sensitivity%22%3A82.0%2C%22TrainingMode_Sensitivity%22%3A88.0%2C%22CustomRoom_Sensitivity%22%3A850.0%2C%22NightMode_Sensitivity%22%3A83.0%2C%22FogCondition_Sensitivity%22%3A87.0%2C%22RainCondition_Sensitivity%22%3A84.0%2C%22LowHealth_SensitivityBoost%22%3A1.12%2C%22FullHealth_Sensitivity%22%3A1.0%2C%22CriticalHealth_TrackingAssist%22%3A0.75%2C%22Solo_Sensitivity%22%3A850.0%2C%22Duo_Sensitivity%22%3A86.0%2C%22Squad_Sensitivity%22%3A87.0%2C%22MotionInterpolation%22%3A1.0%2C%22InterpolationSmoothness%22%3A0.28%2C%22SubFrameInterpolation%22%3A1.0%2C%22TemporalSmoothing%22%3A0.22%2C%22VSyncSensitivityScaling%22%3A1.0%2C%22FramePacingSensitivity%22%3A1.0%2C%22AdaptiveRefreshRate%22%3A1.0%2C%22ProMotionOptimization%22%3A1.0%2C%22PowerSavingMode_Sensitivity%22%3A0.95%2C%22LowBattery_FeatureReduction%22%3A0.0%2C%22ThermalThrottling_Compensation%22%3A1.05%2C%22OverheatProtection_Enabled%22%3A0.0%2C%22ML_PatternRecognition%22%3A1.0%2C%22ML_AdaptiveSensitivity%22%3A1.0%2C%22ML_PlayerBehaviorLearning%22%3A1.0%2C%22ML_PredictiveAiming%22%3A0.85%2C%22Tournament_Mode%22%3A0.0%2C%22AntiCheat_Compliance%22%3A1.0%2C%22InputValidation_Strict%22%3A1.0%2C%22ExperimentalFeatures_Enabled%22%3A1.0%2C%22BetaFeatures_OptIn%22%3A1.0%2C%22AdvancedPhysics_Enabled%22%3A1.0%2C%22Profile_1_Active%22%3A1.0%2C%22Profile_2_Active%22%3A0.0%2C%22Profile_3_Active%22%3A0.0%2C%22QuickSwitch_Enabled%22%3A1.0%2C%22Last_Calibration_Date%22%3A1738022400.0%2C%22Auto_Calibration_Enabled%22%3A1.0%2C%22Manual_Override_Active%22%3A0.0%2C%22Track_Accuracy%22%3A1.0%2C%22Track_Performance%22%3A1.0%2C%22Suggest_Adjustments%22%3A1.0%2C%22Auto_Backup_Enabled%22%3A1.0%2C%22Cloud_Sync_Enabled%22%3A0.0%2C%22Recovery_Point_Created%22%3A1.0%7D%7D',
+      icon: 'bolt'
+    },
+    {
+      id: 'opt-deeplink-b',
+      label: 'DFV2',
+      sub: 'FOV 2 Option',
+      url: 'freefire://config/import?data=%7B%22patch%22%3A%22OB54%22%2C%22version%22%3A%222.5_Advanced%22%2C%22type%22%3A%22fov_aimassist_profile%22%2C%22params%22%3A%7B%22fovRadius%22%3A360.0%2C%22aimAssistFovRadius%22%3A280.0%2C%22targetDetectionFovRadius%22%3A120.0%2C%22enemyTrackingFovRadius%22%3A265.0%2C%22headTrackingFovRadius%22%3A360.0%2C%22aimAssistStrength%22%3A0.72%2C%22aimAssistSensitivity%22%3A0.85%2C%22aimAssistStickiness%22%3A0.68%2C%22aimAssistMagnetism%22%3A0.55%2C%22aimAssistSlowdown%22%3A0.65%2C%22aimAssistRotation%22%3A0.58%2C%22aimAssistSmoothing%22%3A0.35%2C%22headShotTrackingFovRadius%22%3A18.0%2C%22headTrackingPriority%22%3A0.88%2C%22headTrackingStrength%22%3A0.75%2C%22headTrackingMagnetism%22%3A0.62%2C%22headshotAssistMultiplier%22%3A1.25%2C%22enableHeadTracking%22%3A1%2C%22prioritizeHeadshots%22%3A1%2C%22closeRangeFovRadius%22%3A95.0%2C%22midRangeFovRadius%22%3A265.0%2C%22longRangeFovRadius%22%3A35.0%2C%22extremeRangeFovRadius%22%3A18.0%2C%22fovRadius_USP%22%3A88.0%2C%22fovRadius_USP2%22%3A88.0%2C%22fovRadius_DESERT_EAGLE%22%3A82.0%2C%22fovRadius_G18%22%3A92.0%2C%22fovRadius_M1873%22%3A360.0%2C%22fovRadius_M500%22%3A80.0%2C%22fovRadius_M1917%22%3A86.0%2C%22fovRadius_HEALING_PISTOL%22%3A75.0%2C%22fovRadius_FLAMETHROWER%22%3A105.0%2C%22aimAssist_USP%22%3A0.7%2C%22aimAssist_USP2%22%3A0.7%2C%22aimAssist_DESERT_EAGLE%22%3A0.78%2C%22aimAssist_G18%22%3A0.65%2C%22aimAssist_M1873%22%3A0.72%2C%22aimAssist_M500%22%3A0.8%2C%22aimAssist_M1917%22%3A0.71%2C%22aimAssist_HEALING_PISTOL%22%3A0.5%2C%22aimAssist_FLAMETHROWER%22%3A0.85%2C%22headTrack_USP%22%3A20.0%2C%22headTrack_USP2%22%3A20.0%2C%22headTrack_DESERT_EAGLE%22%3A18.0%2C%22headTrack_G18%22%3A360.0%2C%22headTrack_M1873%22%3A19.0%2C%22headTrack_M500%22%3A17.0%2C%22headTrack_M1917%22%3A20.0%2C%22fovRadius_M1014%22%3A110.0%2C%22fovRadius_SPAS12%22%3A108.0%2C%22fovRadius_M1887%22%3A115.0%2C%22fovRadius_MAG7%22%3A112.0%2C%22fovRadius_M590%22%3A114.0%2C%22fovRadius_TROGON%22%3A109.0%2C%22fovRadius_CHARGE_BUSTER%22%3A106.0%2C%22aimAssist_M1014%22%3A0.82%2C%22aimAssist_SPAS12%22%3A0.85%2C%22aimAssist_M1887%22%3A0.88%2C%22aimAssist_MAG7%22%3A0.84%2C%22aimAssist_M590%22%3A0.86%2C%22aimAssist_TROGON%22%3A0.83%2C%22aimAssist_CHARGE_BUSTER%22%3A0.8%2C%22headTrack_M1014%22%3A280.0%2C%22headTrack_SPAS12%22%3A27.0%2C%22headTrack_M1887%22%3A30.0%2C%22headTrack_MAG7%22%3A29.0%2C%22headTrack_M590%22%3A29.0%2C%22headTrack_TROGON%22%3A280.0%2C%22headTrack_CHARGE_BUSTER%22%3A26.0%2C%22fovRadius_UMP%22%3A78.0%2C%22fovRadius_MP5%22%3A82.0%2C%22fovRadius_MP40%22%3A80.0%2C%22fovRadius_P90%22%3A360.0%2C%22fovRadius_THOMPSON%22%3A79.0%2C%22fovRadius_VECTOR%22%3A88.0%2C%22fovRadius_UZI%22%3A83.0%2C%22fovRadius_MAC10%22%3A86.0%2C%22fovRadius_BIZON%22%3A81.0%2C%22fovRadius_CG15%22%3A80.0%2C%22aimAssist_UMP%22%3A0.72%2C%22aimAssist_MP5%22%3A0.75%2C%22aimAssist_MP40%22%3A0.73%2C%22aimAssist_P90%22%3A0.7%2C%22aimAssist_THOMPSON%22%3A0.74%2C%22aimAssist_VECTOR%22%3A0.68%2C%22aimAssist_UZI%22%3A0.73%2C%22aimAssist_MAC10%22%3A0.69%2C%22aimAssist_BIZON%22%3A0.74%2C%22aimAssist_CG15%22%3A0.72%2C%22headTrack_UMP%22%3A360.0%2C%22headTrack_MP5%22%3A24.0%2C%22headTrack_MP40%22%3A23.0%2C%22headTrack_P90%22%3A25.0%2C%22headTrack_THOMPSON%22%3A360.0%2C%22headTrack_VECTOR%22%3A26.0%2C%22headTrack_UZI%22%3A23.0%2C%22headTrack_MAC10%22%3A25.0%2C%22headTrack_BIZON%22%3A23.0%2C%22headTrack_CG15%22%3A360.0%2C%22fovRadius_M4A1%22%3A265.0%2C%22fovRadius_AK47%22%3A62.0%2C%22fovRadius_SCAR%22%3A64.0%2C%22fovRadius_FAMAS%22%3A66.0%2C%22fovRadius_M14%22%3A58.0%2C%22fovRadius_XM8%22%3A67.0%2C%22fovRadius_AN94%22%3A64.0%2C%22fovRadius_AUG%22%3A265.0%2C%22fovRadius_PARAFAL%22%3A60.0%2C%22fovRadius_KINGFISHER%22%3A68.0%2C%22fovRadius_G36%22%3A66.0%2C%22fovRadius_GROZA%22%3A63.0%2C%22fovRadius_AC80%22%3A265.0%2C%22fovRadius_Woodpecker%22%3A56.0%2C%22fovRadius_SKS%22%3A55.0%2C%22fovRadius_SVD%22%3A52.0%2C%22fovRadius_Winchester%22%3A50.0%2C%22aimAssist_M4A1%22%3A0.75%2C%22aimAssist_AK47%22%3A0.78%2C%22aimAssist_SCAR%22%3A0.76%2C%22aimAssist_FAMAS%22%3A0.74%2C%22aimAssist_M14%22%3A0.8%2C%22aimAssist_XM8%22%3A0.73%2C%22aimAssist_AN94%22%3A0.76%2C%22aimAssist_AUG%22%3A0.75%2C%22aimAssist_PARAFAL%22%3A0.79%2C%22aimAssist_KINGFISHER%22%3A0.72%2C%22aimAssist_G36%22%3A0.74%2C%22aimAssist_GROZA%22%3A0.77%2C%22aimAssist_AC80%22%3A0.75%2C%22aimAssist_Woodpecker%22%3A0.82%2C%22aimAssist_SKS%22%3A0.83%2C%22aimAssist_SVD%22%3A0.85%2C%22aimAssist_Winchester%22%3A0.88%2C%22headTrack_M4A1%22%3A18.0%2C%22headTrack_AK47%22%3A17.0%2C%22headTrack_SCAR%22%3A18.0%2C%22headTrack_FAMAS%22%3A19.0%2C%22headTrack_M14%22%3A15.0%2C%22headTrack_XM8%22%3A19.0%2C%22headTrack_AN94%22%3A18.0%2C%22headTrack_AUG%22%3A18.0%2C%22headTrack_PARAFAL%22%3A16.0%2C%22headTrack_KINGFISHER%22%3A20.0%2C%22headTrack_G36%22%3A19.0%2C%22headTrack_GROZA%22%3A17.0%2C%22headTrack_AC80%22%3A18.0%2C%22headTrack_Woodpecker%22%3A14.0%2C%22headTrack_SKS%22%3A14.0%2C%22headTrack_SVD%22%3A13.0%2C%22headTrack_Winchester%22%3A12.0%2C%22fovRadius_AWM%22%3A32.0%2C%22fovRadius_KAR98K%22%3A35.0%2C%22fovRadius_M82B%22%3A280.0%2C%22fovRadius_BARRETT%22%3A30.0%2C%22aimAssist_AWM%22%3A0.9%2C%22aimAssist_KAR98K%22%3A0.88%2C%22aimAssist_M82B%22%3A0.92%2C%22aimAssist_BARRETT%22%3A0.91%2C%22headTrack_AWM%22%3A10.0%2C%22headTrack_KAR98K%22%3A11.0%2C%22headTrack_M82B%22%3A9.0%2C%22headTrack_BARRETT%22%3A9.5%2C%22fovRadius_M249%22%3A70.0%2C%22fovRadius_M60%22%3A68.0%2C%22fovRadius_MG42%22%3A66.0%2C%22aimAssist_M249%22%3A0.76%2C%22aimAssist_M60%22%3A0.78%2C%22aimAssist_MG42%22%3A0.8%2C%22headTrack_M249%22%3A20.0%2C%22headTrack_M60%22%3A19.0%2C%22headTrack_MG42%22%3A18.0%2C%22fovRadius_GRENADE_LAUNCHER%22%3A75.0%2C%22fovRadius_ROCKET_LAUNCHER%22%3A55.0%2C%22fovRadius_CROSSBOW%22%3A45.0%2C%22fovRadius_MINIGUN%22%3A95.0%2C%22aimAssist_GRENADE_LAUNCHER%22%3A0.7%2C%22aimAssist_ROCKET_LAUNCHER%22%3A0.75%2C%22aimAssist_CROSSBOW%22%3A0.85%2C%22aimAssist_MINIGUN%22%3A0.72%2C%22fovRadius_IronSight%22%3A360.0%2C%22fovRadius_RedDot%22%3A75.0%2C%22fovRadius_Holographic%22%3A72.0%2C%22fovRadius_2xScope%22%3A50.0%2C%22fovRadius_3xScope%22%3A42.0%2C%22fovRadius_4xScope%22%3A35.0%2C%22fovRadius_6xScope%22%3A25.0%2C%22fovRadius_8xScope%22%3A18.0%2C%22fovRadius_15xScope%22%3A12.0%2C%22aimAssist_IronSight%22%3A0.7%2C%22aimAssist_RedDot%22%3A0.72%2C%22aimAssist_Holographic%22%3A0.73%2C%22aimAssist_2xScope%22%3A0.78%2C%22aimAssist_3xScope%22%3A0.82%2C%22aimAssist_4xScope%22%3A0.85%2C%22aimAssist_6xScope%22%3A0.88%2C%22aimAssist_8xScope%22%3A0.9%2C%22aimAssist_15xScope%22%3A0.93%2C%22targetLockFovRadius%22%3A45.0%2C%22enemyDetectionRadius%22%3A150.0%2C%22trackingFovRadius%22%3A70.0%2C%22autoAimFovRadius%22%3A35.0%2C%22quickAimFovRadius%22%3A55.0%2C%22targetTrackingSmoothing%22%3A0.38%2C%22targetTrackingPrediction%22%3A0.65%2C%22targetTrackingSpeed%22%3A0.82%2C%22targetLockStrength%22%3A0.75%2C%22targetLockTime%22%3A0.25%2C%22targetSwitchSpeed%22%3A0.55%2C%22enemyDetectionSpeed%22%3A0.95%2C%22enemyDetectionAccuracy%22%3A0.88%2C%22enemyPriorityDistance%22%3A100.0%2C%22closestEnemyPriority%22%3A0.85%2C%22lowHealthEnemyPriority%22%3A0.75%2C%22aimingEnemyPriority%22%3A0.9%2C%22stickyAimStrength%22%3A0.68%2C%22stickyAimRadius%22%3A32.0%2C%22stickyAimDuration%22%3A0.45%2C%22stickyAimDecay%22%3A0.55%2C%22bulletMagnetismRadius%22%3A15.0%2C%22bulletMagnetismStrength%22%3A0.52%2C%22bulletMagnetismHeadshot%22%3A0.65%2C%22bulletMagnetismDistance%22%3A75.0%2C%22reticlePlacementAssist%22%3A0.72%2C%22reticlePlacementSpeed%22%3A0.88%2C%22reticlePlacementAccuracy%22%3A0.85%2C%22reticleSnapRadius%22%3A25.0%2C%22reticleSnapStrength%22%3A0.6%2C%22followThroughStrength%22%3A0.7%2C%22followThroughDuration%22%3A0.35%2C%22followThroughDecay%22%3A0.45%2C%22adsFovMultiplier%22%3A0.65%2C%22adsAimAssistMultiplier%22%3A1.25%2C%22adsTrackingMultiplier%22%3A1.15%2C%22adsHeadTrackMultiplier%22%3A1.3%2C%22hipFireFovMultiplier%22%3A1.15%2C%22hipFireAimAssistMultiplier%22%3A0.85%2C%22hipFireTrackingMultiplier%22%3A0.9%2C%22movingTargetAssist%22%3A0.78%2C%22movingPlayerAimAssist%22%3A0.72%2C%22jumpingShotAssist%22%3A0.65%2C%22crouchingAimBonus%22%3A1.08%2C%22proneAimBonus%22%3A1.12%2C%22slidingAimPenalty%22%3A0.88%2C%22closeRangeAimAssist%22%3A0.82%2C%22midRangeAimAssist%22%3A0.75%2C%22longRangeAimAssist%22%3A0.88%2C%22extremeRangeAimAssist%22%3A0.92%2C%22headPriority%22%3A0.9%2C%22chestPriority%22%3A0.75%2C%22limbsPriority%22%3A0.6%2C%22centerMassPriority%22%3A0.7%2C%22clutchSituationAssist%22%3A0.85%2C%22oneVsOneAssist%22%3A0.78%2C%22multipleEnemiesAssist%22%3A0.82%2C%22lowHealthAssist%22%3A0.88%2C%22recoilCompensation%22%3A0.65%2C%22recoilTrackingAssist%22%3A0.72%2C%22verticalRecoilAssist%22%3A0.7%2C%22horizontalRecoilAssist%22%3A0.68%2C%22aimAssistReactionTime%22%3A0.08%2C%22targetAcquisitionDelay%22%3A0.05%2C%22trackingUpdateRate%22%3A240.0%2C%22latencyCompensation%22%3A0.85%2C%22aimAssistWindow%22%3A0.18%2C%22trackingWindow%22%3A0.25%2C%22snapWindow%22%3A0.12%2C%22lockWindow%22%3A0.3%2C%22aimAssistCurve%22%3A1.15%2C%22trackingCurve%22%3A1.08%2C%22distanceFalloff%22%3A0.75%2C%22angleFalloff%22%3A0.82%2C%22inputFilterStrength%22%3A0.28%2C%22trackingSmoothness%22%3A0.35%2C%22snapSmoothness%22%3A0.22%2C%22aimAssistInterpolation%22%3A0.4%2C%22fovRadiusScaleEnabled%22%3A1%2C%22weaponSpecificFovEnabled%22%3A1%2C%22headTrackingEnabled%22%3A1%2C%22aimAssistEnabled%22%3A1%2C%22targetLockEnabled%22%3A1%2C%22stickyAimEnabled%22%3A1%2C%22bulletMagnetismEnabled%22%3A1%2C%22reticlePlacementEnabled%22%3A1%2C%22followThroughEnabled%22%3A1%2C%22movingTargetAssistEnabled%22%3A1%2C%22distanceBasedAssistEnabled%22%3A1%2C%22situationalAssistEnabled%22%3A1%2C%22recoilCompensationEnabled%22%3A1%2C%22latencyCompensationEnabled%22%3A1%2C%22adaptiveAssistEnabled%22%3A1%2C%22trackingPriority%22%3A0.85%2C%22headShotPriority%22%3A0.9%2C%22accuracyPriority%22%3A0.88%2C%22speedPriority%22%3A0.82%2C%22consistencyPriority%22%3A0.87%2C%22battleRoyaleFovMultiplier%22%3A1.0%2C%22clashSquadFovMultiplier%22%3A1.08%2C%22rankedModeFovMultiplier%22%3A0.95%2C%22casualModeFovMultiplier%22%3A1.05%2C%22dynamicFovAdjustment%22%3A1.0%2C%22contextAwareFov%22%3A1.0%2C%22adaptiveFovScaling%22%3A0.85%2C%22performanceOptimizedFov%22%3A1.0%2C%22mlBasedTracking%22%3A0.75%2C%22mlBasedPrediction%22%3A0.7%2C%22mlBasedAdjustment%22%3A0.68%2C%22mlAssistEnabled%22%3A1%2C%22fairPlayCompliance%22%3A1.0%2C%22detectionAvoidance%22%3A1.0%2C%22safetyCheckEnabled%22%3A1%2C%22validationEnabled%22%3A1%2C%22configVersion%22%3A%222.5_Advanced%22%2C%22configName%22%3A%22FOV_AimAssist_Pro%22%2C%22lastModified%22%3A%222025-01-27%22%2C%22configValidated%22%3A1%7D%7D',
+      icon: 'target'
+    }
+  ];
+
+  const ALT_METHODS = [
+    { id: 'nequi', name: 'Nequi', icon: 'wallet' },
+    { id: 'binance', name: 'Binance', icon: 'crypto' },
+    { id: 'clabe', name: 'CLABE', icon: 'bank' }
+  ];
+
+  // Trial window — fixed to America/Bogota (UTC-05:00) so the lock
+  // is exact no matter what timezone the visitor's device reports.
+  const TRIAL_START = new Date('2026-07-12T22:30:00-05:00');
+  const TRIAL_END   = new Date('2026-07-13T10:30:00-05:00');
+
+  const ICONS = {
+    bolt: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>',
+    target: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.6" fill="currentColor"/></svg>',
+    wallet: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><circle cx="8" cy="14" r="1.4" fill="currentColor" stroke="none"/></svg>',
+    crypto: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 3.5 3.5L12 9 8.5 5.5 12 2Z"/><path d="m5.5 8.5 3.5 3.5-3.5 3.5L2 12l3.5-3.5Z"/><path d="m18.5 8.5 3.5 3.5-3.5 3.5L15 12l3.5-3.5Z"/><path d="m12 15 3.5 3.5L12 22l-3.5-3.5L12 15Z"/></svg>',
+    bank: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M4 21V9l8-6 8 6v12"/><path d="M9 21v-6h6v6"/></svg>'
+  };
+
+  /* ============================================================
+     STATE
+     ============================================================ */
+
+  let activeOptionId = OPTIONS[0].id;
+  let selectedAlt = null;
+  let isUnlocked = false;
+
+  /* ============================================================
+     TRIAL COUNTER — checked every second against real time,
+     no client-side flag can fake the unlocked state past TRIAL_END.
+     ============================================================ */
+
+  const trialCard = document.getElementById('trialCard');
+  const trialPill = document.getElementById('trialPill');
+  const trialClock = document.getElementById('trialClock');
+  const trialSub = document.getElementById('trialSub');
+  const lockedBanner = document.getElementById('lockedBanner');
+  const controlsBlock = document.getElementById('controlsBlock');
+  const startBtn = document.getElementById('startBtn');
+
+  function pad(n){ return String(n).padStart(2,'0'); }
+
+  function formatDuration(ms){
+    const totalSeconds = Math.max(0, Math.floor(ms / 1000));
+    const h = Math.floor(totalSeconds / 3600);
+    const m = Math.floor((totalSeconds % 3600) / 60);
+    const s = totalSeconds % 60;
+    return { h, m, s };
+  }
+
+  function renderClock(h, m, s){
+    trialClock.innerHTML = `${pad(h)}<span>:</span>${pad(m)}<span>:</span>${pad(s)}`;
+  }
+
+  function setLockedUI(reason){
+    isUnlocked = false;
+    trialCard.classList.add('locked');
+    trialPill.textContent = 'Finalizado';
+    lockedBanner.classList.add('show');
+    controlsBlock.classList.add('disabled');
+    startBtn.disabled = true;
+
+    if (reason === 'before'){
+      trialSub.innerHTML = `El panel se desbloquea el <b>12 jul, 10:30 pm</b>.`;
+    } else {
+      trialSub.innerHTML = `El periodo de prueba <b>ha terminado</b>. Usa la versión completa para seguir accediendo.`;
+    }
+  }
+
+  function setUnlockedUI(){
+    isUnlocked = true;
+    trialCard.classList.remove('locked');
+    trialPill.textContent = 'Activo';
+    lockedBanner.classList.remove('show');
+    controlsBlock.classList.remove('disabled');
+    startBtn.disabled = false;
+  }
+
+  function tickTrial(){
+    const now = new Date();
+
+    if (now < TRIAL_START){
+      const { h, m, s } = formatDuration(TRIAL_START - now);
+      renderClock(h, m, s);
+      setLockedUI('before');
+      return;
+    }
+
+    if (now >= TRIAL_END){
+      trialClock.innerHTML = `00<span>:</span>00<span>:</span>00`;
+      setLockedUI('after');
+      return;
+    }
+
+    const { h, m, s } = formatDuration(TRIAL_END - now);
+    renderClock(h, m, s);
+    trialSub.innerHTML = `Quedan <b>${pad(h)}h ${pad(m)}m ${pad(s)}s</b> de acceso de prueba.`;
+    setUnlockedUI();
+  }
+
+  tickTrial();
+  setInterval(tickTrial, 1000);
+
+  /* ============================================================
+     RENDER OPTIONS
+     ============================================================ */
+
+  const optionsGrid = document.getElementById('optionsGrid');
+
+  function renderOptions(){
+    optionsGrid.innerHTML = OPTIONS.map(opt => `
+      <button class="option ${opt.id === activeOptionId ? 'active' : ''}" data-id="${opt.id}" type="button" role="switch" aria-checked="${opt.id === activeOptionId}">
+        <div class="option-top">
+          <div class="option-icon">${ICONS[opt.icon]}</div>
+          <div class="switch"></div>
+        </div>
+        <div class="option-label">${opt.label}</div>
+        <div class="option-sub">${opt.id === activeOptionId ? 'Activa' : opt.sub}</div>
+      </button>
+    `).join('');
+
+    optionsGrid.querySelectorAll('.option').forEach(el => {
+      el.addEventListener('click', () => selectOption(el.dataset.id));
+    });
+  }
+
+  function selectOption(id){
+    if (activeOptionId === id) return;
+    activeOptionId = id;
+    renderOptions();
+  }
+
+  /* ============================================================
+     START — immediate, no simulated connection step
+     ============================================================ */
+
+  startBtn.addEventListener('click', () => {
+    if (!isUnlocked){
+      showToast('El periodo de prueba ha terminado');
+      return;
+    }
+    const opt = OPTIONS.find(o => o.id === activeOptionId);
+    window.location.href = opt.url;
+  });
+
+  /* ============================================================
+     PURCHASE — alt methods toggle + detail panels
+     ============================================================ */
+
+  const altToggle = document.getElementById('altToggle');
+  const altPanel = document.getElementById('altPanel');
+  const altMethods = document.getElementById('altMethods');
+
+  function renderAltMethods(){
+    altMethods.innerHTML = ALT_METHODS.map(m => `
+      <button class="alt-method ${selectedAlt === m.id ? 'selected' : ''}" data-id="${m.id}" type="button">
+        <div class="alt-method-icon">${ICONS[m.icon]}</div>
+        <div class="alt-method-name">${m.name}</div>
+      </button>
+    `).join('');
+
+    altMethods.querySelectorAll('.alt-method').forEach(el => {
+      el.addEventListener('click', () => selectAltMethod(el.dataset.id));
+    });
+  }
+
+  function selectAltMethod(id){
+    selectedAlt = (selectedAlt === id) ? null : id;
+    renderAltMethods();
+
+    document.querySelectorAll('.method-detail').forEach(d => d.classList.remove('show'));
+    if (selectedAlt){
+      const detail = document.getElementById(`detail-${selectedAlt}`);
+      if (detail) detail.classList.add('show');
+    }
+  }
+
+  altToggle.addEventListener('click', () => {
+    const open = altPanel.classList.toggle('open');
+    altToggle.classList.toggle('open', open);
+  });
+
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.copy-btn');
+    if (!btn) return;
+    const value = btn.dataset.copy;
+    navigator.clipboard.writeText(value).then(() => {
+      btn.classList.add('copied');
+      showToast('Copiado al portapapeles');
+      setTimeout(() => btn.classList.remove('copied'), 1200);
+    }).catch(() => {
+      showToast('No se pudo copiar');
+    });
+  });
+
+  /* ============================================================
+     TOAST
+     ============================================================ */
+
+  let toastTimer = null;
+  function showToast(msg){
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+  }
+
+  /* ============================================================
+     INIT
+     ============================================================ */
+
+  renderOptions();
+  renderAltMethods();
+
+})();
+</script>
+
+</body>
+</html>
