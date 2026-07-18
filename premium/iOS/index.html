@@ -50,21 +50,8 @@ main{position:relative;z-index:1;max-width:480px;width:100%;margin:0 auto;paddin
 .video-wrap video{width:100%;display:block;max-height:230px;object-fit:cover}
 .video-label{position:absolute;bottom:10px;left:10px;background:rgba(255,255,255,0.92);backdrop-filter:blur(8px);border-radius:100px;padding:5px 12px;font-size:0.68rem;font-weight:600;color:var(--ink)}
 
-/* SCARCITY */
-.scarcity{margin-top:14px;padding:17px 18px;background:var(--ink);border-radius:var(--r-lg);animation:rise .6s .05s ease both}
-.scar-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:13px}
-.scar-label{font-size:0.65rem;font-weight:600;letter-spacing:0.05em;color:rgba(255,255,255,0.5)}
-.scar-count{font-family:var(--f-disp);font-size:0.95rem;font-weight:800;color:#fff;letter-spacing:-0.01em}
-.scar-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:13px;border-top:1px solid rgba(255,255,255,0.12)}
-.scar-deadline-label{font-size:0.65rem;font-weight:500;color:rgba(255,255,255,0.5)}
-.scar-deadline-date{font-size:0.77rem;font-weight:700;color:#fff;margin-top:1px}
-.scar-timer{display:flex;gap:7px}
-.scar-timer-unit{text-align:center}
-.scar-timer-num{font-family:var(--f-disp);font-size:1rem;font-weight:800;color:#fff;min-width:28px;letter-spacing:-0.01em}
-.scar-timer-lbl{font-size:0.53rem;font-weight:600;color:rgba(255,255,255,0.4);letter-spacing:0.04em;margin-top:1px}
-
 /* PRICE */
-.price-block{margin-top:12px;padding:24px 20px;background:var(--surface);border-radius:var(--r-lg);text-align:center;animation:rise .6s .07s ease both}
+.price-block{margin-top:14px;padding:24px 20px;background:var(--surface);border-radius:var(--r-lg);text-align:center;animation:rise .6s .07s ease both}
 .price-was{font-size:0.8rem;color:var(--gray3);text-decoration:line-through;font-weight:500;margin-bottom:2px}
 .price-now{font-family:var(--f-disp);font-size:3rem;font-weight:900;color:var(--ink);letter-spacing:-0.03em;line-height:1}
 .price-now sup{font-size:1.25rem;font-weight:700;vertical-align:super;margin-right:1px}
@@ -137,6 +124,13 @@ main{position:relative;z-index:1;max-width:480px;width:100%;margin:0 auto;paddin
 .pay-secure svg{width:11px;height:11px;color:rgba(255,255,255,0.35)}
 .pay-secure span{font-size:0.64rem;color:rgba(255,255,255,0.35);font-weight:500}
 
+/* GEO QUICK PAY (auto-detected local options, shown right under the card button) */
+.geo-quickpay{display:none;margin-top:14px}
+.geo-quickpay.show{display:block;animation:rise .3s ease both}
+.geo-quickpay-label{display:flex;align-items:center;gap:7px;font-size:0.68rem;font-weight:600;letter-spacing:0.03em;color:rgba(255,255,255,0.5);margin-bottom:9px}
+.geo-quickpay-label svg{width:12px;height:12px}
+.geo-quick-list{display:flex;flex-direction:column;gap:6px}
+
 /* ALT METHODS TOGGLE */
 .alt-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;padding:12px 14px;border-radius:var(--r-sm);background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.11);cursor:pointer;transition:background var(--tr)}
 .alt-toggle:hover{background:rgba(255,255,255,0.09)}
@@ -149,9 +143,10 @@ main{position:relative;z-index:1;max-width:480px;width:100%;margin:0 auto;paddin
 .alt-panel{display:none;margin-top:10px}
 .alt-panel.open{display:block;animation:rise .28s ease both}
 .alt-method-list{display:flex;flex-direction:column;gap:6px}
+.alt-method-wrap{display:flex;flex-direction:column}
 .alt-method{display:flex;align-items:center;gap:11px;padding:11px 12px;background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.09);border-radius:var(--r-sm);cursor:pointer;transition:all var(--tr);user-select:none}
 .alt-method:hover{border-color:rgba(255,255,255,0.2)}
-.alt-method.is-sel{border-color:#fff;background:rgba(255,255,255,0.09)}
+.alt-method.is-sel{border-color:#fff;background:rgba(255,255,255,0.09);border-bottom-left-radius:0;border-bottom-right-radius:0}
 .alt-m-ico{width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,0.07);display:grid;place-items:center;flex-shrink:0}
 .alt-m-ico svg{width:14px;height:14px;color:#fff}
 .alt-m-info{flex:1;min-width:0}
@@ -162,7 +157,7 @@ main{position:relative;z-index:1;max-width:480px;width:100%;margin:0 auto;paddin
 .alt-method.is-sel .alt-m-radio{background:#fff;border-color:#fff}
 .alt-m-radio svg{width:7px;height:7px;color:var(--ink);opacity:0;transition:opacity .12s}
 .alt-method.is-sel .alt-m-radio svg{opacity:1}
-.alt-detail{display:none;margin-top:9px;padding:13px;border-radius:var(--r-sm);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09)}
+.alt-detail{display:none;padding:13px;border-radius:0 0 var(--r-sm) var(--r-sm);background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.09);border-top:none}
 .alt-detail.show{display:block;animation:rise .22s ease both}
 .alt-detail-title{font-size:0.77rem;font-weight:700;color:#fff;margin-bottom:9px;letter-spacing:-0.005em}
 .alt-data-row{display:flex;align-items:center;gap:8px;padding:8px 10px;margin-bottom:5px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);border-radius:8px}
@@ -227,7 +222,7 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
 <header>
   <div class="hdr-brand">
     <div class="hdr-mark">
-<svg viewBox="0 0 384 512" fill="none"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-19.9-30.3-50.6-46.8-91.8-49.9-37.9-3-79.6 22.4-95.5 22.4-16.9 0-53.6-21.3-83.4-21.3-58.5.9-120.8 47.1-120.8 138.7 0 28.4 5.2 57.8 15.5 88 13.8 39.4 63.4 136.3 115.1 134.7 27.1-.7 46.2-19.5 80.9-19.5 33.7 0 51.4 19.5 81.6 19.5 52.2-.7 97.2-89 110.4-128.5-70.4-33.2-62-97.5-62-99.3zM256.8 67.7c26.6-31.8 24.2-60.8 23.4-71.7-23.6 1.4-50.9 16.4-66.5 34.6-17.2 19.4-27.3 43.4-25.1 70.4 25.5 2 48.4-11.4 68.2-33.3z"fill="white"/></svg>
+      <svg viewBox="0 0 384 512" fill="none"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-19.9-30.3-50.6-46.8-91.8-49.9-37.9-3-79.6 22.4-95.5 22.4-16.9 0-53.6-21.3-83.4-21.3-58.5.9-120.8 47.1-120.8 138.7 0 28.4 5.2 57.8 15.5 88 13.8 39.4 63.4 136.3 115.1 134.7 27.1-.7 46.2-19.5 80.9-19.5 33.7 0 51.4 19.5 81.6 19.5 52.2-.7 97.2-89 110.4-128.5-70.4-33.2-62-97.5-62-99.3zM256.8 67.7c26.6-31.8 24.2-60.8 23.4-71.7-23.6 1.4-50.9 16.4-66.5 34.6-17.2 19.4-27.3 43.4-25.1 70.4 25.5 2 48.4-11.4 68.2-33.3z"fill="white"/></svg>
     </div>
     <span class="hdr-name">JEXE <span class="lt">Regedit</span></span>
   </div>
@@ -241,8 +236,8 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
     <h1 class="hero-h1">Aim Support.<br/><em>Solo para iOS.</em></h1>
     <p class="hero-p">El mejor Regedit para Free Fire en dispositivos Apple. Una sola compra, acceso inmediato, sin intermediarios.</p>
     <div class="hero-platform">
-<svg viewBox="0 0 384 512" fill="none"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-19.9-30.3-50.6-46.8-91.8-49.9-37.9-3-79.6 22.4-95.5 22.4-16.9 0-53.6-21.3-83.4-21.3-58.5.9-120.8 47.1-120.8 138.7 0 28.4 5.2 57.8 15.5 88 13.8 39.4 63.4 136.3 115.1 134.7 27.1-.7 46.2-19.5 80.9-19.5 33.7 0 51.4 19.5 81.6 19.5 52.2-.7 97.2-89 110.4-128.5-70.4-33.2-62-97.5-62-99.3zM256.8 67.7c26.6-31.8 24.2-60.8 23.4-71.7-23.6 1.4-50.9 16.4-66.5 34.6-17.2 19.4-27.3 43.4-25.1 70.4 25.5 2 48.4-11.4 68.2-33.3z"fill="white"/></svg>
-      <span>iOS 11 — 26.4+  ·  Sin jailbreak</span>
+      <svg viewBox="0 0 384 512" fill="none"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-19.9-30.3-50.6-46.8-91.8-49.9-37.9-3-79.6 22.4-95.5 22.4-16.9 0-53.6-21.3-83.4-21.3-58.5.9-120.8 47.1-120.8 138.7 0 28.4 5.2 57.8 15.5 88 13.8 39.4 63.4 136.3 115.1 134.7 27.1-.7 46.2-19.5 80.9-19.5 33.7 0 51.4 19.5 81.6 19.5 52.2-.7 97.2-89 110.4-128.5-70.4-33.2-62-97.5-62-99.3zM256.8 67.7c26.6-31.8 24.2-60.8 23.4-71.7-23.6 1.4-50.9 16.4-66.5 34.6-17.2 19.4-27.3 43.4-25.1 70.4 25.5 2 48.4-11.4 68.2-33.3z"fill="white"/></svg>
+      <span>iOS 11 — 26.5+  ·  Sin jailbreak</span>
     </div>
   </div>
 
@@ -253,32 +248,14 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
     <div class="video-label">Vista previa</div>
   </div>
 
-  <div class="scarcity">
-    <div class="scar-top">
-      <span class="scar-label">Disponibilidad</span>
-      <span class="scar-count">21 unidades</span>
-    </div>
-    <div class="scar-bottom">
-      <div>
-        <div class="scar-deadline-label">Cierra el</div>
-        <div class="scar-deadline-date">18 de julio, 2026</div>
-      </div>
-      <div class="scar-timer">
-        <div class="scar-timer-unit"><div class="scar-timer-num" id="cd-d">--</div><div class="scar-timer-lbl">DIAS</div></div>
-        <div class="scar-timer-unit"><div class="scar-timer-num" id="cd-h">--</div><div class="scar-timer-lbl">HRS</div></div>
-        <div class="scar-timer-unit"><div class="scar-timer-num" id="cd-m">--</div><div class="scar-timer-lbl">MIN</div></div>
-      </div>
-    </div>
-  </div>
-
   <div class="price-block">
     <div class="price-was">$32 USD</div>
-    <div class="price-now"><sup>$</sup>14<sup>.99</sup></div>
-    <div class="price-sub">Pago unico · Acceso permanente</div>
+    <div class="price-now"><sup>$</sup>9<sup>.99</sup></div>
+    <div class="price-sub">Duración · 1 mes</div>
     <div class="price-divider"></div>
     <div class="price-feats">
-      <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Acceso de por vida, sin renovaciones</div>
-      <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Entrega dentro de esta misma pagina</div>
+      <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Entrega inmediata</div>
+      <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Tutoriales de instalacion</div>
       <div class="pf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Certificado premium incluido</div>
     </div>
   </div>
@@ -309,7 +286,7 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
     </div>
     <div class="benefit-row">
       <div class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-3-6.7M21 4v5h-5"/></svg></div>
-      <div class="benefit-txt">Actualizaciones permanentes incluidas</div>
+      <div class="benefit-txt">2 actualizaciones por mes incluidas</div>
     </div>
     <div class="benefit-row">
       <div class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
@@ -327,7 +304,7 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
     <div class="proof-divider"></div>
     <div class="proof-txt">compras completadas y entregadas</div>
   </div>
-  <a class="proof-link" href="https://t.me/+56Wdh8JANmJjYzZh" target="_blank" rel="noopener">
+  <a class="proof-link" href="https://t.me/+v6aIjOQo4HsxMTQ5" target="_blank" rel="noopener">
     <div class="proof-link-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
     <div class="proof-link-meta">
       <div class="proof-link-title">Ver referencias publicas</div>
@@ -344,7 +321,7 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
     </div>
     <div class="flow-step">
       <div class="flow-line"><div class="flow-dot">2</div><div class="flow-stem"></div></div>
-      <div class="flow-body"><div class="flow-title">No cierres esta pagina</div><div class="flow-desc">Al confirmar el pago, vuelve aqui mismo para recibir tu acceso.</div></div>
+      <div class="flow-body"><div class="flow-title">No cierres la pagina del pago hasta que se te haga entrega</div><div class="flow-desc">Al confirmar el pago, espera 10 segundos hasta que la pagina te entregue el acceso.</div></div>
     </div>
     <div class="flow-step">
       <div class="flow-line"><div class="flow-dot">3</div></div>
@@ -363,17 +340,26 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
       <div class="pay-chip"><span>Amex</span></div>
       <div class="pay-chip"><span>Cualquier pais</span></div>
     </div>
-    <a href="https://checkout.bold.co/payment/LNK_EI68EKIH2M" target="_blank" rel="noopener" class="pay-cta">
+    <a href=" https://checkout.bold.co/payment/LNK_7D75GZ3O2K" target="_blank" rel="noopener" class="pay-cta">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-      Pagar $14.99 USD
+      Pagar $9.99 USD
     </a>
     <div class="pay-note">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      <span>Al completar el pago seras redirigido de vuelta aqui. No cierres la pagina, la entrega es automatica e inmediata.</span>
+      <span>Al completar el pago. No cierres la pagina, la entrega es automatica e inmediata.</span>
     </div>
     <div class="pay-secure">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
       <span>Procesado de forma segura por Bold</span>
+    </div>
+
+    <!-- GEO-DETECTED QUICK PAY: shown automatically right below the card button -->
+    <div class="geo-quickpay" id="geoQuickpay">
+      <div class="geo-quickpay-label">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span id="geoQuickpayLabel">Metodos disponibles en tu pais</span>
+      </div>
+      <div class="geo-quick-list" id="geoQuickList"></div>
     </div>
 
     <!-- ALT METHODS -->
@@ -386,7 +372,6 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
     </button>
     <div class="alt-panel" id="altPanel">
       <div class="alt-method-list" id="altMethodList"></div>
-      <div class="alt-detail" id="altDetail"></div>
     </div>
   </div>
 
@@ -440,26 +425,15 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
 
   <footer>
     <div class="footer-brand">JEXE Regedit</div>
-    <div class="footer-sub">Edicion iOS · Disponible hasta el 18 de julio, 2026</div>
+    <div class="footer-sub">Edicion iOS · Acceso por 1 mes</div>
   </footer>
 
 </main>
 
 <script>
-(function(){
-  var deadline=new Date('2026-07-18T23:59:59-05:00').getTime();
-  var d=document.getElementById('cd-d'),h=document.getElementById('cd-h'),m=document.getElementById('cd-m');
-  function tick(){
-    var diff=deadline-Date.now();
-    if(diff<=0){d.textContent='0';h.textContent='0';m.textContent='0';return}
-    d.textContent=Math.floor(diff/86400000);
-    h.textContent=Math.floor((diff%86400000)/3600000);
-    m.textContent=Math.floor((diff%3600000)/60000);
-  }
-  tick();setInterval(tick,30000);
-})();
+var ASTROPAY='https://onetouch.astropay.com/payment?external_reference_id=B02KfLuToT8svuWCrp9EstFjq4nxkACV';
 
-var ASTROPAY='https://onetouch.astropay.com/payment?external_reference_id=1MbmXcUGh7sVodoSvQ4YSXLCt9JmxsuN';
+// Datos de cada metodo de pago (monto ya actualizado a $9.99 USD equivalente)
 var ALT=[
   {id:'nequi',name:'Nequi',desc:'App Bancolombia — Colombia',tag:'Colombia',ico:'<circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v8"/>'},
   {id:'llave',name:'Llave / BRE-B',desc:'Cualquier banco colombiano',tag:'Colombia',ico:'<circle cx="8" cy="8" r="3"/><path d="M10.5 10.5L21 21M15 16l3 3M18 13l3 3"/>'},
@@ -482,44 +456,59 @@ function cpVal(txt,id){
     setTimeout(function(){b.classList.remove('copied');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>'},1800);
   }).catch(function(){});
 }
+
+// Devuelve el HTML de detalle segun el id del metodo (monto en $9.99 USD equivalente)
+function detailHtmlFor(id){
+  _ci=0;
+  if(id==='nequi'){
+    return '<div class="alt-detail-title">Pago con Nequi</div>'+aRow('Monto','$33.000 COP')+aRow('Numero','3132878955')+aRow('Titular','Juan Aguirre')+'<div class="alt-detail-note">Abre Nequi, selecciona Enviar dinero e ingresa el numero. Equivale a $9.99 USD.</div>';
+  }else if(id==='llave'){
+    return '<div class="alt-detail-title">Llave / BRE-B</div>'+aRow('Monto','$33.000 COP')+aRow('Entidad','Bold CF')+aRow('Email / ID','mediaspaceapp@gmail.com')+aRow('Titular','Juan Aguirre')+'<div class="alt-detail-note">Disponible desde cualquier banco colombiano. Equivale a $9.99 USD.</div>';
+  }else if(id==='clabe'){
+    return '<div class="alt-detail-title">Transferencia CLABE — Mexico</div>'+aRow('Monto','178 MXN')+aRow('Titular','Juan Pablo Aguirre Grosso')+aRow('CLABE','646180546701915656')+aRow('Entidad','STP')+'<div class="alt-detail-note">Transferencia bancaria directa via STP. Equivale a $9.99 USD.</div>';
+  }else if(id==='astropay'){
+    return '<div class="alt-detail-title">AstroPay</div><div class="alt-detail-note" style="margin-top:0;margin-bottom:11px">Billetera digital internacional. Paga directo con el enlace por $9.99 USD.</div><a href="'+ASTROPAY+'" target="_blank" rel="noopener" class="alt-cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg>Pagar con AstroPay — $9.99 USD</a>';
+  }else if(id==='binance'){
+    return '<div class="alt-detail-title">Binance Pay</div>'+aRow('Monto','$9.99 USDT')+aRow('Binance ID','538653875')+aRow('Usuario','@jexeregedit')+'<div class="alt-detail-note">Busca por ID o usuario dentro de Binance Pay.</div>';
+  }else if(id==='skrill'){
+    return '<div class="alt-detail-title">Skrill</div>'+aRow('Monto','$9.99 USD')+aRow('Email Skrill','juanpabloaguirregrosso@gmail.com')+'<div class="alt-detail-note">Envia el pago a este correo desde tu cuenta Skrill.</div>';
+  }else if(id==='remittance'){
+    return '<div class="alt-detail-title">Remesadora</div>'+aRow('Monto','$9.99 USD')+aRow('Nombre','Juan Pablo Aguirre Grosso')+aRow('Pais destino','Colombia')+aRow('Telefono','+573132878955')+aRow('Num. cuenta','3132878955')+aRow('Billetera','Nequi')+aRow('Tipo cuenta','Ahorros')+'<div class="alt-detail-note">Disponible via Remitly, MoneyGram o Western Union.</div>';
+  }else if(id==='pix'){
+    return '<div class="alt-detail-title">PIX — Brasil</div><div class="alt-detail-note" style="margin-top:0">El PIX se coordina directamente con JEXE. Notifica por WhatsApp abajo para recibir los datos personalizados equivalentes a $9.99 USD.</div>';
+  }
+  return '';
+}
+
 function toggleAlt(){
   var t=document.getElementById('altToggle'),p=document.getElementById('altPanel');
   var open=p.classList.toggle('open');t.classList.toggle('open',open);
   if(open&&!document.getElementById('altMethodList').children.length)renderAlt();
 }
+
+// Lista de "mas formas de pago": la info aparece justo debajo del metodo seleccionado
 function renderAlt(){
   var list=document.getElementById('altMethodList');list.innerHTML='';
   ALT.forEach(function(m){
+    var wrap=document.createElement('div');wrap.className='alt-method-wrap';
     var el=document.createElement('div');el.className='alt-method';
     el.innerHTML='<div class="alt-m-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">'+m.ico+'</svg></div><div class="alt-m-info"><div class="alt-m-name">'+m.name+'</div><div class="alt-m-desc">'+m.desc+'</div></div><div class="alt-m-tag">'+m.tag+'</div><div class="alt-m-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="5"/></svg></div>';
+    var det=document.createElement('div');det.className='alt-detail';det.id='det-'+m.id;
     el.addEventListener('click',function(){
+      var already=el.classList.contains('is-sel');
       document.querySelectorAll('.alt-method').forEach(function(i){i.classList.remove('is-sel')});
-      el.classList.add('is-sel');renderDetail(m.id);
+      document.querySelectorAll('.alt-detail').forEach(function(i){i.classList.remove('show');i.innerHTML=''});
+      if(!already){
+        el.classList.add('is-sel');
+        det.innerHTML=detailHtmlFor(m.id);
+        det.classList.add('show');
+      }
     });
-    list.appendChild(el);
+    wrap.appendChild(el);wrap.appendChild(det);
+    list.appendChild(wrap);
   });
 }
-function renderDetail(id){
-  var det=document.getElementById('altDetail');_ci=0;var h='';
-  if(id==='nequi'){
-    h='<div class="alt-detail-title">Pago con Nequi</div>'+aRow('Monto','$52.000 COP')+aRow('Numero','3132878955')+aRow('Titular','Juan Aguirre')+'<div class="alt-detail-note">Abre Nequi, selecciona Enviar dinero e ingresa el numero. Equivale a $14.99 USD.</div>';
-  }else if(id==='llave'){
-    h='<div class="alt-detail-title">Llave / BRE-B</div>'+aRow('Monto','$52.000 COP')+aRow('Entidad','Bold CF')+aRow('Email / ID','mediaspaceapp@gmail.com')+aRow('Titular','Juan Aguirre')+'<div class="alt-detail-note">Disponible desde cualquier banco colombiano. Equivale a $14.99 USD.</div>';
-  }else if(id==='clabe'){
-    h='<div class="alt-detail-title">Transferencia CLABE — Mexico</div>'+aRow('Monto','$260 MXN')+aRow('Titular','Juan Pablo Aguirre Grosso')+aRow('CLABE','646180546701915656')+aRow('Entidad','STP')+'<div class="alt-detail-note">Transferencia bancaria directa via STP. Equivale a $14.99 USD.</div>';
-  }else if(id==='astropay'){
-    h='<div class="alt-detail-title">AstroPay</div><div class="alt-detail-note" style="margin-top:0;margin-bottom:11px">Billetera digital internacional. Paga directo con el enlace por $14.99 USD.</div><a href="'+ASTROPAY+'" target="_blank" rel="noopener" class="alt-cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg>Pagar con AstroPay — $14.99 USD</a>';
-  }else if(id==='binance'){
-    h='<div class="alt-detail-title">Binance Pay</div>'+aRow('Monto','$14.99 USDT')+aRow('Binance ID','538653875')+aRow('Usuario','@jexeregedit')+'<div class="alt-detail-note">Busca por ID o usuario dentro de Binance Pay.</div>';
-  }else if(id==='skrill'){
-    h='<div class="alt-detail-title">Skrill</div>'+aRow('Monto','$14.99 USD')+aRow('Email Skrill','juanpabloaguirregrosso@gmail.com')+'<div class="alt-detail-note">Envia el pago a este correo desde tu cuenta Skrill.</div>';
-  }else if(id==='remittance'){
-    h='<div class="alt-detail-title">Remesadora</div>'+aRow('Monto','$14.99 USD')+aRow('Nombre','Juan Pablo Aguirre Grosso')+aRow('Pais destino','Colombia')+aRow('Telefono','+573132878955')+aRow('Num. cuenta','3132878955')+aRow('Billetera','Nequi')+aRow('Tipo cuenta','Ahorros')+'<div class="alt-detail-note">Disponible via Remitly, MoneyGram o Western Union.</div>';
-  }else if(id==='pix'){
-    h='<div class="alt-detail-title">PIX — Brasil</div><div class="alt-detail-note" style="margin-top:0">El PIX se coordina directamente con JEXE. Notifica por WhatsApp abajo para recibir los datos personalizados equivalentes a $14.99 USD.</div>';
-  }
-  det.innerHTML=h;det.classList.add('show');
-}
+
 function toggleWa(){
   var t=document.getElementById('waTrigger'),p=document.getElementById('waPanel');
   var open=p.classList.toggle('open');t.classList.toggle('open',open);
@@ -530,9 +519,49 @@ function onWaMethodChange(){
 function sendWa(){
   var method=document.getElementById('waMethod').value;if(!method)return;
   var note=document.getElementById('waNote').value.trim();
-  var msg='Hola JEXE, ya realice mi pago.\n\n================================\n CONFIRMACION DE PAGO — iOS\n================================\nPlan: Pago unico ($14.99 USD)\nMetodo: '+method+'\nPlataforma: iOS\n'+(note?'Nota: '+note+'\n':'')+'================================\nAdjunto la captura del comprobante en este chat.';
+  var msg='Hola JEXE, ya realice mi pago.\n\n================================\n CONFIRMACION DE PAGO — iOS\n================================\nPlan: 1 mes ($9.99 USD)\nMetodo: '+method+'\nPlataforma: iOS\n'+(note?'Nota: '+note+'\n':'')+'================================\nAdjunto la captura del comprobante en este chat.';
   window.open('https://wa.me/573132878955?text='+encodeURIComponent(msg),'_blank','noopener');
 }
+
+// Deteccion automatica de pais para mostrar metodos locales justo debajo del boton de tarjeta
+(function(){
+  function buildQuickList(ids){
+    var box=document.getElementById('geoQuickList');box.innerHTML='';
+    ids.forEach(function(id){
+      var m=ALT.filter(function(a){return a.id===id})[0];if(!m)return;
+      var wrap=document.createElement('div');wrap.className='alt-method-wrap';
+      var el=document.createElement('div');el.className='alt-method';
+      el.innerHTML='<div class="alt-m-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">'+m.ico+'</svg></div><div class="alt-m-info"><div class="alt-m-name">'+m.name+'</div><div class="alt-m-desc">'+m.desc+'</div></div><div class="alt-m-tag">'+m.tag+'</div><div class="alt-m-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="5"/></svg></div>';
+      var det=document.createElement('div');det.className='alt-detail';
+      el.addEventListener('click',function(){
+        var already=el.classList.contains('is-sel');
+        box.querySelectorAll('.alt-method').forEach(function(i){i.classList.remove('is-sel')});
+        box.querySelectorAll('.alt-detail').forEach(function(i){i.classList.remove('show');i.innerHTML=''});
+        if(!already){el.classList.add('is-sel');det.innerHTML=detailHtmlFor(m.id);det.classList.add('show');}
+      });
+      wrap.appendChild(el);wrap.appendChild(det);
+      box.appendChild(wrap);
+    });
+  }
+  function showGeo(countryCode){
+    var box=document.getElementById('geoQuickpay'),label=document.getElementById('geoQuickpayLabel');
+    if(countryCode==='CO'){
+      label.textContent='Tambien puedes pagar desde Colombia con:';
+      buildQuickList(['nequi','llave']);
+      box.classList.add('show');
+    }else if(countryCode==='MX'){
+      label.textContent='Tambien puedes pagar desde Mexico con:';
+      buildQuickList(['clabe']);
+      box.classList.add('show');
+    }
+  }
+  fetch('https://ipapi.co/json/').then(function(r){return r.json()}).then(function(data){
+    if(data&&data.country_code)showGeo(data.country_code);
+  }).catch(function(){
+    // Si falla la deteccion, simplemente no se muestra el bloque automatico.
+    // El usuario siempre puede usar "ver otros metodos" manualmente.
+  });
+})();
 </script>
 </body>
 </html>
