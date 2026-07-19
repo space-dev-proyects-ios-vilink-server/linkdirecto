@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
 <title>PEGASUS</title>
@@ -474,6 +475,41 @@
     text-transform: uppercase;
   }
 
+  /* ---------------- Ad banner (section 03) ---------------- */
+
+  .ad-section{ margin-bottom: 32px; }
+
+  .ad-frame{
+    position: relative;
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, 0 100%);
+    overflow: hidden;
+    min-height: 100px;
+  }
+
+  .ad-frame .ad-tag{
+    position:absolute;
+    top:6px; left:8px;
+    z-index: 2;
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    background: rgba(8,8,8,0.75);
+    padding: 2px 6px;
+    border: 1px solid var(--line);
+  }
+
+  .ad-frame iframe{
+    display:block;
+    width: 100%;
+    height: 100px;
+    border: 0;
+    background: var(--bg-1);
+  }
+
   /* ---------------- Fixed bottom action bar ---------------- */
 
   .action-bar{
@@ -728,6 +764,18 @@
     </div>
   </div>
 
+  <div class="section-label">
+    <span class="num">03</span>
+    <span class="txt">Publicidad</span>
+    <span class="rule"></span>
+  </div>
+  <div class="ad-section">
+    <div class="ad-frame">
+      <span class="ad-tag">AD</span>
+      <iframe src="https://onelink.shein.com/15/4wh5j6ktxgqy?url_from=affiliate_af_b_33_164_0&click_id=d9el8mg0ic9c73evug8g&sub_id=12&campaign_id=101&source_id=fbb5725039ab24b40d71039870a9a1e0&placement_id=9ece8ca86c66a31870ba93a1521267e5&network=%7Bnetwork%7D&keyword=%7Bkeyword%7D" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Publicidad"></iframe>
+    </div>
+  </div>
+
 </div>
 
 <div class="action-bar">
@@ -781,12 +829,10 @@
 
 
 
-  const GATE_STEP_1_URL = 'https://omg10.com/4/9456163';
-  const GATE_STEP_2_URL = 'https://omg10.com/4/11200169';
+  const GATE_STEP_1_URL = 'https://omg10.com/4/7889357';
+  const GATE_STEP_2_URL = 'https://omg10.com/4/7889357';
 
-  // TODO(JEXE): reemplaza este placeholder por el enlace real de pago
-  // (Bold checkout, Nequi, Binance Pay, CLABE, etc.) cuando lo tengas listo.
-  const BUY_URL = '#';
+  const BUY_URL = 'https://www.link-directo.com/premium/';
 
   /* ============================================================
      ICONS
@@ -1052,10 +1098,6 @@
   });
 
   document.getElementById('statusFlag').addEventListener('click', () => {
-    if (!BUY_URL || BUY_URL === '#'){
-      showToast('https://www.link-directo.com/premium/iOS');
-      return;
-    }
     window.open(BUY_URL, '_blank', 'noopener');
   });
 
