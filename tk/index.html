@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<script>(function(s){s.dataset.zone='10863747',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+<script>(function(s){s.dataset.zone='11349742',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:        #0a0c0a;
+    --bg-panel:  #101310;
+    --line:      #2a2f2a;
+    --line-soft: #1b1f1b;
+    --ink:       #d9e4d9;
+    --ink-dim:   #6f7a6f;
+    --hud:       #6effa0;
+    --hud-dim:   #2f5c40;
+    --amber:     #ffb020;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html,body{ height:100%; }
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'JetBrains Mono', monospace;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:24px;
+    position:relative;
+    overflow-x:hidden;
+  }
+
+  /* subtle grid + scanline texture */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size: 42px 42px;
+    opacity:.35;
+    pointer-events:none;
+  }
+  body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:repeating-linear-gradient(
+      0deg,
+      rgba(0,0,0,0.0) 0px,
+      rgba(0,0,0,0.0) 2px,
+      rgba(0,0,0,0.15) 3px
+    );
+    pointer-events:none;
+    mix-blend-mode:overlay;
+  }
+
+  .stage{
+    position:relative;
+    width:100%;
+    max-width:420px;
+  }
+
+  /* corner reticle brackets */
+  .bracket{
+    position:absolute;
+    width:18px;
+    height:18px;
+    border:2px solid var(--hud);
+    opacity:.8;
+  }
+  .bracket.tl{ top:-9px; left:-9px; border-right:none; border-bottom:none; }
+  .bracket.tr{ top:-9px; right:-9px; border-left:none; border-bottom:none; }
+  .bracket.bl{ bottom:-9px; left:-9px; border-right:none; border-top:none; }
+  .bracket.br{ bottom:-9px; right:-9px; border-left:none; border-top:none; }
+
+  .panel{
+    position:relative;
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    clip-path: polygon(0 14px, 14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
+    padding:34px 30px 28px;
+  }
+
+  /* status row */
+  .status{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    font-size:10px;
+    letter-spacing:.14em;
+    color:var(--ink-dim);
+    text-transform:uppercase;
+    margin-bottom:22px;
+  }
+  .status .dot-row{ display:flex; align-items:center; gap:6px; }
+  .dot{
+    width:6px; height:6px;
+    background:var(--hud);
+    border-radius:50%;
+    box-shadow:0 0 6px var(--hud);
+    animation:pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ opacity:1; }
+    50%{ opacity:.25; }
+  }
+
+  hr.rule{
+    border:none;
+    border-top:1px solid var(--line);
+    margin:0 0 22px;
+  }
+
+  /* identity block */
+  .identity{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:26px;
+  }
+  .id-icon{
+    flex:0 0 auto;
+    width:46px; height:46px;
+    border:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    clip-path: polygon(0 8px, 8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%);
+  }
+  .id-icon svg{ width:22px; height:22px; stroke:var(--hud); }
+
+  .id-text .eyebrow{
+    font-size:9.5px;
+    letter-spacing:.16em;
+    color:var(--ink-dim);
+    text-transform:uppercase;
+    margin-bottom:5px;
+  }
+  .id-text .handle{
+    font-size:16px;
+    font-weight:700;
+    letter-spacing:.02em;
+    color:var(--ink);
+  }
+  .id-text .handle span{ color:var(--hud); }
+
+  .desc{
+    font-size:11.5px;
+    line-height:1.7;
+    color:var(--ink-dim);
+    margin-bottom:26px;
+  }
+
+  .profile-link{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    font-size:10.5px;
+    letter-spacing:.06em;
+    color:var(--hud);
+    text-decoration:none;
+    border-bottom:1px solid var(--hud-dim);
+    padding-bottom:2px;
+    margin-bottom:30px;
+    transition:opacity .2s ease;
+  }
+  .profile-link:hover{ opacity:.7; }
+  .profile-link svg{ width:12px; height:12px; stroke:var(--hud); }
+
+  /* action buttons */
+  .actions{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+
+  .btn{
+    position:relative;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    width:100%;
+    padding:15px 18px;
+    background:transparent;
+    border:1px solid var(--line);
+    color:var(--ink);
+    font-family:inherit;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    text-decoration:none;
+    cursor:pointer;
+    clip-path: polygon(0 10px, 10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+    transition:background .2s ease, border-color .2s ease, transform .12s ease;
+    overflow:hidden;
+  }
+  .btn::before{
+    content:"";
+    position:absolute;
+    left:0; top:0; bottom:0;
+    width:2px;
+    background:var(--ink-dim);
+    transition:background .2s ease;
+  }
+  .btn .idx{
+    font-size:10px;
+    color:var(--ink-dim);
+    min-width:18px;
+  }
+  .btn .icon{
+    flex:0 0 auto;
+    width:16px; height:16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .btn .icon svg{ width:16px; height:16px; stroke:var(--ink); transition:stroke .2s ease; }
+  .btn .label{ flex:1; }
+  .btn .arrow{ width:12px; height:12px; opacity:0; transform:translateX(-4px); transition:all .2s ease; }
+  .btn .arrow svg{ width:12px; height:12px; stroke:var(--ink); }
+
+  .btn:hover{
+    background:rgba(110,255,160,.05);
+    border-color:var(--hud-dim);
+    transform:translateY(-1px);
+  }
+  .btn:hover::before{ background:var(--hud); }
+  .btn:hover .arrow{ opacity:1; transform:translateX(0); }
+  .btn:active{ transform:translateY(0); }
+
+  .btn.primary:hover .icon svg{ stroke:var(--hud); }
+
+  .btn.whatsapp:hover .icon svg{ stroke:var(--amber); }
+  .btn.whatsapp:hover::before{ background:var(--amber); }
+  .btn.whatsapp:hover{ border-color:#5c4415; }
+
+  .footer-tag{
+    margin-top:26px;
+    text-align:center;
+    font-size:9px;
+    letter-spacing:.18em;
+    color:var(--line);
+    text-transform:uppercase;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .dot{ animation:none; }
+    .btn{ transition:none; }
+  }
+
+  :focus-visible{
+    outline:1.5px solid var(--hud);
+    outline-offset:2px;
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="bracket tl"></div>
+  <div class="bracket tr"></div>
+  <div class="bracket bl"></div>
+  <div class="bracket br"></div>
+
+  <div class="panel">
+
+    <div class="status">
+      <div class="dot-row">
+        <span class="dot"></span>
+        <span>GRATIS</span>
+      </div>
+      <span>SITE</span>
+    </div>
+
+    <hr class="rule">
+
+    <div class="identity">
+      <div class="id-icon">
+        <!-- tiktok note icon (line style) -->
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 3v10.5a3.5 3.5 0 1 1-3.5-3.5c.2 0 .4 0 .6.03"/>
+          <path d="M15 3c.3 2.4 2 4.3 4.3 4.7"/>
+        </svg>
+      </div>
+      <div class="id-text">
+        <div class="eyebrow">Perfil vinculado</div>
+        <div class="handle">@<span>jexeregedittk</span></div>
+      </div>
+    </div>
+
+    <p class="desc">
+      Contenido, configuraciones y novedades de JEXE Regedit. Verifica el perfil oficial antes de continuar.
+    </p>
+
+    <a class="profile-link" href="https://www.tiktok.com/@jexeregedittk" target="_blank" rel="noopener noreferrer">
+      Ver perfil en TikTok
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7 17 17 7"/>
+        <path d="M7 7h10v10"/>
+      </svg>
+    </a>
+
+    <div class="actions">
+
+      <!-- ⬇ Reemplaza el href de este botón con tu enlace de descarga -->
+      <a class="btn primary" href="https://www.mediafire.com/file/sscdq9nizth0yo4/iPEGASUS+TK.mobileconfig/file" id="download-btn" rel="noopener noreferrer">
+        <span class="idx">01</span>
+        <span class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3v12"/>
+            <path d="m7 10 5 5 5-5"/>
+            <path d="M5 21h14"/>
+          </svg>
+        </span>
+        <span class="label">Descargar</span>
+        <span class="arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>
+          </svg>
+        </span>
+      </a>
+
+      <!-- ⬇ Reemplaza el href de este botón con tu enlace del grupo de WhatsApp -->
+      <a class="btn whatsapp" href="https://www.link-directo.com/WhatsApp/Group/" id="whatsapp-btn" target="_blank" rel="noopener noreferrer">
+        <span class="idx">02</span>
+        <span class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.55L3 20l1.06-5.4A8.5 8.5 0 1 1 21 11.5Z"/>
+            <path d="M8.5 10.5c.3 2.5 2.5 4.7 5 5"/>
+          </svg>
+        </span>
+        <span class="label">Grupo de WhatsApp</span>
+        <span class="arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>
+          </svg>
+        </span>
+      </a>
+
+    </div>
+
+    <div class="footer-tag">Jexe / Regedit System</div>
+
+  </div>
+</div>
+
+</body>
+</html>
