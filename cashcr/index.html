@@ -1,787 +1,394 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-  <title>VAULT — Gana Dinero Real</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>VAULT — Bóveda de Créditos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<style>
+:root{
+  --bg:#0B0D10; --bg2:#12151A; --bg3:#191D24; --bg4:#22272F;
+  --brass:#C9A15E; --brass-dim:#8A6F3F; --brass-glow:rgba(201,161,94,.18);
+  --steel:#6C8494; --steel-dim:#425460;
+  --green:#3FA772; --red:#C1503F;
+  --text:#EDE7DA; --text-dim:#B7B0A0; --muted:#767C82;
+  --line:rgba(201,161,94,.14); --line2:rgba(255,255,255,.05);
+  --radius:14px; --radius-sm:9px;
+  --tr:.22s cubic-bezier(.4,0,.2,1);
+  --f-display:'Fraunces',serif; --f-body:'IBM Plex Sans',sans-serif; --f-mono:'IBM Plex Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--f-body); background:var(--bg); color:var(--text);
+  min-height:100dvh; display:flex; flex-direction:column; overflow-x:hidden; padding-bottom:90px;
+  -webkit-tap-highlight-color:transparent;
+}
+::selection{background:var(--brass-glow)}
+:focus-visible{outline:2px solid var(--brass); outline-offset:2px}
 
-  <style>
-    :root {
-      --bg:        #080B10;
-      --bg2:       #0F1420;
-      --bg3:       #161D2E;
-      --bg4:       #1E2740;
-      --blue:      #3D8EFF;
-      --blue-dim:  #2463C0;
-      --blue-glow: rgba(61,142,255,0.25);
-      --gold:      #F4C842;
-      --gold-dim:  #C09820;
-      --green:     #22D16E;
-      --red:       #FF4457;
-      --text:      #EEF2FF;
-      --muted:     #6B7A9E;
-      --border:    rgba(61,142,255,0.15);
-      --border2:   rgba(255,255,255,0.06);
-      --radius:    20px;
-      --radius-sm: 13px;
-      --tr:        0.25s cubic-bezier(0.4,0,0.2,1);
-      --font-d:    'Syne', sans-serif;
-      --font-b:    'Inter', sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
-    }
+/* engraved plate texture backdrop */
+.plate-bg{position:fixed; inset:0; z-index:0; pointer-events:none;}
+.plate-bg::before{
+  content:''; position:absolute; inset:0;
+  background-image:
+    repeating-linear-gradient(115deg, rgba(255,255,255,.012) 0 1px, transparent 1px 3px);
+}
+.plate-bg::after{
+  content:''; position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 60% 40% at 50% -10%, rgba(201,161,94,.06) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 30% at 50% 110%, rgba(108,132,148,.05) 0%, transparent 70%);
+}
 
-    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0 }
-    html { scroll-behavior:smooth }
+header{
+  position:sticky; top:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:15px 18px;
+  background:rgba(11,13,16,.88); backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--line);
+}
+.brand{display:flex; align-items:center; gap:9px}
+.brand-mark{
+  width:26px; height:26px; border-radius:50%;
+  border:1.5px solid var(--brass); position:relative; flex-shrink:0;
+}
+.brand-mark::before{
+  content:''; position:absolute; inset:5px; border-radius:50%; border:1px solid var(--brass-dim);
+}
+.brand-mark::after{
+  content:''; position:absolute; top:50%; left:50%; width:1px; height:7px;
+  background:var(--brass); transform:translate(-50%,-100%);
+}
+.brand-name{font-family:var(--f-display); font-size:1.02rem; font-weight:500; letter-spacing:.02em}
+.brand-name em{color:var(--brass); font-style:normal; font-weight:400}
 
-    body {
-      font-family: var(--font-b);
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      overflow-x: hidden;
-      padding-bottom: 80px;
-    }
+.hdr-controls{display:flex; align-items:center; gap:8px}
+.icon-btn{
+  width:34px; height:34px; border-radius:50%;
+  background:var(--bg3); border:1px solid var(--line2);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--muted); cursor:pointer; transition:var(--tr); font-size:.82rem;
+}
+.icon-btn:hover{color:var(--text); border-color:var(--line)}
+.icon-btn.active{color:var(--brass); border-color:var(--brass-dim)}
 
-    /* Fondo animado con cuadrícula perspectiva */
-    .grid-bg {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-    .grid-bg::before {
-      content: '';
-      position: absolute;
-      inset: -50%;
-      background-image:
-        linear-gradient(rgba(61,142,255,0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(61,142,255,0.06) 1px, transparent 1px);
-      background-size: 40px 40px;
-      transform: perspective(600px) rotateX(25deg);
-      transform-origin: center bottom;
-      animation: gridDrift 20s linear infinite;
-    }
-    .grid-bg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(61,142,255,0.08) 0%, transparent 70%),
-                  radial-gradient(ellipse 50% 30% at 50% 100%, rgba(244,200,66,0.05) 0%, transparent 70%);
-    }
-    @keyframes gridDrift {
-      from { transform: perspective(600px) rotateX(25deg) translateY(0) }
-      to   { transform: perspective(600px) rotateX(25deg) translateY(40px) }
-    }
+.status-chip{
+  display:flex; align-items:center; gap:6px; padding:5px 11px;
+  background:rgba(63,167,114,.09); border:1px solid rgba(63,167,114,.28);
+  border-radius:100px; font-size:.64rem; font-weight:500; color:var(--green); letter-spacing:.06em;
+}
+.status-dot{width:5px; height:5px; border-radius:50%; background:var(--green); animation:softPulse 2s ease infinite}
+@keyframes softPulse{0%,100%{opacity:1}50%{opacity:.4}}
 
-    /* ═══ HEADER ═══════════════════════════════════ */
-    header {
-      position: sticky; top: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 18px;
-      background: rgba(8,11,16,0.85);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-    }
-    .logo {
-      font-family: var(--font-d);
-      font-size: 1.0rem;
-      font-weight: 250;
-      letter-spacing: 0.10em;
-      color: var(--text);
-      text-transform: uppercase;
-    }
-    .logo em { color: var(--blue); font-style: normal }
+.main{position:relative; z-index:1; max-width:500px; width:100%; margin:0 auto; padding:0 14px}
 
-    .badge-live {
-      display: flex; align-items: center; gap: 6px;
-      padding: 5px 12px;
-      background: rgba(34,209,110,0.1);
-      border: 1px solid rgba(34,209,110,0.3);
-      border-radius: 100px;
-      font-size: 0.68rem;
-      font-weight: 150;
-      color: var(--green);
-      letter-spacing: 0.08em;
-    }
-    .badge-live-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--green);
-      animation: livePulse 1.4s ease infinite;
-    }
-    @keyframes livePulse {
-      0%,100% { opacity:1; transform:scale(1) }
-      50%      { opacity:0.5; transform:scale(0.7) }
-    }
+/* HERO LEDGER */
+.ledger{padding:26px 0 18px; animation:fadeUp .5s ease both}
+.ledger-eyebrow{
+  font-family:var(--f-mono); font-size:.66rem; color:var(--muted);
+  letter-spacing:.14em; text-transform:uppercase; margin-bottom:10px;
+  display:flex; align-items:center; gap:8px;
+}
+.ledger-eyebrow::after{content:''; flex:1; height:1px; background:var(--line2)}
+.balance-row{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap}
+.balance-num{
+  font-family:var(--f-display); font-size:clamp(2.6rem,11vw,3.6rem); font-weight:500;
+  color:var(--brass); letter-spacing:-.01em; line-height:1;
+}
+.balance-unit{font-family:var(--f-mono); font-size:.78rem; color:var(--muted); letter-spacing:.06em}
+.balance-usd{
+  margin-top:10px; display:inline-flex; align-items:center; gap:7px;
+  padding:6px 13px; background:var(--bg3); border:1px solid var(--line2);
+  border-radius:100px; font-family:var(--f-mono); font-size:.78rem; color:var(--text-dim);
+}
+.balance-usd i{color:var(--green); font-size:.72rem}
 
-    /* ═══ MAIN ══════════════════════════════════════ */
-    .main {
-      position: relative; z-index: 1;
-      max-width: 500px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 0 14px;
-    }
+.sec-label{
+  font-family:var(--f-mono); font-size:.63rem; color:var(--muted);
+  letter-spacing:.14em; text-transform:uppercase; margin:20px 0 8px;
+  display:flex; align-items:center; gap:8px;
+}
+.sec-label i{font-size:.7rem}
 
-    /* ═══ HERO CREDITS ══════════════════════════════ */
-    .credits-hero {
-      text-align: center;
-      padding: 32px 0 20px;
-      animation: fadeUp 0.5s ease both;
-    }
-    .credits-eyebrow {
-      font-size: 0.65rem;
-      font-weight: 250;
-      letter-spacing: 0.2em;
-      color: var(--muted);
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-    .credits-number {
-      font-family: var(--font-d);
-      font-size: clamp(3.5rem, 16vw, 6rem);
-      font-weight: 250;
-      line-height: 1;
-      color: var(--gold);
-      text-shadow: 0 0 60px rgba(244,200,66,0.3);
-      letter-spacing: -0.02em;
-    }
-    .credits-usd {
-      display: inline-flex; align-items: center; gap: 8px;
-      margin-top: 8px;
-      padding: 6px 16px;
-      background: rgba(34,209,110,0.08);
-      border: 1px solid rgba(34,209,110,0.2);
-      border-radius: 100px;
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      color: var(--green);
-    }
+.card{
+  background:var(--bg2); border:1px solid var(--line2); border-radius:var(--radius);
+  padding:17px 15px; margin-bottom:11px; position:relative;
+}
+.card.brass-edge::before{
+  content:''; position:absolute; top:0; left:14px; right:14px; height:1px;
+  background:linear-gradient(90deg, transparent, var(--brass-dim), transparent);
+}
 
-    /* ═══ SECTION LABEL ════════════════════════════ */
-    .sec-label {
-      font-size: 0.62rem;
-      font-weight: 250;
-      letter-spacing: 0.2em;
-      color: var(--muted);
-      text-transform: uppercase;
-      margin: 18px 0 8px;
-    }
+/* PROGRESS */
+.progress-row{display:flex; align-items:center; gap:10px; margin-bottom:10px}
+.progress-row:last-child{margin-bottom:0}
+.progress-lbl{font-family:var(--f-mono); font-size:.68rem; color:var(--muted); width:44px; text-align:right; flex-shrink:0}
+.progress-track{flex:1; height:5px; background:var(--bg4); border-radius:100px; overflow:hidden}
+.progress-fill{height:100%; border-radius:100px; background:var(--steel); transition:width .8s cubic-bezier(.4,0,.2,1)}
+.progress-fill.complete{background:var(--brass)}
+.progress-pct{font-family:var(--f-mono); font-size:.64rem; color:var(--muted); width:32px; flex-shrink:0}
 
-    /* ═══ CARD ══════════════════════════════════════ */
-    .card {
-      background: var(--bg2);
-      border: 1px solid var(--border2);
-      border-radius: var(--radius);
-      padding: 18px 16px;
-      margin-bottom: 12px;
-      position: relative;
-      overflow: hidden;
-    }
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(61,142,255,0.3), transparent);
-    }
+/* DAILY */
+.daily-top{display:flex; align-items:center; justify-content:space-between; margin-bottom:13px}
+.daily-title{font-family:var(--f-display); font-size:.86rem; font-weight:500; letter-spacing:.02em}
+.dots-row{display:flex; gap:5px; align-items:center}
+.dot{width:7px; height:7px; border-radius:50%; background:var(--green); transition:background .3s}
+.dot.used{background:var(--bg4); border:1px solid var(--line2)}
+.dot.bonus{background:var(--brass)}
+.daily-row{
+  display:flex; align-items:center; justify-content:space-between; padding:10px 12px;
+  background:var(--bg3); border-radius:var(--radius-sm); border:1px solid var(--line2);
+}
+.daily-row-lbl{font-size:.72rem; color:var(--muted)}
+.daily-row-val{font-family:var(--f-mono); font-size:.82rem; color:var(--brass)}
 
-    /* ═══ PROGRESS ══════════════════════════════════ */
-    .progress-section { animation: fadeUp 0.5s 0.05s ease both }
-    .progress-row {
-      display: flex; align-items: center; gap: 10px;
-      margin-bottom: 10px;
-    }
-    .progress-row:last-child { margin-bottom: 0 }
-    .progress-lbl {
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      color: var(--muted);
-      width: 40px;
-      text-align: right;
-      flex-shrink: 0;
-    }
-    .progress-track {
-      flex: 1;
-      height: 6px;
-      background: var(--bg4);
-      border-radius: 100px;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      border-radius: 100px;
-      background: linear-gradient(90deg, var(--blue-dim), var(--blue));
-      transition: width 0.7s cubic-bezier(0.4,0,0.2,1);
-    }
-    .progress-fill.complete {
-      background: linear-gradient(90deg, var(--gold-dim), var(--gold));
-    }
-    .progress-pct {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      color: var(--muted);
-      width: 30px;
-      flex-shrink: 0;
-    }
+/* COUNTDOWN */
+#countdownSection{display:none; animation:fadeUp .4s ease both}
+#countdownSection.show{display:block}
+.countdown-card{text-align:center; padding:28px 20px; border-color:var(--line)}
+.countdown-title{
+  font-family:var(--f-display); font-size:.95rem; font-weight:500; letter-spacing:.04em;
+  color:var(--steel); margin-bottom:6px; display:flex; align-items:center; justify-content:center; gap:8px;
+}
+.countdown-sub{font-size:.75rem; color:var(--muted); margin-bottom:20px}
+.countdown-digits{font-family:var(--f-mono); font-size:clamp(2rem,9vw,2.9rem); color:var(--text); letter-spacing:.06em}
+.countdown-digits span{color:var(--steel)}
 
-    /* ═══ DAILY STATUS ══════════════════════════════ */
-    .daily-card { animation: fadeUp 0.5s 0.1s ease both }
-    .daily-top {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 14px;
-    }
-    .daily-title {
-      font-family: var(--font-d);
-      font-size: 0.85rem;
-      font-weight: 250;
-      letter-spacing: 0.1em;
-    }
-    .dots-row {
-      display: flex; gap: 5px; align-items: center;
-    }
-    .dot {
-      width: 9px; height: 9px;
-      border-radius: 50%;
-      background: var(--green);
-      transition: background 0.3s;
-    }
-    .dot.used { background: var(--bg4); border: 1px solid var(--border2) }
-    .dot.bonus { background: var(--gold) }
+.firstplay{
+  display:none; align-items:center; gap:9px; padding:9px 13px;
+  background:var(--bg3); border:1px solid var(--line2); border-radius:var(--radius-sm);
+  margin-bottom:10px; font-size:.72rem; color:var(--muted);
+}
+.firstplay.show{display:flex}
+.firstplay i{color:var(--steel); font-size:.8rem}
+.firstplay-date{font-family:var(--f-mono); color:var(--text-dim); font-size:.73rem; margin-left:auto}
 
-    .daily-row {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 10px 13px;
-      background: var(--bg3);
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border2);
-    }
-    .daily-row-lbl { font-size: 0.72rem; color: var(--muted) }
-    .daily-row-val {
-      font-family: var(--font-mono);
-      font-size: 0.82rem;
-      font-weight: 250;
-      color: var(--gold);
-    }
+/* GAME BOARD — deposit-door boxes */
+.game-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:12px 0 10px}
+.box{
+  aspect-ratio:1; border-radius:11px; background:var(--bg3); border:1.5px solid var(--line2);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  cursor:pointer; user-select:none; position:relative; overflow:hidden;
+  transition:border-color .2s, transform .15s, background .2s;
+}
+.box::before{
+  content:''; position:absolute; inset:4px; border-radius:8px; border:1px solid rgba(255,255,255,.03); pointer-events:none;
+}
+.box:not(.flipped):not(.disabled):not(.selected-pending):hover{ border-color:rgba(108,132,148,.4); }
+.box.disabled{cursor:default; opacity:.4}
+.box.flipped{cursor:default}
+.box.selected-pending{ border-color:var(--brass) !important; background:rgba(201,161,94,.06) !important; }
+.box-front,.box-back{
+  position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:4px; transition:opacity .3s, transform .3s;
+}
+.box-back{opacity:0; transform:scale(.88)}
+.box.flipped .box-front{opacity:0; transform:scale(1.1)}
+.box.flipped .box-back{opacity:1; transform:scale(1)}
+.box-icon{font-size:1.35rem; color:var(--muted); transition:color .2s}
+.box.selected-pending .box-icon{color:var(--brass)}
+.box-num{font-family:var(--f-mono); font-size:.58rem; color:var(--muted); letter-spacing:.06em}
+.box.win-25{border-color:var(--steel) !important}
+.box.win-50{border-color:var(--brass) !important}
+.box.win-100{border-color:var(--brass) !important; background:rgba(201,161,94,.08) !important}
+.box.empty{border-color:var(--line2) !important; opacity:.55}
+.box.win-25 .box-back{background:rgba(108,132,148,.1)}
+.box.win-50 .box-back,.box.win-100 .box-back{background:rgba(201,161,94,.1)}
+.box.empty .box-back{background:var(--bg3)}
+.box-val{font-family:var(--f-display); font-size:1.0rem; font-weight:500; line-height:1}
+.box.win-25 .box-val{color:var(--steel)}
+.box.win-50 .box-val,.box.win-100 .box-val{color:var(--brass)}
+.box.empty .box-val{color:var(--muted); font-size:1.05rem}
+.box-sub{font-size:.58rem; color:var(--muted); letter-spacing:.08em; text-transform:uppercase}
 
-    /* ═══ COUNTDOWN ═════════════════════════════════ */
-    #countdownSection { display: none; animation: fadeUp 0.4s ease both }
-    #countdownSection.show { display: block }
-    .countdown-card {
-      text-align: center;
-      padding: 30px 20px;
-      border-color: rgba(61,142,255,0.25);
-      background: rgba(61,142,255,0.04);
-    }
-    .countdown-title {
-      font-family: var(--font-d);
-      font-size: 1rem;
-      font-weight: 250;
-      letter-spacing: 0.12em;
-      color: var(--blue);
-      margin-bottom: 6px;
-    }
-    .countdown-sub {
-      font-size: 0.76rem;
-      color: var(--muted);
-      margin-bottom: 22px;
-      font-weight: 250;
-    }
-    .countdown-digits {
-      font-family: var(--font-mono);
-      font-size: clamp(2.2rem, 10vw, 3.5rem);
-      font-weight: 250;
-      color: var(--text);
-      letter-spacing: 0.08em;
-    }
-    .countdown-digits span { color: var(--blue) }
+.round-result{
+  text-align:center; min-height:30px; display:flex; align-items:center; justify-content:center;
+  gap:7px; font-size:.83rem; margin:4px 0 10px; font-family:var(--f-body); font-weight:500;
+}
+.round-result.win{color:var(--steel)}
+.round-result.big,.round-result.mega{color:var(--brass)}
+.round-result.loss{color:var(--muted)}
 
-    /* ═══ FIRST PLAY ════════════════════════════════ */
-    .firstplay {
-      display: none;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 14px;
-      background: var(--bg3);
-      border: 1px solid var(--border2);
-      border-radius: var(--radius-sm);
-      margin-bottom: 10px;
-      font-size: 0.73rem;
-      color: var(--muted);
-    }
-    .firstplay.show { display: flex }
-    .firstplay i { color: var(--blue); font-size: 0.85rem }
-    .firstplay-date { font-family: var(--font-mono); color: var(--text); font-size: 0.75rem }
+.spin-btn{
+  width:100%; height:56px; border:none; border-radius:var(--radius-sm);
+  background:var(--steel-dim); color:var(--text);
+  font-family:var(--f-display); font-size:.92rem; font-weight:500; letter-spacing:.05em;
+  cursor:pointer; display:flex; align-items:center; justify-content:center; gap:9px;
+  transition:var(--tr); border:1px solid rgba(255,255,255,.06);
+}
+.spin-btn:hover:not(:disabled){background:var(--steel); transform:translateY(-1px)}
+.spin-btn:active:not(:disabled){transform:translateY(0)}
+.spin-btn:disabled{opacity:.35; cursor:not-allowed}
+.spin-btn.ready{background:var(--brass-dim); color:#161207}
+.spin-btn.ready:hover:not(:disabled){background:var(--brass)}
 
-    /* ═══ GAME BOARD ════════════════════════════════ */
-    #gameSection { animation: fadeUp 0.5s 0.15s ease both }
-    .game-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 9px;
-      margin: 12px 0 10px;
-    }
+/* SPONSOR */
+.sponsor-card{display:flex; align-items:center; gap:12px}
+.sponsor-icon{
+  width:40px; height:40px; border-radius:10px; background:var(--bg3); border:1px solid var(--line2);
+  display:flex; align-items:center; justify-content:center; color:var(--steel); font-size:1rem; flex-shrink:0;
+}
+.sponsor-txt{flex:1}
+.sponsor-title{font-size:.8rem; font-weight:500; margin-bottom:2px}
+.sponsor-sub{font-size:.68rem; color:var(--muted); line-height:1.4}
+.sponsor-btn{
+  padding:9px 14px; border-radius:var(--radius-sm); border:1px solid var(--brass-dim);
+  background:transparent; color:var(--brass); font-size:.72rem; font-weight:500;
+  cursor:pointer; white-space:nowrap; transition:var(--tr); text-decoration:none; flex-shrink:0;
+}
+.sponsor-btn:hover{background:rgba(201,161,94,.08)}
+.sponsor-btn:disabled{opacity:.35; cursor:not-allowed}
 
-    /* BOX */
-    .box {
-      aspect-ratio: 1;
-      border-radius: 15px;
-      background: var(--bg3);
-      border: 2px solid var(--border2);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      user-select: none;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.2s, transform 0.2s, background 0.2s;
-    }
-    /* Vault door lines decoration */
-    .box::before {
-      content: '';
-      position: absolute;
-      inset: 5px;
-      border-radius: 10px;
-      border: 1px solid rgba(255,255,255,0.04);
-      pointer-events: none;
-    }
-    .box:not(.flipped):not(.disabled):not(.selected-pending):hover {
-      transform: scale(1.04);
-      border-color: rgba(61,142,255,0.4);
-    }
-    .box.disabled { cursor: default; opacity: 0.45 }
-    .box.flipped { cursor: default }
+/* WALLET */
+.stat-grid{display:grid; grid-template-columns:1fr 1fr; gap:8px}
+.stat-box{padding:13px 12px; background:var(--bg3); border-radius:var(--radius-sm); border:1px solid var(--line2); text-align:center}
+.stat-lbl{font-family:var(--f-mono); font-size:.6rem; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-bottom:5px}
+.stat-val{font-family:var(--f-mono); font-size:.9rem; color:var(--text)}
+.stat-val.brass{color:var(--brass)}
+.stat-val.green{color:var(--green)}
 
-    /* Selected state — animated border */
-    .box.selected-pending {
-      border-color: var(--blue) !important;
-      background: rgba(61,142,255,0.08) !important;
-      transform: scale(1.04);
-    }
-    .box.selected-pending::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 13px;
-      background: transparent;
-      box-shadow: inset 0 0 16px rgba(61,142,255,0.2);
-      pointer-events: none;
-    }
+/* WITHDRAW */
+.amounts-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:7px; margin-bottom:12px}
+.amt-btn{
+  padding:10px 4px; border-radius:9px; border:1.5px solid var(--line2); background:var(--bg3);
+  color:var(--muted); font-family:var(--f-body); font-size:.74rem; font-weight:500; cursor:pointer;
+  text-align:center; transition:var(--tr);
+}
+.amt-btn .req{font-family:var(--f-mono); font-size:.58rem; color:var(--muted); display:block; margin-top:2px}
+.amt-btn:hover:not(:disabled):not(.locked){border-color:var(--brass-dim); color:var(--text)}
+.amt-btn.selected{border-color:var(--brass); color:var(--brass); background:rgba(201,161,94,.07)}
+.amt-btn.locked{opacity:.3; cursor:not-allowed}
 
-    /* Front / back */
-    .box-front, .box-back {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 5px;
-      transition: opacity 0.35s, transform 0.35s;
-    }
-    .box-back { opacity: 0; transform: scale(0.85) }
-    .box.flipped .box-front { opacity: 0; transform: scale(1.1) }
-    .box.flipped .box-back  { opacity: 1; transform: scale(1) }
+.method-select{
+  width:100%; padding:12px 14px; border-radius:var(--radius-sm); background:var(--bg3);
+  border:1px solid var(--line2); color:var(--text); font-family:var(--f-body); font-size:.84rem;
+  appearance:none; cursor:pointer; margin-bottom:12px; transition:var(--tr);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23767C82' fill='none' stroke-width='1.4'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 14px center;
+}
+.method-select:focus{outline:none; border-color:var(--steel)}
 
-    .box-icon { font-size: 1.7rem; color: var(--muted) }
-    .box.selected-pending .box-icon { color: var(--blue) }
-    .box-num {
-      font-family: var(--font-mono);
-      font-size: 0.6rem;
-      color: var(--muted);
-      letter-spacing: 0.08em;
-    }
+.withdraw-btn{
+  width:100%; height:52px; border:none; border-radius:var(--radius-sm);
+  background:var(--brass-dim); color:#171307; font-family:var(--f-display); font-size:.94rem;
+  font-weight:500; letter-spacing:.04em; cursor:pointer; transition:var(--tr);
+}
+.withdraw-btn:hover:not(:disabled){background:var(--brass); transform:translateY(-1px)}
+.withdraw-btn:disabled{opacity:.32; cursor:not-allowed}
 
-    /* Result states */
-    .box.win-25  { border-color: var(--green) !important }
-    .box.win-50  { border-color: var(--gold) !important }
-    .box.win-100 { border-color: var(--blue) !important }
-    .box.empty   { border-color: var(--border2) !important; opacity: 0.6 }
+/* HISTORY */
+.history-empty{text-align:center; padding:18px; font-size:.76rem; color:var(--muted)}
+.history-list{display:flex; flex-direction:column; gap:6px}
+.h-item{display:flex; align-items:center; gap:12px; padding:11px 13px; background:var(--bg3); border-radius:var(--radius-sm); border:1px solid var(--line2)}
+.h-icon{width:30px; height:30px; border-radius:8px; background:var(--bg4); display:flex; align-items:center; justify-content:center; color:var(--brass); font-size:.85rem; flex-shrink:0}
+.h-info{flex:1; min-width:0}
+.h-amount{font-size:.83rem; font-weight:500; color:var(--brass)}
+.h-code{font-family:var(--f-mono); font-size:.6rem; color:var(--muted)}
+.h-date{font-size:.63rem; color:var(--muted); font-family:var(--f-mono); text-align:right; line-height:1.5; flex-shrink:0}
+.h-status{font-size:.6rem; padding:2px 7px; border-radius:100px; font-family:var(--f-mono); flex-shrink:0}
+.h-status.pending{color:var(--steel); border:1px solid var(--steel-dim)}
 
-    .box.win-25 .box-back  { background: rgba(34,209,110,0.12) }
-    .box.win-50 .box-back  { background: rgba(244,200,66,0.12) }
-    .box.win-100 .box-back { background: rgba(61,142,255,0.12) }
-    .box.empty .box-back   { background: var(--bg3) }
+/* BACKUP */
+.backup-row{display:flex; gap:8px}
+.backup-btn{
+  flex:1; padding:11px; border-radius:var(--radius-sm); border:1px solid var(--line2); background:var(--bg3);
+  color:var(--text-dim); font-size:.72rem; font-weight:500; cursor:pointer; transition:var(--tr);
+  display:flex; align-items:center; justify-content:center; gap:7px;
+}
+.backup-btn:hover{border-color:var(--brass-dim); color:var(--text)}
+.backup-note{font-size:.66rem; color:var(--muted); line-height:1.6; margin-top:10px}
 
-    .box-val {
-      font-family: var(--font-d);
-      font-size: 1.00rem;
-      font-weight: 250;
-      line-height: 1;
-    }
-    .box.win-25 .box-val  { color: var(--green) }
-    .box.win-50 .box-val  { color: var(--gold) }
-    .box.win-100 .box-val { color: var(--blue) }
-    .box.empty .box-val   { color: var(--muted); font-size: 1.2rem }
-    .box-sub {
-      font-size: 0.6rem;
-      color: var(--muted);
-      font-weight: 250;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
+/* OVERLAY */
+.overlay{display:none; position:fixed; inset:0; background:rgba(0,0,0,.78); backdrop-filter:blur(9px); z-index:300; align-items:center; justify-content:center; padding:20px}
+.overlay.show{display:flex}
+.popup{
+  background:var(--bg2); border:1px solid var(--line2); border-radius:var(--radius);
+  padding:26px 22px; max-width:390px; width:100%;
+  box-shadow:0 24px 64px rgba(0,0,0,.6), 0 0 0 1px rgba(201,161,94,.1);
+  animation:popIn .3s cubic-bezier(.34,1.4,.64,1) both;
+}
+.popup-icon{
+  width:46px; height:46px; border-radius:50%; margin:0 auto 14px; background:var(--bg3);
+  border:1px solid var(--brass-dim); display:flex; align-items:center; justify-content:center;
+  color:var(--brass); font-size:1.15rem;
+}
+.popup-title{font-family:var(--f-display); font-size:.98rem; font-weight:500; letter-spacing:.03em; text-align:center; margin-bottom:7px}
+.popup-sub{font-size:.76rem; color:var(--muted); text-align:center; line-height:1.6; margin-bottom:18px}
+.code-box{background:var(--bg3); border:1px solid var(--line2); border-radius:var(--radius-sm); padding:15px; text-align:center; margin-bottom:12px}
+.code-str{font-family:var(--f-mono); font-size:1.05rem; letter-spacing:.12em; color:var(--brass); word-break:break-all}
+.code-warn{
+  display:flex; align-items:flex-start; gap:8px; padding:10px 12px; background:rgba(193,80,63,.08);
+  border:1px solid rgba(193,80,63,.25); border-radius:var(--radius-sm); font-size:.71rem; color:var(--text-dim);
+  line-height:1.5; margin-bottom:14px;
+}
+.code-warn i{color:var(--red); flex-shrink:0; margin-top:1px}
+.code-detail{font-size:.72rem; color:var(--muted); text-align:center; margin-bottom:16px; line-height:1.7}
+.code-detail strong{color:var(--text)}
+.popup-btn{
+  width:100%; height:48px; border:none; border-radius:var(--radius-sm); font-family:var(--f-body);
+  font-size:.86rem; font-weight:600; cursor:pointer; transition:var(--tr); margin-bottom:8px;
+  display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none;
+}
+.popup-btn.primary{background:#1DA851; color:#fff}
+.popup-btn.primary:hover{background:#22bd5a}
+.popup-btn.secondary{background:var(--bg3); border:1px solid var(--line2); color:var(--muted)}
+.popup-btn.secondary:hover{color:var(--text)}
 
-    /* Round result */
-    .round-result {
-      text-align: center;
-      min-height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.85rem;
-      font-weight: 250;
-      margin: 4px 0 10px;
-      transition: all 0.3s;
-    }
-    .round-result.win   { color: var(--green) }
-    .round-result.big   { color: var(--gold) }
-    .round-result.mega  { color: var(--blue) }
-    .round-result.loss  { color: var(--muted) }
+footer{position:relative; z-index:1; margin-top:22px; padding:16px; text-align:center; font-size:.68rem; color:var(--muted); border-top:1px solid var(--line2)}
+footer em{color:var(--brass); font-style:normal}
 
-    /* Spin button */
-    .spin-btn {
-      width: 100%;
-      height: 60px;
-      border: none;
-      border-radius: var(--radius-sm);
-      background: linear-gradient(135deg, var(--blue-dim), var(--blue));
-      color: #fff;
-      font-family: var(--font-d);
-      font-size: 1.00rem;
-      font-weight: 250;
-      letter-spacing: 0.12em;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center; gap: 10px;
-      transition: var(--tr);
-      box-shadow: 0 6px 28px rgba(61,142,255,0.3);
-      position: relative;
-      overflow: hidden;
-    }
-    .spin-btn::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, transparent, rgba(255,255,255,0.1), transparent);
-      transform: translateX(-100%);
-      transition: transform 0.6s;
-    }
-    .spin-btn:hover:not(:disabled)::before { transform: translateX(100%) }
-    .spin-btn:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 36px rgba(61,142,255,0.45);
-    }
-    .spin-btn:active:not(:disabled) { transform: translateY(0) }
-    .spin-btn:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-      box-shadow: none;
-    }
+@keyframes fadeUp{from{opacity:0; transform:translateY(14px)}to{opacity:1; transform:translateY(0)}}
+@keyframes popIn{from{transform:scale(.9); opacity:0}to{transform:scale(1); opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.shake{animation:shake .35s ease}
 
-    /* ═══ WALLET GRID ═══════════════════════════════ */
-    .wallet-card { animation: fadeUp 0.5s 0.2s ease both }
-    .stat-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-    .stat-box {
-      padding: 14px 12px;
-      background: var(--bg3);
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border2);
-      text-align: center;
-    }
-    .stat-lbl {
-      font-size: 0.66rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 5px;
-    }
-    .stat-val {
-      font-family: var(--font-mono);
-      font-size: 0.92rem;
-      font-weight: 250;
-      color: var(--text);
-    }
-    .stat-val.gold  { color: var(--gold) }
-    .stat-val.green { color: var(--green) }
-
-    /* ═══ WITHDRAW ══════════════════════════════════ */
-    .withdraw-card { animation: fadeUp 0.5s 0.25s ease both }
-    .amounts-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 7px;
-      margin-bottom: 12px;
-    }
-    .amt-btn {
-      padding: 10px 4px;
-      border-radius: 11px;
-      border: 2px solid var(--border2);
-      background: var(--bg3);
-      color: var(--muted);
-      font-family: var(--font-b);
-      font-size: 0.76rem;
-      font-weight: 250;
-      cursor: pointer;
-      text-align: center;
-      transition: var(--tr);
-    }
-    .amt-btn .req {
-      font-size: 0.6rem;
-      font-weight: 250;
-      color: var(--muted);
-      display: block;
-      margin-top: 2px;
-    }
-    .amt-btn:hover:not(:disabled):not(.locked) {
-      border-color: rgba(244,200,66,0.4);
-      color: var(--text);
-    }
-    .amt-btn.selected {
-      border-color: var(--gold);
-      color: var(--gold);
-      background: rgba(244,200,66,0.08);
-    }
-    .amt-btn.locked { opacity: 0.3; cursor: not-allowed }
-
-    .method-select {
-      width: 100%;
-      padding: 12px 14px;
-      border-radius: var(--radius-sm);
-      background: var(--bg3);
-      border: 1px solid var(--border2);
-      color: var(--text);
-      font-family: var(--font-b);
-      font-size: 0.85rem;
-      appearance: none;
-      cursor: pointer;
-      margin-bottom: 12px;
-      transition: var(--tr);
-    }
-    .method-select:focus { outline: none; border-color: var(--blue) }
-
-    .withdraw-btn {
-      width: 100%;
-      height: 54px;
-      border: none;
-      border-radius: var(--radius-sm);
-      background: linear-gradient(135deg, var(--gold-dim), var(--gold));
-      color: #000;
-      font-family: var(--font-d);
-      font-size: 1.00rem;
-      font-weight: 250;
-      letter-spacing: 0.1em;
-      cursor: pointer;
-      transition: var(--tr);
-      box-shadow: 0 4px 22px rgba(244,200,66,0.25);
-    }
-    .withdraw-btn:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(244,200,66,0.4);
-    }
-    .withdraw-btn:disabled { opacity: 0.35; cursor: not-allowed; box-shadow: none }
-
-    /* ═══ HISTORY ═══════════════════════════════════ */
-    .history-card { animation: fadeUp 0.5s 0.3s ease both }
-    .history-empty { text-align: center; padding: 20px; font-size: 0.78rem; color: var(--muted); font-weight: 300 }
-    .history-list { display: flex; flex-direction: column; gap: 6px }
-    .h-item {
-      display: flex; align-items: center; gap: 12px;
-      padding: 12px 13px;
-      background: var(--bg3);
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border2);
-    }
-    .h-icon { font-size: 1rem; color: var(--gold); flex-shrink: 0 }
-    .h-info { flex: 1 }
-    .h-amount { font-size: 0.86rem; font-weight: 250; color: var(--gold) }
-    .h-code { font-family: var(--font-mono); font-size: 0.62rem; color: var(--muted) }
-    .h-date { font-size: 0.66rem; color: var(--muted); font-family: var(--font-mono); text-align: right; line-height: 1.5 }
-
-    /* ═══ OVERLAY / POPUP ═══════════════════════════ */
-    .overlay {
-      display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.8);
-      backdrop-filter: blur(10px);
-      z-index: 300;
-      align-items: center; justify-content: center;
-      padding: 20px;
-    }
-    .overlay.show { display: flex }
-    .popup {
-      background: var(--bg2);
-      border: 1px solid var(--border2);
-      border-radius: var(--radius);
-      padding: 28px 22px;
-      max-width: 390px;
-      width: 100%;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.7), 0 0 0 1px rgba(61,142,255,0.15);
-      animation: popIn 0.35s cubic-bezier(0.34,1.56,0.64,1) both;
-    }
-    .popup-icon { text-align: center; font-size: 2.4rem; margin-bottom: 14px }
-    .popup-title {
-      font-family: var(--font-d);
-      font-size: 1.00rem;
-      font-weight: 250;
-      letter-spacing: 0.1em;
-      text-align: center;
-      margin-bottom: 7px;
-    }
-    .popup-sub { font-size: 0.77rem; color: var(--muted); text-align: center; line-height: 1.6; margin-bottom: 18px; font-weight: 250 }
-
-    .code-box {
-      background: var(--bg3);
-      border: 1px solid var(--border2);
-      border-radius: var(--radius-sm);
-      padding: 16px;
-      text-align: center;
-      margin-bottom: 12px;
-    }
-    .code-str {
-      font-family: var(--font-mono);
-      font-size: 1.1rem;
-      letter-spacing: 0.14em;
-      color: var(--gold);
-      word-break: break-all;
-      line-height: 1.5;
-    }
-    .code-warn {
-      display: flex; align-items: flex-start; gap: 8px;
-      padding: 10px 12px;
-      background: rgba(255,68,87,0.08);
-      border: 1px solid rgba(255,68,87,0.25);
-      border-radius: var(--radius-sm);
-      font-size: 0.72rem;
-      color: var(--muted);
-      line-height: 1.5;
-      margin-bottom: 14px;
-    }
-    .code-warn i { color: var(--red); flex-shrink: 0; margin-top: 1px }
-    .code-detail { font-size: 0.73rem; color: var(--muted); text-align: center; margin-bottom: 16px; font-weight: 250; line-height: 1.7 }
-    .code-detail strong { color: var(--text) }
-
-    .popup-btn {
-      width: 100%;
-      height: 50px;
-      border: none;
-      border-radius: var(--radius-sm);
-      font-family: var(--font-d);
-      font-size: 1.05rem;
-      font-weight: 250;
-      letter-spacing: 0.08em;
-      cursor: pointer;
-      transition: var(--tr);
-      margin-bottom: 8px;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      text-decoration: none;
-    }
-    .popup-btn.primary {
-      background: linear-gradient(135deg, #1DA851, #25C25E);
-      color: #fff;
-      box-shadow: 0 4px 20px rgba(37,194,94,0.3);
-    }
-    .popup-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(37,194,94,0.45) }
-    .popup-btn.secondary { background: var(--bg3); border: 1px solid var(--border2); color: var(--muted) }
-    .popup-btn.secondary:hover { color: var(--text) }
-
-    /* ═══ FOOTER ════════════════════════════════════ */
-    footer {
-      position: relative; z-index: 1;
-      margin-top: 24px;
-      padding: 16px;
-      text-align: center;
-      font-size: 0.7rem;
-      color: var(--muted);
-      letter-spacing: 0.06em;
-      border-top: 1px solid var(--border2);
-    }
-    footer em { color: var(--blue); font-style: normal }
-
-    /* ═══ ANIMATIONS ════════════════════════════════ */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px) }
-      to   { opacity: 1; transform: translateY(0) }
-    }
-    @keyframes popIn {
-      from { transform: scale(0.88); opacity: 0 }
-      to   { transform: scale(1); opacity: 1 }
-    }
-    @keyframes pulse {
-      0%,100% { transform: scale(1) }
-      50%      { transform: scale(1.06) }
-    }
-    @keyframes glow {
-      0%,100% { box-shadow: 0 6px 28px rgba(61,142,255,0.3) }
-      50%      { box-shadow: 0 12px 48px rgba(61,142,255,0.6) }
-    }
-    @keyframes shake {
-      0%,100% { transform: translateX(0) }
-      25%      { transform: translateX(-5px) }
-      75%      { transform: translateX(5px) }
-    }
-    .pulse { animation: pulse 0.6s ease }
-    .shake { animation: shake 0.4s ease }
-    .glow  { animation: glow 1.5s ease infinite }
-
-    @media (max-width: 380px) {
-      .credits-number { font-size: 3rem }
-      .amounts-grid { grid-template-columns: repeat(2, 1fr) }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .grid-bg::before { animation: none }
-      .badge-live-dot  { animation: none }
-    }
-  </style>
+@media (max-width:380px){.balance-num{font-size:2.3rem}.amounts-grid{grid-template-columns:repeat(2,1fr)}}
+@media (prefers-reduced-motion:reduce){.status-dot{animation:none}*{animation-duration:.01ms !important}}
+</style>
 </head>
 <body>
 
-<div class="grid-bg"></div>
+<div class="plate-bg"></div>
 
-<!-- HEADER -->
 <header>
-  <div class="logo">VAULT <em>GAME</em></div>
-  <div class="badge-live">
-    <div class="badge-live-dot"></div>
-    EN VIVO
+  <div class="brand">
+    <div class="brand-mark"></div>
+    <div class="brand-name">VAULT <em>GAME</em></div>
+  </div>
+  <div class="hdr-controls">
+    <button class="icon-btn" id="muteBtn" title="Sonido" aria-label="Silenciar sonido"><i class="fa-solid fa-volume-high"></i></button>
+    <div class="status-chip"><div class="status-dot"></div>EN VIVO</div>
   </div>
 </header>
 
 <div class="main">
 
-  <!-- CREDITS HERO -->
-  <div class="credits-hero">
-    <p class="credits-eyebrow">Tus créditos acumulados</p>
-    <div class="credits-number" id="totalCredits">0</div>
-    <div class="credits-usd"><i class="fa-solid fa-circle-dollar-to-slot"></i> <span id="totalUSD">$0.0000 USD</span></div>
+  <div class="ledger">
+    <p class="ledger-eyebrow">Saldo acumulado</p>
+    <div class="balance-row">
+      <div class="balance-num" id="totalCredits">0</div>
+      <div class="balance-unit">créditos</div>
+    </div>
+    <div class="balance-usd"><i class="fa-solid fa-circle-dollar-to-slot"></i><span id="totalUSD">$0.0000 USD</span></div>
   </div>
 
-  <!-- FIRST PLAY BADGE -->
   <div class="firstplay" id="firstPlayBadge">
     <i class="fa-solid fa-calendar-check"></i>
-    <span>Primer juego:</span>
+    <span>Primer juego registrado</span>
     <span class="firstplay-date" id="firstPlayDate">—</span>
   </div>
 
-  <!-- PROGRESS -->
-  <p class="sec-label">Progreso hacia retiro</p>
-  <div class="card progress-section">
-    <div id="progressBars"></div>
-  </div>
+  <p class="sec-label"><i class="fa-solid fa-chart-line"></i>Progreso hacia retiro</p>
+  <div class="card brass-edge progress-section"><div id="progressBars"></div></div>
 
-  <!-- DAILY STATUS -->
-  <p class="sec-label">Intentos de hoy</p>
+  <p class="sec-label"><i class="fa-solid fa-key"></i>Intentos de hoy</p>
   <div class="card daily-card">
     <div class="daily-top">
-      <span class="daily-title">DISPONIBLES</span>
+      <span class="daily-title">Disponibles</span>
       <div class="dots-row" id="attemptDots"></div>
     </div>
     <div class="daily-row">
@@ -790,216 +397,410 @@
     </div>
   </div>
 
-  <!-- COUNTDOWN -->
   <div id="countdownSection">
     <div class="card countdown-card">
-      <div class="countdown-title"><i class="fa-solid fa-lock"></i> VUELVE MAÑANA</div>
+      <div class="countdown-title"><i class="fa-solid fa-lock"></i>Bóveda cerrada por hoy</div>
       <div class="countdown-sub">Agotaste tus intentos. Tu progreso está guardado.</div>
       <div class="countdown-digits" id="countdownDisplay">00<span>:</span>00<span>:</span>00</div>
     </div>
   </div>
 
-  <!-- GAME -->
   <div id="gameSection">
-    <p class="sec-label">Selecciona 3 cajas</p>
+    <p class="sec-label"><i class="fa-solid fa-vault"></i>Selecciona 3 compartimentos</p>
     <div class="card" style="padding:14px 12px">
       <div class="game-grid" id="gameBoard"></div>
       <div class="round-result" id="roundResult"></div>
       <button class="spin-btn" id="spinBtn" disabled>
         <i class="fa-solid fa-vault"></i>
-        <span id="spinBtnText">SELECCIONA 3 CAJAS</span>
+        <span id="spinBtnText">SELECCIONA 3 CASILLAS</span>
       </button>
+    </div>
+
+    <div class="card sponsor-card">
+      <div class="sponsor-icon"><i class="fa-solid fa-store"></i></div>
+      <div class="sponsor-txt">
+        <div class="sponsor-title">Patrocinador del día</div>
+        <div class="sponsor-sub">Visítalo y desbloquea un intento extra</div>
+      </div>
+      <button class="sponsor-btn" id="sponsorBtn">VISITAR</button>
     </div>
   </div>
 
-  <!-- WALLET -->
-  <p class="sec-label">Tu cartera</p>
-  <div class="card wallet-card">
-    <div class="stat-grid" id="walletGrid"></div>
-  </div>
+  <p class="sec-label"><i class="fa-solid fa-wallet"></i>Tu cartera</p>
+  <div class="card wallet-card"><div class="stat-grid" id="walletGrid"></div></div>
 
-  <!-- WITHDRAW -->
-  <p class="sec-label">Retirar ganancias</p>
+  <p class="sec-label"><i class="fa-solid fa-money-bill-transfer"></i>Retirar ganancias</p>
   <div class="card withdraw-card">
     <div class="amounts-grid" id="withdrawAmounts"></div>
     <select class="method-select" id="withdrawMethod">
       <option value="">— Método de pago —</option>
-      <option value="PayPal">💵 PayPal</option>
-      <option value="Nequi">🟣 Nequi</option>
-      <option value="Binance">🟡 Binance Pay</option>
-      <option value="AstroPay">🔵 AstroPay</option>
-      <option value="FreeFire">💎 Diamantes Free Fire ($1, $5, $10)</option>
+      <option value="PayPal">PayPal</option>
+      <option value="Nequi">Nequi</option>
+      <option value="Binance">Binance Pay</option>
+      <option value="AstroPay">AstroPay</option>
+      <option value="FreeFire">Diamantes Free Fire</option>
     </select>
-    <button class="withdraw-btn" id="withdrawBtn" disabled>
-      <i class="fa-solid fa-coins"></i> RETIRAR AHORA
-    </button>
+    <button class="withdraw-btn" id="withdrawBtn" disabled><i class="fa-solid fa-coins"></i> RETIRAR AHORA</button>
   </div>
 
-  <!-- HISTORY -->
-  <p class="sec-label">Historial de retiros</p>
-  <div class="card history-card">
-    <div id="historyContainer">
-      <div class="history-empty">Sin retiros registrados</div>
+  <p class="sec-label"><i class="fa-solid fa-clock-rotate-left"></i>Historial de retiros</p>
+  <div class="card history-card"><div id="historyContainer"><div class="history-empty">Sin retiros registrados</div></div></div>
+
+  <p class="sec-label"><i class="fa-solid fa-shield-halved"></i>Respaldo de progreso</p>
+  <div class="card">
+    <div class="backup-row">
+      <button class="backup-btn" id="exportBtn"><i class="fa-solid fa-download"></i>Exportar respaldo</button>
+      <button class="backup-btn" id="importBtn"><i class="fa-solid fa-upload"></i>Restaurar respaldo</button>
     </div>
+    <input type="file" id="importFile" accept="application/json" style="display:none"/>
+    <p class="backup-note">Tu progreso se guarda automáticamente en dos almacenes distintos del navegador. Si vas a cambiar de dispositivo o borrar datos del navegador, exporta un respaldo primero — es la única copia que sobrevive a eso.</p>
   </div>
 
 </div>
 
 <footer>© <em>VAULT GAME</em> 2026 — Todos los derechos reservados</footer>
 
-<!-- WITHDRAW POPUP -->
 <div class="overlay" id="withdrawOverlay">
   <div class="popup">
-    <div class="popup-icon">🏆</div>
+    <div class="popup-icon"><i class="fa-solid fa-award"></i></div>
     <h3 class="popup-title">CÓDIGO DE RETIRO</h3>
     <div class="popup-sub" id="popupSubtitle">Generado exitosamente</div>
-    <div class="code-box">
-      <div class="code-str" id="popupCode">—</div>
-    </div>
-    <div class="code-warn">
-      <i class="fa-solid fa-triangle-exclamation"></i>
-      <span>Código de <strong>uso único</strong>. Toma captura de pantalla y envíala junto al mensaje por WhatsApp.</span>
-    </div>
+    <div class="code-box"><div class="code-str" id="popupCode">—</div></div>
+    <div class="code-warn"><i class="fa-solid fa-triangle-exclamation"></i><span>Código de <strong>uso único</strong>. Toma captura de pantalla y envíala junto al mensaje por WhatsApp.</span></div>
     <div class="code-detail" id="popupDetail"></div>
-    <a class="popup-btn primary" id="popupWhatsApp" href="#" target="_blank" rel="noopener">
-      <i class="fa-brands fa-whatsapp"></i> ENVIAR A WHATSAPP
-    </a>
+    <a class="popup-btn primary" id="popupWhatsApp" href="#" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> ENVIAR A WHATSAPP</a>
     <button class="popup-btn secondary" id="popupClose">Cancelar</button>
   </div>
 </div>
 
-<!-- BONUS POPUP -->
 <div class="overlay" id="bonusOverlay">
   <div class="popup" style="text-align:center">
-    <div class="popup-icon" style="animation:pulse 1s ease infinite">⚡</div>
-    <h3 class="popup-title" style="color:var(--gold)">INTENTO EXTRA</h3>
-    <p style="font-size:.82rem;color:var(--muted);margin-bottom:20px;font-weight:250;line-height:1.7">
-      No ganaste esta vez, pero te damos <strong style="color:var(--gold)">1 intento extra</strong> ¡para que sigas intentando!
+    <div class="popup-icon"><i class="fa-solid fa-bolt"></i></div>
+    <h3 class="popup-title">INTENTO EXTRA</h3>
+    <p style="font-size:.8rem;color:var(--muted);margin-bottom:20px;line-height:1.7">
+      Esta vuelta no tuvo premio, pero te damos <strong style="color:var(--brass)">1 intento extra</strong> para que sigas intentando.
     </p>
-    <button class="popup-btn primary" id="bonusClose" style="background:linear-gradient(135deg,var(--blue-dim),var(--blue));box-shadow:0 4px 20px var(--blue-glow)">
-      <i class="fa-solid fa-bolt"></i> ¡USAR INTENTO EXTRA!
-    </button>
+    <button class="popup-btn primary" id="bonusClose" style="background:var(--steel-dim)"><i class="fa-solid fa-bolt"></i> USAR INTENTO EXTRA</button>
+  </div>
+</div>
+
+<div class="overlay" id="restoreOverlay">
+  <div class="popup" style="text-align:center">
+    <div class="popup-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+    <h3 class="popup-title">SE RECUPERÓ TU PROGRESO</h3>
+    <p style="font-size:.78rem;color:var(--muted);margin-bottom:20px;line-height:1.7" id="restoreMsg"></p>
+    <button class="popup-btn primary" id="restoreClose" style="background:var(--steel-dim)">ENTENDIDO</button>
   </div>
 </div>
 
 <script>
-/* ═══════════════════════════════════════════════════════════
-   VAULT GAME — ENGINE v3
-═══════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════
+   VAULT GAME — MOTOR v4
+   Persistencia: localStorage (primario) + IndexedDB (respaldo espejo)
+   con checksum de integridad y recuperación automática.
+═══════════════════════════════════════════════════════════════ */
 
-const MAX_CREDITS      = 100000;
-const MAX_DAILY        = 1000;
-const DAILY_ATTEMPTS   = 10;
-const CREDITS_PER_CENT = 100;
-const WHATSAPP_NUM     = '573132878955';
-const WITHDRAW_TARGETS = [
-  { usd: 0.50, credits: 5000   },
-  { usd: 1.00, credits: 10000  },
-  { usd: 5.00, credits: 50000  },
-  { usd:10.00, credits: 100000 },
+const SCHEMA_VERSION    = 4;
+const MAX_CREDITS       = 100000;
+const MAX_DAILY         = 1000;
+const DAILY_ATTEMPTS    = 10;
+const CREDITS_PER_CENT  = 100;
+const WHATSAPP_NUM      = '573132878955';
+const SPONSOR_URL       = 'https://omg10.com/4/11349756';
+const WITHDRAW_TARGETS  = [
+  { usd:0.50, credits:5000   },
+  { usd:1.00, credits:10000  },
+  { usd:5.00, credits:50000  },
+  { usd:10.00,credits:100000 },
 ];
+const LS_KEY  = 'vaultgame_v4';
+const LS_BAK  = 'vaultgame_v4_backup';
+const IDB_NAME = 'vaultgame_db';
+const IDB_STORE = 'state';
 
-let STATE = {
-  totalCredits: 0,
-  firstPlayDate: null,
-  firstPlayTS: null,
-  dailyDate: '',
-  dailyAttempts: DAILY_ATTEMPTS,
-  dailyEarned: 0,
-  bonusAvailable: false,
-  history: [],
-  storedDateCheck: null,
-};
-
-const STORE_KEY = 'vaultgame_v3';
-
-function loadState() {
-  try {
-    const raw = localStorage.getItem(STORE_KEY);
-    if (raw) STATE = { ...STATE, ...JSON.parse(raw) };
-  } catch(e) {}
+function defaultState(){
+  return {
+    v: SCHEMA_VERSION,
+    totalCredits: 0,
+    firstPlayDate: null,
+    firstPlayTS: null,
+    dailyDate: '',
+    dailyAttempts: DAILY_ATTEMPTS,
+    dailyEarned: 0,
+    bonusAvailable: false,
+    sponsorVisitedToday: false,
+    sponsorBonusUsedToday: false,
+    muted: false,
+    history: [],
+    lastSaveTS: 0,
+  };
 }
-function saveState() {
-  localStorage.setItem(STORE_KEY, JSON.stringify(STATE));
+let STATE = defaultState();
+
+/* ---- checksum (integrity guard, not security) ---- */
+function checksum(obj){
+  const s = JSON.stringify(obj);
+  let h = 0;
+  for (let i=0;i<s.length;i++){ h = (h*31 + s.charCodeAt(i)) | 0; }
+  return h.toString(36);
+}
+function wrap(state){ return { data: state, sum: checksum(state) }; }
+function unwrap(payload){
+  if (!payload || typeof payload !== 'object') return null;
+  if (!payload.data || payload.sum !== checksum(payload.data)) return null;
+  return payload.data;
 }
 
-function todayStr() {
+/* ---- IndexedDB mirror ---- */
+let idb = null;
+function openIDB(){
+  return new Promise((resolve)=>{
+    if (!('indexedDB' in window)) return resolve(null);
+    const req = indexedDB.open(IDB_NAME, 1);
+    req.onupgradeneeded = () => { req.result.createObjectStore(IDB_STORE); };
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => resolve(null);
+  });
+}
+function idbGet(){
+  return new Promise((resolve)=>{
+    if (!idb) return resolve(null);
+    try{
+      const tx = idb.transaction(IDB_STORE,'readonly');
+      const rq = tx.objectStore(IDB_STORE).get('state');
+      rq.onsuccess = () => resolve(rq.result || null);
+      rq.onerror = () => resolve(null);
+    }catch(e){ resolve(null); }
+  });
+}
+function idbSet(payload){
+  if (!idb) return;
+  try{
+    const tx = idb.transaction(IDB_STORE,'readwrite');
+    tx.objectStore(IDB_STORE).put(payload,'state');
+  }catch(e){}
+}
+
+/* ---- save: writes to localStorage primary+backup and IndexedDB mirror ---- */
+function saveState(){
+  STATE.lastSaveTS = Date.now();
+  const payload = wrap(STATE);
+  try{
+    const raw = JSON.stringify(payload);
+    localStorage.setItem(LS_KEY, raw);
+    localStorage.setItem(LS_BAK, raw);
+  }catch(e){ /* storage full or blocked — IDB mirror still attempted below */ }
+  idbSet(payload);
+}
+
+/* ---- load with fallback chain: LS primary -> LS backup -> IndexedDB -> defaults ---- */
+async function loadState(){
+  idb = await openIDB();
+
+  let recovered = null;
+  let source = null;
+
+  try{
+    const raw = localStorage.getItem(LS_KEY);
+    if (raw){ const p = unwrap(JSON.parse(raw)); if (p) { recovered = p; source='primary'; } }
+  }catch(e){}
+
+  if (!recovered){
+    try{
+      const raw = localStorage.getItem(LS_BAK);
+      if (raw){ const p = unwrap(JSON.parse(raw)); if (p) { recovered = p; source='backup'; } }
+    }catch(e){}
+  }
+
+  if (!recovered){
+    const idbPayload = await idbGet();
+    const p = unwrap(idbPayload);
+    if (p) { recovered = p; source='indexeddb'; }
+  }
+
+  if (recovered){
+    STATE = { ...defaultState(), ...recovered, v: SCHEMA_VERSION };
+    if (source !== 'primary'){
+      showRestoreNotice(source);
+    }
+  } else {
+    STATE = defaultState();
+  }
+  saveState();
+}
+
+function showRestoreNotice(source){
+  const label = source === 'backup' ? 'una copia de seguridad local' : 'el respaldo en segundo plano';
+  document.getElementById('restoreMsg').textContent =
+    `El almacenamiento principal no estaba disponible, así que restauramos tu saldo desde ${label}. No perdiste nada.`;
+  document.getElementById('restoreOverlay').classList.add('show');
+}
+document.getElementById('restoreClose').addEventListener('click', ()=>{
+  document.getElementById('restoreOverlay').classList.remove('show');
+});
+
+window.addEventListener('beforeunload', saveState);
+document.addEventListener('visibilitychange', ()=>{ if (document.visibilityState==='hidden') saveState(); });
+setInterval(saveState, 15000);
+
+/* ---- manual export/import ---- */
+document.getElementById('exportBtn').addEventListener('click', ()=>{
+  const payload = wrap(STATE);
+  const blob = new Blob([JSON.stringify(payload,null,2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `vault-backup-${todayStr()}.json`;
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+  playSound('click');
+});
+document.getElementById('importBtn').addEventListener('click', ()=> document.getElementById('importFile').click());
+document.getElementById('importFile').addEventListener('change', (e)=>{
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try{
+      const payload = JSON.parse(reader.result);
+      const p = unwrap(payload);
+      if (!p) throw new Error('checksum');
+      STATE = { ...defaultState(), ...p, v: SCHEMA_VERSION };
+      checkDailyReset();
+      saveState();
+      updateUI();
+      renderBoard();
+      renderAttemptDots();
+      playSound('win');
+    }catch(err){
+      alert('El archivo de respaldo no es válido o está dañado.');
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+});
+
+/* ---- date helpers ---- */
+function todayStr(){
   const d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
-function nowTS() { return Date.now(); }
-
-function detectTampering() {
+function checkDailyReset(){
   const today = todayStr();
-  return !!(STATE.storedDateCheck && STATE.storedDateCheck > today);
-}
-
-function checkDailyReset() {
-  const today = todayStr();
-  if (!detectTampering() && STATE.dailyDate !== today) {
-    STATE.dailyDate      = today;
-    STATE.dailyAttempts  = DAILY_ATTEMPTS;
-    STATE.dailyEarned    = 0;
+  if (STATE.dailyDate !== today){
+    STATE.dailyDate = today;
+    STATE.dailyAttempts = DAILY_ATTEMPTS;
+    STATE.dailyEarned = 0;
     STATE.bonusAvailable = false;
-    STATE.storedDateCheck = today;
+    STATE.sponsorVisitedToday = false;
+    STATE.sponsorBonusUsedToday = false;
     saveState();
   }
 }
 
-function generateCode() {
-  const U = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
-  const L = 'abcdefghjkmnpqrstuvwxyz';
-  const D = '0123456789';
+function generateCode(){
+  const U='ABCDEFGHJKLMNPQRSTUVWXYZ', L='abcdefghjkmnpqrstuvwxyz', D='0123456789';
   const r = s => s[Math.floor(Math.random()*s.length)];
   let mix = [...Array.from({length:4},()=>r(U)), ...Array.from({length:4},()=>r(L)), ...Array.from({length:4},()=>r(D))];
-  for (let i=mix.length-1;i>0;i--) {
-    const j=Math.floor(Math.random()*(i+1));
-    [mix[i],mix[j]]=[mix[j],mix[i]];
-  }
-  const now=new Date();
-  return mix.join('')+String(now.getDate()).padStart(2,'0')+String(now.getMonth()+1).padStart(2,'0');
+  for (let i=mix.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [mix[i],mix[j]]=[mix[j],mix[i]]; }
+  const now = new Date();
+  return mix.join('') + String(now.getDate()).padStart(2,'0') + String(now.getMonth()+1).padStart(2,'0');
 }
 
-// ── AD INJECTION ─────────────────────────────────────────────
-let adInjected = false;
-
-function injectAd() {
-  if (adInjected) return;
-  adInjected = true;
-  // Ejecutar el script exactamente como fue proporcionado
-  (function(s){s.dataset.zone='10863747',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')));
+/* ═══ SOUND ENGINE (Web Audio, sin archivos externos) ═══ */
+let actx = null;
+function ac(){ if (!actx) actx = new (window.AudioContext||window.webkitAudioContext)(); return actx; }
+function tone(freq, dur, type='sine', gain=0.08, delay=0){
+  if (STATE.muted) return;
+  const ctx = ac();
+  const t0 = ctx.currentTime + delay;
+  const osc = ctx.createOscillator();
+  const g = ctx.createGain();
+  osc.type = type; osc.frequency.setValueAtTime(freq, t0);
+  g.gain.setValueAtTime(0, t0);
+  g.gain.linearRampToValueAtTime(gain, t0+0.01);
+  g.gain.exponentialRampToValueAtTime(0.0001, t0+dur);
+  osc.connect(g); g.connect(ctx.destination);
+  osc.start(t0); osc.stop(t0+dur+0.02);
+}
+function playSound(name){
+  if (STATE.muted) return;
+  try{
+    switch(name){
+      case 'select': tone(520,.08,'sine',.06); break;
+      case 'deselect': tone(340,.07,'sine',.05); break;
+      case 'flip': tone(280,.1,'triangle',.05); break;
+      case 'loss': tone(180,.22,'sine',.05); break;
+      case 'win': tone(660,.14,'sine',.07); tone(880,.16,'sine',.06,.08); break;
+      case 'bigwin': tone(660,.12,'triangle',.08); tone(880,.12,'triangle',.07,.08); tone(1100,.2,'triangle',.07,.16); break;
+      case 'megawin': tone(523,.1,'triangle',.09); tone(659,.1,'triangle',.08,.09); tone(784,.1,'triangle',.08,.18); tone(1047,.28,'triangle',.08,.27); break;
+      case 'bonus': tone(440,.1,'sine',.06); tone(660,.14,'sine',.06,.1); break;
+      case 'click': tone(400,.05,'sine',.04); break;
+      case 'withdraw': tone(392,.1,'sine',.07); tone(523,.1,'sine',.07,.1); tone(659,.18,'sine',.07,.2); break;
+      case 'lock': tone(220,.2,'sawtooth',.04); break;
+    }
+  }catch(e){}
+}
+document.getElementById('muteBtn').addEventListener('click', ()=>{
+  STATE.muted = !STATE.muted;
+  saveState();
+  updateMuteBtn();
+  if (!STATE.muted) playSound('click');
+});
+function updateMuteBtn(){
+  const btn = document.getElementById('muteBtn');
+  btn.classList.toggle('active', STATE.muted);
+  btn.innerHTML = STATE.muted ? '<i class="fa-solid fa-volume-xmark"></i>' : '<i class="fa-solid fa-volume-high"></i>';
 }
 
-function resetAdFlag() {
-  adInjected = false;
+/* ═══ SPONSOR (enlace directo, acción explícita del usuario) ═══
+   Integración de un slot de anuncios legítimo: reemplaza SPONSOR_URL
+   o coloca aquí la llamada a tu SDK de anuncios preferido si decides
+   sumar uno (ej. rewarded video de una red verificada). */
+document.getElementById('sponsorBtn').addEventListener('click', ()=>{
+  if (STATE.sponsorBonusUsedToday) return;
+  window.open(SPONSOR_URL, '_blank', 'noopener');
+  STATE.sponsorVisitedToday = true;
+  saveState();
+  updateSponsorBtn();
+  setTimeout(()=>{
+    if (STATE.sponsorVisitedToday && !STATE.sponsorBonusUsedToday){
+      STATE.sponsorBonusUsedToday = true;
+      bonusActive = true;
+      saveState();
+      updateSpinBtn();
+      renderAttemptDots();
+      updateSponsorBtn();
+      playSound('bonus');
+    }
+  }, 4000);
+});
+function updateSponsorBtn(){
+  const btn = document.getElementById('sponsorBtn');
+  if (STATE.sponsorBonusUsedToday){ btn.disabled = true; btn.textContent = 'BONO USADO HOY'; }
+  else if (STATE.sponsorVisitedToday){ btn.disabled = true; btn.textContent = 'PROCESANDO…'; }
+  else { btn.disabled = false; btn.textContent = 'VISITAR'; }
 }
 
-// ── BOARD ─────────────────────────────────────────────────────
+/* ═══ BOARD ═══ */
 let selectedBoxes = [];
-let boardPrizes   = [];
-let revealed      = false;
-let inRound       = false;
-let bonusActive   = false;
+let boardPrizes = [];
+let revealed = false;
+let inRound = false;
+let bonusActive = false;
 
-function buildPrizes() {
-  let p = [25, 50, 100, 0, 0, 0, 0, 0, 0];
-  for (let i=p.length-1;i>0;i--) {
-    const j=Math.floor(Math.random()*(i+1));
-    [p[i],p[j]]=[p[j],p[i]];
-  }
+function buildPrizes(){
+  let p = [25,50,100,0,0,0,0,0,0];
+  for (let i=p.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [p[i],p[j]]=[p[j],p[i]]; }
   return p;
 }
 
-function renderBoard() {
+function renderBoard(){
   const board = document.getElementById('gameBoard');
   board.innerHTML = '';
-  selectedBoxes = [];
-  boardPrizes   = buildPrizes();
-  revealed      = false;
-  inRound       = false;
-  resetAdFlag();
+  selectedBoxes = []; boardPrizes = buildPrizes(); revealed = false; inRound = false;
 
-  for (let i=0;i<9;i++) {
+  for (let i=0;i<9;i++){
     const box = document.createElement('div');
     box.className = 'box';
     box.dataset.index = i;
@@ -1008,411 +809,310 @@ function renderBoard() {
         <div class="box-icon"><i class="fa-solid fa-vault"></i></div>
         <div class="box-num">#${String(i+1).padStart(2,'0')}</div>
       </div>
-      <div class="box-back">
-        <div class="box-val">—</div>
-        <div class="box-sub">—</div>
-      </div>`;
-    box.addEventListener('click', () => handleBoxClick(box, i));
+      <div class="box-back"><div class="box-val">—</div><div class="box-sub">—</div></div>`;
+    box.addEventListener('click', ()=> handleBoxClick(box,i));
     board.appendChild(box);
   }
   updateSpinBtn();
   const r = document.getElementById('roundResult');
-  r.textContent = '';
-  r.className   = 'round-result';
+  r.textContent = ''; r.className = 'round-result';
 }
 
-function handleBoxClick(box, idx) {
+function handleBoxClick(box, idx){
   if (revealed || inRound) return;
   if (STATE.dailyAttempts <= 0 && !bonusActive) return;
 
-  if (box.classList.contains('selected-pending')) {
+  if (box.classList.contains('selected-pending')){
     box.classList.remove('selected-pending');
-    selectedBoxes = selectedBoxes.filter(i => i !== idx);
+    selectedBoxes = selectedBoxes.filter(i=>i!==idx);
+    playSound('deselect');
   } else {
     if (selectedBoxes.length >= 3) return;
     box.classList.add('selected-pending');
     selectedBoxes.push(idx);
-    // Inyectar anuncio exactamente cuando se seleccionan las 3 cajas
-    if (selectedBoxes.length === 3) {
-      injectAd();
-    }
+    playSound('select');
   }
   updateSpinBtn();
 }
 
-function updateSpinBtn() {
+function updateSpinBtn(){
   const btn = document.getElementById('spinBtn');
   const txt = document.getElementById('spinBtnText');
   const hasAttempts = STATE.dailyAttempts > 0 || bonusActive;
   const canSpin = selectedBoxes.length === 3 && hasAttempts && !revealed && !inRound;
   btn.disabled = !canSpin;
-  if (selectedBoxes.length < 3) {
-    txt.textContent = `SELECCIONA ${3 - selectedBoxes.length} MÁS`;
-  } else {
-    txt.textContent = 'REVELAR CAJAS';
-  }
+  btn.classList.toggle('ready', canSpin);
+  txt.textContent = selectedBoxes.length < 3 ? `SELECCIONA ${3-selectedBoxes.length} MÁS` : 'ABRIR COMPARTIMENTOS';
 }
 
-function revealBoxes() {
+function revealBoxes(){
   if (inRound || selectedBoxes.length !== 3) return;
-  inRound = true;
-  revealed = true;
+  inRound = true; revealed = true;
 
   if (bonusActive) bonusActive = false;
   else STATE.dailyAttempts = Math.max(0, STATE.dailyAttempts - 1);
   saveState();
 
   const boxes = document.querySelectorAll('.box');
-  let totalWon = 0;
-  let delay    = 0;
+  let totalWon = 0, delay = 0;
 
-  selectedBoxes.forEach((idx, i) => {
-    setTimeout(() => {
-      const box   = boxes[idx];
+  selectedBoxes.forEach((idx,i)=>{
+    setTimeout(()=>{
+      const box = boxes[idx];
       const prize = boardPrizes[idx];
-      const back  = box.querySelector('.box-back');
-
+      const back = box.querySelector('.box-back');
       box.classList.remove('selected-pending');
       box.classList.add('flipped');
+      playSound('flip');
 
-      if (prize === 25) {
-        box.classList.add('win-25');
-        back.querySelector('.box-val').textContent = '+25';
-        back.querySelector('.box-sub').textContent = 'créditos';
-        totalWon += 25;
-      } else if (prize === 50) {
-        box.classList.add('win-50');
-        back.querySelector('.box-val').textContent = '+50';
-        back.querySelector('.box-sub').textContent = 'créditos';
-        totalWon += 50;
-      } else if (prize === 100) {
-        box.classList.add('win-100');
-        back.querySelector('.box-val').textContent = '+100';
-        back.querySelector('.box-sub').textContent = 'créditos';
-        totalWon += 100;
-      } else {
-        box.classList.add('empty');
-        back.querySelector('.box-val').textContent = '✗';
-        back.querySelector('.box-sub').textContent = 'sin premio';
-      }
+      if (prize === 25){ box.classList.add('win-25'); back.querySelector('.box-val').textContent='+25'; back.querySelector('.box-sub').textContent='créditos'; totalWon+=25; }
+      else if (prize === 50){ box.classList.add('win-50'); back.querySelector('.box-val').textContent='+50'; back.querySelector('.box-sub').textContent='créditos'; totalWon+=50; }
+      else if (prize === 100){ box.classList.add('win-100'); back.querySelector('.box-val').textContent='+100'; back.querySelector('.box-sub').textContent='créditos'; totalWon+=100; }
+      else { box.classList.add('empty'); back.querySelector('.box-val').innerHTML='<i class="fa-solid fa-xmark"></i>'; back.querySelector('.box-sub').textContent='sin premio'; }
 
-      if (i === selectedBoxes.length - 1) {
-        setTimeout(() => finishRound(totalWon), 400);
-      }
+      if (i === selectedBoxes.length-1) setTimeout(()=>finishRound(totalWon), 400);
     }, delay);
-    delay += 350;
+    delay += 320;
   });
 
-  setTimeout(() => {
-    boxes.forEach((b, idx) => {
-      if (!selectedBoxes.includes(idx)) b.classList.add('disabled');
-    });
-  }, 50);
+  setTimeout(()=>{ boxes.forEach((b,idx)=>{ if (!selectedBoxes.includes(idx)) b.classList.add('disabled'); }); }, 40);
 }
 
-function finishRound(won) {
+function finishRound(won){
   const result = document.getElementById('roundResult');
-  const canAdd  = STATE.dailyEarned + won <= MAX_DAILY;
-  const actual  = canAdd ? won : Math.max(0, MAX_DAILY - STATE.dailyEarned);
+  const canAdd = STATE.dailyEarned + won <= MAX_DAILY;
+  const actual = canAdd ? won : Math.max(0, MAX_DAILY - STATE.dailyEarned);
 
-  if (actual > 0) {
+  if (actual > 0){
     const add = Math.min(actual, MAX_CREDITS - STATE.totalCredits);
     STATE.totalCredits = Math.min(MAX_CREDITS, STATE.totalCredits + add);
-    STATE.dailyEarned  = Math.min(MAX_DAILY, STATE.dailyEarned + add);
+    STATE.dailyEarned = Math.min(MAX_DAILY, STATE.dailyEarned + add);
   }
 
-  if (!STATE.firstPlayDate) {
-    STATE.firstPlayDate = new Date().toLocaleString('es-MX', {
-      year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit'
-    });
-    STATE.firstPlayTS = nowTS();
+  if (!STATE.firstPlayDate){
+    STATE.firstPlayDate = new Date().toLocaleString('es-CO', { year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' });
+    STATE.firstPlayTS = Date.now();
     renderFirstPlay();
   }
 
   saveState();
   updateUI();
 
-  if (won === 0) {
+  if (won === 0){
+    result.innerHTML = '<i class="fa-solid fa-box-archive"></i> Sin premio esta vuelta';
     result.className = 'round-result loss';
-    result.textContent = '📦 Sin premio esta vez...';
-    if (!STATE.bonusAvailable) {
-      STATE.bonusAvailable = true;
-      saveState();
-      setTimeout(() => document.getElementById('bonusOverlay').classList.add('show'), 800);
+    playSound('loss');
+    if (!STATE.bonusAvailable){
+      STATE.bonusAvailable = true; saveState();
+      setTimeout(()=>{ document.getElementById('bonusOverlay').classList.add('show'); playSound('bonus'); }, 700);
     }
-  } else if (won <= 25) {
+  } else if (won <= 25){
+    result.innerHTML = `<i class="fa-solid fa-circle-check"></i> Ganaste ${won} créditos`;
     result.className = 'round-result win';
-    result.textContent = `✅ Ganaste ${won} créditos`;
-  } else if (won <= 75) {
+    playSound('win');
+  } else if (won <= 75){
+    result.innerHTML = `<i class="fa-solid fa-medal"></i> +${won} créditos — buena jugada`;
     result.className = 'round-result big';
-    result.textContent = `🏅 +${won} créditos ¡bien jugado!`;
+    playSound('bigwin');
   } else {
+    result.innerHTML = `<i class="fa-solid fa-crown"></i> +${won} créditos — excelente`;
     result.className = 'round-result mega';
-    result.textContent = `🔥 +${won} créditos ¡INCREÍBLE!`;
-    document.getElementById('spinBtn').classList.add('glow');
+    playSound('megawin');
   }
 
-  setTimeout(() => {
+  setTimeout(()=>{
     renderBoard();
     renderAttemptDots();
-    document.getElementById('spinBtn').classList.remove('glow');
     if (STATE.dailyAttempts <= 0 && !bonusActive) startCountdown();
-  }, 2200);
+  }, 2000);
 }
 
-document.getElementById('bonusClose').addEventListener('click', () => {
+document.getElementById('bonusClose').addEventListener('click', ()=>{
   document.getElementById('bonusOverlay').classList.remove('show');
   bonusActive = true;
   updateSpinBtn();
+  playSound('click');
 });
 
-// ── COUNTDOWN ────────────────────────────────────────────────
+/* ═══ COUNTDOWN ═══ */
 let countdownInterval = null;
-
-function getMsUntilMidnight() {
-  const now = new Date();
-  const mid = new Date(now);
-  mid.setHours(24,0,0,0);
-  return mid - now;
-}
-
-function startCountdown() {
+function getMsUntilMidnight(){ const now=new Date(); const mid=new Date(now); mid.setHours(24,0,0,0); return mid-now; }
+function startCountdown(){
   document.getElementById('countdownSection').classList.add('show');
-  document.getElementById('gameSection').style.opacity = '0.3';
+  document.getElementById('gameSection').style.opacity = '.3';
   document.getElementById('gameSection').style.pointerEvents = 'none';
   document.getElementById('spinBtn').disabled = true;
-
+  playSound('lock');
   if (countdownInterval) clearInterval(countdownInterval);
-
-  function tick() {
+  function tick(){
     const ms = getMsUntilMidnight();
-    if (ms <= 0) {
-      clearInterval(countdownInterval);
-      checkDailyReset();
-      unlockGame();
-      return;
-    }
-    const h = String(Math.floor(ms/3600000)).padStart(2,'0');
-    const m = String(Math.floor((ms%3600000)/60000)).padStart(2,'0');
-    const s = String(Math.floor((ms%60000)/1000)).padStart(2,'0');
-    document.getElementById('countdownDisplay').innerHTML =
-      `${h}<span>:</span>${m}<span>:</span>${s}`;
+    if (ms <= 0){ clearInterval(countdownInterval); checkDailyReset(); unlockGame(); return; }
+    const h=String(Math.floor(ms/3600000)).padStart(2,'0');
+    const m=String(Math.floor((ms%3600000)/60000)).padStart(2,'0');
+    const s=String(Math.floor((ms%60000)/1000)).padStart(2,'0');
+    document.getElementById('countdownDisplay').innerHTML = `${h}<span>:</span>${m}<span>:</span>${s}`;
   }
-  tick();
-  countdownInterval = setInterval(tick, 1000);
+  tick(); countdownInterval = setInterval(tick,1000);
 }
-
-function unlockGame() {
+function unlockGame(){
   document.getElementById('countdownSection').classList.remove('show');
   document.getElementById('gameSection').style.opacity = '';
   document.getElementById('gameSection').style.pointerEvents = '';
-  renderBoard();
-  renderAttemptDots();
-  updateUI();
+  renderBoard(); renderAttemptDots(); updateUI();
 }
 
-// ── WITHDRAW ─────────────────────────────────────────────────
+/* ═══ WITHDRAW ═══ */
 let selectedWithdrawAmount = null;
-
-function renderWithdrawAmounts() {
+function renderWithdrawAmounts(){
   const container = document.getElementById('withdrawAmounts');
   container.innerHTML = '';
-  WITHDRAW_TARGETS.forEach(target => {
+  WITHDRAW_TARGETS.forEach(target=>{
     const btn = document.createElement('button');
     btn.className = 'amt-btn';
     const enough = STATE.totalCredits >= target.credits;
     if (!enough) btn.classList.add('locked');
     btn.innerHTML = `$${target.usd.toFixed(2)}<span class="req">${target.credits.toLocaleString()}cr</span>`;
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', ()=>{
       if (!enough) return;
       selectedWithdrawAmount = target;
-      document.querySelectorAll('.amt-btn').forEach(b => b.classList.remove('selected'));
+      document.querySelectorAll('.amt-btn').forEach(b=>b.classList.remove('selected'));
       btn.classList.add('selected');
+      playSound('click');
       validateWithdraw();
     });
     container.appendChild(btn);
   });
 }
-
-function validateWithdraw() {
+function validateWithdraw(){
   const method = document.getElementById('withdrawMethod').value;
   const btn = document.getElementById('withdrawBtn');
-  if (!selectedWithdrawAmount || !method) { btn.disabled = true; return; }
-  if (method === 'FreeFire' && selectedWithdrawAmount.usd < 1) { btn.disabled = true; return; }
+  if (!selectedWithdrawAmount || !method){ btn.disabled = true; return; }
   btn.disabled = false;
 }
-
 document.getElementById('withdrawMethod').addEventListener('change', validateWithdraw);
-
-document.getElementById('withdrawBtn').addEventListener('click', () => {
+document.getElementById('withdrawBtn').addEventListener('click', ()=>{
   if (!selectedWithdrawAmount) return;
   const method = document.getElementById('withdrawMethod').value;
   if (!method) return;
 
-  const code    = generateCode();
-  const now     = new Date();
-  const dateStr = now.toLocaleString('es-MX', {
-    year:'numeric', month:'long', day:'numeric',
-    hour:'2-digit', minute:'2-digit', second:'2-digit'
-  });
+  const code = generateCode();
+  const now = new Date();
+  const dateStr = now.toLocaleString('es-CO', { year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit', second:'2-digit' });
 
   document.getElementById('popupCode').textContent = code;
-  document.getElementById('popupSubtitle').textContent =
-    `$${selectedWithdrawAmount.usd.toFixed(2)} USD vía ${method}`;
+  document.getElementById('popupSubtitle').textContent = `$${selectedWithdrawAmount.usd.toFixed(2)} USD vía ${method}`;
   document.getElementById('popupDetail').innerHTML =
-    `<strong>Monto:</strong> $${selectedWithdrawAmount.usd.toFixed(2)} USD &nbsp;·&nbsp;
-     <strong>Método:</strong> ${method}<br/>
-     <strong>Créditos:</strong> ${selectedWithdrawAmount.credits.toLocaleString()}
-     &nbsp;·&nbsp; <strong>Fecha:</strong> ${dateStr}`;
+    `<strong>Monto:</strong> $${selectedWithdrawAmount.usd.toFixed(2)} USD &nbsp;·&nbsp; <strong>Método:</strong> ${method}<br/>
+     <strong>Créditos:</strong> ${selectedWithdrawAmount.credits.toLocaleString()} &nbsp;·&nbsp; <strong>Fecha:</strong> ${dateStr}`;
 
   const msg = encodeURIComponent(
-    `Hola buen día, quiero solicitar un retiro.\n\n` +
-    `💰 *Monto:* $${selectedWithdrawAmount.usd.toFixed(2)} USD\n` +
-    `💳 *Método de pago:* ${method}\n` +
-    `🔑 *Código de retiro:* ${code}\n` +
-    `📅 *Fecha de solicitud:* ${dateStr}\n` +
-    `🎮 *Primer juego registrado:* ${STATE.firstPlayDate || 'N/A'}\n\n` +
+    `Hola buen día, quiero solicitar un retiro.\n\n`+
+    `Monto: $${selectedWithdrawAmount.usd.toFixed(2)} USD\n`+
+    `Método de pago: ${method}\n`+
+    `Código de retiro: ${code}\n`+
+    `Fecha de solicitud: ${dateStr}\n`+
+    `Primer juego registrado: ${STATE.firstPlayDate || 'N/A'}\n\n`+
     `Adjunto captura de pantalla del código generado.`
   );
   document.getElementById('popupWhatsApp').href = `https://wa.me/${WHATSAPP_NUM}?text=${msg}`;
 
-  STATE.history.unshift({ amount:`$${selectedWithdrawAmount.usd.toFixed(2)}`, credits:selectedWithdrawAmount.credits, method, code, date:dateStr });
+  STATE.history.unshift({ amount:`$${selectedWithdrawAmount.usd.toFixed(2)}`, credits:selectedWithdrawAmount.credits, method, code, date:dateStr, status:'pending' });
   STATE.totalCredits = Math.max(0, STATE.totalCredits - selectedWithdrawAmount.credits);
 
   selectedWithdrawAmount = null;
-  document.querySelectorAll('.amt-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.amt-btn').forEach(b=>b.classList.remove('selected'));
   document.getElementById('withdrawMethod').value = '';
   document.getElementById('withdrawBtn').disabled = true;
 
-  saveState();
-  updateUI();
+  saveState(); updateUI(); playSound('withdraw');
   document.getElementById('withdrawOverlay').classList.add('show');
 });
-
-document.getElementById('popupWhatsApp').addEventListener('click', () => {
-  setTimeout(() => {
-    document.getElementById('withdrawOverlay').classList.remove('show');
-    renderHistory();
-  }, 500);
+document.getElementById('popupWhatsApp').addEventListener('click', ()=>{
+  setTimeout(()=>{ document.getElementById('withdrawOverlay').classList.remove('show'); renderHistory(); }, 500);
 });
-document.getElementById('popupClose').addEventListener('click', () => {
+document.getElementById('popupClose').addEventListener('click', ()=>{
   document.getElementById('withdrawOverlay').classList.remove('show');
 });
 
-// ── UI RENDERS ───────────────────────────────────────────────
-function renderAttemptDots() {
-  const c = document.getElementById('attemptDots');
-  c.innerHTML = '';
-  for (let i=0;i<DAILY_ATTEMPTS;i++) {
+/* ═══ RENDER ═══ */
+function renderAttemptDots(){
+  const c = document.getElementById('attemptDots'); c.innerHTML = '';
+  for (let i=0;i<DAILY_ATTEMPTS;i++){
     const d = document.createElement('div');
     d.className = 'dot' + (i >= STATE.dailyAttempts ? ' used' : '');
     c.appendChild(d);
   }
-  if (bonusActive) {
-    const b = document.createElement('div');
-    b.className = 'dot bonus';
-    b.title = 'Intento extra';
-    c.appendChild(b);
-  }
+  if (bonusActive){ const b=document.createElement('div'); b.className='dot bonus'; b.title='Intento extra'; c.appendChild(b); }
 }
-
-function renderProgressBars() {
-  const c = document.getElementById('progressBars');
-  c.innerHTML = '';
-  WITHDRAW_TARGETS.forEach(target => {
-    const pct = Math.min(100, (STATE.totalCredits / target.credits) * 100);
+function renderProgressBars(){
+  const c = document.getElementById('progressBars'); c.innerHTML = '';
+  WITHDRAW_TARGETS.forEach(target=>{
+    const pct = Math.min(100, (STATE.totalCredits/target.credits)*100);
     const row = document.createElement('div');
     row.className = 'progress-row';
-    row.innerHTML = `
-      <span class="progress-lbl">$${target.usd.toFixed(2)}</span>
-      <div class="progress-track">
-        <div class="progress-fill${pct>=100?' complete':''}" style="width:${pct}%"></div>
-      </div>
+    row.innerHTML = `<span class="progress-lbl">$${target.usd.toFixed(2)}</span>
+      <div class="progress-track"><div class="progress-fill${pct>=100?' complete':''}" style="width:${pct}%"></div></div>
       <span class="progress-pct">${Math.floor(pct)}%</span>`;
     c.appendChild(row);
   });
 }
-
-function renderWalletGrid() {
-  const usd  = STATE.totalCredits / CREDITS_PER_CENT / 100;
-  const grid = document.getElementById('walletGrid');
-  grid.innerHTML = '';
+function renderWalletGrid(){
+  const usd = STATE.totalCredits/CREDITS_PER_CENT/100;
+  const grid = document.getElementById('walletGrid'); grid.innerHTML = '';
   [
-    { label:'Créditos totales', val:STATE.totalCredits.toLocaleString(), cls:'gold' },
-    { label:'Equivalente USD',  val:`$${usd.toFixed(4)}`, cls:'green' },
-    { label:'Ganados hoy',      val:STATE.dailyEarned.toLocaleString()+' cr', cls:'' },
-    { label:'Límite diario',    val:`${MAX_DAILY.toLocaleString()} cr`, cls:'' },
-  ].forEach(s => {
+    { label:'Créditos totales', val:STATE.totalCredits.toLocaleString(), cls:'brass' },
+    { label:'Equivalente USD', val:`$${usd.toFixed(4)}`, cls:'green' },
+    { label:'Ganados hoy', val:STATE.dailyEarned.toLocaleString()+' cr', cls:'' },
+    { label:'Límite diario', val:`${MAX_DAILY.toLocaleString()} cr`, cls:'' },
+  ].forEach(s=>{
     const el = document.createElement('div');
     el.className = 'stat-box';
     el.innerHTML = `<div class="stat-lbl">${s.label}</div><div class="stat-val ${s.cls}">${s.val}</div>`;
     grid.appendChild(el);
   });
 }
-
-function renderFirstPlay() {
+function renderFirstPlay(){
   const badge = document.getElementById('firstPlayBadge');
-  if (STATE.firstPlayDate) {
-    badge.classList.add('show');
-    document.getElementById('firstPlayDate').textContent = STATE.firstPlayDate;
-  }
+  if (STATE.firstPlayDate){ badge.classList.add('show'); document.getElementById('firstPlayDate').textContent = STATE.firstPlayDate; }
 }
-
-function renderHistory() {
+function renderHistory(){
   const c = document.getElementById('historyContainer');
-  if (!STATE.history || STATE.history.length === 0) {
-    c.innerHTML = '<div class="history-empty">Sin retiros registrados</div>';
-    return;
-  }
-  const list = document.createElement('div');
-  list.className = 'history-list';
-  STATE.history.slice(0, 20).forEach(item => {
-    const el = document.createElement('div');
-    el.className = 'h-item';
+  if (!STATE.history || STATE.history.length === 0){ c.innerHTML = '<div class="history-empty">Sin retiros registrados</div>'; return; }
+  const list = document.createElement('div'); list.className = 'history-list';
+  STATE.history.slice(0,20).forEach(item=>{
+    const el = document.createElement('div'); el.className = 'h-item';
     el.innerHTML = `
       <div class="h-icon"><i class="fa-solid fa-coins"></i></div>
-      <div class="h-info">
-        <div class="h-amount">${item.amount} — ${item.method}</div>
-        <div class="h-code">${item.code}</div>
-      </div>
+      <div class="h-info"><div class="h-amount">${item.amount} — ${item.method}</div><div class="h-code">${item.code}</div></div>
+      <span class="h-status pending">enviado</span>
       <div class="h-date">${item.date}</div>`;
     list.appendChild(el);
   });
-  c.innerHTML = '';
-  c.appendChild(list);
+  c.innerHTML = ''; c.appendChild(list);
 }
-
-function updateCreditsDisplay() {
-  const usd = STATE.totalCredits / CREDITS_PER_CENT / 100;
+function updateCreditsDisplay(){
   document.getElementById('totalCredits').textContent = STATE.totalCredits.toLocaleString();
-  document.getElementById('totalUSD').textContent = `$${usd.toFixed(4)} USD`;
+  document.getElementById('totalUSD').textContent = `$${(STATE.totalCredits/CREDITS_PER_CENT/100).toFixed(4)} USD`;
   document.getElementById('dailyEarned').textContent = STATE.dailyEarned.toLocaleString() + ' créditos';
 }
-
-function updateUI() {
-  updateCreditsDisplay();
-  renderProgressBars();
-  renderAttemptDots();
-  renderWalletGrid();
-  renderWithdrawAmounts();
-  renderFirstPlay();
-  renderHistory();
+function updateUI(){
+  updateCreditsDisplay(); renderProgressBars(); renderAttemptDots();
+  renderWalletGrid(); renderWithdrawAmounts(); renderFirstPlay(); renderHistory();
+  updateMuteBtn(); updateSponsorBtn();
 }
 
-// ── SPIN BTN ─────────────────────────────────────────────────
-document.getElementById('spinBtn').addEventListener('click', () => {
+document.getElementById('spinBtn').addEventListener('click', ()=>{
   if (selectedBoxes.length === 3 && !revealed && !inRound) revealBoxes();
 });
 
-// ── INIT ─────────────────────────────────────────────────────
-function init() {
-  loadState();
+/* ═══ INIT ═══ */
+async function init(){
+  await loadState();
   checkDailyReset();
   updateUI();
   renderBoard();
   if (STATE.dailyAttempts <= 0 && !bonusActive) startCountdown();
 }
-
 init();
 </script>
 </body>
