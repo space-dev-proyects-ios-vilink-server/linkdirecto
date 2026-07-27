@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Lowcost — Recargas Free Fire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0E15;
+    --surface:rgba(18,26,40,0.62);
+    --surface-solid:#121A28;
+    --border:rgba(148,163,184,0.14);
+    --text:#EAEFF6;
+    --muted:#8695AB;
+    --muted-2:#5E6C82;
+    --primary:#2F6FED;
+    --primary-2:#5A8CFF;
+    --accent:#17B7A6;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  html,body{touch-action:manipulation;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+    font-size:15px;
+    line-height:1.5;
+  }
+  .bg{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(ellipse 60% 45% at 12% 8%, rgba(47,111,237,0.14) 0%, transparent 60%),
+      radial-gradient(ellipse 45% 35% at 90% 85%, rgba(23,183,166,0.08) 0%, transparent 55%),
+      var(--bg);
+  }
+  .bg::after{
+    content:'';position:absolute;inset:0;
+    background-image:linear-gradient(rgba(148,163,184,0.035) 1px, transparent 1px),linear-gradient(90deg, rgba(148,163,184,0.035) 1px, transparent 1px);
+    background-size:42px 42px;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black 0%, transparent 70%);
+  }
+
+  /* ---------- MODAL ---------- */
+  .modal-overlay{
+    position:fixed;inset:0;z-index:50;
+    background:rgba(6,9,15,0.88);
+    backdrop-filter:blur(6px);
+    display:flex;align-items:center;justify-content:center;
+    padding:20px;
+  }
+  .modal-card{
+    width:100%;max-width:420px;
+    background:var(--surface-solid);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:30px 26px 26px;
+    text-align:center;
+  }
+  .modal-icon{
+    width:44px;height:44px;margin:0 auto 16px;
+    border-radius:10px;
+    background:rgba(47,111,237,0.12);
+    border:1px solid rgba(47,111,237,0.3);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--primary-2);
+  }
+  .modal-card h2{
+    font-family:'Outfit',sans-serif;font-weight:700;font-size:1.15rem;
+    letter-spacing:-0.01em;margin-bottom:6px;
+  }
+  .modal-card p{font-size:0.82rem;color:var(--muted);margin-bottom:22px;line-height:1.6;}
+  .modal-options{display:flex;flex-direction:column;gap:9px;}
+  .modal-btn{
+    display:flex;align-items:center;justify-content:space-between;
+    width:100%;font-family:'Inter',sans-serif;font-size:0.9rem;font-weight:500;
+    background:rgba(255,255,255,0.03);border:1px solid var(--border);color:var(--text);
+    cursor:pointer;padding:13px 16px;border-radius:10px;
+    transition:border-color 0.18s, background 0.18s;
+  }
+  .modal-btn:hover{border-color:var(--primary);background:rgba(47,111,237,0.08);}
+  .modal-btn svg{opacity:0.5;flex-shrink:0;}
+
+  /* ---------- LAYOUT ---------- */
+  .shell{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:0 18px 34px;}
+  nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 0 16px;border-bottom:1px solid var(--border);margin-bottom:22px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand-mark{
+    font-family:'Outfit',sans-serif;font-weight:800;font-size:1.28rem;letter-spacing:-0.03em;
+  }
+  .brand-mark span{color:var(--primary-2);}
+  .game-chip{
+    display:flex;align-items:center;gap:6px;
+    font-size:0.68rem;color:var(--muted);
+    background:rgba(255,255,255,0.03);border:1px solid var(--border);
+    padding:4px 10px 4px 5px;border-radius:20px;
+  }
+  .game-chip img{width:18px;height:18px;border-radius:5px;display:block;}
+  .nav-right{display:flex;align-items:center;gap:14px;}
+  .change-country{
+    background:none;border:none;color:var(--muted);font-size:0.72rem;
+    font-family:'Inter',sans-serif;cursor:pointer;text-decoration:underline;
+    text-underline-offset:2px;
+  }
+  .change-country:hover{color:var(--text);}
+
+  .hero{margin-bottom:20px;}
+  .hero-tag{
+    display:inline-block;font-size:0.66rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
+    color:var(--primary-2);background:rgba(47,111,237,0.09);border:1px solid rgba(47,111,237,0.22);
+    padding:4px 12px;border-radius:20px;margin-bottom:12px;
+  }
+  h1{
+    font-family:'Outfit',sans-serif;font-size:clamp(1.55rem, 4.4vw, 2.15rem);
+    font-weight:700;line-height:1.12;letter-spacing:-0.03em;margin-bottom:8px;
+  }
+  h1 em{font-style:normal;color:var(--primary-2);}
+  .hero-sub{font-size:0.85rem;color:var(--muted);max-width:480px;}
+
+  /* ---------- DISCOUNT BANNER ---------- */
+  .promo{
+    background:rgba(23,183,166,0.05);border:1px solid rgba(23,183,166,0.22);
+    border-radius:13px;padding:15px 18px;margin-bottom:20px;
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  }
+  .promo-icon{
+    width:32px;height:32px;flex-shrink:0;border-radius:8px;
+    background:rgba(23,183,166,0.13);display:flex;align-items:center;justify-content:center;color:#3FD8C4;
+  }
+  .promo-text{flex:1;min-width:200px;}
+  .promo-text h4{font-family:'Outfit',sans-serif;font-size:0.84rem;font-weight:600;margin-bottom:3px;}
+  .promo-text p{font-size:0.72rem;color:var(--muted);line-height:1.5;}
+  .promo-btn{
+    font-family:'Inter',sans-serif;font-size:0.76rem;font-weight:600;
+    background:rgba(23,183,166,0.14);border:1px solid rgba(23,183,166,0.4);color:#3FD8C4;
+    cursor:pointer;padding:8px 16px;border-radius:8px;white-space:nowrap;transition:background 0.18s;
+  }
+  .promo-btn:hover{background:rgba(23,183,166,0.22);}
+  .promo-btn.active{background:#17B7A6;color:#06120F;border-color:#17B7A6;}
+
+  /* ---------- PACKAGES ---------- */
+  .section-label{
+    font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;
+    color:var(--muted-2);margin-bottom:9px;display:flex;align-items:center;gap:6px;
+  }
+  .packages{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:8px;}
+  @media(max-width:640px){.packages{grid-template-columns:repeat(2,1fr);}}
+
+  .pkg{
+    position:relative;background:var(--surface);border:1px solid var(--border);
+    border-radius:13px;padding:14px 12px 12px;cursor:pointer;
+    backdrop-filter:blur(10px);transition:border-color 0.18s, transform 0.18s;
+  }
+  .pkg:hover{border-color:rgba(47,111,237,0.4);}
+  .pkg.selected{border-color:var(--primary);background:rgba(47,111,237,0.07);}
+  .pkg-top{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .pkg-top img{width:26px;height:26px;flex-shrink:0;}
+  .pkg-qty{font-family:'JetBrains Mono',monospace;font-size:1.02rem;font-weight:700;line-height:1;}
+  .pkg-qty-label{font-size:0.6rem;color:var(--muted-2);text-transform:uppercase;letter-spacing:0.05em;}
+  .pkg-df{font-size:0.68rem;color:var(--muted-2);text-decoration:line-through;margin-bottom:1px;}
+  .pkg-price{font-family:'JetBrains Mono',monospace;font-size:1.05rem;font-weight:700;line-height:1.25;}
+  .pkg-price.discounted{color:#3FD8C4;}
+  .pkg-save{
+    display:inline-block;margin-top:6px;font-size:0.63rem;font-weight:600;
+    background:rgba(23,183,166,0.1);border:1px solid rgba(23,183,166,0.25);color:#3FD8C4;
+    padding:2px 7px;border-radius:5px;
+  }
+  .pkg-discount-tag{
+    position:absolute;top:9px;right:9px;font-size:0.58rem;font-weight:700;
+    background:rgba(47,111,237,0.16);border:1px solid rgba(47,111,237,0.4);color:var(--primary-2);
+    padding:2px 6px;border-radius:5px;letter-spacing:0.03em;
+  }
+  .pkg-note{font-size:0.68rem;color:var(--muted-2);margin-bottom:18px;}
+
+  /* ---------- PAYMENT METHODS ---------- */
+  .methods-grid{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:6px;}
+  .method-chip{
+    font-size:0.78rem;font-weight:500;background:rgba(255,255,255,0.03);
+    border:1px solid var(--border);color:var(--muted);cursor:pointer;
+    padding:7px 13px;border-radius:8px;transition:all 0.16s;user-select:none;
+  }
+  .method-chip:hover{border-color:var(--primary);color:var(--text);}
+  .method-chip.active{background:rgba(47,111,237,0.16);border-color:var(--primary);color:var(--text);}
+  .rate-note{font-size:0.68rem;color:var(--muted-2);margin-bottom:18px;line-height:1.5;}
+
+  /* ---------- ORDER ---------- */
+  .order-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:15px;
+    padding:20px 20px 18px;backdrop-filter:blur(12px);margin-bottom:16px;
+  }
+  .order-title{font-family:'Outfit',sans-serif;font-size:0.95rem;font-weight:700;margin-bottom:14px;}
+  .form-row{display:grid;grid-template-columns:1.4fr 1fr;gap:10px;margin-bottom:12px;}
+  @media(max-width:480px){.form-row{grid-template-columns:1fr;}}
+  .form-group{display:flex;flex-direction:column;gap:5px;}
+  label{font-size:0.66rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted-2);}
+  input,select{
+    font-family:'Inter',sans-serif;font-size:0.85rem;background:rgba(6,10,17,0.6);
+    border:1px solid var(--border);color:var(--text);padding:10px 12px;border-radius:8px;
+    outline:none;transition:border-color 0.18s;appearance:none;-webkit-appearance:none;
+  }
+  input:focus,select:focus{border-color:var(--primary);}
+  input::placeholder{color:var(--muted-2);}
+  select option{background:var(--surface-solid);}
+
+  .discount-toggle{
+    display:flex;align-items:center;gap:9px;margin:2px 0 14px;
+    font-size:0.76rem;color:var(--muted);cursor:pointer;user-select:none;
+  }
+  .discount-toggle input{width:16px;height:16px;accent-color:#17B7A6;cursor:pointer;}
+  .discount-toggle.disabled{opacity:0.4;cursor:not-allowed;}
+
+  .summary-line{
+    display:flex;justify-content:space-between;align-items:baseline;
+    font-size:0.8rem;color:var(--muted);padding:10px 0;border-top:1px solid var(--border);margin-bottom:14px;
+  }
+  .summary-line strong{font-family:'JetBrains Mono',monospace;color:var(--text);font-size:0.95rem;}
+
+  .cta-btn{
+    width:100%;font-family:'Outfit',sans-serif;font-size:0.9rem;font-weight:700;letter-spacing:0.01em;
+    background:linear-gradient(135deg, var(--primary) 0%, #1E4FBF 100%);
+    color:#fff;border:none;cursor:pointer;padding:13px 20px;border-radius:10px;
+    transition:opacity 0.18s, transform 0.18s;
+  }
+  .cta-btn:hover{opacity:0.92;transform:translateY(-1px);}
+  .cta-note{text-align:center;font-size:0.66rem;color:var(--muted-2);margin-top:9px;}
+
+  /* ---------- TRUST STRIP ---------- */
+  .trust-strip{
+    display:flex;gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;
+    margin-bottom:16px;background:var(--surface);
+  }
+  .trust-item{
+    flex:1;display:flex;align-items:center;gap:8px;padding:12px 13px;
+    border-right:1px solid var(--border);
+  }
+  .trust-item:last-child{border-right:none;}
+  @media(max-width:640px){.trust-strip{flex-direction:column;}.trust-item{border-right:none;border-bottom:1px solid var(--border);}.trust-item:last-child{border-bottom:none;}}
+  .trust-item svg{flex-shrink:0;color:var(--primary-2);}
+  .trust-item span{font-size:0.72rem;color:var(--muted);line-height:1.35;}
+  .trust-item strong{display:block;color:var(--text);font-size:0.76rem;font-weight:600;margin-bottom:1px;}
+
+  /* ---------- WHATSAPP GROUP ---------- */
+  .group-card{
+    display:flex;align-items:center;gap:13px;background:var(--surface);
+    border:1px solid var(--border);border-radius:13px;padding:15px 16px;margin-bottom:18px;
+  }
+  .group-icon{
+    width:38px;height:38px;flex-shrink:0;border-radius:9px;background:rgba(23,183,166,0.12);
+    display:flex;align-items:center;justify-content:center;color:#3FD8C4;
+  }
+  .group-text{flex:1;min-width:0;}
+  .group-text h4{font-family:'Outfit',sans-serif;font-size:0.83rem;font-weight:600;margin-bottom:2px;}
+  .group-text p{font-size:0.68rem;color:var(--muted-2);line-height:1.4;}
+  .group-btn{
+    font-family:'Inter',sans-serif;font-size:0.76rem;font-weight:600;white-space:nowrap;
+    background:none;border:1px solid var(--border);color:var(--text);cursor:pointer;
+    padding:9px 15px;border-radius:8px;transition:border-color 0.18s;
+  }
+  .group-btn:hover{border-color:var(--primary);}
+
+  footer{text-align:center;font-size:0.66rem;color:var(--muted-2);line-height:1.6;padding-top:6px;}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+  nav,.hero,.promo,.packages,.order-card,.trust-strip,.group-card{animation:fadeUp 0.35s ease both;}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+
+<!-- COUNTRY MODAL -->
+<div class="modal-overlay" id="countryModal">
+  <div class="modal-card">
+    <div class="modal-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 4 6 4 9s-1.5 6.3-4 9c-2.5-2.7-4-6-4-9s1.5-6.3 4-9z"/></svg>
+    </div>
+    <h2>¿Desde dónde nos visitas?</h2>
+    <p>Los precios y métodos de pago se muestran según tu país.</p>
+    <div class="modal-options">
+      <button class="modal-btn" onclick="chooseCountry('MX')">México <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button>
+      <button class="modal-btn" onclick="chooseCountry('CO')">Colombia <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button>
+      <button class="modal-btn" onclick="chooseCountry('OT')">Otro país <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button>
+    </div>
+  </div>
+</div>
+
+<div class="shell">
+
+  <nav>
+    <div class="brand">
+      <div class="brand-mark">Low<span>cost</span></div>
+      <div class="game-chip"><img src="https://cdn-gop.garenanow.com/gop/app/0000/100/067/icon.png" alt="Free Fire">Free Fire</div>
+    </div>
+    <div class="nav-right">
+      <button class="change-country" onclick="openModal()">Cambiar país</button>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-tag" id="countryTag">Precios para Colombia</div>
+    <h1>Diamantes al <em>precio mas bajo</em></h1>
+    <p class="hero-sub">Recargas rapidas y seguras para Free Fire. Garantia de por vida sobre cada recarga.</p>
+  </div>
+
+  <div class="promo">
+    <div class="promo-icon">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.59 13.41L12 22l-9-9V3h10l7.59 7.59a2 2 0 010 2.82z"/><circle cx="7.5" cy="7.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+    </div>
+    <div class="promo-text">
+      <h4>¿Nunca has recargado 2,398 o 6,160 diamantes?</h4>
+      <p>Obtén un 15% de descuento extra en tu primer pedido de ese monto. Si ya recargaste esa cantidad antes, se cobra el precio normal.</p>
+    </div>
+    <button class="promo-btn" id="promoBtn" onclick="toggleDiscount()">Aplicar 15% de descuento</button>
+  </div>
+
+  <div class="section-label">Paquetes disponibles</div>
+  <div class="packages" id="packagesGrid"></div>
+  <div class="pkg-note" id="pkgNote"></div>
+
+  <div class="section-label">Metodo de pago</div>
+  <div class="methods-grid" id="methodsGrid"></div>
+  <div class="rate-note" id="rateNote"></div>
+
+  <div class="order-card">
+    <div class="order-title">Realizar pedido</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>ID de jugador Free Fire</label>
+        <input type="text" id="playerID" placeholder="Ej. 123456789" inputmode="numeric">
+      </div>
+      <div class="form-group">
+        <label>Paquete</label>
+        <select id="pkgSelect" onchange="syncPkgSelect()"></select>
+      </div>
+    </div>
+    <label class="discount-toggle" id="discountToggleWrap">
+      <input type="checkbox" id="discountCheck" onchange="syncDiscountFromCheck()">
+      Aplicar 15% de descuento de primera recarga (solo 2,398 y 6,160 diamantes)
+    </label>
+    <div class="summary-line" id="summaryLine"></div>
+    <button class="cta-btn" onclick="submitOrder()">Enviar pedido por WhatsApp</button>
+    <div class="cta-note">Seras redirigido a WhatsApp con tu pedido precargado.</div>
+  </div>
+
+  <div class="trust-strip">
+    <div class="trust-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5z"/></svg>
+      <span><strong>Garantia de por vida</strong>Tus diamantes quedan seguros en tu cuenta.</span>
+    </div>
+    <div class="trust-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>
+      <span><strong>Sin problemas de reembolso</strong>Proceso limpio, tu cuenta nunca queda marcada.</span>
+    </div>
+    <div class="trust-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 4 6 4 9s-1.5 6.3-4 9c-2.5-2.7-4-6-4-9s1.5-6.3 4-9z"/></svg>
+      <span><strong>Cobertura multinacional</strong>Mexico, Colombia y mas paises con soporte local.</span>
+    </div>
+  </div>
+
+  <div class="group-card">
+    <div class="group-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.6 15.1L2 22l5-1.35A10 10 0 1012 2zm5.6 14.2c-.24.66-1.4 1.27-1.94 1.35-.5.08-1.12.11-1.8-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.8-4.16-4.94-4.36-.14-.2-1.18-1.57-1.18-3s.75-2.13 1.02-2.42c.26-.29.58-.36.77-.36h.56c.18 0 .42-.07.66.5.24.58.8 2 .87 2.15.07.15.11.32.02.51-.09.2-.14.32-.27.49-.14.17-.29.38-.41.51-.14.15-.28.3-.12.6.16.29.71 1.18 1.53 1.91 1.05.94 1.94 1.23 2.23 1.37.29.14.46.12.63-.07.18-.2.75-.87.95-1.17.2-.29.4-.24.66-.15.27.1 1.7.8 2 .95.29.14.48.21.55.33.07.13.07.72-.17 1.38z"/></svg>
+    </div>
+    <div class="group-text">
+      <h4>Grupo de WhatsApp para clientes</h4>
+      <p>Abierto solo para Colombia, Mexico, Estados Unidos, Argentina, Peru y Brasil.</p>
+    </div>
+    <button class="group-btn" onclick="window.open('https://chat.whatsapp.com/KVf6gQuJdbMIRHMte4kXSr?mode=gi_t','_blank')">Unirme</button>
+  </div>
+
+  <footer>
+    Lowcost es un servicio independiente de recarga, no afiliado oficialmente a Garena.<br>
+    Free Fire y sus marcas son propiedad de sus respectivos titulares.
+  </footer>
+
+</div>
+
+<script>
+const DIAMOND_ICON = 'https://cdn-gop.garenanow.com/gop/app/0000/100/067/point.png';
+const WA_NUMBER = '573132878955';
+
+const PACKAGES = [
+  { id:110,  mxn:22,   mxnDF:25,   cop:4000,   copDF:5900,   otro:false },
+  { id:341,  mxn:69,   mxnDF:75,   cop:11500,  copDF:17900,  otro:false },
+  { id:572,  mxn:109,  mxnDF:129,  cop:18900,  copDF:29900,  otro:false },
+  { id:1266, mxn:209,  mxnDF:249,  cop:37900,  copDF:59900,  otro:false },
+  { id:2398, mxn:429,  mxnDF:499,  cop:75900,  copDF:114900, otro:true  },
+  { id:6160, mxn:1059, mxnDF:1299, cop:178900, copDF:299900, otro:true  }
+];
+const USD_RATE = 3650; // referencia COP->USD para paquetes "Otro país"
+const DISCOUNT_IDS = [2398, 6160];
+
+const COUNTRY_CONFIG = {
+  MX: { label:'México',     currency:'mxn', suffix:' MXN',
+        methods:['Transferencia CLABE'],
+        rateNote:'Transferencia bancaria desde cualquier banco mexicano que acepte CLABE.' },
+  CO: { label:'Colombia',   currency:'cop', suffix:' COP',
+        methods:['Llave / Bre-B','Nequi'],
+        rateNote:null },
+  OT: { label:'Otro país',  currency:'usd', suffix:' USD aprox.',
+        methods:['Skrill','Binance','AstroPay','Western Union','MoneyGram','Ria Money Transfer','Remitly','Xoom'],
+        rateNote:'Monto de referencia en USD. El valor final depende de la tasa de tu remesadora o exchange y se confirma por WhatsApp.' }
+};
+
+let country = null, currentPkg = null, currentMethod = null, discountOn = false;
+
+function roundStep(value, currency){
+  if(currency==='cop') return Math.round(value/100)*100;
+  return Math.round(value);
+}
+
+function priceFor(pkg, currency){
+  if(currency==='mxn') return { our: pkg.mxn, df: pkg.mxnDF };
+  if(currency==='cop') return { our: pkg.cop, df: pkg.copDF };
+  return { our: Math.round(pkg.cop/USD_RATE), df: Math.round(pkg.copDF/USD_RATE) };
+}
+
+function formatPrice(n, suffix){
+  return '$' + n.toLocaleString('es-CO') + suffix;
+}
+
+function openModal(){ document.getElementById('countryModal').style.display = 'flex'; }
+function closeModal(){ document.getElementById('countryModal').style.display = 'none'; }
+
+function chooseCountry(c){
+  country = c;
+  localStorage.setItem('lowcost_country', c);
+  closeModal();
+  render();
+}
+
+function render(){
+  const cfg = COUNTRY_CONFIG[country];
+  document.getElementById('countryTag').textContent = 'Precios para ' + cfg.label;
+  renderPackages();
+  renderMethods();
+  renderPkgSelect();
+  document.getElementById('pkgNote').textContent = 'Precio tachado = valor oficial de referencia dentro de la tienda de Free Fire.';
+  document.getElementById('rateNote').textContent = cfg.rateNote || '';
+  updateSummary();
+}
+
+function renderPackages(){
+  const cfg = COUNTRY_CONFIG[country];
+  const list = country === 'OT' ? PACKAGES.filter(p => p.otro) : PACKAGES;
+  const grid = document.getElementById('packagesGrid');
+  grid.innerHTML = list.map(pkg => {
+    const price = priceFor(pkg, cfg.currency);
+    const pct = Math.round((price.df - price.our) / price.df * 100);
+    const eligible = DISCOUNT_IDS.includes(pkg.id);
+    const showDiscount = eligible && discountOn;
+    const finalOur = showDiscount ? roundStep(price.our * 0.85, cfg.currency) : price.our;
+    return `
+      <div class="pkg ${currentPkg===pkg.id?'selected':''}" id="pkg${pkg.id}" onclick="selectPkg(${pkg.id})">
+        ${eligible ? '<div class="pkg-discount-tag">-15% disp.</div>' : ''}
+        <div class="pkg-top">
+          <img src="${DIAMOND_ICON}" alt="Diamantes">
+          <div>
+            <div class="pkg-qty">${pkg.id.toLocaleString('es-CO')}</div>
+            <div class="pkg-qty-label">Diamantes</div>
+          </div>
+        </div>
+        <div class="pkg-df">${formatPrice(price.df, cfg.suffix)}</div>
+        <div class="pkg-price ${showDiscount?'discounted':''}">${formatPrice(finalOur, cfg.suffix)}</div>
+        <div class="pkg-save">Ahorras ${pct}%${showDiscount?' + 15%':''}</div>
+      </div>`;
+  }).join('');
+}
+
+function renderMethods(){
+  const cfg = COUNTRY_CONFIG[country];
+  document.getElementById('methodsGrid').innerHTML = cfg.methods.map(m =>
+    `<div class="method-chip" onclick="selectMethod(this,'${m}')">${m}</div>`
+  ).join('');
+  currentMethod = null;
+}
+
+function renderPkgSelect(){
+  const list = country === 'OT' ? PACKAGES.filter(p => p.otro) : PACKAGES;
+  const sel = document.getElementById('pkgSelect');
+  sel.innerHTML = list.map(p => `<option value="${p.id}">${p.id.toLocaleString('es-CO')} diamantes</option>`).join('');
+  if(!currentPkg || !list.find(p=>p.id===currentPkg)){
+    currentPkg = list[0].id;
+  }
+  sel.value = String(currentPkg);
+  document.querySelectorAll('.pkg').forEach(el => el.classList.remove('selected'));
+  const active = document.getElementById('pkg'+currentPkg);
+  if(active) active.classList.add('selected');
+  syncDiscountAvailability();
+}
+
+function selectPkg(id){
+  currentPkg = id;
+  document.getElementById('pkgSelect').value = String(id);
+  syncDiscountAvailability();
+  renderPackages();
+  updateSummary();
+}
+
+function syncPkgSelect(){
+  selectPkg(parseInt(document.getElementById('pkgSelect').value));
+}
+
+function selectMethod(el, m){
+  currentMethod = m;
+  document.querySelectorAll('.method-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function syncDiscountAvailability(){
+  const wrap = document.getElementById('discountToggleWrap');
+  const check = document.getElementById('discountCheck');
+  const eligible = DISCOUNT_IDS.includes(currentPkg);
+  wrap.classList.toggle('disabled', !eligible);
+  check.disabled = !eligible;
+  if(!eligible){ check.checked = false; discountOn = false; }
+  else { check.checked = discountOn; }
+  updatePromoBtn();
+}
+
+function toggleDiscount(){
+  if(!DISCOUNT_IDS.includes(currentPkg)){
+    alert('El 15% extra solo aplica para pedidos de 2,398 o 6,160 diamantes. Selecciona uno de esos paquetes primero.');
+    return;
+  }
+  discountOn = !discountOn;
+  document.getElementById('discountCheck').checked = discountOn;
+  updatePromoBtn();
+  renderPackages();
+  updateSummary();
+}
+
+function syncDiscountFromCheck(){
+  discountOn = document.getElementById('discountCheck').checked;
+  updatePromoBtn();
+  renderPackages();
+  updateSummary();
+}
+
+function updatePromoBtn(){
+  document.getElementById('promoBtn').classList.toggle('active', discountOn && DISCOUNT_IDS.includes(currentPkg));
+}
+
+function updateSummary(){
+  const cfg = COUNTRY_CONFIG[country];
+  const pkg = PACKAGES.find(p => p.id === currentPkg);
+  if(!pkg) return;
+  const price = priceFor(pkg, cfg.currency);
+  const eligible = DISCOUNT_IDS.includes(pkg.id) && discountOn;
+  const finalOur = eligible ? roundStep(price.our * 0.85, cfg.currency) : price.our;
+  document.getElementById('summaryLine').innerHTML =
+    `<span>${pkg.id.toLocaleString('es-CO')} diamantes${eligible ? ' · descuento 15% aplicado' : ''}</span><strong>${formatPrice(finalOur, cfg.suffix)}</strong>`;
+}
+
+function submitOrder(){
+  const id = document.getElementById('playerID').value.trim();
+  if(!id){ alert('Por favor ingresa tu ID de jugador Free Fire.'); return; }
+  if(!currentMethod){ alert('Por favor selecciona un metodo de pago.'); return; }
+  const cfg = COUNTRY_CONFIG[country];
+  const pkg = PACKAGES.find(p => p.id === currentPkg);
+  const price = priceFor(pkg, cfg.currency);
+  const eligible = DISCOUNT_IDS.includes(pkg.id) && discountOn;
+  const finalOur = eligible ? roundStep(price.our * 0.85, cfg.currency) : price.our;
+  const priceText = formatPrice(finalOur, cfg.suffix) + (eligible ? ' (con 15% de descuento de primera recarga)' : '');
+  const msg = `Hola, quiero hacer un pedido en Lowcost:%0A%0A*ID Free Fire:* ${id}%0A*Paquete:* ${pkg.id.toLocaleString('es-CO')} diamantes%0A*Precio:* ${priceText}%0A*Pais:* ${cfg.label}%0A*Metodo de pago:* ${currentMethod}`;
+  window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank');
+}
+
+(function init(){
+  const saved = localStorage.getItem('lowcost_country');
+  if(saved && COUNTRY_CONFIG[saved]){
+    country = saved;
+    closeModal();
+    render();
+  }
+})();
+</script>
+</body>
+</html>
