@@ -461,7 +461,7 @@ function cpVal(txt,id){
 function detailHtmlFor(id){
   _ci=0;
   if(id==='nequi'){
-    return '<div class="alt-detail-title">Pago con Nequi</div>'+aRow('Monto','$33.000 COP')+aRow('Numero','3132878955')+aRow('Titular','Juan Aguirre')+'<div class="alt-detail-note">Abre Nequi, selecciona Enviar dinero e ingresa el numero. Equivale a $9.99 USD.</div>';
+    return '<div class="alt-detail-title">Pago con Nequi</div>'+aRow('Monto','$33.000 COP')+aRow('Numero','3115593037')+aRow('Titular','Juan Aguirre')+'<div class="alt-detail-note">Abre Nequi, selecciona Enviar dinero e ingresa el numero. Equivale a $9.99 USD.</div>';
   }else if(id==='llave'){
     return '<div class="alt-detail-title">Llave / BRE-B</div>'+aRow('Monto','$33.000 COP')+aRow('Entidad','Bold CF')+aRow('Email / ID','mediaspaceapp@gmail.com')+aRow('Titular','Juan Aguirre')+'<div class="alt-detail-note">Disponible desde cualquier banco colombiano. Equivale a $9.99 USD.</div>';
   }else if(id==='clabe'){
@@ -473,7 +473,7 @@ function detailHtmlFor(id){
   }else if(id==='skrill'){
     return '<div class="alt-detail-title">Skrill</div>'+aRow('Monto','$9.99 USD')+aRow('Email Skrill','juanpabloaguirregrosso@gmail.com')+'<div class="alt-detail-note">Envia el pago a este correo desde tu cuenta Skrill.</div>';
   }else if(id==='remittance'){
-    return '<div class="alt-detail-title">Remesadora</div>'+aRow('Monto','$9.99 USD')+aRow('Nombre','Juan Pablo Aguirre Grosso')+aRow('Pais destino','Colombia')+aRow('Telefono','+573132878955')+aRow('Num. cuenta','3132878955')+aRow('Billetera','Nequi')+aRow('Tipo cuenta','Ahorros')+'<div class="alt-detail-note">Disponible via Remitly, MoneyGram o Western Union.</div>';
+    return '<div class="alt-detail-title">Remesadora</div>'+aRow('Monto','$9.99 USD')+aRow('Nombre','Juan Pablo Aguirre Grosso')+aRow('Pais destino','Colombia')+aRow('Telefono','+573115593037')+aRow('Num. cuenta','3115593037')+aRow('Billetera','Nequi')+aRow('Tipo cuenta','Ahorros')+'<div class="alt-detail-note">Disponible via Remitly, MoneyGram o Western Union.</div>';
   }else if(id==='pix'){
     return '<div class="alt-detail-title">PIX — Brasil</div><div class="alt-detail-note" style="margin-top:0">El PIX se coordina directamente con JEXE. Notifica por WhatsApp abajo para recibir los datos personalizados equivalentes a $9.99 USD.</div>';
   }
@@ -520,7 +520,7 @@ function sendWa(){
   var method=document.getElementById('waMethod').value;if(!method)return;
   var note=document.getElementById('waNote').value.trim();
   var msg='Hola JEXE, ya realice mi pago.\n\n================================\n CONFIRMACION DE PAGO — iOS\n================================\nPlan: 1 mes ($9.99 USD)\nMetodo: '+method+'\nPlataforma: iOS\n'+(note?'Nota: '+note+'\n':'')+'================================\nAdjunto la captura del comprobante en este chat.';
-  window.open('https://wa.me/573132878955?text='+encodeURIComponent(msg),'_blank','noopener');
+  window.open('https://wa.me/573115593037?text='+encodeURIComponent(msg),'_blank','noopener');
 }
 
 // Deteccion automatica de pais para mostrar metodos locales justo debajo del boton de tarjeta
