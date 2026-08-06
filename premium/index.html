@@ -4,166 +4,223 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 <meta name="color-scheme" content="light"/>
-<title>JEXE Regedit — Detectando dispositivo</title>
+<title>JEXE Regedit — Android &amp; iOS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@500;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --white:#FFFFFF;--line:#E5E5E5;--line2:#D9D9D9;
+  --white:#FFFFFF;--paper:#FAFAFA;--line:#E5E5E5;--line2:#D9D9D9;
   --ink:#0A0A0A;--ink2:#1D1D1F;--gray1:#6E6E73;--gray2:#86868B;--gray3:#AEAEB2;
-  --surface:#F5F5F7;
+  --surface:#F5F5F7;--surface2:#EFEFF1;
   --r-lg:22px;--r-md:16px;--r-sm:11px;
   --tr:0.2s cubic-bezier(0.16,1,0.3,1);
   --f-disp:'Inter Tight',-apple-system,system-ui,sans-serif;
   --f-body:'Inter',-apple-system,system-ui,sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-tap-highlight-color:transparent}
-body{
-  font-family:var(--f-body);background:var(--white);color:var(--ink);
-  min-height:100dvh;overflow-x:hidden;-webkit-font-smoothing:antialiased;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:24px 18px calc(env(safe-area-inset-bottom,0px) + 32px);
-}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
+body{font-family:var(--f-body);background:var(--white);color:var(--ink);min-height:100dvh;overflow-x:hidden;-webkit-font-smoothing:antialiased;padding-bottom:calc(env(safe-area-inset-bottom,0px) + 40px)}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 
-/* HEADER */
-header{
-  position:fixed;top:0;left:0;right:0;z-index:90;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 20px;height:54px;
-  background:rgba(255,255,255,0.88);
-  backdrop-filter:blur(20px) saturate(180%);
-  -webkit-backdrop-filter:blur(20px) saturate(180%);
-  border-bottom:1px solid var(--line);
-}
+header{position:sticky;top:0;z-index:90;display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:54px;background:rgba(255,255,255,0.88);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--line)}
 .hdr-brand{display:flex;align-items:center;gap:9px}
 .hdr-mark{width:22px;height:22px;border-radius:6px;background:var(--ink);display:grid;place-items:center;flex-shrink:0}
 .hdr-mark svg{width:13px;height:13px}
 .hdr-name{font-family:var(--f-disp);font-size:0.94rem;font-weight:700;letter-spacing:-0.01em;color:var(--ink)}
 .hdr-name .lt{font-weight:500;color:var(--gray1)}
-.hdr-tag{font-size:0.62rem;font-weight:600;letter-spacing:0.05em;color:var(--ink);background:var(--surface);padding:5px 10px;border-radius:100px;border:1px solid var(--line)}
 
-/* WRAP */
-.wrap{
-  width:100%;max-width:400px;
-  text-align:center;
-  animation:rise .55s cubic-bezier(.16,1,.3,1) both;
-  margin-top:54px;
-}
-@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+/* platform switch in header */
+.plat-switch{display:flex;background:var(--surface);border:1px solid var(--line);border-radius:100px;padding:3px;gap:2px}
+.plat-btn{display:flex;align-items:center;gap:5px;border:none;background:transparent;padding:6px 11px;border-radius:100px;font-size:0.68rem;font-weight:700;color:var(--gray1);cursor:pointer;transition:all var(--tr);letter-spacing:0.01em}
+.plat-btn svg{width:11px;height:11px}
+.plat-btn.active{background:var(--ink);color:#fff}
 
-/* ICON */
-.device-icon{
-  width:72px;height:72px;border-radius:20px;
-  background:var(--ink);
-  display:grid;place-items:center;
-  margin:0 auto 20px;
-  animation:iconPop .6s cubic-bezier(.34,1.56,.64,1) .08s both;
-}
-@keyframes iconPop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
-.device-icon svg{width:34px;height:34px}
+main{position:relative;z-index:1;max-width:480px;width:100%;margin:0 auto;padding:0 18px}
 
-/* HEADING */
-.detect-title{
-  font-family:var(--f-disp);font-size:1.55rem;font-weight:800;
-  letter-spacing:-0.025em;line-height:1.1;color:var(--ink);
-  margin-bottom:7px;
-}
-.detect-sub{font-size:0.84rem;color:var(--gray1);font-weight:400;line-height:1.5;margin-bottom:28px}
+.hero{padding:34px 0 22px;animation:rise .6s ease both}
+.hero-kicker{font-size:0.72rem;font-weight:600;letter-spacing:0.04em;color:var(--gray1);margin-bottom:13px}
+.hero-h1{font-family:var(--f-disp);font-size:clamp(2.1rem,8.6vw,2.7rem);font-weight:800;line-height:1.05;letter-spacing:-0.025em;color:var(--ink)}
+.hero-h1 em{font-style:normal;color:var(--gray2)}
+.hero-p{font-size:0.92rem;font-weight:400;line-height:1.58;color:var(--gray1);margin-top:13px;max-width:380px}
+.hero-platform{display:inline-flex;align-items:center;gap:7px;margin-top:18px;padding:7px 13px 7px 9px;border-radius:100px;background:var(--ink);color:#fff}
+.hero-platform svg{width:13px;height:13px}
+.hero-platform span{font-size:0.74rem;font-weight:600;letter-spacing:0.01em}
 
-/* PROGRESS */
-.progress-wrap{
-  background:var(--surface);border:1px solid var(--line);
-  border-radius:100px;height:5px;overflow:hidden;margin-bottom:12px;
-}
-.progress-bar{
-  height:100%;width:0%;border-radius:100px;
-  background:var(--ink);
-  transition:width .06s linear;
-}
-.status-text{
-  font-size:0.74rem;color:var(--gray2);font-weight:500;
-  min-height:1.2em;margin-bottom:32px;letter-spacing:0.01em;
-}
+.video-wrap{position:relative;border-radius:var(--r-lg);overflow:hidden;background:var(--ink);margin-top:20px;border:1px solid var(--line);animation:rise .6s .03s ease both}
+.video-wrap video{width:100%;display:block;max-height:230px;object-fit:cover}
+.video-label{position:absolute;bottom:10px;left:10px;background:rgba(255,255,255,0.92);backdrop-filter:blur(8px);border-radius:100px;padding:5px 12px;font-size:0.68rem;font-weight:600;color:var(--ink)}
 
-/* RESULT */
-.result-block{
-  display:none;
-  background:var(--surface);border:1px solid var(--line);
-  border-radius:var(--r-lg);padding:20px 18px;margin-bottom:14px;
-  animation:rise .3s ease both;
-  text-align:left;
-}
-.result-block.show{display:block}
-.result-row{display:flex;align-items:center;gap:12px}
-.result-ico{
-  width:38px;height:38px;border-radius:10px;background:var(--ink);
-  display:grid;place-items:center;flex-shrink:0;
-}
-.result-ico svg{width:18px;height:18px}
-.result-label{font-size:0.68rem;font-weight:600;letter-spacing:0.04em;color:var(--gray1);margin-bottom:2px}
-.result-val{font-family:var(--f-disp);font-size:1.05rem;font-weight:800;color:var(--ink);letter-spacing:-0.01em}
-.result-confidence{
-  margin-top:14px;padding-top:12px;border-top:1px solid var(--line);
-  display:flex;justify-content:space-between;align-items:center;
-}
-.conf-label{font-size:0.68rem;font-weight:600;color:var(--gray2)}
-.conf-track{flex:1;height:4px;border-radius:100px;background:var(--line2);margin:0 10px;overflow:hidden}
-.conf-fill{height:100%;border-radius:100px;background:var(--ink);transition:width .6s cubic-bezier(.16,1,.3,1)}
-.conf-pct{font-size:0.72rem;font-weight:700;color:var(--ink);min-width:32px;text-align:right}
+/* TELEGRAM REQUIREMENT */
+.tg-required{margin-top:14px;padding:16px 17px;background:var(--ink);border-radius:var(--r-lg);display:flex;gap:12px;animation:rise .6s .045s ease both}
+.tg-required-ico{width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,0.1);display:grid;place-items:center;flex-shrink:0}
+.tg-required-ico svg{width:17px;height:17px;color:#fff}
+.tg-required-title{font-size:0.83rem;font-weight:800;color:#fff;letter-spacing:-0.005em}
+.tg-required-body{font-size:0.76rem;color:rgba(255,255,255,0.62);font-weight:400;line-height:1.55;margin-top:3px}
+.tg-required-body strong{color:#fff;font-weight:700}
 
-/* CTA */
-.go-btn{
-  display:flex;align-items:center;justify-content:center;gap:9px;
-  width:100%;height:54px;border:none;border-radius:100px;
-  background:var(--ink);color:#fff;
-  font-family:var(--f-disp);font-size:0.96rem;font-weight:800;
-  letter-spacing:-0.005em;cursor:pointer;text-decoration:none;
-  transition:all var(--tr);
-}
-.go-btn:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(0,0,0,0.18)}
-.go-btn:active{transform:translateY(0)}
-.go-btn svg{width:16px;height:16px}
+/* SEC LABEL */
+.sec-label{font-size:0.69rem;font-weight:600;letter-spacing:0.04em;color:var(--gray1);margin:28px 0 11px}
 
-/* MANUAL */
-.manual{display:none;margin-top:10px;animation:rise .35s ease both}
-.manual.show{display:block}
-.manual-label{
-  font-size:0.68rem;font-weight:600;letter-spacing:0.04em;color:var(--gray1);
-  text-align:center;margin-bottom:10px;
-}
-.manual-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.manual-btn{
-  display:flex;flex-direction:column;align-items:center;gap:8px;
-  padding:16px 12px;border-radius:var(--r-md);
-  background:var(--white);border:1.5px solid var(--line);
-  text-decoration:none;transition:all var(--tr);cursor:pointer;
-}
-.manual-btn:hover{border-color:var(--line2);background:var(--surface)}
-.manual-btn:active{transform:scale(.98)}
-.manual-btn-ico{
-  width:36px;height:36px;border-radius:10px;background:var(--ink);
-  display:grid;place-items:center;
-}
-.manual-btn-ico svg{width:17px;height:17px}
-.manual-btn-name{font-family:var(--f-disp);font-size:0.85rem;font-weight:800;color:var(--ink);letter-spacing:-0.005em}
-.manual-btn-sub{font-size:0.67rem;color:var(--gray1);font-weight:500}
+/* SPECS */
+.spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;animation:rise .6s .09s ease both}
+.spec-card{background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);padding:15px 14px}
+.spec-ico{width:32px;height:32px;border-radius:9px;background:var(--surface);display:grid;place-items:center;margin-bottom:10px}
+.spec-ico svg{width:16px;height:16px;color:var(--ink)}
+.spec-num{font-family:var(--f-disp);font-size:1.5rem;font-weight:800;letter-spacing:-0.02em;color:var(--ink)}
+.spec-name{font-size:0.73rem;font-weight:600;color:var(--gray1);margin-top:2px}
 
-/* WARN — si la confianza es baja */
-.low-conf-warn{
-  display:none;margin-top:10px;padding:12px 14px;
-  border-radius:var(--r-sm);background:var(--surface);border:1px solid var(--line2);
-  font-size:0.73rem;color:var(--gray1);font-weight:400;line-height:1.55;
-  text-align:left;
-}
-.low-conf-warn.show{display:block}
-.low-conf-warn strong{color:var(--ink);font-weight:700}
+/* BENEFITS */
+.benefit-list{background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;animation:rise .6s .11s ease both}
+.benefit-row{display:flex;align-items:center;gap:12px;padding:13px 15px;border-bottom:1px solid var(--line)}
+.benefit-row:last-child{border-bottom:none}
+.benefit-ico{width:27px;height:27px;border-radius:8px;background:var(--surface);display:grid;place-items:center;flex-shrink:0}
+.benefit-ico svg{width:13px;height:13px;color:var(--ink)}
+.benefit-txt{font-size:0.83rem;font-weight:500;color:var(--ink2)}
 
-.footer-note{
-  margin-top:26px;font-size:0.66rem;color:var(--gray3);font-weight:500;
-  line-height:1.5;
-}
+/* PROOF */
+.proof-strip{display:flex;align-items:center;gap:14px;margin-top:10px;padding:15px;background:var(--surface);border-radius:var(--r-md);animation:rise .6s .13s ease both}
+.proof-num{font-family:var(--f-disp);font-size:1.55rem;font-weight:900;color:var(--ink);letter-spacing:-0.02em;white-space:nowrap}
+.proof-divider{width:1px;height:28px;background:var(--line2)}
+.proof-txt{font-size:0.77rem;color:var(--gray1);font-weight:500;line-height:1.4}
+.proof-links{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.proof-link{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);padding:13px 14px;background:var(--surface);border-radius:var(--r-md);border:1px solid var(--line);transition:border-color var(--tr);animation:rise .6s .14s ease both}
+.proof-link:hover{border-color:var(--line2)}
+.proof-link-ico{width:34px;height:34px;border-radius:9px;flex-shrink:0;background:var(--white);border:1px solid var(--line);display:grid;place-items:center}
+.proof-link-ico svg{width:16px;height:16px;color:var(--ink)}
+.proof-link-meta{flex:1;min-width:0}
+.proof-link-title{font-size:0.81rem;font-weight:700;color:var(--ink);letter-spacing:-0.005em}
+.proof-link-sub{font-size:0.7rem;color:var(--gray1);font-weight:500;margin-top:1px}
+.proof-link-arrow{color:var(--gray2);flex-shrink:0}
+.proof-link-arrow svg{width:14px;height:14px}
+
+/* VERSIONS */
+.ver-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;animation:rise .6s .145s ease both}
+.ver-card{background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);padding:14px}
+.ver-top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.ver-top svg{width:14px;height:14px;color:var(--ink)}
+.ver-top span{font-size:0.75rem;font-weight:700;color:var(--ink)}
+.ver-range{font-family:var(--f-disp);font-size:1.1rem;font-weight:800;color:var(--ink);letter-spacing:-0.01em}
+.ver-note{font-size:0.68rem;color:var(--gray1);font-weight:500;margin-top:3px}
+
+/* HOW IT WORKS */
+.flow-steps{display:flex;flex-direction:column;animation:rise .6s .15s ease both}
+.flow-step{display:flex;gap:14px;padding:13px 0}
+.flow-line{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:26px}
+.flow-dot{width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-family:var(--f-disp);font-size:0.72rem;font-weight:800;flex-shrink:0}
+.flow-stem{width:1px;flex:1;background:var(--line2);margin-top:4px;min-height:16px}
+.flow-step:last-child .flow-stem{display:none}
+.flow-body{padding-top:2px}
+.flow-title{font-size:0.85rem;font-weight:700;color:var(--ink);letter-spacing:-0.005em}
+.flow-desc{font-size:0.78rem;color:var(--gray1);margin-top:3px;line-height:1.5;font-weight:400}
+
+/* PLANS */
+.plans{display:flex;flex-direction:column;gap:12px;animation:rise .6s .17s ease both}
+.plan-card{border-radius:var(--r-lg);padding:22px 20px;border:1.5px solid var(--line)}
+.plan-card.is-hi{background:var(--ink);border-color:var(--ink)}
+.plan-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
+.plan-name{font-family:var(--f-disp);font-size:1.05rem;font-weight:800;letter-spacing:-0.01em;color:var(--ink)}
+.is-hi .plan-name{color:#fff}
+.plan-badge{font-size:0.6rem;font-weight:700;letter-spacing:0.04em;color:#fff;background:var(--ink);padding:4px 9px;border-radius:100px}
+.is-hi .plan-badge{background:rgba(255,255,255,0.14);color:#fff}
+.plan-price{font-family:var(--f-disp);font-size:2.1rem;font-weight:900;letter-spacing:-0.02em;color:var(--ink);line-height:1}
+.is-hi .plan-price{color:#fff}
+.plan-price sup{font-size:1rem;font-weight:700;margin-right:1px}
+.plan-sub{font-size:0.73rem;color:var(--gray1);font-weight:500;margin-top:4px}
+.is-hi .plan-sub{color:rgba(255,255,255,0.55)}
+.plan-feats{display:flex;flex-direction:column;gap:8px;margin:15px 0 16px}
+.plan-f{display:flex;align-items:flex-start;gap:8px;font-size:0.79rem;font-weight:500;color:var(--ink2);line-height:1.4}
+.is-hi .plan-f{color:rgba(255,255,255,0.88)}
+.plan-f svg{width:14px;height:14px;flex-shrink:0;margin-top:1px;color:var(--ink)}
+.is-hi .plan-f svg{color:#fff}
+.plan-f.neg{color:var(--gray2)}
+.is-hi .plan-f.neg{color:rgba(255,255,255,0.4)}
+.plan-cta{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:50px;border:none;border-radius:100px;background:var(--ink);color:#fff;font-family:var(--f-disp);font-size:0.88rem;font-weight:800;letter-spacing:-0.005em;cursor:pointer;transition:all var(--tr);text-decoration:none}
+.is-hi .plan-cta{background:#fff;color:var(--ink)}
+.plan-cta:hover{transform:translateY(-1px)}
+.plan-cta svg{width:14px;height:14px}
+
+/* UPDATE POLICY NOTE */
+.policy-note{margin-top:12px;padding:15px 16px;background:var(--surface);border-radius:var(--r-md);animation:rise .6s .18s ease both}
+.policy-note-title{display:flex;align-items:center;gap:8px;font-size:0.76rem;font-weight:700;color:var(--ink);margin-bottom:8px}
+.policy-note-title svg{width:14px;height:14px}
+.policy-note-body{font-size:0.76rem;color:var(--gray1);line-height:1.6;font-weight:400}
+.policy-note-body strong{color:var(--ink);font-weight:700}
+
+/* PAYMENT NOTE (no closing page) */
+.pay-warn{display:flex;align-items:flex-start;gap:10px;margin-top:12px;padding:14px 15px;background:var(--white);border:1.5px solid var(--ink);border-radius:var(--r-md);animation:rise .6s .19s ease both}
+.pay-warn svg{width:16px;height:16px;color:var(--ink);flex-shrink:0;margin-top:1px}
+.pay-warn span{font-size:0.78rem;color:var(--ink2);font-weight:500;line-height:1.55}
+.pay-warn span strong{font-weight:800;color:var(--ink)}
+
+/* PAYMENT LOGOS MARQUEE */
+.marquee-wrap{margin-top:8px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);animation:rise .6s .2s ease both}
+.marquee-title{font-size:0.68rem;font-weight:600;letter-spacing:0.03em;color:var(--gray1);margin-bottom:10px}
+.marquee-track{display:flex;gap:10px;width:max-content;animation:scrollLeft 34s linear infinite}
+.marquee-track.slow{animation-duration:44s;animation-direction:reverse}
+.logo-chip{display:flex;align-items:center;gap:8px;padding:9px 14px;background:var(--surface);border:1px solid var(--line);border-radius:100px;flex-shrink:0}
+.logo-chip svg{width:16px;height:16px;color:var(--ink)}
+.logo-chip span{font-size:0.73rem;font-weight:600;color:var(--ink2);white-space:nowrap}
+@keyframes scrollLeft{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* SUPPORT / WA WIZARD */
+.support-card{margin-top:30px;background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;animation:rise .6s .22s ease both}
+.support-top{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+.support-ico{width:36px;height:36px;border-radius:10px;flex-shrink:0;background:var(--ink);display:grid;place-items:center}
+.support-ico svg{width:17px;height:17px;color:#fff}
+.support-title{font-family:var(--f-disp);font-size:1rem;font-weight:800;color:var(--ink);letter-spacing:-0.01em}
+.support-sub{font-size:0.73rem;color:var(--gray1);font-weight:500;margin-top:2px}
+.support-body{margin-top:16px}
+.sw-step{display:none}
+.sw-step.active{display:block;animation:rise .25s ease both}
+.sw-q{font-size:0.82rem;font-weight:700;color:var(--ink);margin-bottom:10px;letter-spacing:-0.005em}
+.sw-opts{display:flex;flex-direction:column;gap:7px}
+.sw-opt{display:flex;align-items:center;gap:10px;padding:12px 13px;border:1.5px solid var(--line);border-radius:var(--r-sm);background:var(--surface);cursor:pointer;transition:all var(--tr);text-align:left;font-family:var(--f-body)}
+.sw-opt:hover{border-color:var(--gray3)}
+.sw-opt.sel{border-color:var(--ink);background:var(--ink);color:#fff}
+.sw-opt-radio{width:15px;height:15px;border-radius:50%;border:1.5px solid var(--gray3);display:grid;place-items:center;flex-shrink:0}
+.sw-opt.sel .sw-opt-radio{border-color:#fff;background:#fff}
+.sw-opt-radio svg{width:7px;height:7px;color:var(--ink);opacity:0}
+.sw-opt.sel .sw-opt-radio svg{opacity:1}
+.sw-opt-txt{font-size:0.8rem;font-weight:600}
+.sw-field{margin-top:4px}
+.sw-textarea{width:100%;padding:11px 12px;border-radius:var(--r-sm);background:var(--surface);border:1.5px solid var(--line);color:var(--ink);font-family:var(--f-body);font-size:0.82rem;font-weight:400;outline:none;transition:var(--tr);resize:vertical;min-height:70px;line-height:1.5}
+.sw-textarea:focus{border-color:var(--ink)}
+.sw-nav{display:flex;gap:8px;margin-top:16px}
+.sw-back,.sw-next{flex:1;height:46px;border-radius:100px;font-family:var(--f-disp);font-size:0.83rem;font-weight:800;letter-spacing:-0.005em;cursor:pointer;transition:all var(--tr);border:none;display:flex;align-items:center;justify-content:center;gap:6px}
+.sw-back{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.sw-next{background:var(--ink);color:#fff}
+.sw-next:disabled{opacity:0.3;cursor:not-allowed}
+.sw-next svg,.sw-back svg{width:13px;height:13px}
+.sw-progress{display:flex;gap:4px;margin-bottom:16px}
+.sw-progress-seg{height:3px;flex:1;background:var(--line);border-radius:2px;overflow:hidden}
+.sw-progress-seg i{display:block;height:100%;width:0;background:var(--ink);transition:width .3s}
+.sw-progress-seg.done i{width:100%}
+.sw-summary{background:var(--surface);border-radius:var(--r-sm);padding:13px;margin-bottom:14px}
+.sw-summary-row{display:flex;justify-content:space-between;gap:10px;font-size:0.74rem;padding:5px 0;border-bottom:1px solid var(--line)}
+.sw-summary-row:last-child{border-bottom:none}
+.sw-summary-lbl{color:var(--gray1);font-weight:500;flex-shrink:0}
+.sw-summary-val{color:var(--ink);font-weight:700;text-align:right}
+.sw-send{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;height:52px;border:none;border-radius:100px;background:var(--ink);color:#fff;font-family:var(--f-disp);font-size:0.9rem;font-weight:800;letter-spacing:-0.005em;cursor:pointer;transition:all var(--tr);text-decoration:none}
+.sw-send:hover{transform:translateY(-1px)}
+.sw-send svg{width:16px;height:16px}
+
+/* DELIVERY */
+.delivery-banner{margin-top:12px;padding:17px;background:var(--white);border:1.5px solid var(--ink);border-radius:var(--r-lg);animation:rise .6s .24s ease both}
+.db-top{display:flex;align-items:center;gap:11px;margin-bottom:9px}
+.db-ico{width:34px;height:34px;border-radius:10px;background:var(--ink);display:grid;place-items:center;flex-shrink:0}
+.db-ico svg{width:17px;height:17px;color:#fff}
+.db-title{font-family:var(--f-disp);font-size:0.95rem;font-weight:800;color:var(--ink);letter-spacing:-0.01em}
+.db-body{font-size:0.8rem;color:var(--gray1);font-weight:400;line-height:1.6;padding-left:45px}
+.db-body strong{color:var(--ink);font-weight:700}
+
+footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-align:center}
+.footer-brand{font-family:var(--f-disp);font-size:0.77rem;font-weight:700;color:var(--gray1)}
+.footer-sub{font-size:0.67rem;color:var(--gray3);font-weight:500;margin-top:4px;margin-bottom:4px}
+
+@keyframes rise{from{opacity:0;transform:translateY(11px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:340px){.plan-price{font-size:1.8rem}}
 </style>
 </head>
 <body>
@@ -171,334 +228,580 @@ header{
 <header>
   <div class="hdr-brand">
     <div class="hdr-mark">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M16.5 2.5c.1 1.2-.35 2.4-1.1 3.3-.78.9-1.95 1.55-3.1 1.45-.13-1.15.4-2.4 1.13-3.2.8-.9 2.05-1.5 3.07-1.55zM21 17.2c-.6 1.35-.9 1.95-1.65 3.15-1.05 1.65-2.55 3.7-4.4 3.72-1.65.02-2.07-1.07-4.3-1.06-2.22.01-2.7 1.08-4.35 1.06-1.85-.02-3.27-1.87-4.32-3.52C-.2 16.4-.55 11.1 1.95 8.4c1.27-1.4 3.1-2.25 4.85-2.27 1.78-.02 2.9 1.05 4.35 1.05 1.43 0 2.32-1.07 4.4-1.07 1.5.02 3.1.8 4.3 2.2-3.78 2.18-3.18 7.5 1.15 8.89z" fill="white"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
     </div>
     <span class="hdr-name">JEXE <span class="lt">Regedit</span></span>
   </div>
-  <span class="hdr-tag">Premium</span>
+  <div class="plat-switch" id="platSwitch">
+    <button class="plat-btn active" data-plat="android" id="btnAndroid">
+      <svg viewBox="0 0 576 512" fill="currentColor"><path d="M420.55,301.93a24,24,0,1,1,24-24,24,24,0,0,1-24,24m-265.1,0a24,24,0,1,1,24-24,24,24,0,0,1-24,24m273.7-144.48,47.94-83a10,10,0,1,0-17.27-10h0l-48.54,84.07a301.25,301.25,0,0,0-246.56,0L116.18,64.45a10,10,0,1,0-17.27,10h0l47.94,83C64.53,202.22,8.24,285.55,0,384H576c-8.24-98.45-64.54-181.78-146.85-226.55"/></svg>
+      Android
+    </button>
+    <button class="plat-btn" data-plat="ios" id="btnIos">
+      <svg viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-19.9-30.3-50.6-46.8-91.8-49.9-37.9-3-79.6 22.4-95.5 22.4-16.9 0-53.6-21.3-83.4-21.3-58.5.9-120.8 47.1-120.8 138.7 0 28.4 5.2 57.8 15.5 88 13.8 39.4 63.4 136.3 115.1 134.7 27.1-.7 46.2-19.5 80.9-19.5 33.7 0 51.4 19.5 81.6 19.5 52.2-.7 97.2-89 110.4-128.5-70.4-33.2-62-97.5-62-99.3zM256.8 67.7c26.6-31.8 24.2-60.8 23.4-71.7-23.6 1.4-50.9 16.4-66.5 34.6-17.2 19.4-27.3 43.4-25.1 70.4 25.5 2 48.4-11.4 68.2-33.3z"/></svg>
+      iOS
+    </button>
+  </div>
 </header>
 
-<div class="wrap">
+<main>
 
-  <div class="device-icon" id="deviceIcon">
-    <!-- Icono neutral — scanning -->
-    <svg id="iconScan" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="2" y="3" width="20" height="14" rx="2"/>
-      <path d="M8 21h8M12 17v4"/>
-    </svg>
-    <svg id="iconIOS" style="display:none" viewBox="0 0 24 24" fill="none">
-      <path d="M16.5 2.5c.1 1.2-.35 2.4-1.1 3.3-.78.9-1.95 1.55-3.1 1.45-.13-1.15.4-2.4 1.13-3.2.8-.9 2.05-1.5 3.07-1.55zM21 17.2c-.6 1.35-.9 1.95-1.65 3.15-1.05 1.65-2.55 3.7-4.4 3.72-1.65.02-2.07-1.07-4.3-1.06-2.22.01-2.7 1.08-4.35 1.06-1.85-.02-3.27-1.87-4.32-3.52C-.2 16.4-.55 11.1 1.95 8.4c1.27-1.4 3.1-2.25 4.85-2.27 1.78-.02 2.9 1.05 4.35 1.05 1.43 0 2.32-1.07 4.4-1.07 1.5.02 3.1.8 4.3 2.2-3.78 2.18-3.18 7.5 1.15 8.89z" fill="white"/>
-    </svg>
-    <svg id="iconAndroid" style="display:none" viewBox="0 0 24 24" fill="none">
-      <path d="M6 18L4.5 21M18 18l1.5 3M3.5 12.5c0-4.14 3.36-7.5 7.5-7.5s7.5 3.36 7.5 7.5M2 12.5h1.5M20.5 12.5H22M6.5 6.5l1 1M17.5 6.5l-1 1" stroke="white" stroke-width="1.7" stroke-linecap="round"/>
-    </svg>
+  <div class="hero">
+    <div class="hero-kicker">Disponible para Android &amp; iOS</div>
+    <h1 class="hero-h1">Maximo control.<br/><em id="heroEm">Android &amp; iOS.</em></h1>
+    <p class="hero-p">El mejor Regedit para Free Fire, disponible para cualquier dispositivo. Una sola pagina, acceso inmediato, sin intermediarios.</p>
+    <div class="hero-platform">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" id="heroPlatIco"><circle cx="12" cy="12" r="9"/></svg>
+      <span id="heroPlatText">Android 8 — 16+  ·  Sin root  &nbsp;|&nbsp;  iOS 11 — 26.5+  ·  Sin jailbreak</span>
+    </div>
   </div>
 
-  <div class="detect-title" id="detectTitle">Identificando<br/>tu dispositivo</div>
-  <div class="detect-sub" id="detectSub">Analizando multiples senales del sistema.<br/>Esto toma menos de 2 segundos.</div>
-
-  <div class="progress-wrap">
-    <div class="progress-bar" id="bar"></div>
+  <div class="video-wrap">
+    <video controls preload="metadata">
+      <source src="producto.mp4" type="video/mp4"/>
+    </video>
+    <div class="video-label">Vista previa</div>
   </div>
-  <div class="status-text" id="status">Iniciando analisis...</div>
 
-  <!-- RESULTADO -->
-  <div class="result-block" id="resultBlock">
-    <div class="result-row">
-      <div class="result-ico" id="resultIco"></div>
+  <div class="tg-required">
+    <div class="tg-required-ico">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+    </div>
+    <div>
+      <div class="tg-required-title">Requisito obligatorio: Telegram</div>
+      <div class="tg-required-body">Antes de comprar, ten la <strong>app de Telegram descargada, instalada y con una cuenta activa</strong>. La entrega y el soporte se hacen por Telegram, igual que reciben sus beneficios <strong>mas de 1.000 clientes activos</strong> ahora mismo.</div>
+    </div>
+  </div>
+
+  <div class="sec-label">Parametros de ajuste</div>
+  <div class="spec-grid">
+    <div class="spec-card">
+      <div class="spec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></div>
+      <div class="spec-num">70%</div>
+      <div class="spec-name">Aimlock</div>
+    </div>
+    <div class="spec-card">
+      <div class="spec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 9h6v6H9z"/></svg></div>
+      <div class="spec-num">70%</div>
+      <div class="spec-name">Aim assist</div>
+    </div>
+  </div>
+
+  <div class="sec-label">Versiones compatibles</div>
+  <div class="ver-grid">
+    <div class="ver-card">
+      <div class="ver-top">
+        <svg viewBox="0 0 576 512" fill="currentColor"><path d="M420.55,301.93a24,24,0,1,1,24-24,24,24,0,0,1-24,24m-265.1,0a24,24,0,1,1,24-24,24,24,0,0,1-24,24m273.7-144.48,47.94-83a10,10,0,1,0-17.27-10h0l-48.54,84.07a301.25,301.25,0,0,0-246.56,0L116.18,64.45a10,10,0,1,0-17.27,10h0l47.94,83C64.53,202.22,8.24,285.55,0,384H576c-8.24-98.45-64.54-181.78-146.85-226.55"/></svg>
+        <span>Android</span>
+      </div>
+      <div class="ver-range">8 — 16+</div>
+      <div class="ver-note">Sin root · Cualquier fabricante</div>
+    </div>
+    <div class="ver-card">
+      <div class="ver-top">
+        <svg viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-19.9-30.3-50.6-46.8-91.8-49.9-37.9-3-79.6 22.4-95.5 22.4-16.9 0-53.6-21.3-83.4-21.3-58.5.9-120.8 47.1-120.8 138.7 0 28.4 5.2 57.8 15.5 88 13.8 39.4 63.4 136.3 115.1 134.7 27.1-.7 46.2-19.5 80.9-19.5 33.7 0 51.4 19.5 81.6 19.5 52.2-.7 97.2-89 110.4-128.5-70.4-33.2-62-97.5-62-99.3zM256.8 67.7c26.6-31.8 24.2-60.8 23.4-71.7-23.6 1.4-50.9 16.4-66.5 34.6-17.2 19.4-27.3 43.4-25.1 70.4 25.5 2 48.4-11.4 68.2-33.3z"/></svg>
+        <span>iOS</span>
+      </div>
+      <div class="ver-range">11 — 26.5+</div>
+      <div class="ver-note">Sin jailbreak · iPhone &amp; iPad</div>
+    </div>
+  </div>
+
+  <div class="sec-label">Incluido en tu compra</div>
+  <div class="benefit-list">
+    <div class="benefit-row">
+      <div class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5 2 7.5L12 16.5 5.5 21l2-7.5L2 9h7z"/></svg></div>
+      <div class="benefit-txt">Certificados premium, libres de baneo</div>
+    </div>
+    <div class="benefit-row">
+      <div class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/></svg></div>
+      <div class="benefit-txt">Sin blacklist, sin reinicio de rango</div>
+    </div>
+    <div class="benefit-row">
+      <div class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
+      <div class="benefit-txt">Activacion inmediata dentro de Telegram</div>
+    </div>
+    <div class="benefit-row">
+      <div class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-6.2-8.6"/></svg></div>
+      <div class="benefit-txt">Compatible con Android e iOS</div>
+    </div>
+  </div>
+
+  <div class="proof-strip">
+    <div class="proof-num">5 años</div>
+    <div class="proof-divider"></div>
+    <div class="proof-txt">de historial verificado en el mercado</div>
+  </div>
+  <div class="proof-strip" style="margin-top:8px">
+    <div class="proof-num">2.500+</div>
+    <div class="proof-divider"></div>
+    <div class="proof-txt">compras completadas y entregadas</div>
+  </div>
+  <div class="proof-strip" style="margin-top:8px">
+    <div class="proof-num">1.000+</div>
+    <div class="proof-divider"></div>
+    <div class="proof-txt">clientes activos recibiendo beneficios hoy</div>
+  </div>
+  <div class="proof-links">
+    <a class="proof-link" href="https://t.me/+v6aIjOQo4HsxMTQ5" target="_blank" rel="noopener">
+      <div class="proof-link-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
+      <div class="proof-link-meta">
+        <div class="proof-link-title">Ver referencias — canal 1</div>
+        <div class="proof-link-sub">Pagos verificables en Telegram</div>
+      </div>
+      <div class="proof-link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+    </a>
+    <a class="proof-link" href="https://t.me/+HbRheKk2U1Y5ZDMx" target="_blank" rel="noopener">
+      <div class="proof-link-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
+      <div class="proof-link-meta">
+        <div class="proof-link-title">Ver referencias — canal 2</div>
+        <div class="proof-link-sub">Mas de 2.500 pagos verificables</div>
+      </div>
+      <div class="proof-link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+    </a>
+  </div>
+
+  <div class="sec-label">Como funciona</div>
+  <div class="flow-steps">
+    <div class="flow-step">
+      <div class="flow-line"><div class="flow-dot">1</div><div class="flow-stem"></div></div>
+      <div class="flow-body"><div class="flow-title">Ten Telegram listo</div><div class="flow-desc">Descarga la app, instalala y ten una cuenta activa antes de pagar. Ahi se hace la entrega.</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-line"><div class="flow-dot">2</div><div class="flow-stem"></div></div>
+      <div class="flow-body"><div class="flow-title">Elige tu plan y paga</div><div class="flow-desc">Tarjeta, Apple Pay, Google Pay, Cash App y mas metodos segun el plan que elijas.</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-line"><div class="flow-dot">3</div><div class="flow-stem"></div></div>
+      <div class="flow-body"><div class="flow-title">No cierres la pagina del pago</div><div class="flow-desc">Manten abierta la pestana del checkout hasta que se confirme y recibas el acceso completo.</div></div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-line"><div class="flow-dot">4</div></div>
+      <div class="flow-body"><div class="flow-title">Acceso por Telegram</div><div class="flow-desc">Recibes el acceso en Telegram, igual que los mas de 1.000 clientes activos actuales.</div></div>
+    </div>
+  </div>
+
+  <div class="sec-label">Planes</div>
+  <div class="plans">
+
+    <div class="plan-card">
+      <div class="plan-top">
+        <div><div class="plan-name">15 dias</div><div class="plan-sub">Prueba corta, todo incluido</div></div>
+        <div class="plan-badge">BASICO</div>
+      </div>
+      <div class="plan-price"><sup>$</sup>6<span style="font-size:0.95rem;font-weight:700"> USD</span></div>
+      <div class="plan-feats">
+        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Certificados premium, libres de baneo</div>
+        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Aimlock y aim assist al 70%</div>
+        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Entrega inmediata por Telegram</div>
+        <div class="plan-f neg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>No incluye actualizaciones</div>
+      </div>
+      <a href="https://whop.com/checkout/plan_zanh1ivbWF4Ta" target="_blank" rel="noopener" class="plan-cta">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        Pagar $6 USD
+      </a>
+    </div>
+
+    <div class="plan-card">
+      <div class="plan-top">
+        <div><div class="plan-name">1 Mes</div><div class="plan-sub">El mas elegido</div></div>
+        <div class="plan-badge">POPULAR</div>
+      </div>
+      <div class="plan-price"><sup>$</sup>10<span style="font-size:0.95rem;font-weight:700"> USD</span></div>
+      <div class="plan-feats">
+        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Certificados premium, libres de baneo</div>
+        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Aimlock y aim assist al 70%</div>
+        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Entrega inmediata por Telegram</div>
+        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><strong>2 actualizaciones</strong> incluidas durante el mes</div>
+      </div>
+      <a href="https://whop.com/checkout/plan_w7W6tisuJRazT" target="_blank" rel="noopener" class="plan-cta">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        Pagar $10 USD
+      </a>
+    </div>
+
+    <div class="plan-card is-hi">
+      <div class="plan-top">
+        <div><div class="plan-name">Permanente</div><div class="plan-sub">Acceso de por vida</div></div>
+        <div class="plan-badge">MEJOR VALOR</div>
+      </div>
+      <div class="plan-price"><sup>$</sup>20<span style="font-size:0.95rem;font-weight:700"> USD</span></div>
+      <div class="plan-feats">
+        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Certificados premium, libres de baneo</div>
+        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Aimlock y aim assist al 70%</div>
+        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Entrega inmediata por Telegram</div>
+        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><strong>Actualizaciones ilimitadas de por vida</strong></div>
+        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Acceso a todos los metodos de pago locales</div>
+      </div>
+      <a href="https://whop.com/checkout/plan_4hRRQoSDe8aMW" target="_blank" rel="noopener" class="plan-cta">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        Pagar $20 USD
+      </a>
+    </div>
+
+  </div>
+
+  <div class="policy-note">
+    <div class="policy-note-title">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      Politica de actualizaciones
+    </div>
+    <div class="policy-note-body">
+      El plan de <strong>15 dias</strong> incluye todo lo mencionado pero <strong>no incluye actualizaciones</strong>. El plan de <strong>1 mes</strong> incluye <strong>2 actualizaciones</strong> ademas de todo lo anterior. El plan <strong>permanente</strong> incluye <strong>actualizaciones ilimitadas, de por vida</strong>.
+    </div>
+  </div>
+
+  <div class="pay-warn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    <span><strong>No cierres la pagina</strong> desde donde completaste el pago hasta que obtengas el acceso completo. Cerrarla antes de tiempo puede retrasar tu entrega.</span>
+  </div>
+
+  <div class="marquee-wrap">
+    <div class="marquee-title">Metodos disponibles en 15 dias y 1 mes</div>
+    <div class="marquee-track" id="mqUniversal"></div>
+  </div>
+  <div class="marquee-wrap" style="margin-top:14px">
+    <div class="marquee-title">Metodos adicionales — solo plan Permanente</div>
+    <div class="marquee-track slow" id="mqPermanent"></div>
+  </div>
+
+  <div class="support-card">
+    <div class="support-top">
+      <div class="support-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65-3.8a9 9 0 111.79 1.72L3 21"/><path d="M9 10c0 5 6 5 6 0"/></svg></div>
       <div>
-        <div class="result-label">Dispositivo detectado</div>
-        <div class="result-val" id="resultVal">—</div>
+        <div class="support-title">Soporte por WhatsApp</div>
+        <div class="support-sub">Responde unas preguntas y te conectamos directo con JEXE</div>
       </div>
     </div>
-    <div class="result-confidence">
-      <span class="conf-label">Confianza</span>
-      <div class="conf-track"><div class="conf-fill" id="confFill" style="width:0%"></div></div>
-      <span class="conf-pct" id="confPct">0%</span>
+    <div class="support-body">
+
+      <div class="sw-progress" id="swProgress"></div>
+
+      <div class="sw-step active" data-step="0">
+        <div class="sw-q">¿Cual es el motivo de tu mensaje?</div>
+        <div class="sw-opts">
+          <button class="sw-opt" data-field="motivo" data-value="Quiero mas informacion antes de comprar">
+            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
+            <div class="sw-opt-txt">Quiero mas informacion antes de comprar</div>
+          </button>
+          <button class="sw-opt" data-field="motivo" data-value="Ya realice mi compra y tengo un problema con el acceso">
+            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
+            <div class="sw-opt-txt">Ya realice mi compra y tengo un problema</div>
+          </button>
+        </div>
+      </div>
+
+      <!-- INFO PATH -->
+      <div class="sw-step" data-step="info-1">
+        <div class="sw-q">¿Que plataforma usas?</div>
+        <div class="sw-opts">
+          <button class="sw-opt" data-field="plataforma" data-value="Android">
+            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
+            <div class="sw-opt-txt">Android</div>
+          </button>
+          <button class="sw-opt" data-field="plataforma" data-value="iOS">
+            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
+            <div class="sw-opt-txt">iOS</div>
+          </button>
+        </div>
+      </div>
+
+      <div class="sw-step" data-step="info-2">
+        <div class="sw-q">¿Que plan te interesa?</div>
+        <div class="sw-opts">
+          <button class="sw-opt" data-field="plan" data-value="15 dias — $6 USD">
+            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
+            <div class="sw-opt-txt">15 dias — $6 USD</div>
+          </button>
+          <button class="sw-opt" data-field="plan" data-value="1 mes — $10 USD">
+            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
+            <div class="sw-opt-txt">1 mes — $10 USD</div>
+          </button>
+          <button class="sw-opt" data-field="plan" data-value="Permanente — $20 USD">
+            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
+            <div class="sw-opt-txt">Permanente — $20 USD</div>
+          </button>
+          <button class="sw-opt" data-field="plan" data-value="Aun no estoy seguro">
+            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
+            <div class="sw-opt-txt">Aun no estoy seguro</div>
+          </button>
+        </div>
+      </div>
+
+      <div class="sw-step" data-step="info-3">
+        <div class="sw-q">Cuentanos tu pregunta (opcional)</div>
+        <div class="sw-field"><textarea class="sw-textarea" id="swInfoNote" placeholder="Ej: ¿funciona en mi modelo de celular?"></textarea></div>
+      </div>
+
+      <!-- PROBLEM PATH -->
+      <div class="sw-step" data-step="prob-1">
+        <div class="sw-q">¿Que plan compraste?</div>
+        <div class="sw-opts">
+          <button class="sw-opt" data-field="plan" data-value="15 dias — $6 USD">
+            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
+            <div class="sw-opt-txt">15 dias — $6 USD</div>
+          </button>
+          <button class="sw-opt" data-field="plan" data-value="1 mes — $10 USD">
+            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
+            <div class="sw-opt-txt">1 mes — $10 USD</div>
+          </button>
+          <button class="sw-opt" data-field="plan" data-value="Permanente — $20 USD">
+            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
+            <div class="sw-opt-txt">Permanente — $20 USD</div>
+          </button>
+        </div>
+      </div>
+
+      <div class="sw-step" data-step="prob-2">
+        <div class="sw-q">¿Con que metodo pagaste?</div>
+        <div class="sw-opts">
+          <button class="sw-opt" data-field="metodo" data-value="Tarjeta debito/credito">
+            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
+            <div class="sw-opt-txt">Tarjeta debito/credito</div>
+          </button>
+          <button class="sw-opt" data-field="metodo" data-value="Apple Pay">
+            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
+            <div class="sw-opt-txt">Apple Pay</div>
+          </button>
+          <button class="sw-opt" data-field="metodo" data-value="Google Pay">
+            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
+            <div class="sw-opt-txt">Google Pay</div>
+          </button>
+          <button class="sw-opt" data-field="metodo" data-value="Cash App">
+            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
+            <div class="sw-opt-txt">Cash App</div>
+          </button>
+          <button class="sw-opt" data-field="metodo" data-value="Otro metodo local (permanente)">
+            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
+            <div class="sw-opt-txt">Otro metodo local (plan permanente)</div>
+          </button>
+        </div>
+      </div>
+
+      <div class="sw-step" data-step="prob-3">
+        <div class="sw-q">Cuentanos que problema tuviste con el acceso</div>
+        <div class="sw-field"><textarea class="sw-textarea" id="swProbNote" placeholder="Ej: pague pero no recibi el acceso en Telegram, no me llego el link, etc."></textarea></div>
+      </div>
+
+      <!-- SUMMARY -->
+      <div class="sw-step" data-step="summary">
+        <div class="sw-q">Confirma tus respuestas</div>
+        <div class="sw-summary" id="swSummary"></div>
+        <a class="sw-send" id="swSendBtn" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65-3.8a9 9 0 111.79 1.72L3 21"/></svg>
+          Enviar por WhatsApp
+        </a>
+      </div>
+
+      <div class="sw-nav" id="swNav">
+        <button class="sw-back" id="swBack" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          Atras
+        </button>
+        <button class="sw-next" id="swNext" disabled>
+          Siguiente
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+
     </div>
   </div>
 
-  <div class="low-conf-warn" id="lowConfWarn">
-    <strong>Verificacion doble recomendada.</strong> La deteccion automatica no fue conclusiva para tu navegador. Confirma tu dispositivo manualmente abajo para asegurarte de recibir la version correcta.
-  </div>
-
-  <a class="go-btn" id="goBtn" href="#" style="display:none">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-    <span id="goBtnTxt">Continuar</span>
-  </a>
-
-  <div class="manual" id="manualBlock">
-    <div class="manual-label">Confirma tu dispositivo</div>
-    <div class="manual-grid">
-      <a class="manual-btn" href="https://www.link-directo.com/premium/iOS/" id="manualIOS">
-        <div class="manual-btn-ico">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M16.5 2.5c.1 1.2-.35 2.4-1.1 3.3-.78.9-1.95 1.55-3.1 1.45-.13-1.15.4-2.4 1.13-3.2.8-.9 2.05-1.5 3.07-1.55zM21 17.2c-.6 1.35-.9 1.95-1.65 3.15-1.05 1.65-2.55 3.7-4.4 3.72-1.65.02-2.07-1.07-4.3-1.06-2.22.01-2.7 1.08-4.35 1.06-1.85-.02-3.27-1.87-4.32-3.52C-.2 16.4-.55 11.1 1.95 8.4c1.27-1.4 3.1-2.25 4.85-2.27 1.78-.02 2.9 1.05 4.35 1.05 1.43 0 2.32-1.07 4.4-1.07 1.5.02 3.1.8 4.3 2.2-3.78 2.18-3.18 7.5 1.15 8.89z" fill="white"/></svg>
-        </div>
-        <div class="manual-btn-name">iOS</div>
-        <div class="manual-btn-sub">iPhone / iPad</div>
-      </a>
-      <a class="manual-btn" href="https://www.link-directo.com/premium/Android/" id="manualAndroid">
-        <div class="manual-btn-ico">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M6 18L4.5 21M18 18l1.5 3M3.5 12.5c0-4.14 3.36-7.5 7.5-7.5s7.5 3.36 7.5 7.5M2 12.5h1.5M20.5 12.5H22M6.5 6.5l1 1M17.5 6.5l-1 1" stroke="white" stroke-width="1.7" stroke-linecap="round"/></svg>
-        </div>
-        <div class="manual-btn-name">Android</div>
-        <div class="manual-btn-sub">Cualquier marca</div>
-      </a>
+  <div class="delivery-banner">
+    <div class="db-top">
+      <div class="db-ico"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+      <div class="db-title">Entrega inmediata, 24/7</div>
     </div>
+    <div class="db-body">Sin intermediarios ni tiempos de espera. <strong>No cierres la pagina de pago</strong> hasta recibir tu acceso completo por Telegram, a cualquier hora del dia.</div>
   </div>
 
-  <div class="footer-note">JEXE Regedit Premium · Entrega inmediata</div>
+  <footer>
+    <div class="footer-brand">JEXE Regedit</div>
+    <div class="footer-sub">Android &amp; iOS · 15 dias, 1 mes o acceso permanente</div>
+  </footer>
 
-</div>
+</main>
 
 <script>
+/* ---------- PLATFORM SWITCH ---------- */
 (function(){
-
-  var IOS_URL     = 'https://www.link-directo.com/premium/iOS/';
-  var ANDROID_URL = 'https://www.link-directo.com/premium/Android/';
-
-  /* ══════════════════════════════════════════════
-     DETECTOR MULTI-SEÑAL
-     Cada señal tiene peso propio. Resultado final:
-     score ios vs android → ganador por puntos.
-     Confianza = distancia relativa entre scores.
-  ══════════════════════════════════════════════ */
-  function detect() {
-    var ua       = (navigator.userAgent       || '').toString();
-    var platform = (navigator.platform        || '').toString();
-    var vendor   = (navigator.vendor          || '').toString();
-    var appVer   = (navigator.appVersion      || '').toString();
-    var maxTouch = navigator.maxTouchPoints   || 0;
-    var pf       = platform.toLowerCase();
-    var uaL      = ua.toLowerCase();
-
-    var ios = 0, and = 0;
-
-    /* ── SEÑAL 1: User-Agent — indicador primario ── */
-    // Terminales iOS clásicos
-    if (/iphone/i.test(ua))                                   ios += 60;
-    if (/ipod/i.test(ua))                                     ios += 60;
-    if (/ipad/i.test(ua))                                     ios += 60;
-    // CriOS = Chrome en iOS
-    if (/CriOS/i.test(ua))                                    ios += 30;
-    // FxiOS = Firefox en iOS
-    if (/FxiOS/i.test(ua))                                    ios += 30;
-    // OPiOS = Opera en iOS
-    if (/OPiOS/i.test(ua))                                    ios += 25;
-    // EdgiOS = Edge en iOS
-    if (/EdgiOS/i.test(ua))                                   ios += 25;
-    // Android explícito
-    if (/android/i.test(ua))                                  and += 60;
-    // Fabricantes Android populares en UA
-    if (/samsung/i.test(ua))                                  and += 20;
-    if (/xiaomi|miui|redmi/i.test(ua))                        and += 20;
-    if (/huawei|hmscore/i.test(ua))                           and += 20;
-    if (/oppo|realme|vivo|oneplus/i.test(ua))                 and += 15;
-    if (/SamsungBrowser/i.test(ua))                           and += 20;
-    if (/Fennec/i.test(ua))                                   and += 15;  // Firefox viejo Android
-
-    /* ── SEÑAL 2: navigator.platform ── */
-    if (/iphone|ipod|ipad/i.test(platform))                   ios += 30;
-    // macIntel con touch = iPad disfrazado (iOS 13+ "sitio escritorio")
-    if (/macintel|macppc/i.test(platform) && maxTouch > 1)    ios += 40;
-    if (/linux arm/i.test(pf))                                and += 25;
-    if (/android/i.test(pf))                                  and += 25;
-
-    /* ── SEÑAL 3: navigator.vendor ── */
-    // Solo Safari/iOS reporta "Apple Computer, Inc."
-    if (/apple/i.test(vendor) && !/android/i.test(ua))       ios += 18;
-
-    /* ── SEÑAL 4: API exclusiva DeviceMotionEvent.requestPermission
-         Solo existe en iOS 13+ Safari. Es la señal más discriminante. ── */
-    if (typeof DeviceMotionEvent !== 'undefined' &&
-        typeof DeviceMotionEvent.requestPermission === 'function') {
-      ios += 50;  // peso muy alto — prácticamente definitivo
+  var btnA=document.getElementById('btnAndroid'),btnI=document.getElementById('btnIos');
+  var em=document.getElementById('heroEm'),platText=document.getElementById('heroPlatText'),platIco=document.getElementById('heroPlatIco');
+  var ANDROID_SVG='<circle cx="12" cy="12" r="9"/>';
+  function setPlat(p){
+    if(p==='android'){
+      btnA.classList.add('active');btnI.classList.remove('active');
+      em.textContent='Solo Android.';
+      platText.textContent='Android 8 — 16+  ·  Sin root';
+    }else{
+      btnI.classList.add('active');btnA.classList.remove('active');
+      em.textContent='Solo iOS.';
+      platText.textContent='iOS 11 — 26.5+  ·  Sin jailbreak';
     }
+  }
+  btnA.addEventListener('click',function(){setPlat('android')});
+  btnI.addEventListener('click',function(){setPlat('ios')});
+})();
 
-    /* ── SEÑAL 5: maxTouchPoints heurístico ──
-         Android siempre reporta >0. iOS también.
-         Pero si no hay Android en UA y hay touch → iOS probable. ── */
-    if (maxTouch >= 1 && !/android/i.test(ua) && !/windows/i.test(ua)) {
-      ios += 12;
+/* ---------- PAYMENT LOGOS MARQUEE ---------- */
+var ICONS={
+  card:'<rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>',
+  apple:'<path d="M16.5 2c.1 1.2-.4 2.4-1.1 3.3-.7.9-1.9 1.6-3 1.5-.1-1.1.4-2.3 1.1-3.1.8-.9 2-1.5 3-1.7zM20.7 17.2c-.5 1.2-1.1 2.3-1.9 3.3-1 1.4-2 2.8-3.6 2.8-1.6 0-2.1-1-3.9-1-1.8 0-2.4 1-3.9 1-1.6 0-2.7-1.5-3.7-2.9-2-2.9-3.5-8.1-1.5-11.7 1-1.8 2.8-2.9 4.7-2.9 1.6 0 2.6 1.1 3.9 1.1 1.3 0 2.1-1.1 3.9-1.1 1.6 0 3.3 1 4.4 2.6-3.9 2.1-3.3 7.6.6 8.8z"/>',
+  google:'<circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v3M9 15h6"/>',
+  cashapp:'<rect x="3" y="3" width="18" height="18" rx="5"/><path d="M9 15s1 1.5 3 1.5 3-1 3-2.2c0-1.4-1.3-1.8-3-2.3-1.7-.5-3-1-3-2.3C9 8.5 10 7.5 12 7.5s3 1.5 3 1.5M12 6v1.3M12 16.7V18"/>',
+  bank:'<path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/>',
+  mpesa:'<rect x="4" y="2" width="16" height="20" rx="3"/><path d="M9 6h6M9 18h.01"/>',
+  mobilepay:'<rect x="5" y="2" width="14" height="20" rx="3"/><circle cx="12" cy="17.5" r="1"/>',
+  yape:'<circle cx="12" cy="12" r="9"/><path d="M8 9l4 4 4-4M12 13v6"/>',
+  paypal:'<path d="M7 21l2-14h6c3 0 5 2 4.5 5-.5 3-3 5-6 5H10l-1 4H7z"/>',
+  bancolombia:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 14h2M14 14h2"/>',
+  bancontact:'<circle cx="9" cy="12" r="7"/><circle cx="15" cy="12" r="7"/>',
+  ideal:'<rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="3"/>',
+  pse:'<path d="M3 12h4l3-8 4 16 3-8h4"/>',
+  sepa:'<rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="8" cy="12" r="2.5"/><path d="M13 9h6M13 12h6M13 15h4"/>',
+  spei:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/>',
+  iap:'<rect x="4" y="2" width="16" height="20" rx="3"/><path d="M9 8h6M9 12h6M9 16h3"/>',
+  efecty:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h6M7 13h10"/>',
+  oxxo:'<rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="9" cy="10" r="1.3"/><circle cx="15" cy="10" r="1.3"/><path d="M8 15c1.3 1 2.7 1 4 0"/>',
+  servipag:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 14h8"/>'
+};
+var UNIVERSAL=[
+  {n:'Tarjeta debito/credito',i:'card'},
+  {n:'Apple Pay',i:'apple'},
+  {n:'Google Pay',i:'google'},
+  {n:'Cash App',i:'cashapp'},
+  {n:'Bank Transfer (US)',i:'bank'}
+];
+var PERMANENT=[
+  {n:'M-Pesa',i:'mpesa'},
+  {n:'Mobile Pay',i:'mobilepay'},
+  {n:'Yape',i:'yape'},
+  {n:'PayPal',i:'paypal'},
+  {n:'Bancolombia',i:'bancolombia'},
+  {n:'Bancontact',i:'bancontact'},
+  {n:'Bank Transfer US/AU/CA/EU/UK',i:'bank'},
+  {n:'iDEAL',i:'ideal'},
+  {n:'PSE',i:'pse'},
+  {n:'SEPA Debit',i:'sepa'},
+  {n:'SPEI',i:'spei'},
+  {n:'Apple In-App Purchase',i:'iap'},
+  {n:'Efecty',i:'efecty'},
+  {n:'Oxxo Sencillito',i:'oxxo'},
+  {n:'Servipag',i:'servipag'}
+];
+function buildMarquee(elId,list){
+  var el=document.getElementById(elId);
+  var full=list.concat(list); // duplicate for seamless loop
+  el.innerHTML=full.map(function(m){
+    return '<div class="logo-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'+ICONS[m.i]+'</svg><span>'+m.n+'</span></div>';
+  }).join('');
+}
+buildMarquee('mqUniversal',UNIVERSAL);
+buildMarquee('mqPermanent',PERMANENT);
+
+/* ---------- SUPPORT WIZARD ---------- */
+(function(){
+  var answers={motivo:'',plataforma:'',plan:'',metodo:'',nota:''};
+  var flow=['start']; // dynamic step order, built as user answers
+  var currentIndex=0;
+  var steps=document.querySelectorAll('.sw-step');
+  var nextBtn=document.getElementById('swNext'),backBtn=document.getElementById('swBack');
+  var progressBox=document.getElementById('swProgress');
+
+  function stepEl(name){
+    return document.querySelector('.sw-step[data-step="'+name+'"]');
+  }
+  function showStep(name){
+    steps.forEach(function(s){s.classList.remove('active')});
+    var el = name==='start' ? stepEl('0') : stepEl(name);
+    el.classList.add('active');
+    updateNextState(name);
+    renderProgress();
+  }
+  function updateNextState(name){
+    if(name==='summary'){nextBtn.style.display='none';return}
+    nextBtn.style.display='flex';
+    var el = name==='start' ? stepEl('0') : stepEl(name);
+    if(el.querySelector('.sw-textarea')){
+      nextBtn.disabled=false; // notes optional
+    }else{
+      var hasSel = el.querySelector('.sw-opt.sel');
+      nextBtn.disabled=!hasSel;
     }
-
-    /* ── SEÑAL 6: window.MSStream — NUNCA existe en iOS real ── */
-    if (typeof window.MSStream !== 'undefined') {
-      ios  = 0;  // Windows Phone / IE, no es iOS
+    backBtn.style.display = currentIndex===0 ? 'none':'flex';
+  }
+  function renderProgress(){
+    var total = flow.length>1? flow.length-1 : 4;
+    progressBox.innerHTML='';
+    for(var i=0;i<Math.max(total,1);i++){
+      var seg=document.createElement('div');seg.className='sw-progress-seg'+(i<currentIndex?' done':'');
+      seg.innerHTML='<i style="width:'+(i<currentIndex?'100%':(i===currentIndex?'40%':'0%'))+'"></i>';
+      progressBox.appendChild(seg);
     }
+  }
 
-    /* ── SEÑAL 7: CSS media features via matchMedia ── */
-    // iOS Safari no soporta hover = none en táctil verdadero
-    try {
-      if (window.matchMedia) {
-        // Dispositivos sin hover "real" (táctiles)
-        if (window.matchMedia('(hover: none)').matches)          ios += 6;
-        if (window.matchMedia('(pointer: coarse)').matches)      ios += 4;
-      }
-    } catch(e){}
+  document.querySelectorAll('.sw-opt').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var parent=btn.closest('.sw-step');
+      parent.querySelectorAll('.sw-opt').forEach(function(o){o.classList.remove('sel')});
+      btn.classList.add('sel');
+      answers[btn.dataset.field]=btn.dataset.value;
+      nextBtn.disabled=false;
 
-    /* ── SEÑAL 8: Screen resolution típica iOS ──
-         iPhones tienen screen.width ≤ 430 (pt), iPads ≤ 1024 ── */
-    try {
-      var sw = screen.width  || 0;
-      var sh = screen.height || 0;
-      var ratio = window.devicePixelRatio || 1;
-      var maxDim = Math.max(sw, sh);
-      var minDim = Math.min(sw, sh);
-      // Resoluciones lógicas exclusivas de iPhone/iPad
-      var iphoneSizes = [320,375,390,393,414,428,430,768,820,834,1024];
-      if (iphoneSizes.indexOf(minDim) !== -1 && !/android/i.test(ua) && ratio >= 2) {
-        ios += 8;
-      }
-    } catch(e){}
-
-    /* ── SEÑAL 9: navigator.userAgentData (Chromium 90+) ──
-         No disponible en Safari/iOS pero sí en Chrome/Android. ── */
-    try {
-      var uad = navigator.userAgentData;
-      if (uad) {
-        var mobile = uad.mobile;
-        var brands = uad.brands || [];
-        var brandStr = JSON.stringify(brands).toLowerCase();
-        // Si hay userAgentData y el UA no dice iPhone, es Chromium → Android probable
-        if (mobile && !/iphone|ipad|ipod/i.test(ua)) {
-          and += 20;
+      // build flow dynamically once motivo is chosen
+      if(btn.dataset.field==='motivo'){
+        if(btn.dataset.value.indexOf('mas informacion')>-1){
+          flow=['start','info-1','info-2','info-3','summary'];
+        }else{
+          flow=['start','prob-1','prob-2','prob-3','summary'];
         }
-        // Algunos dispositivos Android reportan su plataforma aquí
-        var pl = (uad.platform || '').toLowerCase();
-        if (pl === 'android')  and += 30;
-        if (pl === 'ios')      ios += 30;  // por si acaso algún día
       }
-    } catch(e){}
+    });
+  });
 
-    /* ── SEÑAL 10: Comportamiento de WebKit ──
-         window.ApplePaySession solo existe en Safari/iOS/macOS ── */
-    if (typeof window.ApplePaySession !== 'undefined' && !/android/i.test(ua)) {
-      ios += 20;
-    }
+  nextBtn.addEventListener('click',function(){
+    if(currentIndex>=flow.length-1)return;
+    currentIndex++;
+    var name=flow[currentIndex];
+    if(name==='summary')buildSummary();
+    showStep(name);
+  });
+  backBtn.addEventListener('click',function(){
+    if(currentIndex<=0)return;
+    currentIndex--;
+    showStep(flow[currentIndex]);
+  });
 
-    /* ── Calcular confianza ── */
-    var total = ios + and;
-    if (total === 0) return { os: 'unknown', confidence: 0, iosScore: 0, andScore: 0 };
+  function buildSummary(){
+    answers.nota = answers.motivo.indexOf('mas informacion')>-1
+      ? (document.getElementById('swInfoNote').value.trim())
+      : (document.getElementById('swProbNote').value.trim());
 
-    var winner    = ios >= and ? 'ios' : 'android';
-    var winScore  = Math.max(ios, and);
-    var loseScore = Math.min(ios, and);
-    // Confianza = qué tan dominante es el ganador sobre el total
-    var confidence = Math.round((winScore / total) * 100);
+    var box=document.getElementById('swSummary');
+    var rows=[['Motivo',answers.motivo]];
+    if(answers.plataforma)rows.push(['Plataforma',answers.plataforma]);
+    if(answers.plan)rows.push(['Plan',answers.plan]);
+    if(answers.metodo)rows.push(['Metodo de pago',answers.metodo]);
+    if(answers.nota)rows.push(['Detalle',answers.nota]);
+    box.innerHTML=rows.map(function(r){
+      return '<div class="sw-summary-row"><span class="sw-summary-lbl">'+r[0]+'</span><span class="sw-summary-val">'+r[1]+'</span></div>';
+    }).join('');
 
-    return { os: winner, confidence: confidence, iosScore: ios, andScore: and };
+    var isInfo = answers.motivo.indexOf('mas informacion')>-1;
+    var msg = 'Hola JEXE, te escribo desde la pagina de JEXE Regedit.\n\n';
+    msg += '================================\n';
+    msg += isInfo ? ' CONSULTA — Antes de comprar\n' : ' SOPORTE — Problema con el acceso\n';
+    msg += '================================\n';
+    if(answers.plataforma)msg += 'Plataforma: '+answers.plataforma+'\n';
+    if(answers.plan)msg += 'Plan: '+answers.plan+'\n';
+    if(answers.metodo)msg += 'Metodo de pago: '+answers.metodo+'\n';
+    if(answers.nota)msg += 'Detalle: '+answers.nota+'\n';
+    msg += '================================';
+
+    document.getElementById('swSendBtn').href='https://wa.me/573115593037?text='+encodeURIComponent(msg);
   }
 
-  /* ══════════════════════════════════════════════
-     UI
-  ══════════════════════════════════════════════ */
-  var bar      = document.getElementById('bar');
-  var status   = document.getElementById('status');
-  var goBtn    = document.getElementById('goBtn');
-  var goBtnTxt = document.getElementById('goBtnTxt');
-
-  var msgs = [
-    [18, 'Leyendo User-Agent...'],
-    [36, 'Verificando plataforma del sistema...'],
-    [54, 'Analizando APIs exclusivas del dispositivo...'],
-    [72, 'Cruzando 10 señales independientes...'],
-    [90, 'Calculando nivel de confianza...'],
-    [100,'Listo.']
-  ];
-  var mi = 0, pct = 0;
-
-  var iv = setInterval(function(){
-    pct = Math.min(pct + 1.8, 100);
-    bar.style.width = pct + '%';
-    if (mi < msgs.length && pct >= msgs[mi][0]) {
-      status.textContent = msgs[mi][1];
-      mi++;
-    }
-    if (pct >= 100) { clearInterval(iv); showResult(); }
-  }, 32);
-
-  function showResult() {
-    var result = detect();
-
-    // Cambiar icono del encabezado
-    document.getElementById('iconScan').style.display = 'none';
-    if (result.os === 'ios') {
-      document.getElementById('iconIOS').style.display = 'block';
-    } else if (result.os === 'android') {
-      document.getElementById('iconAndroid').style.display = 'block';
-    } else {
-      document.getElementById('iconScan').style.display = 'block';
-    }
-
-    if (result.os === 'unknown') {
-      status.textContent = 'No se pudo determinar el dispositivo.';
-      document.getElementById('detectTitle').textContent = 'Selecciona tu dispositivo';
-      document.getElementById('detectSub').textContent = 'El detector automatico no fue concluyente para tu navegador.';
-      document.getElementById('manualBlock').classList.add('show');
-      return;
-    }
-
-    // Mostrar bloque de resultado
-    var rb = document.getElementById('resultBlock');
-    rb.classList.add('show');
-
-    var name = result.os === 'ios' ? 'iPhone / iPad (iOS)' : 'Android';
-    document.getElementById('resultVal').textContent = name;
-
-    // Icono dentro del bloque
-    var ricoEl = document.getElementById('resultIco');
-    if (result.os === 'ios') {
-      ricoEl.innerHTML = '<svg viewBox="0 0 24 24" fill="none"><path d="M16.5 2.5c.1 1.2-.35 2.4-1.1 3.3-.78.9-1.95 1.55-3.1 1.45-.13-1.15.4-2.4 1.13-3.2.8-.9 2.05-1.5 3.07-1.55zM21 17.2c-.6 1.35-.9 1.95-1.65 3.15-1.05 1.65-2.55 3.7-4.4 3.72-1.65.02-2.07-1.07-4.3-1.06-2.22.01-2.7 1.08-4.35 1.06-1.85-.02-3.27-1.87-4.32-3.52C-.2 16.4-.55 11.1 1.95 8.4c1.27-1.4 3.1-2.25 4.85-2.27 1.78-.02 2.9 1.05 4.35 1.05 1.43 0 2.32-1.07 4.4-1.07 1.5.02 3.1.8 4.3 2.2-3.78 2.18-3.18 7.5 1.15 8.89z" fill="white"/></svg>';
-    } else {
-      ricoEl.innerHTML = '<svg viewBox="0 0 24 24" fill="none"><path d="M6 18L4.5 21M18 18l1.5 3M3.5 12.5c0-4.14 3.36-7.5 7.5-7.5s7.5 3.36 7.5 7.5M2 12.5h1.5M20.5 12.5H22M6.5 6.5l1 1M17.5 6.5l-1 1" stroke="white" stroke-width="1.7" stroke-linecap="round"/></svg>';
-    }
-
-    // Barra de confianza (animada con delay)
-    setTimeout(function(){
-      document.getElementById('confFill').style.width = result.confidence + '%';
-      document.getElementById('confPct').textContent = result.confidence + '%';
-    }, 120);
-
-    // Umbral de confianza — si < 72%, mostrar advertencia + botones manuales
-    var HIGH_CONF = 72;
-
-    if (result.confidence < HIGH_CONF) {
-      status.textContent = 'Confianza baja — confirma manualmente.';
-      document.getElementById('lowConfWarn').classList.add('show');
-      document.getElementById('manualBlock').classList.add('show');
-    } else {
-      // Confianza alta — mostrar botón de CTA + opcion manual debajo
-      var url = result.os === 'ios' ? IOS_URL : ANDROID_URL;
-      status.textContent = result.os === 'ios'
-        ? 'iOS detectado con alta confianza.'
-        : 'Android detectado con alta confianza.';
-
-      goBtn.href = url;
-      goBtnTxt.textContent = result.os === 'ios'
-        ? 'Ir a version iOS'
-        : 'Ir a version Android';
-      goBtn.style.display = 'flex';
-
-      // Redireccion automatica a los 2.2s para confianza muy alta (>= 88%)
-      if (result.confidence >= 88) {
-        var counter = 2;
-        var civ = setInterval(function(){
-          goBtnTxt.textContent = (result.os === 'ios' ? 'Ir a iOS' : 'Ir a Android') + ' (' + counter + ')';
-          counter--;
-          if (counter < 0) {
-            clearInterval(civ);
-            window.location.href = url;
-          }
-        }, 1000);
-      }
-
-      // Siempre mostrar botones manuales como confirmacion
-      document.getElementById('manualBlock').classList.add('show');
-      document.querySelector('.manual-label').textContent = 'Si el sistema se equivoco, elige aqui:';
-    }
-  }
-
+  showStep('start');
 })();
 </script>
 </body>
