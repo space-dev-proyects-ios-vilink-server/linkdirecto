@@ -32,10 +32,7 @@ header{position:sticky;top:0;z-index:90;display:flex;align-items:center;justify-
 .hdr-name .lt{font-weight:500;color:var(--gray1)}
 
 /* platform switch in header */
-.plat-switch{display:flex;background:var(--surface);border:1px solid var(--line);border-radius:100px;padding:3px;gap:2px}
-.plat-btn{display:flex;align-items:center;gap:5px;border:none;background:transparent;padding:6px 11px;border-radius:100px;font-size:0.68rem;font-weight:700;color:var(--gray1);cursor:pointer;transition:all var(--tr);letter-spacing:0.01em}
-.plat-btn svg{width:11px;height:11px}
-.plat-btn.active{background:var(--ink);color:#fff}
+.hdr-tag{font-size:0.62rem;font-weight:600;letter-spacing:0.05em;color:var(--ink);background:var(--surface);padding:5px 10px;border-radius:100px;border:1px solid var(--line)}
 
 main{position:relative;z-index:1;max-width:480px;width:100%;margin:0 auto;padding:0 18px}
 
@@ -155,13 +152,14 @@ main{position:relative;z-index:1;max-width:480px;width:100%;margin:0 auto;paddin
 .pay-warn span strong{font-weight:800;color:var(--ink)}
 
 /* PAYMENT LOGOS MARQUEE */
-.marquee-wrap{margin-top:8px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);animation:rise .6s .2s ease both}
-.marquee-title{font-size:0.68rem;font-weight:600;letter-spacing:0.03em;color:var(--gray1);margin-bottom:10px}
-.marquee-track{display:flex;gap:10px;width:max-content;animation:scrollLeft 34s linear infinite}
-.marquee-track.slow{animation-duration:44s;animation-direction:reverse}
-.logo-chip{display:flex;align-items:center;gap:8px;padding:9px 14px;background:var(--surface);border:1px solid var(--line);border-radius:100px;flex-shrink:0}
-.logo-chip svg{width:16px;height:16px;color:var(--ink)}
-.logo-chip span{font-size:0.73rem;font-weight:600;color:var(--ink2);white-space:nowrap}
+.plan-logos-label{font-size:0.62rem;font-weight:600;letter-spacing:0.04em;color:var(--gray2);margin:14px 0 8px}
+.is-hi .plan-logos-label{color:rgba(255,255,255,0.4)}
+.plan-marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
+.plan-marquee-track{display:flex;gap:9px;width:max-content;animation:scrollLeft 26s linear infinite}
+.plan-marquee-track.slow{animation-duration:50s}
+.logo-chip{display:flex;align-items:center;justify-content:center;height:38px;min-width:38px;padding:0 8px;background:var(--white);border:1px solid var(--line);border-radius:10px;flex-shrink:0}
+.is-hi .logo-chip{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.14)}
+.logo-chip svg{height:20px;width:auto;display:block}
 @keyframes scrollLeft{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* SUPPORT / WA WIZARD */
@@ -232,27 +230,18 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
     </div>
     <span class="hdr-name">JEXE <span class="lt">Regedit</span></span>
   </div>
-  <div class="plat-switch" id="platSwitch">
-    <button class="plat-btn active" data-plat="android" id="btnAndroid">
-      <svg viewBox="0 0 576 512" fill="currentColor"><path d="M420.55,301.93a24,24,0,1,1,24-24,24,24,0,0,1-24,24m-265.1,0a24,24,0,1,1,24-24,24,24,0,0,1-24,24m273.7-144.48,47.94-83a10,10,0,1,0-17.27-10h0l-48.54,84.07a301.25,301.25,0,0,0-246.56,0L116.18,64.45a10,10,0,1,0-17.27,10h0l47.94,83C64.53,202.22,8.24,285.55,0,384H576c-8.24-98.45-64.54-181.78-146.85-226.55"/></svg>
-      Android
-    </button>
-    <button class="plat-btn" data-plat="ios" id="btnIos">
-      <svg viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-19.9-30.3-50.6-46.8-91.8-49.9-37.9-3-79.6 22.4-95.5 22.4-16.9 0-53.6-21.3-83.4-21.3-58.5.9-120.8 47.1-120.8 138.7 0 28.4 5.2 57.8 15.5 88 13.8 39.4 63.4 136.3 115.1 134.7 27.1-.7 46.2-19.5 80.9-19.5 33.7 0 51.4 19.5 81.6 19.5 52.2-.7 97.2-89 110.4-128.5-70.4-33.2-62-97.5-62-99.3zM256.8 67.7c26.6-31.8 24.2-60.8 23.4-71.7-23.6 1.4-50.9 16.4-66.5 34.6-17.2 19.4-27.3 43.4-25.1 70.4 25.5 2 48.4-11.4 68.2-33.3z"/></svg>
-      iOS
-    </button>
-  </div>
+  <span class="hdr-tag">Android &amp; iOS</span>
 </header>
 
 <main>
 
   <div class="hero">
-    <div class="hero-kicker">Disponible para Android &amp; iOS</div>
-    <h1 class="hero-h1">Maximo control.<br/><em id="heroEm">Android &amp; iOS.</em></h1>
-    <p class="hero-p">El mejor Regedit para Free Fire, disponible para cualquier dispositivo. Una sola pagina, acceso inmediato, sin intermediarios.</p>
+    <div class="hero-kicker">Un solo acceso para Android &amp; iOS</div>
+    <h1 class="hero-h1">Maximo control.<br/><em>Android &amp; iOS.</em></h1>
+    <p class="hero-p">El mejor Regedit para Free Fire. Tu compra incluye los beneficios para ambas plataformas dentro de una sola pagina, con acceso inmediato y sin intermediarios.</p>
     <div class="hero-platform">
-      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" id="heroPlatIco"><circle cx="12" cy="12" r="9"/></svg>
-      <span id="heroPlatText">Android 8 — 16+  ·  Sin root  &nbsp;|&nbsp;  iOS 11 — 26.5+  ·  Sin jailbreak</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-6.2-8.6"/></svg>
+      <span>Android 8 — 16+  ·  Sin root  &nbsp;|&nbsp;  iOS 11 — 26.5+  ·  Sin jailbreak</span>
     </div>
   </div>
 
@@ -396,7 +385,9 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
         <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Entrega inmediata por Telegram</div>
         <div class="plan-f neg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>No incluye actualizaciones</div>
       </div>
-      <a href="https://whop.com/checkout/plan_zanh1ivbWF4Ta" target="_blank" rel="noopener" class="plan-cta">
+      <div class="plan-logos-label">Metodos de pago</div>
+      <div class="plan-marquee"><div class="plan-marquee-track" id="logosBasico"></div></div>
+      <a href="https://whop.com/checkout/plan_zanh1ivbWF4Ta" target="_blank" rel="noopener" class="plan-cta" style="margin-top:14px">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
         Pagar $6 USD
       </a>
@@ -414,7 +405,9 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
         <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Entrega inmediata por Telegram</div>
         <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><strong>2 actualizaciones</strong> incluidas durante el mes</div>
       </div>
-      <a href="https://whop.com/checkout/plan_w7W6tisuJRazT" target="_blank" rel="noopener" class="plan-cta">
+      <div class="plan-logos-label">Metodos de pago</div>
+      <div class="plan-marquee"><div class="plan-marquee-track" id="logosMes"></div></div>
+      <a href="https://whop.com/checkout/plan_w7W6tisuJRazT" target="_blank" rel="noopener" class="plan-cta" style="margin-top:14px">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
         Pagar $10 USD
       </a>
@@ -433,7 +426,9 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
         <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><strong>Actualizaciones ilimitadas de por vida</strong></div>
         <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Acceso a todos los metodos de pago locales</div>
       </div>
-      <a href="https://whop.com/checkout/plan_4hRRQoSDe8aMW" target="_blank" rel="noopener" class="plan-cta">
+      <div class="plan-logos-label">Metodos de pago</div>
+      <div class="plan-marquee"><div class="plan-marquee-track slow" id="logosPermanente"></div></div>
+      <a href="https://whop.com/checkout/plan_4hRRQoSDe8aMW" target="_blank" rel="noopener" class="plan-cta" style="margin-top:14px">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
         Pagar $20 USD
       </a>
@@ -454,15 +449,6 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
   <div class="pay-warn">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
     <span><strong>No cierres la pagina</strong> desde donde completaste el pago hasta que obtengas el acceso completo. Cerrarla antes de tiempo puede retrasar tu entrega.</span>
-  </div>
-
-  <div class="marquee-wrap">
-    <div class="marquee-title">Metodos disponibles en 15 dias y 1 mes</div>
-    <div class="marquee-track" id="mqUniversal"></div>
-  </div>
-  <div class="marquee-wrap" style="margin-top:14px">
-    <div class="marquee-title">Metodos adicionales — solo plan Permanente</div>
-    <div class="marquee-track slow" id="mqPermanent"></div>
   </div>
 
   <div class="support-card">
@@ -623,81 +609,45 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
 </main>
 
 <script>
-/* ---------- PLATFORM SWITCH ---------- */
-(function(){
-  var btnA=document.getElementById('btnAndroid'),btnI=document.getElementById('btnIos');
-  var em=document.getElementById('heroEm'),platText=document.getElementById('heroPlatText'),platIco=document.getElementById('heroPlatIco');
-  var ANDROID_SVG='<circle cx="12" cy="12" r="9"/>';
-  function setPlat(p){
-    if(p==='android'){
-      btnA.classList.add('active');btnI.classList.remove('active');
-      em.textContent='Solo Android.';
-      platText.textContent='Android 8 — 16+  ·  Sin root';
-    }else{
-      btnI.classList.add('active');btnA.classList.remove('active');
-      em.textContent='Solo iOS.';
-      platText.textContent='iOS 11 — 26.5+  ·  Sin jailbreak';
-    }
-  }
-  btnA.addEventListener('click',function(){setPlat('android')});
-  btnI.addEventListener('click',function(){setPlat('ios')});
-})();
-
-/* ---------- PAYMENT LOGOS MARQUEE ---------- */
-var ICONS={
-  card:'<rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>',
-  apple:'<path d="M16.5 2c.1 1.2-.4 2.4-1.1 3.3-.7.9-1.9 1.6-3 1.5-.1-1.1.4-2.3 1.1-3.1.8-.9 2-1.5 3-1.7zM20.7 17.2c-.5 1.2-1.1 2.3-1.9 3.3-1 1.4-2 2.8-3.6 2.8-1.6 0-2.1-1-3.9-1-1.8 0-2.4 1-3.9 1-1.6 0-2.7-1.5-3.7-2.9-2-2.9-3.5-8.1-1.5-11.7 1-1.8 2.8-2.9 4.7-2.9 1.6 0 2.6 1.1 3.9 1.1 1.3 0 2.1-1.1 3.9-1.1 1.6 0 3.3 1 4.4 2.6-3.9 2.1-3.3 7.6.6 8.8z"/>',
-  google:'<circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v3M9 15h6"/>',
-  cashapp:'<rect x="3" y="3" width="18" height="18" rx="5"/><path d="M9 15s1 1.5 3 1.5 3-1 3-2.2c0-1.4-1.3-1.8-3-2.3-1.7-.5-3-1-3-2.3C9 8.5 10 7.5 12 7.5s3 1.5 3 1.5M12 6v1.3M12 16.7V18"/>',
-  bank:'<path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/>',
-  mpesa:'<rect x="4" y="2" width="16" height="20" rx="3"/><path d="M9 6h6M9 18h.01"/>',
-  mobilepay:'<rect x="5" y="2" width="14" height="20" rx="3"/><circle cx="12" cy="17.5" r="1"/>',
-  yape:'<circle cx="12" cy="12" r="9"/><path d="M8 9l4 4 4-4M12 13v6"/>',
-  paypal:'<path d="M7 21l2-14h6c3 0 5 2 4.5 5-.5 3-3 5-6 5H10l-1 4H7z"/>',
-  bancolombia:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 14h2M14 14h2"/>',
-  bancontact:'<circle cx="9" cy="12" r="7"/><circle cx="15" cy="12" r="7"/>',
-  ideal:'<rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="3"/>',
-  pse:'<path d="M3 12h4l3-8 4 16 3-8h4"/>',
-  sepa:'<rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="8" cy="12" r="2.5"/><path d="M13 9h6M13 12h6M13 15h4"/>',
-  spei:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/>',
-  iap:'<rect x="4" y="2" width="16" height="20" rx="3"/><path d="M9 8h6M9 12h6M9 16h3"/>',
-  efecty:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h6M7 13h10"/>',
-  oxxo:'<rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="9" cy="10" r="1.3"/><circle cx="15" cy="10" r="1.3"/><path d="M8 15c1.3 1 2.7 1 4 0"/>',
-  servipag:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 14h8"/>'
+/* ---------- PAYMENT LOGOS (icon-only, real brand colors, per plan) ---------- */
+/* Each icon is a full mini logotype in its real brand color(s) — no separate name label needed. */
+var LOGOS={
+  card:'<svg viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>',
+  apple:'<svg viewBox="0 0 40 24"><path fill="#0A0A0A" d="M12.9 2c.07.8-.27 1.6-.73 2.2-.47.6-1.27 1.07-2 1-.08-.75.27-1.53.73-2.07C11.37 2.53 12.23 2.07 12.9 2zM15.6 11.5c-.03-2.45 1.1-4.3 3.33-5.65-1.33-2-3.37-3.13-6.1-3.33-2.53-.2-5.3 1.5-6.37 1.5-1.13 0-3.57-1.42-5.57-1.42C-2.98 2.66-6.98 5.73-6.98 12c0 1.9.35 3.85 1.03 5.87.92 2.63 4.23 9.1 7.67 9 1.8-.05 3.08-1.3 5.4-1.3 2.25 0 3.42 1.3 5.43 1.3 3.47-.05 6.48-5.93 7.37-8.57-4.7-2.2-4.32-6.5-4.32-6.8z" transform="translate(9,0) scale(0.62)"/><text x="24" y="16.5" font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="9.5" font-weight="600" fill="#0A0A0A">Pay</text></svg>',
+  google:'<svg viewBox="0 0 24 24"><path fill="#4285F4" d="M12 2a10 10 0 100 20 10 10 0 000-20z" opacity="0"/><path fill="#4285F4" d="M11.5 10.2v3.9h5.5c-.2 1.3-1.7 3.9-5.5 3.9-3.3 0-6-2.7-6-6.1s2.7-6.1 6-6.1c1.9 0 3.1.8 3.9 1.5l2.6-2.6C16.5 3.1 14.4 2 11.5 2 6.5 2 2.4 6.1 2.4 11s4.1 9 9.1 9c5.2 0 8.7-3.7 8.7-8.9 0-.6-.1-1.1-.1-1.5z"/></svg>',
+  cashapp:'<svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="6" fill="#00D64B"/><path fill="#fff" d="M14.8 8.3c-.5-.5-1.3-.9-2.3-1l.3-1.1h-1.6l-.3 1.1c-1.8.1-3.2 1.1-3.2 2.6 0 1.4 1.1 2 2.7 2.4l.4.1c1.2.3 1.6.5 1.6 1 0 .6-.6.9-1.5.9-1 0-1.9-.4-2.5-1l-1.1 1.1c.7.8 1.8 1.3 3 1.4l-.3 1.2h1.6l.3-1.2c1.9-.2 3.2-1.2 3.2-2.7 0-1.5-1-2.1-2.8-2.5l-.4-.1c-1.1-.3-1.5-.5-1.5-1 0-.5.5-.8 1.3-.8.8 0 1.5.3 2 .8z"/></svg>',
+  bank:'<svg viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/></svg>',
+  mpesa:'<svg viewBox="0 0 24 24"><rect x="1" y="5" width="22" height="14" rx="3" fill="#4CAF50"/><text x="12" y="14.5" font-family="Arial,sans-serif" font-size="6.2" font-weight="800" fill="#fff" text-anchor="middle">M-PESA</text></svg>',
+  mobilepay:'<svg viewBox="0 0 24 24"><rect x="1" y="1" width="22" height="22" rx="6" fill="#5A78FF"/><circle cx="9" cy="12" r="4" fill="#fff"/><path d="M13 8l4 4-4 4" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  yape:'<svg viewBox="0 0 24 24"><rect x="1" y="1" width="22" height="22" rx="11" fill="#742E9E"/><text x="12" y="15" font-family="Arial,sans-serif" font-size="8" font-weight="800" fill="#fff" text-anchor="middle">yape</text></svg>',
+  paypal:'<svg viewBox="0 0 24 24"><path fill="#003087" d="M8.5 4h5.4c2.6 0 4.3 1.6 3.9 4-.5 3-2.8 4.6-5.7 4.6H9.9l-.9 5.4H5.6L8.5 4z"/><path fill="#0070BA" d="M10.9 6.4h5.3c2.5 0 4.1 1.5 3.7 3.8-.5 2.9-2.7 4.4-5.4 4.4h-2.1l-.9 5.4H8.1L10.9 6.4z" opacity="0.85"/></svg>',
+  bancolombia:'<svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="3" fill="#FFDD00"/><path d="M6 15l3-6 3 6M15 9l3 6M12 9v6" stroke="#0A0A0A" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  bancontact:'<svg viewBox="0 0 24 24"><circle cx="9" cy="12" r="7.5" fill="#005498"/><circle cx="15" cy="12" r="7.5" fill="#FFD400"/><path d="M8 9l7 6M8 15l7-6" stroke="#fff" stroke-width="1.3" opacity="0.9"/></svg>',
+  ideal:'<svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="3" fill="#CC0066"/><text x="12" y="15" font-family="Georgia,serif" font-size="9" font-weight="700" fill="#fff" text-anchor="middle">iD</text></svg>',
+  pse:'<svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="3" fill="#E4032E"/><text x="12" y="14.5" font-family="Arial,sans-serif" font-size="7.5" font-weight="800" fill="#fff" text-anchor="middle">PSE</text></svg>',
+  sepa:'<svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="3" fill="#003399"/><text x="12" y="10.5" font-family="Arial,sans-serif" font-size="5" font-weight="800" fill="#FFCC00" text-anchor="middle">SEPA</text><text x="12" y="17" font-family="Arial,sans-serif" font-size="4.6" font-weight="700" fill="#fff" text-anchor="middle">DEBIT</text></svg>',
+  spei:'<svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="3" fill="#8C1D40"/><text x="12" y="14.5" font-family="Arial,sans-serif" font-size="7" font-weight="800" fill="#fff" text-anchor="middle">SPEI</text></svg>',
+  iap:'<svg viewBox="0 0 24 24" fill="#0A0A0A"><path d="M16.5 2c.1 1.2-.4 2.4-1.1 3.3-.7.9-1.9 1.6-3 1.5-.1-1.1.4-2.3 1.1-3.1.8-.9 2-1.5 3-1.7zM20.7 17.2c-.5 1.2-1.1 2.3-1.9 3.3-1 1.4-2 2.8-3.6 2.8-1.6 0-2.1-1-3.9-1-1.8 0-2.4 1-3.9 1-1.6 0-2.7-1.5-3.7-2.9-2-2.9-3.5-8.1-1.5-11.7 1-1.8 2.8-2.9 4.7-2.9 1.6 0 2.6 1.1 3.9 1.1 1.3 0 2.1-1.1 3.9-1.1 1.6 0 3.3 1 4.4 2.6-3.9 2.1-3.3 7.6.6 8.8z"/></svg>',
+  efecty:'<svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="3" fill="#F58220"/><text x="12" y="14.5" font-family="Arial,sans-serif" font-size="6.5" font-weight="800" fill="#fff" text-anchor="middle">Efecty</text></svg>',
+  oxxo:'<svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="3" fill="#DD1E25"/><text x="12" y="14.5" font-family="Arial,sans-serif" font-size="7" font-weight="800" fill="#fff" text-anchor="middle">OXXO</text></svg>',
+  sencillito:'<svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="3" fill="#00A19A"/><text x="12" y="9.5" font-family="Arial,sans-serif" font-size="4" font-weight="800" fill="#fff" text-anchor="middle">sencillito</text><path d="M6 15h12" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg>',
+  servipag:'<svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="3" fill="#005CA9"/><text x="12" y="14.5" font-family="Arial,sans-serif" font-size="4.6" font-weight="800" fill="#fff" text-anchor="middle">Servipag</text></svg>'
 };
-var UNIVERSAL=[
-  {n:'Tarjeta debito/credito',i:'card'},
-  {n:'Apple Pay',i:'apple'},
-  {n:'Google Pay',i:'google'},
-  {n:'Cash App',i:'cashapp'},
-  {n:'Bank Transfer (US)',i:'bank'}
-];
-var PERMANENT=[
-  {n:'M-Pesa',i:'mpesa'},
-  {n:'Mobile Pay',i:'mobilepay'},
-  {n:'Yape',i:'yape'},
-  {n:'PayPal',i:'paypal'},
-  {n:'Bancolombia',i:'bancolombia'},
-  {n:'Bancontact',i:'bancontact'},
-  {n:'Bank Transfer US/AU/CA/EU/UK',i:'bank'},
-  {n:'iDEAL',i:'ideal'},
-  {n:'PSE',i:'pse'},
-  {n:'SEPA Debit',i:'sepa'},
-  {n:'SPEI',i:'spei'},
-  {n:'Apple In-App Purchase',i:'iap'},
-  {n:'Efecty',i:'efecty'},
-  {n:'Oxxo Sencillito',i:'oxxo'},
-  {n:'Servipag',i:'servipag'}
-];
-function buildMarquee(elId,list){
+var UNIVERSAL=['card','apple','google','cashapp','bank'];
+var PERMANENT_EXTRA=['mpesa','mobilepay','yape','paypal','bancolombia','bancontact','bank','ideal','pse','sepa','spei','iap','efecty','oxxo','sencillito','servipag'];
+var PERMANENT=UNIVERSAL.concat(PERMANENT_EXTRA);
+
+function buildLogos(elId,list){
   var el=document.getElementById(elId);
+  if(!el)return;
   var full=list.concat(list); // duplicate for seamless loop
-  el.innerHTML=full.map(function(m){
-    return '<div class="logo-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'+ICONS[m.i]+'</svg><span>'+m.n+'</span></div>';
+  el.innerHTML=full.map(function(id){
+    return '<div class="logo-chip">'+LOGOS[id]+'</div>';
   }).join('');
 }
-buildMarquee('mqUniversal',UNIVERSAL);
-buildMarquee('mqPermanent',PERMANENT);
+buildLogos('logosBasico',UNIVERSAL);
+buildLogos('logosMes',UNIVERSAL);
+buildLogos('logosPermanente',PERMANENT);
 
 /* ---------- SUPPORT WIZARD ---------- */
 (function(){
