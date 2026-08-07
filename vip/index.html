@@ -138,6 +138,57 @@ main{position:relative;z-index:1;max-width:480px;width:100%;margin:0 auto;paddin
 .plan-cta:hover{transform:translateY(-1px)}
 .plan-cta svg{width:14px;height:14px}
 
+/* EXTRA PAYMENT METHODS (collapsible, per plan) */
+.extra-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;padding:11px 13px;border-radius:var(--r-sm);background:var(--surface);border:1px solid var(--line);cursor:pointer;transition:background var(--tr)}
+.extra-toggle:hover{background:var(--surface2)}
+.is-hi .extra-toggle{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.13)}
+.is-hi .extra-toggle:hover{background:rgba(255,255,255,0.1)}
+.extra-toggle-left{display:flex;align-items:center;gap:8px}
+.extra-toggle-left svg{width:14px;height:14px;color:var(--gray1);flex-shrink:0}
+.is-hi .extra-toggle-left svg{color:rgba(255,255,255,0.6)}
+.extra-toggle-left span{font-size:0.75rem;font-weight:700;color:var(--ink2)}
+.is-hi .extra-toggle-left span{color:rgba(255,255,255,0.85)}
+.extra-chevron{color:var(--gray2);transition:transform .2s;flex-shrink:0}
+.is-hi .extra-chevron{color:rgba(255,255,255,0.45)}
+.extra-chevron svg{width:12px;height:12px}
+.extra-toggle.open .extra-chevron{transform:rotate(180deg)}
+.extra-panel{display:none;margin-top:8px}
+.extra-panel.open{display:block;animation:rise .25s ease both}
+.extra-method-wrap{display:flex;flex-direction:column;margin-bottom:6px}
+.extra-method-wrap:last-child{margin-bottom:0}
+.extra-method{display:flex;align-items:center;gap:10px;padding:9px 10px;background:var(--white);border:1.5px solid var(--line);border-radius:var(--r-sm);cursor:pointer;transition:all var(--tr)}
+.is-hi .extra-method{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.09)}
+.extra-method:hover{border-color:var(--gray3)}
+.is-hi .extra-method:hover{border-color:rgba(255,255,255,0.2)}
+.extra-method.is-sel{border-color:var(--ink);border-bottom-left-radius:0;border-bottom-right-radius:0}
+.is-hi .extra-method.is-sel{border-color:#fff;background:rgba(255,255,255,0.09)}
+.extra-m-ico{width:34px;height:24px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.extra-m-ico svg{height:24px;width:auto;display:block}
+.extra-m-info{flex:1;min-width:0}
+.extra-m-name{font-size:0.77rem;font-weight:700;color:var(--ink)}
+.is-hi .extra-m-name{color:#fff}
+.extra-m-amt{font-size:0.66rem;color:var(--gray1);font-weight:600;margin-top:1px}
+.is-hi .extra-m-amt{color:rgba(255,255,255,0.5)}
+.extra-m-chev{color:var(--gray3);flex-shrink:0;transition:transform .2s}
+.extra-method.is-sel .extra-m-chev{transform:rotate(180deg)}
+.is-hi .extra-m-chev{color:rgba(255,255,255,0.4)}
+.extra-m-chev svg{width:13px;height:13px}
+.extra-detail{display:none;padding:11px;border-radius:0 0 var(--r-sm) var(--r-sm);background:var(--surface);border:1.5px solid var(--line);border-top:none}
+.is-hi .extra-detail{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.09)}
+.extra-detail.show{display:block;animation:rise .2s ease both}
+.extra-data-row{display:flex;align-items:center;gap:8px;padding:7px 9px;margin-bottom:5px;background:var(--white);border:1px solid var(--line);border-radius:8px}
+.is-hi .extra-data-row{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.09)}
+.extra-data-row:last-of-type{margin-bottom:0}
+.extra-data-lbl{font-size:0.6rem;color:var(--gray1);font-weight:500;min-width:66px;flex-shrink:0}
+.is-hi .extra-data-lbl{color:rgba(255,255,255,0.42)}
+.extra-data-val{font-size:0.74rem;font-weight:700;color:var(--ink);flex:1;word-break:break-all}
+.is-hi .extra-data-val{color:#fff}
+.extra-data-copy{width:23px;height:23px;border-radius:6px;border:1px solid var(--line);background:var(--white);color:var(--gray1);cursor:pointer;display:grid;place-items:center;flex-shrink:0;transition:all var(--tr)}
+.is-hi .extra-data-copy{border-color:rgba(255,255,255,0.13);background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.55)}
+.extra-data-copy svg{width:11px;height:11px}
+.extra-data-copy.copied{color:var(--ink);border-color:var(--ink)}
+.is-hi .extra-data-copy.copied{color:#fff;border-color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.13)}
+
 /* UPDATE POLICY NOTE */
 .policy-note{margin-top:12px;padding:15px 16px;background:var(--surface);border-radius:var(--r-md);animation:rise .6s .18s ease both}
 .policy-note-title{display:flex;align-items:center;gap:8px;font-size:0.76rem;font-weight:700;color:var(--ink);margin-bottom:8px}
@@ -391,6 +442,14 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
         Pagar $6 USD
       </a>
+      <button class="extra-toggle" onclick="toggleExtra('basico',this)">
+        <div class="extra-toggle-left">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2H2v10l9.29 9.29a1 1 0 001.41 0l6.59-6.59a1 1 0 000-1.41L12 2z"/><path d="M7 7h.01"/></svg>
+          <span>Otros metodos de pago</span>
+        </div>
+        <div class="extra-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </button>
+      <div class="extra-panel" id="extraPanel-basico"></div>
     </div>
 
     <div class="plan-card">
@@ -411,6 +470,14 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
         Pagar $10 USD
       </a>
+      <button class="extra-toggle" onclick="toggleExtra('mes',this)">
+        <div class="extra-toggle-left">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2H2v10l9.29 9.29a1 1 0 001.41 0l6.59-6.59a1 1 0 000-1.41L12 2z"/><path d="M7 7h.01"/></svg>
+          <span>Otros metodos de pago</span>
+        </div>
+        <div class="extra-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </button>
+      <div class="extra-panel" id="extraPanel-mes"></div>
     </div>
 
     <div class="plan-card is-hi">
@@ -432,6 +499,14 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
         Pagar $20 USD
       </a>
+      <button class="extra-toggle" onclick="toggleExtra('permanente',this)">
+        <div class="extra-toggle-left">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2H2v10l9.29 9.29a1 1 0 001.41 0l6.59-6.59a1 1 0 000-1.41L12 2z"/><path d="M7 7h.01"/></svg>
+          <span>Otros metodos de pago</span>
+        </div>
+        <div class="extra-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </button>
+      <div class="extra-panel" id="extraPanel-permanente"></div>
     </div>
 
   </div>
@@ -631,7 +706,12 @@ var LOGOS={
   efecty:'<svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="3" fill="#F58220"/><text x="12" y="14.5" font-family="Arial,sans-serif" font-size="6.5" font-weight="800" fill="#fff" text-anchor="middle">Efecty</text></svg>',
   oxxo:'<svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="3" fill="#DD1E25"/><text x="12" y="14.5" font-family="Arial,sans-serif" font-size="7" font-weight="800" fill="#fff" text-anchor="middle">OXXO</text></svg>',
   sencillito:'<svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="3" fill="#00A19A"/><text x="12" y="9.5" font-family="Arial,sans-serif" font-size="4" font-weight="800" fill="#fff" text-anchor="middle">sencillito</text><path d="M6 15h12" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/></svg>',
-  servipag:'<svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="3" fill="#005CA9"/><text x="12" y="14.5" font-family="Arial,sans-serif" font-size="4.6" font-weight="800" fill="#fff" text-anchor="middle">Servipag</text></svg>'
+  servipag:'<svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="3" fill="#005CA9"/><text x="12" y="14.5" font-family="Arial,sans-serif" font-size="4.6" font-weight="800" fill="#fff" text-anchor="middle">Servipag</text></svg>',
+  binance:'<svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="3" fill="#F0B90B"/><text x="12" y="14.5" font-family="Arial,sans-serif" font-size="6" font-weight="800" fill="#0A0A0A" text-anchor="middle">Binance</text></svg>',
+  skrill:'<svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="3" fill="#862165"/><text x="12" y="14.5" font-family="Arial,sans-serif" font-size="6.3" font-weight="800" fill="#fff" text-anchor="middle">skrill</text></svg>',
+  nequi:'<svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="3" fill="#DA1884"/><text x="12" y="14.5" font-family="Arial,sans-serif" font-size="6.3" font-weight="800" fill="#fff" text-anchor="middle">Nequi</text></svg>',
+  breb:'<svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="3" fill="#1C3FAA"/><text x="12" y="14.5" font-family="Arial,sans-serif" font-size="6" font-weight="800" fill="#fff" text-anchor="middle">Bre-B</text></svg>',
+  clabe:'<svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="3" fill="#006341"/><text x="12" y="14.5" font-family="Arial,sans-serif" font-size="6.3" font-weight="800" fill="#fff" text-anchor="middle">CLABE</text></svg>'
 };
 var UNIVERSAL=['card','apple','google','cashapp','bank'];
 var PERMANENT_EXTRA=['mpesa','mobilepay','yape','paypal','bancolombia','bancontact','bank','ideal','pse','sepa','spei','iap','efecty','oxxo','sencillito','servipag'];
@@ -648,6 +728,90 @@ function buildLogos(elId,list){
 buildLogos('logosBasico',UNIVERSAL);
 buildLogos('logosMes',UNIVERSAL);
 buildLogos('logosPermanente',PERMANENT);
+
+/* ---------- EXTRA PAYMENT METHODS (per plan, hidden until tapped) ---------- */
+var COP_RATE=3300, MXN_RATE=18;
+var PLAN_RATES={
+  basico:{usd:6},
+  mes:{usd:10},
+  permanente:{usd:20}
+};
+var EXTRA_METHODS=['binance','skrill','nequi','breb','clabe'];
+var _eci=0;
+function fmtCOP(n){return '$'+n.toLocaleString('es-CO')+' COP'}
+function fmtMXN(n){return '$'+n.toLocaleString('es-MX')+' MXN'}
+function eRow(lbl,val){
+  var id='ecp'+(++_eci);
+  return '<div class="extra-data-row"><span class="extra-data-lbl">'+lbl+'</span><span class="extra-data-val">'+val+'</span><button class="extra-data-copy" id="'+id+'" onclick="cpExtra(\''+val.replace(/'/g,"\\'")+"','"+id+"')\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\"/><path d=\"M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1\"/></svg></button></div>";
+}
+function cpExtra(txt,id){
+  var b=document.getElementById(id);
+  navigator.clipboard.writeText(txt).then(function(){
+    b.classList.add('copied');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+    setTimeout(function(){b.classList.remove('copied');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>'},1800);
+  }).catch(function(){});
+}
+function extraAmountLabel(methodId,usd){
+  if(methodId==='binance')return usd+' USDT';
+  if(methodId==='skrill')return '$'+usd+' USD';
+  if(methodId==='nequi'||methodId==='breb')return fmtCOP(Math.round(usd*COP_RATE));
+  if(methodId==='clabe')return fmtMXN(Math.round(usd*MXN_RATE));
+  return '';
+}
+function extraDetailHtml(methodId,usd){
+  _eci=0;
+  if(methodId==='binance'){
+    return '<div class="extra-data-lbl" style="margin-bottom:8px;font-weight:700;color:inherit">Binance Pay</div>'
+      +eRow('Monto',usd+' USDT')+eRow('Binance ID','538653875')+eRow('Usuario','@jexeregedit');
+  }else if(methodId==='skrill'){
+    return eRow('Monto','$'+usd+' USD')+eRow('Email Skrill','juanpabloaguirregrosso@gmail.com');
+  }else if(methodId==='nequi'){
+    return eRow('Monto',fmtCOP(Math.round(usd*COP_RATE)))+eRow('Numero','3115593037')+eRow('Titular','Juan Aguirre');
+  }else if(methodId==='breb'){
+    return eRow('Monto',fmtCOP(Math.round(usd*COP_RATE)))+eRow('Entidad','Bold CF')+eRow('Email / ID','mediaspaceapp@gmail.com')+eRow('Titular','Juan Aguirre');
+  }else if(methodId==='clabe'){
+    return eRow('Monto',fmtMXN(Math.round(usd*MXN_RATE)))+eRow('Titular','Juan Pablo Aguirre Grosso')+eRow('CLABE','646180546701915656')+eRow('Entidad','STP');
+  }
+  return '';
+}
+var METHOD_NAMES={binance:'Binance Pay',skrill:'Skrill',nequi:'Nequi',breb:'Llave / BRE-B',clabe:'CLABE — Mexico'};
+
+function buildExtraPanel(planId){
+  var usd=PLAN_RATES[planId].usd;
+  var panel=document.getElementById('extraPanel-'+planId);
+  panel.innerHTML=EXTRA_METHODS.map(function(mid){
+    return '<div class="extra-method-wrap">'
+      +'<div class="extra-method" data-plan="'+planId+'" data-method="'+mid+'">'
+        +'<div class="extra-m-ico">'+LOGOS[mid]+'</div>'
+        +'<div class="extra-m-info"><div class="extra-m-name">'+METHOD_NAMES[mid]+'</div><div class="extra-m-amt">Equivale a '+extraAmountLabel(mid,usd)+'</div></div>'
+        +'<div class="extra-m-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>'
+      +'</div>'
+      +'<div class="extra-detail" data-detail-for="'+planId+'-'+mid+'"></div>'
+    +'</div>';
+  }).join('');
+
+  panel.querySelectorAll('.extra-method').forEach(function(el){
+    el.addEventListener('click',function(){
+      var mid=el.dataset.method;
+      var det=panel.querySelector('[data-detail-for="'+planId+'-'+mid+'"]');
+      var already=el.classList.contains('is-sel');
+      panel.querySelectorAll('.extra-method').forEach(function(i){i.classList.remove('is-sel')});
+      panel.querySelectorAll('.extra-detail').forEach(function(i){i.classList.remove('show');i.innerHTML=''});
+      if(!already){
+        el.classList.add('is-sel');
+        det.innerHTML=extraDetailHtml(mid,usd);
+        det.classList.add('show');
+      }
+    });
+  });
+}
+
+function toggleExtra(planId,btn){
+  var panel=document.getElementById('extraPanel-'+planId);
+  var open=panel.classList.toggle('open');
+  btn.classList.toggle('open',open);
+  if(open&&!panel.children.length)buildExtraPanel(planId);
+}
 
 /* ---------- SUPPORT WIZARD ---------- */
 (function(){
