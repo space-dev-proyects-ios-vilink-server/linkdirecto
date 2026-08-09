@@ -304,6 +304,15 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
 .pp-contact.enabled{opacity:1;pointer-events:auto}
 .pp-contact:hover.enabled{transform:translateY(-1px)}
 .pp-contact svg{width:15px;height:15px}
+
+/* FREE TRIAL BUTTON (1 mes plan only) */
+.trial-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:48px;margin-top:10px;border-radius:100px;background:var(--white);border:1.5px solid var(--ink);color:var(--ink);font-family:var(--f-disp);font-size:0.83rem;font-weight:800;letter-spacing:-0.005em;cursor:pointer;transition:transform var(--tr),background var(--tr)}
+.trial-btn:hover{transform:translateY(-1px);background:var(--surface)}
+.trial-btn svg{width:15px;height:15px}
+
+/* method-note inside modals */
+.pp-methods-note{display:flex;align-items:flex-start;gap:8px;margin-top:12px;font-size:0.71rem;color:var(--gray1);font-weight:500;line-height:1.5}
+.pp-methods-note svg{width:13px;height:13px;flex-shrink:0;margin-top:1px;color:var(--gray2)}
 </style>
 </head>
 <body>
@@ -484,6 +493,11 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
         <div class="extra-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
       </button>
       <div class="extra-panel" id="extraPanel-mes"></div>
+
+      <button class="trial-btn" id="trialOpenBtn" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+        Prueba gratuita — 1 dia
+      </button>
     </div>
 
     <div class="plan-card is-hi">
@@ -704,6 +718,45 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
       <a class="pp-contact" id="ppContactBtn" href="#" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65-3.8a9 9 0 111.79 1.72L3 21"/></svg>
         Contactar para pagar
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="pp-overlay" id="trialOverlay">
+  <div class="pp-modal">
+    <div class="pp-modal-top">
+      <div class="pp-modal-ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+      </div>
+      <div>
+        <div class="pp-modal-title">Prueba gratuita — 1 Mes</div>
+        <div class="pp-modal-sub">Antes de continuar, lee esto</div>
+      </div>
+    </div>
+    <div class="pp-modal-body">
+      Obtienes <strong>1 dia de prueba totalmente gratis</strong> del plan de 1 mes. Pagas <strong>$0 hoy</strong>. Si te gusta, no hagas nada y sigues disfrutando del acceso. Si no te convence, <strong>debes cancelar antes de que termine el dia de prueba</strong>; de lo contrario, al finalizar el periodo se <strong>debitara automaticamente el pago</strong> del plan de 1 mes.
+    </div>
+    <div class="pp-price-row">
+      <div>
+        <div class="pp-price-lbl">Hoy pagas</div>
+        <div class="pp-price-sub">1 dia de prueba gratis · luego $10 USD/mes si no cancelas</div>
+      </div>
+      <div class="pp-price-val">$0 USD</div>
+    </div>
+    <div class="pp-check-row" id="trialCheckRow">
+      <div class="pp-check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="pp-check-txt">Me quedo claro: si no cancelo antes de terminar el dia de prueba gratis, se me debitara automaticamente el pago de $10 USD</div>
+    </div>
+    <div class="pp-methods-note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span>Este enlace solo acepta tarjeta debito/credito, Apple Pay (cualquier iPhone) y Google Pay (cualquier Android).</span>
+    </div>
+    <div class="pp-actions">
+      <button class="pp-cancel" id="trialCancelBtn" type="button">Cancelar</button>
+      <a class="pp-contact" id="trialContinueBtn" href="https://whop.com/checkout/plan_5EpdOw1wJ0H6f" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        Empezar prueba gratis
       </a>
     </div>
   </div>
@@ -965,6 +1018,41 @@ function toggleExtra(planId,btn){
     setChecked(!checked);
   });
   contactBtn.addEventListener('click',function(e){
+    if(!checked)e.preventDefault();
+  });
+})();
+
+/* ---------- FREE TRIAL CONFIRM MODAL (1 mes only) ---------- */
+(function(){
+  var openBtn=document.getElementById('trialOpenBtn');
+  var overlay=document.getElementById('trialOverlay');
+  var checkRow=document.getElementById('trialCheckRow');
+  var continueBtn=document.getElementById('trialContinueBtn');
+  var cancelBtn=document.getElementById('trialCancelBtn');
+  if(!openBtn)return;
+
+  var checked=false;
+
+  function open(){overlay.classList.add('show')}
+  function close(){overlay.classList.remove('show')}
+  function setChecked(v){
+    checked=v;
+    checkRow.classList.toggle('checked',checked);
+    continueBtn.classList.toggle('enabled',checked);
+  }
+
+  openBtn.addEventListener('click',function(){
+    setChecked(false);
+    open();
+  });
+  cancelBtn.addEventListener('click',close);
+  overlay.addEventListener('click',function(e){
+    if(e.target===overlay)close();
+  });
+  checkRow.addEventListener('click',function(){
+    setChecked(!checked);
+  });
+  continueBtn.addEventListener('click',function(e){
     if(!checked)e.preventDefault();
   });
 })();
