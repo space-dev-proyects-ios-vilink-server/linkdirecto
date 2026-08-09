@@ -270,6 +270,40 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
 
 @keyframes rise{from{opacity:0;transform:translateY(11px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:340px){.plan-price{font-size:1.8rem}}
+
+/* PAYPAL BUTTON (permanente plan only) */
+.paypal-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:48px;margin-top:10px;border-radius:100px;background:#fff;border:1.5px solid rgba(255,255,255,0.9);color:var(--ink);font-family:var(--f-disp);font-size:0.83rem;font-weight:800;letter-spacing:-0.005em;cursor:pointer;transition:transform var(--tr),box-shadow var(--tr)}
+.paypal-btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,0,0,0.18)}
+
+/* PAYPAL CONFIRM MODAL */
+.pp-overlay{position:fixed;inset:0;background:rgba(10,10,10,0.55);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);z-index:9998;display:flex;align-items:flex-end;justify-content:center;opacity:0;visibility:hidden;transition:opacity .25s ease,visibility 0s linear .25s}
+.pp-overlay.show{opacity:1;visibility:visible;transition:opacity .25s ease}
+.pp-modal{width:100%;max-width:480px;background:var(--white);border-radius:24px 24px 0 0;padding:22px 20px calc(env(safe-area-inset-bottom,0px) + 22px);transform:translateY(24px);transition:transform .3s cubic-bezier(.16,1,.3,1)}
+.pp-overlay.show .pp-modal{transform:translateY(0)}
+.pp-modal-top{display:flex;align-items:center;gap:11px;margin-bottom:4px}
+.pp-modal-ico{width:36px;height:36px;border-radius:10px;background:var(--surface);display:grid;place-items:center;flex-shrink:0}
+.pp-modal-ico svg{width:18px;height:18px}
+.pp-modal-title{font-family:var(--f-disp);font-size:1rem;font-weight:800;color:var(--ink);letter-spacing:-0.01em}
+.pp-modal-sub{font-size:0.73rem;color:var(--gray1);font-weight:500;margin-top:2px}
+.pp-modal-body{margin-top:15px;padding:15px 16px;background:var(--surface);border-radius:var(--r-md);font-size:0.79rem;color:var(--ink2);line-height:1.6;font-weight:400}
+.pp-modal-body strong{color:var(--ink);font-weight:700}
+.pp-price-row{display:flex;justify-content:space-between;align-items:center;margin-top:13px;padding:13px 15px;background:var(--ink);border-radius:var(--r-md)}
+.pp-price-lbl{font-size:0.75rem;color:rgba(255,255,255,0.6);font-weight:600}
+.pp-price-val{font-family:var(--f-disp);font-size:1.3rem;font-weight:900;color:#fff;letter-spacing:-0.01em}
+.pp-price-sub{font-size:0.66rem;color:rgba(255,255,255,0.4);font-weight:500;margin-top:2px}
+.pp-check-row{display:flex;align-items:flex-start;gap:10px;margin-top:16px;padding:13px 14px;border:1.5px solid var(--line);border-radius:var(--r-sm);cursor:pointer;transition:border-color var(--tr),background var(--tr)}
+.pp-check-row.checked{border-color:var(--ink);background:var(--surface)}
+.pp-check-box{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--gray3);flex-shrink:0;display:grid;place-items:center;transition:all var(--tr);margin-top:1px}
+.pp-check-row.checked .pp-check-box{background:var(--ink);border-color:var(--ink)}
+.pp-check-box svg{width:11px;height:11px;color:#fff;opacity:0;transition:opacity var(--tr)}
+.pp-check-row.checked .pp-check-box svg{opacity:1}
+.pp-check-txt{font-size:0.8rem;font-weight:600;color:var(--ink2);line-height:1.4}
+.pp-actions{display:flex;gap:8px;margin-top:16px}
+.pp-cancel{flex:0 0 auto;padding:0 18px;height:50px;border-radius:100px;background:var(--surface);border:1px solid var(--line);color:var(--ink);font-family:var(--f-disp);font-size:0.85rem;font-weight:700;cursor:pointer}
+.pp-contact{flex:1;height:50px;border-radius:100px;background:var(--ink);color:#fff;border:none;font-family:var(--f-disp);font-size:0.85rem;font-weight:800;letter-spacing:-0.005em;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;transition:all var(--tr);opacity:0.4;pointer-events:none}
+.pp-contact.enabled{opacity:1;pointer-events:auto}
+.pp-contact:hover.enabled{transform:translateY(-1px)}
+.pp-contact svg{width:15px;height:15px}
 </style>
 </head>
 <body>
@@ -479,6 +513,11 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
         <div class="extra-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
       </button>
       <div class="extra-panel" id="extraPanel-permanente"></div>
+
+      <button class="paypal-btn" id="paypalOpenBtn" type="button">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#003087" d="M8.3 3.5h5.9c2.9 0 4.9 1.8 4.4 4.6-.6 3.3-3 5-6.1 5H10l-1 6H5.7L8.3 3.5z"/><path fill="#009cde" d="M9.9 6.3h5.7c2.6 0 4.3 1.6 3.9 4.1-.5 3.1-2.8 4.7-5.7 4.7h-2.3l-1 6.1H7.1L9.9 6.3z" opacity="0.85"/></svg>
+        Pagar con PayPal
+      </button>
     </div>
 
   </div>
@@ -634,6 +673,41 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
   </footer>
 
 </main>
+
+<div class="pp-overlay" id="ppOverlay">
+  <div class="pp-modal">
+    <div class="pp-modal-top">
+      <div class="pp-modal-ico">
+        <svg viewBox="0 0 24 24"><path fill="#003087" d="M8.3 3.5h5.9c2.9 0 4.9 1.8 4.4 4.6-.6 3.3-3 5-6.1 5H10l-1 6H5.7L8.3 3.5z"/><path fill="#009cde" d="M9.9 6.3h5.7c2.6 0 4.3 1.6 3.9 4.1-.5 3.1-2.8 4.7-5.7 4.7h-2.3l-1 6.1H7.1L9.9 6.3z" opacity="0.85"/></svg>
+      </div>
+      <div>
+        <div class="pp-modal-title">Pago con PayPal — Permanente</div>
+        <div class="pp-modal-sub">Antes de continuar, lee esto</div>
+      </div>
+    </div>
+    <div class="pp-modal-body">
+      El pago con <strong>PayPal</strong> para el plan <strong>Permanente</strong> se hace <strong>personalmente con JEXE</strong>, no es un checkout automatico. Por las comisiones de envio que cobra la plataforma, el valor total con PayPal tiene un <strong>recargo de $3 USD</strong> sobre el precio normal.
+    </div>
+    <div class="pp-price-row">
+      <div>
+        <div class="pp-price-lbl">Total a pagar por PayPal</div>
+        <div class="pp-price-sub">$20 USD + $3 USD comision de envio</div>
+      </div>
+      <div class="pp-price-val">$23 USD</div>
+    </div>
+    <div class="pp-check-row" id="ppCheckRow">
+      <div class="pp-check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="pp-check-txt">He leido y quiero pagar $23 USD por PayPal (plan Permanente + comision de envio)</div>
+    </div>
+    <div class="pp-actions">
+      <button class="pp-cancel" id="ppCancelBtn" type="button">Cancelar</button>
+      <a class="pp-contact" id="ppContactBtn" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65-3.8a9 9 0 111.79 1.72L3 21"/></svg>
+        Contactar para pagar
+      </a>
+    </div>
+  </div>
+</div>
 
 <script>
 /* ---------- PAYMENT LOGOS (icon-only, real brand colors, per plan) ---------- */
@@ -848,6 +922,51 @@ function toggleExtra(planId,btn){
   }
 
   showStep('start');
+})();
+
+/* ---------- PAYPAL CONFIRM MODAL (permanente only) ---------- */
+(function(){
+  var openBtn=document.getElementById('paypalOpenBtn');
+  var overlay=document.getElementById('ppOverlay');
+  var checkRow=document.getElementById('ppCheckRow');
+  var contactBtn=document.getElementById('ppContactBtn');
+  var cancelBtn=document.getElementById('ppCancelBtn');
+  if(!openBtn)return;
+
+  var checked=false;
+
+  function open(){
+    overlay.classList.add('show');
+  }
+  function close(){
+    overlay.classList.remove('show');
+  }
+  function setChecked(v){
+    checked=v;
+    checkRow.classList.toggle('checked',checked);
+    contactBtn.classList.toggle('enabled',checked);
+    if(checked){
+      var msg='Hola JEXE, quiero pagar el plan Permanente ($20 USD + $3 USD comision de envio = $23 USD) por PayPal.\n\nHe leido y acepto el precio total con PayPal.';
+      contactBtn.href='https://wa.me/573115593037?text='+encodeURIComponent(msg);
+    }else{
+      contactBtn.href='#';
+    }
+  }
+
+  openBtn.addEventListener('click',function(){
+    setChecked(false);
+    open();
+  });
+  cancelBtn.addEventListener('click',close);
+  overlay.addEventListener('click',function(e){
+    if(e.target===overlay)close();
+  });
+  checkRow.addEventListener('click',function(){
+    setChecked(!checked);
+  });
+  contactBtn.addEventListener('click',function(e){
+    if(!checked)e.preventDefault();
+  });
 })();
 </script>
 </body>
