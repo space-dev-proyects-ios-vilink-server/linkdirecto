@@ -1,83 +1,59 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Diagnóstico</title>
-<style>
-  body{background:#0A0C10;color:#E6EBEF;font-family:'JetBrains Mono',monospace;padding:16px;font-size:13px;}
-  h1{font-size:16px;margin-bottom:6px;}
-  p.note{color:#71808C;font-size:11.5px;line-height:1.6;margin-bottom:20px;}
-  .item{background:#12161C;border:1px solid #212831;border-radius:10px;padding:14px;margin-bottom:12px;}
-  .item .label{font-size:11px;color:#4CE0D2;margin-bottom:6px;font-weight:700;}
-  .item code{display:block;font-size:10px;color:#71808C;word-break:break-all;line-height:1.5;margin-bottom:10px;}
-  .item a{display:block;text-align:center;background:#4CE0D2;color:#0A0C10;padding:10px;border-radius:7px;text-decoration:none;font-weight:700;font-size:11px;letter-spacing:.04em;}
-  .item a:active{opacity:.8;}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel en actualización</title>
+  <style>
+    /* Reseteo básico y fondo negro total */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background-color: #000000;    /* Fondo negro */
+      font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    /* Contenedor del mensaje */
+    .mensaje {
+      color: #ffffff;               /* Texto blanco */
+      font-size: 2.2rem;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      padding: 1.5rem 2rem;
+      max-width: 90%;
+      line-height: 1.4;
+      background: transparent;      /* sin fondo adicional */
+      border: none;
+      box-shadow: none;
+    }
+
+    /* Pequeño ajuste para móviles */
+    @media (max-width: 600px) {
+      .mensaje {
+        font-size: 1.6rem;
+        padding: 1rem 1.2rem;
+      }
+    }
+
+    /* Estilo sutil para el texto (opcional, solo para darle un toque limpio) */
+    .mensaje span {
+      display: inline-block;
+    }
+  </style>
 </head>
 <body>
-<h1>Prueba de variantes — BreventCmd</h1>
-<p class="note">
-  Abre esta página en Chrome (no en el navegador interno de Koder). Toca cada botón uno por uno.
-  El que abra Brevent directamente es el formato correcto — avísame el número.
-  Comando de prueba usado en todas: pointer_speed 7.
-</p>
-
-<div id="list"></div>
-
-<script>
-const PKG = "me.piebridge.brevent";
-const CLASS_FULL = "me.piebridge.brevent.ui.BreventCmd";
-const CLASS_REL  = ".ui.BreventCmd";
-const CMD = "settings put system pointer_speed 7";
-const ENC = encodeURIComponent(CMD);
-
-const variantes = [
-  {
-    n: 1,
-    uri: `intent:#Intent;component=${PKG}/${CLASS_FULL};end`
-  },
-  {
-    n: 2,
-    uri: `intent:#Intent;component=${PKG}/${CLASS_REL};end`
-  },
-  {
-    n: 3,
-    uri: `intent:#Intent;package=${PKG};component=${PKG}/${CLASS_FULL};end`
-  },
-  {
-    n: 4,
-    uri: `intent://cmd#Intent;package=${PKG};component=${PKG}/${CLASS_FULL};end`
-  },
-  {
-    n: 5,
-    uri: `intent:#Intent;action=android.intent.action.MAIN;component=${PKG}/${CLASS_FULL};end`
-  },
-  {
-    n: 6,
-    uri: `intent:#Intent;component=${PKG}/${CLASS_FULL};S.cmd=${ENC};end`
-  },
-  {
-    n: 7,
-    uri: `intent:#Intent;component=${PKG}/${CLASS_FULL};S.command=${ENC};end`
-  },
-  {
-    n: 8,
-    uri: `intent:#Intent;component=${PKG}/${CLASS_FULL};S.shell=${ENC};end`
-  },
-];
-
-const list = document.getElementById("list");
-variantes.forEach(v=>{
-  const div = document.createElement("div");
-  div.className = "item";
-  div.innerHTML = `
-    <div class="label">Variante ${v.n}</div>
-    <code>${v.uri}</code>
-    <a href="${v.uri}">Probar</a>
-  `;
-  list.appendChild(div);
-});
-</script>
+  <div class="mensaje">
+    este panel aún se está actualizando, por favor espere aviso
+  </div>
 </body>
 </html>
