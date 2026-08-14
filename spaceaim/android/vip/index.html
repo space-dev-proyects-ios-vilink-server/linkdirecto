@@ -1,59 +1,570 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel en actualización</title>
-  <style>
-    /* Reseteo básico y fondo negro total */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Space Aim — Verificación</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0d10;
+    --panel:#14171c;
+    --panel-2:#0f1114;
+    --border:#262b31;
+    --border-soft:#1b1f24;
+    --accent:#5b8def;
+    --accent-dim:#233350;
+    --text:#c7ccd3;
+    --text-bright:#eef0f3;
+    --text-dim:#767c85;
+    --ok:#4caf7d;
+    --ok-dim:#1c2f24;
+    --err:#d1615f;
+    --err-dim:#301c1c;
+    --warn:#c9a15a;
+    --radius:5px;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    background:var(--bg);
+    background-image:
+      radial-gradient(circle at 50% -10%, #12161c 0%, transparent 55%);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    font-size:12.5px;
+    min-height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    padding:52px 16px 60px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .shell{width:100%; max-width:380px;}
 
-    html, body {
-      width: 100%;
-      height: 100%;
-      background-color: #000000;    /* Fondo negro */
-      font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
+  .brandbar{display:flex; flex-direction:column; align-items:center; gap:10px; margin-bottom:26px;}
+  .brandbar .mark{
+    width:34px; height:34px; border:1px solid var(--border); border-radius:8px;
+    display:flex; align-items:center; justify-content:center; background:var(--panel-2);
+  }
+  .brandbar .t1{
+    font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:15px; letter-spacing:.02em; color:var(--text-bright);
+  }
+  .brandbar .t2{
+    font-family:'IBM Plex Mono',monospace; font-size:9px; color:var(--text-dim);
+    letter-spacing:.14em; text-transform:uppercase;
+  }
 
-    /* Contenedor del mensaje */
-    .mensaje {
-      color: #ffffff;               /* Texto blanco */
-      font-size: 2.2rem;
-      font-weight: 400;
-      letter-spacing: 0.02em;
-      padding: 1.5rem 2rem;
-      max-width: 90%;
-      line-height: 1.4;
-      background: transparent;      /* sin fondo adicional */
-      border: none;
-      box-shadow: none;
-    }
+  .panel{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:22px 20px;
+    box-shadow:0 1px 0 rgba(255,255,255,.02) inset, 0 12px 24px -12px rgba(0,0,0,.5);
+  }
+  .panel + .panel{margin-top:12px;}
 
-    /* Pequeño ajuste para móviles */
-    @media (max-width: 600px) {
-      .mensaje {
-        font-size: 1.6rem;
-        padding: 1rem 1.2rem;
-      }
-    }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--text-dim); display:flex; align-items:center; gap:7px; margin-bottom:16px;
+  }
+  .eyebrow .ic{flex:none; opacity:.8;}
 
-    /* Estilo sutil para el texto (opcional, solo para darle un toque limpio) */
-    .mensaje span {
-      display: inline-block;
-    }
-  </style>
+  label.flabel{
+    display:block; font-family:'IBM Plex Mono',monospace; font-size:9px; color:var(--text-dim);
+    letter-spacing:.1em; text-transform:uppercase; margin-bottom:7px;
+  }
+
+  input[type=text]{
+    width:100%; background:var(--panel-2); border:1px solid var(--border); color:var(--text-bright);
+    font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:.05em;
+    padding:12px 12px; outline:none; text-transform:uppercase; text-align:center;
+    border-radius:var(--radius);
+    transition:border-color .15s ease;
+  }
+  input:focus{border-color:var(--accent);}
+  input:disabled{opacity:.4;}
+
+  .btn{
+    width:100%; background:var(--accent); border:none; color:#0b0d10;
+    font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:11.5px; letter-spacing:.03em;
+    padding:12px 14px; cursor:pointer; margin-top:12px; border-radius:var(--radius);
+    transition:filter .15s ease, transform .05s ease;
+  }
+  .btn:hover{filter:brightness(1.08);}
+  .btn:active{transform:scale(.985);}
+  .btn:disabled{opacity:.35; cursor:not-allowed; filter:none;}
+  .btn.secondary{
+    background:transparent; border:1px solid var(--border); color:var(--text);
+    font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.06em; text-transform:uppercase;
+  }
+  .btn.secondary:hover{border-color:var(--accent-dim); color:var(--text-bright);}
+
+  .msg{
+    font-family:'IBM Plex Mono',monospace; font-size:10px; margin-top:12px; line-height:1.55; min-height:1px;
+  }
+  .msg.err{color:var(--err);}
+  .msg.ok{color:var(--ok);}
+  .msg.warn{color:var(--warn);}
+  .msg.dim{color:var(--text-dim);}
+
+  /* estado activo */
+  #activeView{display:none;}
+  .statusline{
+    display:flex; align-items:center; justify-content:space-between; margin-bottom:18px;
+  }
+  .statusline .left{display:flex; align-items:center; gap:8px;}
+  .statusline .dot{width:6px; height:6px; border-radius:50%; background:var(--ok);}
+  .statuspill{
+    font-family:'IBM Plex Mono',monospace; font-size:9.5px; color:var(--ok); letter-spacing:.08em; text-transform:uppercase;
+  }
+  .statuspill.redirect{color:var(--accent);}
+
+  .countdown{
+    font-family:'IBM Plex Mono',monospace; font-size:26px; font-weight:500; color:var(--text-bright);
+    letter-spacing:.02em; text-align:center; padding:16px 0;
+    border-top:1px solid var(--border-soft); border-bottom:1px solid var(--border-soft); margin:14px 0;
+  }
+  .countdown .u{font-size:9px; color:var(--text-dim); letter-spacing:.1em; display:block; margin-top:6px; font-family:'Space Grotesk',sans-serif;}
+  .countdown.perm{font-size:14px; letter-spacing:.06em; color:var(--ok);}
+
+  .metarow{
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:'IBM Plex Mono',monospace; font-size:10px;
+    color:var(--text-dim); padding:8px 0; border-bottom:1px solid var(--border-soft);
+  }
+  .metarow span:last-child{color:var(--text); text-align:right;}
+  .metarow:last-child{border-bottom:none;}
+
+  .redirnote{
+    display:flex; align-items:center; gap:7px; margin-top:14px;
+    font-family:'IBM Plex Mono',monospace; font-size:9.5px; color:var(--text-dim); letter-spacing:.03em;
+  }
+  .redirnote .spin{
+    width:11px; height:11px; border-radius:50%; border:1.5px solid var(--border);
+    border-top-color:var(--accent); animation:spin .8s linear infinite; flex:none;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  /* estado expirado */
+  #expiredView{display:none; text-align:center;}
+  #expiredView .ico{margin:2px auto 12px;}
+  #expiredView .title{font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:13px; color:var(--text-bright); letter-spacing:.01em; margin-bottom:6px;}
+  #expiredView .sub{font-family:'Inter',sans-serif; font-size:11px; color:var(--text-dim); line-height:1.6;}
+
+  .foot{
+    text-align:center; color:var(--text-dim); font-family:'IBM Plex Mono',monospace;
+    font-size:8.5px; letter-spacing:.1em; margin-top:22px; opacity:.5;
+  }
+
+  .clockflag{
+    display:none; align-items:flex-start; gap:7px; margin-top:12px; padding:10px 11px;
+    background:var(--panel-2); border:1px solid var(--border-soft); border-radius:var(--radius);
+    font-family:'IBM Plex Mono',monospace; font-size:9.5px; color:var(--warn); letter-spacing:.02em; line-height:1.55;
+  }
+  .clockflag.show{display:flex;}
+  .clockflag .ic{flex:none; margin-top:1px;}
+</style>
 </head>
 <body>
-  <div class="mensaje">
-    este panel aún se está actualizando, por favor espere aviso
+<div class="shell">
+
+  <div class="brandbar">
+    <div class="mark">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2.5 20 6v6c0 5-3.4 8.7-8 9.5C7.4 20.7 4 17 4 12V6l8-3.5Z" stroke="#5b8def" stroke-width="1.4" stroke-linejoin="round"/>
+        <path d="M8.5 12.3 11 14.8l4.8-5.4" stroke="#5b8def" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="t1">Space Aim</div>
+    <div class="t2">Verificación de acceso</div>
   </div>
+
+  <!-- ENTRADA DE KEY -->
+  <div class="panel" id="entryPanel">
+    <div class="eyebrow">
+      <svg class="ic" width="12" height="12" viewBox="0 0 24 24" fill="none"><rect x="4" y="10" width="16" height="10" rx="1.5" stroke="#767c85" stroke-width="1.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="#767c85" stroke-width="1.5"/></svg>
+      Activar licencia
+    </div>
+    <label class="flabel">Código de licencia</label>
+    <input type="text" id="keyInput" placeholder="XXXXX-XXXXX-XXXXX-XXXXX" autocomplete="off" spellcheck="false" maxlength="60">
+    <button class="btn" id="verifyBtn">Verificar</button>
+    <div class="msg" id="msgOut"></div>
+    <div class="clockflag" id="clockFlag">
+      <svg class="ic" width="12" height="12" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#c9a15a" stroke-width="1.5"/><path d="M12 7v5l3 2" stroke="#c9a15a" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <span>No se pudo confirmar la hora del dispositivo contra un servidor de tiempo. Se usó el último valor confiable registrado para evitar conceder tiempo adicional.</span>
+    </div>
+  </div>
+
+  <!-- LICENCIA ACTIVA -->
+  <div class="panel" id="activeView">
+    <div class="statusline">
+      <div class="left"><span class="dot"></span><span class="statuspill" id="statusPill">Licencia activa</span></div>
+    </div>
+    <div class="countdown" id="countdownOut">
+      --:--:--:--
+      <span class="u">días · horas · min · seg restantes</span>
+    </div>
+    <div class="metarow"><span>Plataforma</span><span id="actPlat">—</span></div>
+    <div class="metarow"><span>Tipo de plan</span><span id="actDur">—</span></div>
+    <div class="metarow"><span>Activada</span><span id="actStart">—</span></div>
+    <div class="metarow"><span>Vence</span><span id="actEnd">—</span></div>
+    <button class="btn" id="continueBtn">Continuar ahora</button>
+    <div class="redirnote" id="redirNote"><span class="spin"></span><span id="redirText">Redirigiendo automáticamente…</span></div>
+  </div>
+
+  <!-- EXPIRADO -->
+  <div class="panel" id="expiredView">
+    <svg class="ico" width="28" height="28" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#d1615f" stroke-width="1.4"/><path d="M12 7.5v6" stroke="#d1615f" stroke-width="1.4" stroke-linecap="round"/><circle cx="12" cy="16.3" r="0.9" fill="#d1615f"/></svg>
+    <div class="title">Licencia vencida</div>
+    <div class="sub">El tiempo de esta key terminó. Solicita una nueva key para continuar usando Space Aim.</div>
+  </div>
+
+  <div class="foot">SPACE AIM by JEXE</div>
+</div>
+
+<script>
+/* =========================================================================
+   SPACE AIM — VERIFICADOR
+   Debe compartir el mismo SECRET y el mismo formato de payload que
+   generador.html.
+   ========================================================================= */
+
+const SECRET = (function(){
+  const p = ["Sp4c3", "-A1m_", "Cr3d", "3nt1al", "-v1//", "9f2c7"];
+  return p.join("");
+})();
+
+const REDIRECT_URL_ANDROID = "https://www.link-directo.com/spaceaim/android/vip";
+const REDIRECT_URL_IOS     = "https://www.link-directo.com/spaceaim/ios/vip";
+const REDIRECT_DELAY_MS    = 1400; // tiempo antes de redirigir automáticamente, en cada verificación exitosa
+
+const DUR_SECONDS = [3*86400, 30*86400, 0]; // 0 = permanente
+const PLAT_LABEL = ["Android","iOS"];
+const DUR_LABEL = ["3 días","1 mes","Permanente"];
+
+const B32 = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
+function b32decode(str){
+  let bits = 0, value = 0; const out = [];
+  for (const ch of str){
+    const idx = B32.indexOf(ch);
+    if (idx === -1) continue;
+    value = (value << 5) | idx;
+    bits += 5;
+    if (bits >= 8){
+      out.push((value >>> (bits - 8)) & 255);
+      bits -= 8;
+    }
+  }
+  return new Uint8Array(out);
+}
+
+async function hmac(bytes){
+  const key = await crypto.subtle.importKey(
+    "raw", new TextEncoder().encode(SECRET),
+    {name:"HMAC", hash:"SHA-256"}, false, ["sign"]
+  );
+  const sig = await crypto.subtle.sign("HMAC", key, bytes);
+  return new Uint8Array(sig);
+}
+
+function constTimeEq(a,b){
+  if (a.length !== b.length) return false;
+  let d = 0;
+  for (let i=0;i<a.length;i++) d |= a[i]^b[i];
+  return d === 0;
+}
+
+async function parseKey(raw){
+  const clean = raw.toUpperCase().replace(/[^0-9A-Z]/g,"");
+  const bytes = b32decode(clean);
+  if (bytes.length < 19) return { ok:false, reason:"format" };
+  const full = bytes.slice(0,19);
+  const payload = full.slice(0,11);
+  const sig = full.slice(11,19);
+  const expected = (await hmac(payload)).slice(0,8);
+  if (!constTimeEq(sig, expected)) return { ok:false, reason:"signature" };
+
+  const version = payload[0];
+  const platform = payload[1];
+  const durationCode = payload[2];
+  const ts = (payload[3]<<24 | payload[4]<<16 | payload[5]<<8 | payload[6]) >>> 0;
+  if (version !== 1) return { ok:false, reason:"version" };
+  if (platform > 1 || durationCode > 2) return { ok:false, reason:"fields" };
+
+  const sigHex = [...sig].map(b=>b.toString(16).padStart(2,"0")).join("");
+  return { ok:true, platform, durationCode, generatedAt: ts, sigHex };
+}
+
+/* ---------------- Hora confiable (Colombia) ---------------- */
+async function fetchNetworkTime(){
+  const attempts = [
+    async () => {
+      const r = await fetchWithTimeout("https://worldtimeapi.org/api/timezone/America/Bogota", 4000);
+      const j = await r.json();
+      return Math.floor(j.unixtime);
+    },
+    async () => {
+      const r = await fetchWithTimeout("https://timeapi.io/api/Time/current/zone?timeZone=America/Bogota", 4000);
+      const j = await r.json();
+      return Math.floor(new Date(j.dateTime + "Z").getTime()/1000);
+    }
+  ];
+  for (const attempt of attempts){
+    try{ const t = await attempt(); if (t) return t; }catch(e){ /* probar siguiente */ }
+  }
+  return null;
+}
+
+function fetchWithTimeout(url, ms){
+  const ctrl = new AbortController();
+  const id = setTimeout(()=>ctrl.abort(), ms);
+  return fetch(url, {signal:ctrl.signal}).finally(()=>clearTimeout(id));
+}
+
+const MAXTS_KEY = "sa_max_ts_v1";
+
+async function getTrustedNow(){
+  const deviceNow = Math.floor(Date.now()/1000);
+  const netNow = await fetchNetworkTime();
+  const lastMax = Number(localStorage.getItem(MAXTS_KEY) || 0);
+
+  let trusted;
+  let clockSuspicious = false;
+
+  if (netNow){
+    trusted = netNow;
+    if (Math.abs(deviceNow - netNow) > 300) clockSuspicious = true;
+  } else {
+    trusted = Math.max(deviceNow, lastMax);
+    if (deviceNow < lastMax - 60) clockSuspicious = true;
+  }
+
+  const newMax = Math.max(trusted, lastMax);
+  localStorage.setItem(MAXTS_KEY, String(newMax));
+
+  return { now: newMax, clockSuspicious, hadNetwork: !!netNow };
+}
+
+/* ---------------- Almacenamiento redundante local ---------------- */
+const ACT_KEY = "sa_activation_v1";
+const USED_KEY = "sa_used_sigs_v1";
+
+function idbOpen(){
+  return new Promise((resolve,reject)=>{
+    const req = indexedDB.open("space_aim_store", 1);
+    req.onupgradeneeded = () => { req.result.createObjectStore("kv"); };
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+}
+async function idbSet(key, value){
+  try{
+    const db = await idbOpen();
+    await new Promise((res,rej)=>{
+      const tx = db.transaction("kv","readwrite");
+      tx.objectStore("kv").put(value, key);
+      tx.oncomplete = res; tx.onerror = () => rej(tx.error);
+    });
+  }catch(e){ /* IndexedDB no disponible */ }
+}
+async function idbGet(key){
+  try{
+    const db = await idbOpen();
+    return await new Promise((res,rej)=>{
+      const tx = db.transaction("kv","readonly");
+      const r = tx.objectStore("kv").get(key);
+      r.onsuccess = () => res(r.result);
+      r.onerror = () => rej(r.error);
+    });
+  }catch(e){ return undefined; }
+}
+
+async function saveActivation(record){
+  localStorage.setItem(ACT_KEY, JSON.stringify(record));
+  await idbSet(ACT_KEY, record);
+}
+async function loadActivation(){
+  const ls = localStorage.getItem(ACT_KEY);
+  const idb = await idbGet(ACT_KEY);
+  if (ls && idb) return JSON.parse(ls);
+  if (ls) { await idbSet(ACT_KEY, JSON.parse(ls)); return JSON.parse(ls); }
+  if (idb) { localStorage.setItem(ACT_KEY, JSON.stringify(idb)); return idb; }
+  return null;
+}
+
+async function markUsed(sigHex){
+  const list = JSON.parse(localStorage.getItem(USED_KEY) || "[]");
+  if (!list.includes(sigHex)) list.push(sigHex);
+  localStorage.setItem(USED_KEY, JSON.stringify(list));
+  await idbSet(USED_KEY, list);
+}
+async function wasUsed(sigHex){
+  const ls = JSON.parse(localStorage.getItem(USED_KEY) || "[]");
+  const idb = (await idbGet(USED_KEY)) || [];
+  return ls.includes(sigHex) || idb.includes(sigHex);
+}
+
+/* ---------------- UI ---------------- */
+const entryPanel = document.getElementById("entryPanel");
+const activeView = document.getElementById("activeView");
+const expiredView = document.getElementById("expiredView");
+const keyInput = document.getElementById("keyInput");
+const verifyBtn = document.getElementById("verifyBtn");
+const msgOut = document.getElementById("msgOut");
+const clockFlag = document.getElementById("clockFlag");
+const continueBtn = document.getElementById("continueBtn");
+const redirText = document.getElementById("redirText");
+const statusPill = document.getElementById("statusPill");
+
+function setMsg(text, cls){
+  msgOut.textContent = text;
+  msgOut.className = "msg " + (cls||"");
+}
+
+keyInput.addEventListener("input", ()=>{
+  let v = keyInput.value.toUpperCase().replace(/[^0-9A-Z]/g,"");
+  v = v.slice(0,40);
+  keyInput.value = v.match(/.{1,5}/g)?.join("-") || v;
+});
+verifyBtn.addEventListener("click", handleVerify);
+keyInput.addEventListener("keydown", e=>{ if(e.key==="Enter") handleVerify(); });
+
+async function handleVerify(){
+  const raw = keyInput.value;
+  if (!raw.trim()){ setMsg("Ingresa una key.","err"); return; }
+
+  verifyBtn.disabled = true;
+  keyInput.disabled = true;
+  setMsg("Verificando…","dim");
+
+  const parsed = await parseKey(raw);
+  if (!parsed.ok){
+    setMsg("Key inválida. Revisa que esté completa y sin errores.","err");
+    verifyBtn.disabled = false; keyInput.disabled = false;
+    return;
+  }
+  if (await wasUsed(parsed.sigHex)){
+    setMsg("Esta key ya fue utilizada en este dispositivo.","err");
+    verifyBtn.disabled = false; keyInput.disabled = false;
+    return;
+  }
+
+  const { now, clockSuspicious } = await getTrustedNow();
+  clockFlag.classList.toggle("show", clockSuspicious);
+
+  const durSecs = DUR_SECONDS[parsed.durationCode];
+  const expiresAt = durSecs === 0 ? null : now + durSecs;
+
+  const record = {
+    sigHex: parsed.sigHex,
+    platform: parsed.platform,
+    durationCode: parsed.durationCode,
+    activatedAt: now,
+    expiresAt
+  };
+
+  await saveActivation(record);
+  await markUsed(parsed.sigHex);
+
+  setMsg("Key válida.","ok");
+  activateAndRedirect(record);
+}
+
+function fmtDate(ts){
+  return new Date(ts*1000).toLocaleString("es-CO",{timeZone:"America/Bogota", dateStyle:"medium", timeStyle:"short"});
+}
+
+function destinationFor(record){
+  return record.platform === 0 ? REDIRECT_URL_ANDROID : REDIRECT_URL_IOS;
+}
+
+// Renderiza el estado activo y SIEMPRE redirige automáticamente tras
+// una verificación válida, sea la primera activación o una revisión
+// posterior de una licencia ya activa.
+function activateAndRedirect(record){
+  entryPanel.style.display = "none";
+  expiredView.style.display = "none";
+  activeView.style.display = "block";
+
+  document.getElementById("actPlat").textContent = PLAT_LABEL[record.platform];
+  document.getElementById("actDur").textContent = DUR_LABEL[record.durationCode];
+  document.getElementById("actStart").textContent = fmtDate(record.activatedAt);
+  document.getElementById("actEnd").textContent = record.expiresAt ? fmtDate(record.expiresAt) : "No vence";
+
+  statusPill.textContent = "Licencia activa";
+  statusPill.classList.remove("redirect");
+  redirText.textContent = "Redirigiendo automáticamente…";
+
+  tickCountdown(record);
+
+  const url = destinationFor(record);
+  continueBtn.onclick = () => { window.location.href = url; };
+
+  let secsLeft = Math.ceil(REDIRECT_DELAY_MS/1000);
+  statusPill.textContent = `Redirigiendo en ${secsLeft}s`;
+  statusPill.classList.add("redirect");
+  const tick = setInterval(()=>{
+    secsLeft -= 1;
+    if (secsLeft > 0) statusPill.textContent = `Redirigiendo en ${secsLeft}s`;
+    else clearInterval(tick);
+  }, 1000);
+
+  setTimeout(()=>{
+    clearInterval(tick);
+    window.location.href = url;
+  }, REDIRECT_DELAY_MS);
+}
+
+let tickHandle = null;
+function tickCountdown(record){
+  const out = document.getElementById("countdownOut");
+  if (tickHandle) clearInterval(tickHandle);
+
+  async function update(){
+    const { now } = await getTrustedNow();
+    if (!record.expiresAt){
+      out.innerHTML = 'ACCESO PERMANENTE<span class="u">sin fecha de vencimiento</span>';
+      out.classList.add("perm");
+      return;
+    }
+    const remaining = record.expiresAt - now;
+    if (remaining <= 0){
+      clearInterval(tickHandle);
+      activeView.style.display = "none";
+      expiredView.style.display = "block";
+      return;
+    }
+    const d = Math.floor(remaining/86400);
+    const h = Math.floor((remaining%86400)/3600);
+    const m = Math.floor((remaining%3600)/60);
+    const s = Math.floor(remaining%60);
+    out.innerHTML = `${String(d).padStart(2,"0")}:${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}<span class="u">días · horas · min · seg restantes</span>`;
+  }
+  update();
+  tickHandle = setInterval(update, 1000);
+}
+
+/* ---------------- al cargar: revisar si ya hay activación ---------------- */
+(async function init(){
+  const record = await loadActivation();
+  if (!record) return;
+
+  if (!record.expiresAt){
+    activateAndRedirect(record);
+    return;
+  }
+  const { now } = await getTrustedNow();
+  if (now >= record.expiresAt){
+    entryPanel.style.display = "none";
+    expiredView.style.display = "block";
+  } else {
+    activateAndRedirect(record);
+  }
+})();
+</script>
 </body>
 </html>
