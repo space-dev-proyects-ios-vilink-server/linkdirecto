@@ -24,6 +24,7 @@
     --err:#d1615f;
     --err-dim:#301c1c;
     --warn:#c9a15a;
+    --danger:#d1615f;
     --radius:5px;
   }
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
@@ -102,6 +103,11 @@
     font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.06em; text-transform:uppercase;
   }
   .btn.secondary:hover{border-color:var(--accent-dim); color:var(--text-bright);}
+  .btn.danger{
+    background:transparent; border:1px solid var(--danger); color:var(--danger);
+    font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.06em; text-transform:uppercase;
+  }
+  .btn.danger:hover{background:var(--err-dim);}
 
   .msg{
     font-family:'IBM Plex Mono',monospace; font-size:10px; margin-top:12px; line-height:1.55; min-height:1px;
@@ -213,6 +219,7 @@
     <div class="metarow"><span>Activada</span><span id="actStart">—</span></div>
     <div class="metarow"><span>Vence</span><span id="actEnd">—</span></div>
     <button class="btn" id="continueBtn">Continuar ahora</button>
+    <button class="btn danger" id="deleteBtn" style="margin-top:8px;">Eliminar licencia</button>
     <div class="redirnote" id="redirNote"><span class="spin"></span><span id="redirText">Redirigiendo automáticamente…</span></div>
   </div>
 
@@ -221,6 +228,7 @@
     <svg class="ico" width="28" height="28" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#d1615f" stroke-width="1.4"/><path d="M12 7.5v6" stroke="#d1615f" stroke-width="1.4" stroke-linecap="round"/><circle cx="12" cy="16.3" r="0.9" fill="#d1615f"/></svg>
     <div class="title">Licencia vencida</div>
     <div class="sub">El tiempo de esta key terminó. Solicita una nueva key para continuar usando Space Aim.</div>
+    <button class="btn danger" id="deleteExpiredBtn" style="margin-top:15px;">Eliminar licencia vencida</button>
   </div>
 
   <div class="foot">SPACE AIM by JEXE</div>
@@ -240,7 +248,7 @@ const SECRET = (function(){
 
 const REDIRECT_URL_ANDROID = "https://www.link-directo.com/spaceaim/android/vip";
 const REDIRECT_URL_IOS     = "https://www.link-directo.com/spaceaim/ios/vip";
-const REDIRECT_DELAY_MS    = 1400; // tiempo antes de redirigir automáticamente, en cada verificación exitosa
+const REDIRECT_DELAY_MS    = 3000; // Aumentado a 3 segundos para dar tiempo al usuario
 
 const DUR_SECONDS = [3*86400, 30*86400, 0]; // 0 = permanente
 const PLAT_LABEL = ["Android","iOS"];
@@ -326,9 +334,17 @@ function fetchWithTimeout(url, ms){
 }
 
 const MAXTS_KEY = "sa_max_ts_v1";
+let cachedNow = null;
+let cacheTimestamp = 0;
+const CACHE_DURATION = 60000; // 1 minuto de caché
 
 async function getTrustedNow(){
-  const deviceNow = Math.floor(Date.now()/1000);
+  const currentTime = Date.now();
+  if (cachedNow && (currentTime - cacheTimestamp) < CACHE_DURATION) {
+    return { now: cachedNow, clockSuspicious: false, hadNetwork: true };
+  }
+
+  const deviceNow = Math.floor(currentTime/1000);
   const netNow = await fetchNetworkTime();
   const lastMax = Number(localStorage.getItem(MAXTS_KEY) || 0);
 
@@ -345,6 +361,9 @@ async function getTrustedNow(){
 
   const newMax = Math.max(trusted, lastMax);
   localStorage.setItem(MAXTS_KEY, String(newMax));
+  
+  cachedNow = newMax;
+  cacheTimestamp = currentTime;
 
   return { now: newMax, clockSuspicious, hadNetwork: !!netNow };
 }
@@ -396,6 +415,20 @@ async function loadActivation(){
   return null;
 }
 
+async function deleteActivation(){
+  localStorage.removeItem(ACT_KEY);
+  localStorage.removeItem(USED_KEY);
+  try{
+    const db = await idbOpen();
+    await new Promise((res,rej)=>{
+      const tx = db.transaction("kv","readwrite");
+      tx.objectStore("kv").delete(ACT_KEY);
+      tx.objectStore("kv").delete(USED_KEY);
+      tx.oncomplete = res; tx.onerror = () => rej(tx.error);
+    });
+  }catch(e){ /* IndexedDB no disponible */ }
+}
+
 async function markUsed(sigHex){
   const list = JSON.parse(localStorage.getItem(USED_KEY) || "[]");
   if (!list.includes(sigHex)) list.push(sigHex);
@@ -419,10 +452,26 @@ const clockFlag = document.getElementById("clockFlag");
 const continueBtn = document.getElementById("continueBtn");
 const redirText = document.getElementById("redirText");
 const statusPill = document.getElementById("statusPill");
+const deleteBtn = document.getElementById("deleteBtn");
+const deleteExpiredBtn = document.getElementById("deleteExpiredBtn");
+
+let autoRedirectTimeout = null;
+let countdownInterval = null;
 
 function setMsg(text, cls){
   msgOut.textContent = text;
   msgOut.className = "msg " + (cls||"");
+}
+
+function stopAutoRedirect(){
+  if (autoRedirectTimeout) {
+    clearTimeout(autoRedirectTimeout);
+    autoRedirectTimeout = null;
+  }
+  if (countdownInterval) {
+    clearInterval(countdownInterval);
+    countdownInterval = null;
+  }
 }
 
 keyInput.addEventListener("input", ()=>{
@@ -482,10 +531,10 @@ function destinationFor(record){
   return record.platform === 0 ? REDIRECT_URL_ANDROID : REDIRECT_URL_IOS;
 }
 
-// Renderiza el estado activo y SIEMPRE redirige automáticamente tras
-// una verificación válida, sea la primera activación o una revisión
-// posterior de una licencia ya activa.
+// Renderiza el estado activo y redirige automáticamente
 function activateAndRedirect(record){
+  stopAutoRedirect(); // Limpiar cualquier temporizador anterior
+  
   entryPanel.style.display = "none";
   expiredView.style.display = "none";
   activeView.style.display = "block";
@@ -502,27 +551,38 @@ function activateAndRedirect(record){
   tickCountdown(record);
 
   const url = destinationFor(record);
-  continueBtn.onclick = () => { window.location.href = url; };
+  continueBtn.onclick = () => { 
+    stopAutoRedirect();
+    window.location.href = url; 
+  };
 
+  // Iniciar countdown para redirección automática
   let secsLeft = Math.ceil(REDIRECT_DELAY_MS/1000);
   statusPill.textContent = `Redirigiendo en ${secsLeft}s`;
   statusPill.classList.add("redirect");
-  const tick = setInterval(()=>{
+  
+  countdownInterval = setInterval(()=>{
     secsLeft -= 1;
-    if (secsLeft > 0) statusPill.textContent = `Redirigiendo en ${secsLeft}s`;
-    else clearInterval(tick);
+    if (secsLeft > 0) {
+      statusPill.textContent = `Redirigiendo en ${secsLeft}s`;
+    } else {
+      clearInterval(countdownInterval);
+      countdownInterval = null;
+    }
   }, 1000);
 
-  setTimeout(()=>{
-    clearInterval(tick);
+  autoRedirectTimeout = setTimeout(()=>{
+    if (countdownInterval) {
+      clearInterval(countdownInterval);
+      countdownInterval = null;
+    }
     window.location.href = url;
   }, REDIRECT_DELAY_MS);
 }
 
-let tickHandle = null;
 function tickCountdown(record){
   const out = document.getElementById("countdownOut");
-  if (tickHandle) clearInterval(tickHandle);
+  if (countdownInterval) clearInterval(countdownInterval);
 
   async function update(){
     const { now } = await getTrustedNow();
@@ -533,7 +593,7 @@ function tickCountdown(record){
     }
     const remaining = record.expiresAt - now;
     if (remaining <= 0){
-      clearInterval(tickHandle);
+      clearInterval(countdownInterval);
       activeView.style.display = "none";
       expiredView.style.display = "block";
       return;
@@ -545,8 +605,30 @@ function tickCountdown(record){
     out.innerHTML = `${String(d).padStart(2,"0")}:${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}<span class="u">días · horas · min · seg restantes</span>`;
   }
   update();
-  tickHandle = setInterval(update, 1000);
+  countdownInterval = setInterval(update, 1000);
 }
+
+// Función para eliminar licencia
+async function handleDeleteLicense(){
+  if (confirm("¿Estás seguro de que deseas eliminar esta licencia? Podrás ingresar una nueva key.")) {
+    stopAutoRedirect();
+    await deleteActivation();
+    
+    // Resetear UI
+    activeView.style.display = "none";
+    expiredView.style.display = "none";
+    entryPanel.style.display = "block";
+    
+    keyInput.value = "";
+    keyInput.disabled = false;
+    verifyBtn.disabled = false;
+    setMsg("", "");
+  }
+}
+
+// Event listeners para botones de eliminar
+deleteBtn.addEventListener("click", handleDeleteLicense);
+deleteExpiredBtn.addEventListener("click", handleDeleteLicense);
 
 /* ---------------- al cargar: revisar si ya hay activación ---------------- */
 (async function init(){
@@ -557,6 +639,7 @@ function tickCountdown(record){
     activateAndRedirect(record);
     return;
   }
+  
   const { now } = await getTrustedNow();
   if (now >= record.expiresAt){
     entryPanel.style.display = "none";
