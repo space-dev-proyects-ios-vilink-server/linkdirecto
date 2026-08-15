@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>JEXE REGEDIT — Descargas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0c;
+    --panel:#121215;
+    --panel-line:#232327;
+    --red:#c81e3a;
+    --red-dim:#7a1526;
+    --text:#e9e7e2;
+    --muted:#75757c;
+    --mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;min-height:100%;}
+  body{
+    display:flex;
+    justify-content:center;
+    padding:48px 18px 80px;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(200,30,58,0.08), transparent 55%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 3px),
+      var(--bg);
+  }
+  .wrap{width:100%;max-width:420px;}
+
+  /* HUD corner frame */
+  .frame{position:relative;border:1px solid var(--panel-line);padding:28px 22px 24px;background:var(--panel);}
+  .frame::before,.frame::after,
+  .frame .c-br,.frame .c-tr{
+    content:"";position:absolute;width:14px;height:14px;
+    border-color:var(--red);
+  }
+  .frame::before{top:-1px;left:-1px;border-top:2px solid var(--red);border-left:2px solid var(--red);}
+  .frame::after{bottom:-1px;right:-1px;border-bottom:2px solid var(--red);border-right:2px solid var(--red);}
+  .frame .c-tr{top:-1px;right:-1px;border-top:2px solid var(--red);border-right:2px solid var(--red);}
+  .frame .c-bl{position:absolute;bottom:-1px;left:-1px;width:14px;height:14px;border-bottom:2px solid var(--red);border-left:2px solid var(--red);}
+
+  /* top status strip */
+  .status{
+    display:flex;align-items:center;justify-content:space-between;
+    font-family:var(--mono);font-size:10px;letter-spacing:.12em;
+    color:var(--muted);text-transform:uppercase;margin-bottom:18px;
+  }
+  .status .dot{width:6px;height:6px;background:var(--red);border-radius:50%;display:inline-block;margin-right:6px;
+    box-shadow:0 0 6px var(--red);animation:pulse 1.8s infinite ease-in-out;}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+  /* like signal */
+  .like-row{
+    display:flex;align-items:center;gap:10px;
+    padding:10px 12px;border:1px dashed var(--panel-line);
+    margin-bottom:22px;background:rgba(200,30,58,0.04);
+  }
+  .like-row svg{flex-shrink:0;}
+  .like-row .n{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--red);letter-spacing:.04em;line-height:1;}
+  .like-row .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-top:2px;}
+
+  h1{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:38px;letter-spacing:.03em;line-height:1;
+    color:var(--text);margin-bottom:4px;
+  }
+  h1 span{color:var(--red);}
+  .sub{
+    font-family:var(--mono);font-size:11px;color:var(--muted);
+    letter-spacing:.08em;text-transform:uppercase;margin-bottom:26px;
+  }
+
+  .section-label{
+    font-family:var(--mono);font-size:10px;letter-spacing:.15em;
+    color:var(--red);text-transform:uppercase;margin:26px 0 10px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .section-label::after{content:"";flex:1;height:1px;background:var(--panel-line);}
+  .section-label:first-of-type{margin-top:0;}
+
+  a.btn{
+    display:flex;align-items:center;gap:12px;
+    width:100%;padding:14px 16px;
+    background:#0e0e10;border:1px solid var(--panel-line);
+    color:var(--text);text-decoration:none;
+    font-family:'Outfit',sans-serif;font-weight:600;font-size:14.5px;
+    letter-spacing:.01em;margin-bottom:10px;
+    transition:border-color .15s ease, background .15s ease, transform .1s ease;
+    position:relative;
+  }
+  a.btn:hover{border-color:var(--red);background:#141013;}
+  a.btn:active{transform:scale(0.99);}
+  a.btn svg{flex-shrink:0;color:var(--red);}
+  a.btn .txt{flex:1;}
+  a.btn .txt small{display:block;font-family:var(--mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:2px;font-weight:400;}
+  a.btn .arrow{color:var(--muted);font-family:var(--mono);font-size:13px;}
+
+  a.btn.vip{border-color:var(--red-dim);background:linear-gradient(180deg, rgba(200,30,58,0.10), rgba(200,30,58,0.02));}
+  a.btn.vip svg{color:var(--red);}
+  a.btn.vip:hover{border-color:var(--red);}
+
+  a.btn.wsp svg{color:#3ba55d;}
+  a.btn.yt svg{color:#e0e0e0;}
+
+  /* key block */
+  .key-block{
+    border:1px solid var(--panel-line);background:#0e0e10;
+    padding:12px 14px;margin:-2px 0 16px;
+  }
+  .key-block .k-lbl{
+    font-family:var(--mono);font-size:9.5px;color:var(--muted);
+    text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;
+    display:flex;align-items:center;gap:6px;
+  }
+  .key-block .k-lbl svg{color:var(--red);flex-shrink:0;}
+  .key-row{
+    display:flex;align-items:center;gap:10px;
+    background:#000;border:1px solid #1c1c20;
+    padding:9px 10px;
+  }
+  .key-row code{
+    flex:1;font-family:var(--mono);font-size:12.5px;
+    color:var(--text);letter-spacing:.06em;
+    overflow-x:auto;white-space:nowrap;
+  }
+  .copy-btn{
+    flex-shrink:0;background:transparent;border:1px solid var(--panel-line);
+    color:var(--muted);font-family:var(--mono);font-size:10px;
+    text-transform:uppercase;letter-spacing:.08em;
+    padding:6px 9px;cursor:pointer;transition:all .15s ease;
+    display:flex;align-items:center;gap:5px;
+  }
+  .copy-btn:hover{border-color:var(--red);color:var(--red);}
+  .copy-btn.copied{border-color:#3ba55d;color:#3ba55d;}
+  .note{
+    font-family:var(--mono);font-size:10.5px;color:var(--muted);
+    line-height:1.5;margin-top:2px;
+  }
+  .note b{color:var(--text);font-weight:500;}
+
+  footer{
+    margin-top:30px;text-align:center;
+    font-family:var(--mono);font-size:9.5px;color:var(--muted);
+    letter-spacing:.1em;text-transform:uppercase;
+  }
+  footer span{color:var(--red);}
+
+  @media (prefers-reduced-motion: reduce){
+    .status .dot{animation:none;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="frame">
+    <span class="c-tr"></span><span class="c-bl"></span>
+
+    <div class="status">
+      <span><span class="dot"></span>JEXE // REGEDIT</span>
+      <span>ONLINE</span>
+    </div>
+
+    <div class="like-row">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="color:var(--red)">
+        <path d="M12 21s-7.5-4.7-10-9.3C.3 8.1 2 4.5 5.6 4c2-.3 3.8.6 5 2.2M12 21s7.5-4.7 10-9.3c1.7-3.6 0-7.2-3.6-7.7-2-.3-3.8.6-5 2.2"/>
+        <path d="M9 9l3 3M12 9l-3 3" stroke="var(--muted)"/>
+      </svg>
+      <div>
+        <div class="n">1 LIKE???</div>
+        <div class="lbl">un solo like, en serio</div>
+      </div>
+    </div>
+
+    <h1>JEXE <span>REGEDIT</span></h1>
+    <div class="sub">Descarga todo desde aquí</div>
+
+    <div class="section-label">Descargas</div>
+
+    <a class="btn" href="https://www.mediafire.com/file/e86ssr458olvc6t/PROXYH4CK.mobileconfig/file" target="_blank" rel="noopener">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16.365 1.43c0 1.14-.462 2.222-1.15 3.01-.83.95-2.13 1.68-3.31 1.58-.15-1.1.45-2.28 1.13-3.03.85-.98 2.32-1.7 3.33-1.56zM20.6 17.24c-.55 1.27-.81 1.84-1.52 2.96-1 1.57-2.4 3.53-4.15 3.55-1.55.02-1.95-1.01-4.05-1-2.1.01-2.54 1.02-4.09 1-1.75-.02-3.08-1.78-4.08-3.35C.24 16.9-.6 12.5 1.02 9.66c1.13-1.98 3.02-3.23 5.03-3.26 1.57-.03 3.05 1.06 4.01 1.06.95 0 2.75-1.31 4.64-1.12.79.03 3.02.32 4.45 2.42-.12.07-2.66 1.55-2.63 4.63.03 3.68 3.23 4.9 3.27 4.92-.03.09-.51 1.76-1.19 2.93z"/></svg>
+      <div class="txt">iOS / iPhone<small>Perfil .mobileconfig</small></div>
+      <span class="arrow">↓</span>
+    </a>
+
+    <div class="key-block">
+      <div class="k-lbl">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="1"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Key de respaldo — iOS
+      </div>
+      <div class="key-row">
+        <code id="key-ios">040G0TKZQAWDBAWTHDY4HAQYXDSGZQ0</code>
+        <button class="copy-btn" onclick="copyKey('key-ios', this)">Copiar</button>
+      </div>
+      <div class="note">Úsala <b>solo si la key del video no funciona</b>.</div>
+    </div>
+
+    <a class="btn" href="https://www.mediafire.com/file/ch6j27le4m4l1ym/PROXYH4CK.zip/file" target="_blank" rel="noopener">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 9.48l1.84-3.18a1 1 0 0 0-1.73-1L15.87 8.5a10 10 0 0 0-7.74 0L6.29 5.3a1 1 0 1 0-1.73 1L6.4 9.48A10.06 10.06 0 0 0 2 17h20a10.06 10.06 0 0 0-4.4-7.52zM7 14a1.25 1.25 0 1 1 0-2.5A1.25 1.25 0 0 1 7 14zm10 0a1.25 1.25 0 1 1 0-2.5A1.25 1.25 0 0 1 17 14z"/></svg>
+      <div class="txt">Android<small>Archivo .zip</small></div>
+      <span class="arrow">↓</span>
+    </a>
+
+    <div class="key-block">
+      <div class="k-lbl">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="1"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Key de respaldo — Android
+      </div>
+      <div class="key-row">
+        <code id="key-android">04000TKZQ9Y5ENQ89BFMKW0EGJGYCMR</code>
+        <button class="copy-btn" onclick="copyKey('key-android', this)">Copiar</button>
+      </div>
+      <div class="note">Úsala <b>solo si la key del video no funciona</b>.</div>
+    </div>
+
+    <div class="section-label">Más</div>
+
+    <a class="btn vip" href="https://www.link-directo.com/vip/" target="_blank" rel="noopener">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l2.6 6.1L21 9l-4.9 4.3L17.5 21 12 17.3 6.5 21l1.4-7.7L3 9l6.4-.9z"/></svg>
+      <div class="txt">Versión de paga<small>Acceso VIP</small></div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="btn wsp" href="https://www.link-directo.com/WhatsApp/Group/" target="_blank" rel="noopener">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.28-1.38a9.9 9.9 0 0 0 4.71 1.2h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.8 14.02c-.24.68-1.4 1.3-1.93 1.38-.5.08-1.12.11-1.8-.11-.42-.13-.95-.31-1.63-.6-2.87-1.24-4.74-4.13-4.89-4.32-.14-.2-1.17-1.56-1.17-2.98s.74-2.11 1-2.4c.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.57.81 1.98.88 2.12.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.52 1.9 1.05.94 1.93 1.23 2.21 1.37.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.19-.28.37-.23.62-.14.26.09 1.63.77 1.91.91.28.14.47.21.53.33.07.12.07.68-.17 1.36z"/></svg>
+      <div class="txt">Grupo de WhatsApp<small>Soporte y avisos</small></div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="btn yt" href="https://youtube.com/@jexeregedit?si=5xtp2vva8O31t3UW" target="_blank" rel="noopener">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8zM9.6 15.5V8.5L15.8 12z"/></svg>
+      <div class="txt">Canal de YouTube<small>@jexeregedit</small></div>
+      <span class="arrow">→</span>
+    </a>
+
+    <footer>DEJA TU LIKE <span>&#9829;</span> AYUDA MÁS DE LO QUE CREES</footer>
+  </div>
+</div>
+
+<script>
+function copyKey(id, btn){
+  const text = document.getElementById(id).textContent;
+  const original = btn.textContent;
+  navigator.clipboard.writeText(text).then(function(){
+    btn.textContent = 'Copiado';
+    btn.classList.add('copied');
+    setTimeout(function(){
+      btn.textContent = original;
+      btn.classList.remove('copied');
+    }, 1600);
+  }).catch(function(){
+    btn.textContent = 'Error';
+    setTimeout(function(){ btn.textContent = original; }, 1600);
+  });
+}
+</script>
+</body>
+</html>
