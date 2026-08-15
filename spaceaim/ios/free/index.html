@@ -173,6 +173,32 @@
   }
   .clockflag.show{display:flex;}
   .clockflag .ic{flex:none; margin-top:1px;}
+
+  /* separador "o" entre paneles */
+  .orsep{
+    display:flex; align-items:center; gap:10px; margin:16px 0;
+    font-family:'IBM Plex Mono',monospace; font-size:9px; color:var(--text-dim);
+    letter-spacing:.12em; text-transform:uppercase;
+  }
+  .orsep::before, .orsep::after{content:""; flex:1; height:1px; background:var(--border-soft);}
+
+  /* panel certificado gratis */
+  .freenote{
+    font-family:'Inter',sans-serif; font-size:10.5px; color:var(--text-dim);
+    line-height:1.6; margin-bottom:16px;
+  }
+  .freerow{display:flex; gap:8px;}
+  .freerow .btn{margin-top:0;}
+  .btn.ghost{
+    background:var(--panel-2); border:1px solid var(--border); color:var(--text-bright);
+    font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:10.5px;
+  }
+  .btn.ghost:hover{border-color:var(--accent-dim);}
+  .freewhy{
+    margin-top:14px; padding:10px 11px; background:var(--panel-2); border:1px solid var(--border-soft);
+    border-radius:var(--radius); font-family:'IBM Plex Mono',monospace; font-size:9.5px;
+    color:var(--text-dim); line-height:1.6; letter-spacing:.01em;
+  }
 </style>
 </head>
 <body>
@@ -205,6 +231,21 @@
     </div>
   </div>
 
+  <!-- CERTIFICADO GRATUITO 3 DÍAS -->
+  <div class="panel" id="freeTrialPanel">
+    <div class="eyebrow">
+      <svg class="ic" width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M12 2.5 20 6v6c0 5-3.4 8.7-8 9.5C7.4 20.7 4 17 4 12V6l8-3.5Z" stroke="#767c85" stroke-width="1.5" stroke-linejoin="round"/></svg>
+      Certificado gratuito · 3 días
+    </div>
+    <div class="freenote">Actívalo directo desde aquí, sin copiar ningún código. Se activa una sola vez por dispositivo y comienza a correr desde el momento en que lo confirmas.</div>
+    <div class="freerow">
+      <button class="btn ghost" id="freeAndroidBtn" style="flex:1;">Android — Gratis</button>
+      <button class="btn ghost" id="freeIosBtn" style="flex:1;">iOS — Gratis</button>
+    </div>
+    <div class="msg" id="freeMsgOut"></div>
+    <div class="freewhy">Antes el certificado gratuito se entregaba como código en el canal de YouTube, pero muchas personas no sabían copiarlo bien y se quedaban sin el beneficio. Por eso ahora se activa directo aquí, sin copiar nada.</div>
+  </div>
+
   <!-- LICENCIA ACTIVA -->
   <div class="panel" id="activeView">
     <div class="statusline">
@@ -214,6 +255,7 @@
       --:--:--:--
       <span class="u">días · horas · min · seg restantes</span>
     </div>
+    <div class="metarow"><span>Origen</span><span id="actOrigin">—</span></div>
     <div class="metarow"><span>Plataforma</span><span id="actPlat">—</span></div>
     <div class="metarow"><span>Tipo de plan</span><span id="actDur">—</span></div>
     <div class="metarow"><span>Activada</span><span id="actStart">—</span></div>
@@ -247,7 +289,7 @@ const SECRET = (function(){
 })();
 
 const REDIRECT_URL_ANDROID = "https://www.link-directo.com/spaceaim/android/free";
-const REDIRECT_URL_IOS     = "freefire://";
+const REDIRECT_URL_IOS     = "https://www.link-directo.com/spaceaim/ios/vip";
 const REDIRECT_DELAY_MS    = 3000; // Aumentado a 3 segundos para dar tiempo al usuario
 
 const DUR_SECONDS = [3*86400, 30*86400, 0]; // 0 = permanente
@@ -361,7 +403,7 @@ async function getTrustedNow(){
 
   const newMax = Math.max(trusted, lastMax);
   localStorage.setItem(MAXTS_KEY, String(newMax));
-  
+
   cachedNow = newMax;
   cacheTimestamp = currentTime;
 
@@ -371,6 +413,7 @@ async function getTrustedNow(){
 /* ---------------- Almacenamiento redundante local ---------------- */
 const ACT_KEY = "sa_activation_v1";
 const USED_KEY = "sa_used_sigs_v1";
+const FREE_KEY = "sa_free_trial_used_v1";
 
 function idbOpen(){
   return new Promise((resolve,reject)=>{
@@ -441,8 +484,20 @@ async function wasUsed(sigHex){
   return ls.includes(sigHex) || idb.includes(sigHex);
 }
 
+/* ---- marca de certificado gratuito ya usado en este dispositivo ---- */
+async function markFreeTrialUsed(){
+  localStorage.setItem(FREE_KEY, "1");
+  await idbSet(FREE_KEY, true);
+}
+async function wasFreeTrialUsed(){
+  const ls = localStorage.getItem(FREE_KEY) === "1";
+  const idb = await idbGet(FREE_KEY);
+  return ls || !!idb;
+}
+
 /* ---------------- UI ---------------- */
 const entryPanel = document.getElementById("entryPanel");
+const freeTrialPanel = document.getElementById("freeTrialPanel");
 const activeView = document.getElementById("activeView");
 const expiredView = document.getElementById("expiredView");
 const keyInput = document.getElementById("keyInput");
@@ -454,6 +509,9 @@ const redirText = document.getElementById("redirText");
 const statusPill = document.getElementById("statusPill");
 const deleteBtn = document.getElementById("deleteBtn");
 const deleteExpiredBtn = document.getElementById("deleteExpiredBtn");
+const freeAndroidBtn = document.getElementById("freeAndroidBtn");
+const freeIosBtn = document.getElementById("freeIosBtn");
+const freeMsgOut = document.getElementById("freeMsgOut");
 
 let autoRedirectTimeout = null;
 let countdownInterval = null;
@@ -461,6 +519,10 @@ let countdownInterval = null;
 function setMsg(text, cls){
   msgOut.textContent = text;
   msgOut.className = "msg " + (cls||"");
+}
+function setFreeMsg(text, cls){
+  freeMsgOut.textContent = text;
+  freeMsgOut.className = "msg " + (cls||"");
 }
 
 function stopAutoRedirect(){
@@ -513,13 +575,52 @@ async function handleVerify(){
     platform: parsed.platform,
     durationCode: parsed.durationCode,
     activatedAt: now,
-    expiresAt
+    expiresAt,
+    isFree: false
   };
 
   await saveActivation(record);
   await markUsed(parsed.sigHex);
 
   setMsg("Key válida.","ok");
+  activateAndRedirect(record);
+}
+
+/* ---------------- Certificado gratuito 3 días ---------------- */
+freeAndroidBtn.addEventListener("click", ()=>handleFreeTrial(0));
+freeIosBtn.addEventListener("click", ()=>handleFreeTrial(1));
+
+async function handleFreeTrial(platform){
+  freeAndroidBtn.disabled = true;
+  freeIosBtn.disabled = true;
+  setFreeMsg("Activando certificado…","dim");
+
+  if (await wasFreeTrialUsed()){
+    setFreeMsg("Ya activaste tu certificado gratuito en este dispositivo.","err");
+    freeAndroidBtn.disabled = true;
+    freeIosBtn.disabled = true;
+    return;
+  }
+
+  const { now, clockSuspicious } = await getTrustedNow();
+  clockFlag.classList.toggle("show", clockSuspicious);
+
+  const expiresAt = now + DUR_SECONDS[0]; // siempre 3 días, sin excepción
+
+  const record = {
+    sigHex: "FREE-" + PLAT_LABEL[platform] + "-" + now,
+    platform,
+    durationCode: 0,
+    activatedAt: now,
+    expiresAt,
+    isFree: true
+  };
+
+  await saveActivation(record);
+  await markFreeTrialUsed();
+
+  setFreeMsg("Certificado gratuito activado.","ok");
+  freeTrialPanel.style.display = "none";
   activateAndRedirect(record);
 }
 
@@ -534,11 +635,13 @@ function destinationFor(record){
 // Renderiza el estado activo y redirige automáticamente
 function activateAndRedirect(record){
   stopAutoRedirect(); // Limpiar cualquier temporizador anterior
-  
+
   entryPanel.style.display = "none";
+  freeTrialPanel.style.display = "none";
   expiredView.style.display = "none";
   activeView.style.display = "block";
 
+  document.getElementById("actOrigin").textContent = record.isFree ? "Certificado gratuito" : "Key de licencia";
   document.getElementById("actPlat").textContent = PLAT_LABEL[record.platform];
   document.getElementById("actDur").textContent = DUR_LABEL[record.durationCode];
   document.getElementById("actStart").textContent = fmtDate(record.activatedAt);
@@ -551,16 +654,16 @@ function activateAndRedirect(record){
   tickCountdown(record);
 
   const url = destinationFor(record);
-  continueBtn.onclick = () => { 
+  continueBtn.onclick = () => {
     stopAutoRedirect();
-    window.location.href = url; 
+    window.location.href = url;
   };
 
   // Iniciar countdown para redirección automática
   let secsLeft = Math.ceil(REDIRECT_DELAY_MS/1000);
   statusPill.textContent = `Redirigiendo en ${secsLeft}s`;
   statusPill.classList.add("redirect");
-  
+
   countdownInterval = setInterval(()=>{
     secsLeft -= 1;
     if (secsLeft > 0) {
@@ -613,16 +716,18 @@ async function handleDeleteLicense(){
   if (confirm("¿Estás seguro de que deseas eliminar esta licencia? Podrás ingresar una nueva key.")) {
     stopAutoRedirect();
     await deleteActivation();
-    
+
     // Resetear UI
     activeView.style.display = "none";
     expiredView.style.display = "none";
     entryPanel.style.display = "block";
-    
+
     keyInput.value = "";
     keyInput.disabled = false;
     verifyBtn.disabled = false;
     setMsg("", "");
+
+    await initFreeTrialUI();
   }
 }
 
@@ -630,8 +735,24 @@ async function handleDeleteLicense(){
 deleteBtn.addEventListener("click", handleDeleteLicense);
 deleteExpiredBtn.addEventListener("click", handleDeleteLicense);
 
+/* ---------------- estado del panel de certificado gratuito ---------------- */
+async function initFreeTrialUI(){
+  const trialUsed = await wasFreeTrialUsed();
+  if (trialUsed){
+    freeAndroidBtn.disabled = true;
+    freeIosBtn.disabled = true;
+    setFreeMsg("Ya activaste tu certificado gratuito en este dispositivo.","dim");
+  } else {
+    freeAndroidBtn.disabled = false;
+    freeIosBtn.disabled = false;
+    setFreeMsg("", "");
+  }
+}
+
 /* ---------------- al cargar: revisar si ya hay activación ---------------- */
 (async function init(){
+  await initFreeTrialUI();
+
   const record = await loadActivation();
   if (!record) return;
 
@@ -639,10 +760,11 @@ deleteExpiredBtn.addEventListener("click", handleDeleteLicense);
     activateAndRedirect(record);
     return;
   }
-  
+
   const { now } = await getTrustedNow();
   if (now >= record.expiresAt){
     entryPanel.style.display = "none";
+    freeTrialPanel.style.display = "none";
     expiredView.style.display = "block";
   } else {
     activateAndRedirect(record);
