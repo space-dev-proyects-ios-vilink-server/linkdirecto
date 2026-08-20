@@ -313,6 +313,27 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
 /* method-note inside modals */
 .pp-methods-note{display:flex;align-items:flex-start;gap:8px;margin-top:12px;font-size:0.71rem;color:var(--gray1);font-weight:500;line-height:1.5}
 .pp-methods-note svg{width:13px;height:13px;flex-shrink:0;margin-top:1px;color:var(--gray2)}
+
+/* PAY COMPARE BOX */
+.pay-compare{margin-top:10px;padding:13px;border-radius:var(--r-sm);background:var(--surface)}
+.is-hi .pay-compare{background:rgba(255,255,255,0.06)}
+.pay-compare-title{font-size:0.68rem;font-weight:700;letter-spacing:0.03em;color:var(--gray1);margin-bottom:9px;text-transform:uppercase}
+.is-hi .pay-compare-title{color:rgba(255,255,255,0.45)}
+.pay-compare-row{display:flex;align-items:flex-start;gap:9px;padding:6px 0}
+.pay-compare-row+.pay-compare-row{border-top:1px solid var(--line)}
+.is-hi .pay-compare-row+.pay-compare-row{border-top:1px solid rgba(255,255,255,0.1)}
+.pay-compare-tag{flex-shrink:0;font-family:var(--f-disp);font-size:0.7rem;font-weight:800;color:var(--ink);background:var(--white);border:1px solid var(--line);border-radius:100px;padding:3px 8px;white-space:nowrap;margin-top:1px}
+.is-hi .pay-compare-tag{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.16);color:#fff}
+.pay-compare-tag.hi{background:var(--ink);color:#fff;border-color:var(--ink)}
+.is-hi .pay-compare-tag.hi{background:#fff;color:var(--ink);border-color:#fff}
+.pay-compare-desc{font-size:0.74rem;color:var(--gray1);font-weight:500;line-height:1.5}
+.is-hi .pay-compare-desc{color:rgba(255,255,255,0.6)}
+
+/* RECURRING SUBSCRIPTION BUTTON (1 mes plan) */
+.recur-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:48px;margin-top:10px;border-radius:100px;background:var(--ink);border:1.5px solid var(--ink);color:#fff;font-family:var(--f-disp);font-size:0.83rem;font-weight:800;letter-spacing:-0.005em;cursor:pointer;transition:transform var(--tr),background var(--tr)}
+.recur-btn:hover{transform:translateY(-1px)}
+.recur-btn svg{width:15px;height:15px}
+.recur-save{display:inline-flex;align-items:center;margin-left:2px;font-size:0.66rem;font-weight:700;background:rgba(255,255,255,0.16);padding:2px 7px;border-radius:100px}
 </style>
 </head>
 <body>
@@ -344,6 +365,104 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
       <source src="producto.mp4" type="video/mp4"/>
     </video>
     <div class="video-label">Vista previa</div>
+  </div>
+
+  <div class="sec-label">Planes</div>
+  <div class="plans">
+
+    <div class="plan-card">
+      <div class="plan-top">
+        <div><div class="plan-name">1 Mes</div><div class="plan-sub">El mas elegido</div></div>
+        <div class="plan-badge">POPULAR</div>
+      </div>
+      <div class="plan-price"><sup>$</sup>10<span style="font-size:0.95rem;font-weight:700"> USD</span></div>
+      <div class="plan-feats">
+        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Certificados premium, libres de baneo</div>
+        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Aimlock y aim assist al 70%</div>
+        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Entrega inmediata por Telegram</div>
+        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><strong>2 actualizaciones</strong> incluidas durante el mes</div>
+      </div>
+      <div class="plan-logos-label">Metodos de pago</div>
+      <div class="plan-marquee"><div class="plan-marquee-track" id="logosMes"></div></div>
+      <a href="https://checkout.bold.co/payment/LNK_QPHVA2NY2C" target="_blank" rel="noopener" class="plan-cta" style="margin-top:14px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        Pagar $10 USD
+      </a>
+      <button class="extra-toggle" onclick="toggleExtra('mes',this)">
+        <div class="extra-toggle-left">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2H2v10l9.29 9.29a1 1 0 001.41 0l6.59-6.59a1 1 0 000-1.41L12 2z"/><path d="M7 7h.01"/></svg>
+          <span>Otros metodos de pago</span>
+        </div>
+        <div class="extra-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </button>
+      <div class="extra-panel" id="extraPanel-mes"></div>
+
+      <div class="pay-compare">
+        <div class="pay-compare-title">¿Cual elegir?</div>
+        <div class="pay-compare-row">
+          <span class="pay-compare-tag">$10 pago unico</span>
+          <span class="pay-compare-desc">Un solo cobro por 1 mes de acceso. Al terminar el mes, debes volver a entrar y pagar manualmente otra vez si quieres seguir.</span>
+        </div>
+        <div class="pay-compare-row">
+          <span class="pay-compare-tag hi">$8 recurrente</span>
+          <span class="pay-compare-desc">Cobro automatico de $8 USD cada mes. Te ahorras $2 USD y no tienes que volver a pagar manualmente mes a mes.</span>
+        </div>
+      </div>
+      <button class="recur-btn" id="recurOpenBtn" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+        Suscripcion $8 USD/mes <span class="recur-save">Ahorras $2</span>
+      </button>
+    </div>
+
+    <div class="plan-card is-hi">
+      <div class="plan-top">
+        <div><div class="plan-name">Permanente</div><div class="plan-sub">Acceso de por vida</div></div>
+        <div class="plan-badge">MEJOR VALOR</div>
+      </div>
+      <div class="plan-price"><sup>$</sup>20<span style="font-size:0.95rem;font-weight:700"> USD</span></div>
+      <div class="plan-feats">
+        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Certificados premium, libres de baneo</div>
+        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Aimlock y aim assist al 70%</div>
+        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Entrega inmediata por Telegram</div>
+        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><strong>Actualizaciones ilimitadas de por vida</strong></div>
+        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Acceso a todos los metodos de pago locales</div>
+      </div>
+      <div class="plan-logos-label">Metodos de pago</div>
+      <div class="plan-marquee"><div class="plan-marquee-track slow" id="logosPermanente"></div></div>
+      <a href="https://checkout.bold.co/payment/LNK_TKGTXL26QV" target="_blank" rel="noopener" class="plan-cta" style="margin-top:14px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        Pagar $20 USD
+      </a>
+      <button class="extra-toggle" onclick="toggleExtra('permanente',this)">
+        <div class="extra-toggle-left">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2H2v10l9.29 9.29a1 1 0 001.41 0l6.59-6.59a1 1 0 000-1.41L12 2z"/><path d="M7 7h.01"/></svg>
+          <span>Otros metodos de pago</span>
+        </div>
+        <div class="extra-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+      </button>
+      <div class="extra-panel" id="extraPanel-permanente"></div>
+
+      <button class="paypal-btn" id="paypalOpenBtn" type="button">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#003087" d="M8.3 3.5h5.9c2.9 0 4.9 1.8 4.4 4.6-.6 3.3-3 5-6.1 5H10l-1 6H5.7L8.3 3.5z"/><path fill="#009cde" d="M9.9 6.3h5.7c2.6 0 4.3 1.6 3.9 4.1-.5 3.1-2.8 4.7-5.7 4.7h-2.3l-1 6.1H7.1L9.9 6.3z" opacity="0.85"/></svg>
+        Pagar con PayPal
+      </button>
+    </div>
+
+  </div>
+
+  <div class="policy-note">
+    <div class="policy-note-title">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      Politica de actualizaciones
+    </div>
+    <div class="policy-note-body">
+      El plan de <strong>1 mes</strong> incluye <strong>2 actualizaciones</strong> durante ese periodo. El plan <strong>permanente</strong> incluye <strong>actualizaciones ilimitadas, de por vida</strong>.
+    </div>
+  </div>
+
+  <div class="pay-warn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    <span><strong>No cierres la pagina</strong> desde donde completaste el pago hasta que obtengas el acceso completo. Cerrarla antes de tiempo puede retrasar tu entrega.</span>
   </div>
 
   <div class="tg-required">
@@ -464,93 +583,6 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
     </div>
   </div>
 
-  <div class="sec-label">Planes</div>
-  <div class="plans">
-
-    <div class="plan-card">
-      <div class="plan-top">
-        <div><div class="plan-name">1 Mes</div><div class="plan-sub">El mas elegido</div></div>
-        <div class="plan-badge">POPULAR</div>
-      </div>
-      <div class="plan-price"><sup>$</sup>10<span style="font-size:0.95rem;font-weight:700"> USD</span></div>
-      <div class="plan-feats">
-        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Certificados premium, libres de baneo</div>
-        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Aimlock y aim assist al 70%</div>
-        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Entrega inmediata por Telegram</div>
-        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><strong>2 actualizaciones</strong> incluidas durante el mes</div>
-      </div>
-      <div class="plan-logos-label">Metodos de pago</div>
-      <div class="plan-marquee"><div class="plan-marquee-track" id="logosMes"></div></div>
-      <a href="https://checkout.bold.co/payment/LNK_QPHVA2NY2C" target="_blank" rel="noopener" class="plan-cta" style="margin-top:14px">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-        Pagar $10 USD
-      </a>
-      <button class="extra-toggle" onclick="toggleExtra('mes',this)">
-        <div class="extra-toggle-left">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2H2v10l9.29 9.29a1 1 0 001.41 0l6.59-6.59a1 1 0 000-1.41L12 2z"/><path d="M7 7h.01"/></svg>
-          <span>Otros metodos de pago</span>
-        </div>
-        <div class="extra-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
-      </button>
-      <div class="extra-panel" id="extraPanel-mes"></div>
-
-      <button class="trial-btn" id="trialOpenBtn" type="button">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
-        Prueba gratuita — 1 dia
-      </button>
-    </div>
-
-    <div class="plan-card is-hi">
-      <div class="plan-top">
-        <div><div class="plan-name">Permanente</div><div class="plan-sub">Acceso de por vida</div></div>
-        <div class="plan-badge">MEJOR VALOR</div>
-      </div>
-      <div class="plan-price"><sup>$</sup>20<span style="font-size:0.95rem;font-weight:700"> USD</span></div>
-      <div class="plan-feats">
-        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Certificados premium, libres de baneo</div>
-        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Aimlock y aim assist al 70%</div>
-        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Entrega inmediata por Telegram</div>
-        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><strong>Actualizaciones ilimitadas de por vida</strong></div>
-        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Acceso a todos los metodos de pago locales</div>
-      </div>
-      <div class="plan-logos-label">Metodos de pago</div>
-      <div class="plan-marquee"><div class="plan-marquee-track slow" id="logosPermanente"></div></div>
-      <a href="https://checkout.bold.co/payment/LNK_TKGTXL26QV" target="_blank" rel="noopener" class="plan-cta" style="margin-top:14px">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-        Pagar $20 USD
-      </a>
-      <button class="extra-toggle" onclick="toggleExtra('permanente',this)">
-        <div class="extra-toggle-left">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2H2v10l9.29 9.29a1 1 0 001.41 0l6.59-6.59a1 1 0 000-1.41L12 2z"/><path d="M7 7h.01"/></svg>
-          <span>Otros metodos de pago</span>
-        </div>
-        <div class="extra-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
-      </button>
-      <div class="extra-panel" id="extraPanel-permanente"></div>
-
-      <button class="paypal-btn" id="paypalOpenBtn" type="button">
-        <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#003087" d="M8.3 3.5h5.9c2.9 0 4.9 1.8 4.4 4.6-.6 3.3-3 5-6.1 5H10l-1 6H5.7L8.3 3.5z"/><path fill="#009cde" d="M9.9 6.3h5.7c2.6 0 4.3 1.6 3.9 4.1-.5 3.1-2.8 4.7-5.7 4.7h-2.3l-1 6.1H7.1L9.9 6.3z" opacity="0.85"/></svg>
-        Pagar con PayPal
-      </button>
-    </div>
-
-  </div>
-
-  <div class="policy-note">
-    <div class="policy-note-title">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      Politica de actualizaciones
-    </div>
-    <div class="policy-note-body">
-      El plan de <strong>1 mes</strong> incluye <strong>2 actualizaciones</strong> durante ese periodo. El plan <strong>permanente</strong> incluye <strong>actualizaciones ilimitadas, de por vida</strong>.
-    </div>
-  </div>
-
-  <div class="pay-warn">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-    <span><strong>No cierres la pagina</strong> desde donde completaste el pago hasta que obtengas el acceso completo. Cerrarla antes de tiempo puede retrasar tu entrega.</span>
-  </div>
-
   <div class="support-card">
     <div class="support-top">
       <div class="support-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65-3.8a9 9 0 111.79 1.72L3 21"/><path d="M9 10c0 5 6 5 6 0"/></svg></div>
@@ -595,9 +627,13 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
       <div class="sw-step" data-step="info-2">
         <div class="sw-q">¿Que plan te interesa?</div>
         <div class="sw-opts">
-          <button class="sw-opt" data-field="plan" data-value="1 mes — $10 USD">
+          <button class="sw-opt" data-field="plan" data-value="1 mes — $10 USD (pago unico)">
             <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
-            <div class="sw-opt-txt">1 mes — $10 USD</div>
+            <div class="sw-opt-txt">1 mes — $10 USD (pago unico)</div>
+          </button>
+          <button class="sw-opt" data-field="plan" data-value="1 mes — $8 USD/mes (suscripcion)">
+            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
+            <div class="sw-opt-txt">1 mes — $8 USD/mes (suscripcion)</div>
           </button>
           <button class="sw-opt" data-field="plan" data-value="Permanente — $20 USD">
             <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
@@ -619,9 +655,13 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
       <div class="sw-step" data-step="prob-1">
         <div class="sw-q">¿Que plan compraste?</div>
         <div class="sw-opts">
-          <button class="sw-opt" data-field="plan" data-value="1 mes — $10 USD">
+          <button class="sw-opt" data-field="plan" data-value="1 mes — $10 USD (pago unico)">
             <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
-            <div class="sw-opt-txt">1 mes — $10 USD</div>
+            <div class="sw-opt-txt">1 mes — $10 USD (pago unico)</div>
+          </button>
+          <button class="sw-opt" data-field="plan" data-value="1 mes — $8 USD/mes (suscripcion)">
+            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
+            <div class="sw-opt-txt">1 mes — $8 USD/mes (suscripcion)</div>
           </button>
           <button class="sw-opt" data-field="plan" data-value="Permanente — $20 USD">
             <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
@@ -723,40 +763,40 @@ footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-al
   </div>
 </div>
 
-<div class="pp-overlay" id="trialOverlay">
+<div class="pp-overlay" id="recurOverlay">
   <div class="pp-modal">
     <div class="pp-modal-top">
       <div class="pp-modal-ico">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
       </div>
       <div>
-        <div class="pp-modal-title">Prueba gratuita — 1 Mes</div>
-        <div class="pp-modal-sub">Antes de continuar, lee esto</div>
+        <div class="pp-modal-title">Suscripcion $8 USD/mes</div>
+        <div class="pp-modal-sub">Antes de continuar, confirma que entendiste la diferencia</div>
       </div>
     </div>
     <div class="pp-modal-body">
-      Obtienes <strong>1 dia de prueba totalmente gratis</strong> del plan de 1 mes. Pagas <strong>$0 hoy</strong>. Si te gusta, no hagas nada y sigues disfrutando del acceso. Si no te convence, <strong>debes cancelar antes de que termine el dia de prueba</strong>; de lo contrario, al finalizar el periodo se <strong>debitara automaticamente el pago</strong> del plan de 1 mes.
+      Hay <strong>dos formas</strong> de pagar el acceso de 1 mes:
+      <br/><br/>
+      <strong>$10 USD — pago unico:</strong> pagas una sola vez por 1 mes de acceso. Cuando se vence, tienes que volver a la pagina y pagar manualmente otra vez si quieres seguir usandolo.
+      <br/><br/>
+      <strong>$8 USD — pago recurrente:</strong> se cobra automaticamente cada mes a tu tarjeta. Te ahorras $2 USD cada mes frente al pago unico y no tienes que preocuparte de volver a pagar manualmente. Puedes cancelar la suscripcion cuando quieras desde Whop.
     </div>
     <div class="pp-price-row">
       <div>
-        <div class="pp-price-lbl">Hoy pagas</div>
-        <div class="pp-price-sub">1 dia de prueba gratis · luego $10 USD/mes si no cancelas</div>
+        <div class="pp-price-lbl">Cobro recurrente</div>
+        <div class="pp-price-sub">$8 USD cada mes, automatico, hasta que canceles</div>
       </div>
-      <div class="pp-price-val">$0 USD</div>
+      <div class="pp-price-val">$8 USD</div>
     </div>
-    <div class="pp-check-row" id="trialCheckRow">
+    <div class="pp-check-row" id="recurCheckRow">
       <div class="pp-check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <div class="pp-check-txt">Me quedo claro: si no cancelo antes de terminar el dia de prueba gratis, se me debitara automaticamente el pago de $10 USD</div>
-    </div>
-    <div class="pp-methods-note">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      <span>Este enlace solo acepta tarjeta debito/credito, Apple Pay (cualquier iPhone) y Google Pay (cualquier Android).</span>
+      <div class="pp-check-txt">Entendi la diferencia: el boton de $10 es un pago unico manual y el de $8 es un pago recurrente automatico que me ahorra $2 USD al mes</div>
     </div>
     <div class="pp-actions">
-      <button class="pp-cancel" id="trialCancelBtn" type="button">Cancelar</button>
-      <a class="pp-contact" id="trialContinueBtn" href="https://whop.com/checkout/plan_5EpdOw1wJ0H6f" target="_blank" rel="noopener">
+      <button class="pp-cancel" id="recurCancelBtn" type="button">Cancelar</button>
+      <a class="pp-contact" id="recurContinueBtn" href="https://whop.com/checkout/plan_20jKmvamAI8af" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-        Empezar prueba gratis
+        Continuar con $8 USD/mes
       </a>
     </div>
   </div>
@@ -1022,13 +1062,13 @@ function toggleExtra(planId,btn){
   });
 })();
 
-/* ---------- FREE TRIAL CONFIRM MODAL (1 mes only) ---------- */
+/* ---------- RECURRING SUBSCRIPTION CONFIRM MODAL ($8/mes, 1 mes plan) ---------- */
 (function(){
-  var openBtn=document.getElementById('trialOpenBtn');
-  var overlay=document.getElementById('trialOverlay');
-  var checkRow=document.getElementById('trialCheckRow');
-  var continueBtn=document.getElementById('trialContinueBtn');
-  var cancelBtn=document.getElementById('trialCancelBtn');
+  var openBtn=document.getElementById('recurOpenBtn');
+  var overlay=document.getElementById('recurOverlay');
+  var checkRow=document.getElementById('recurCheckRow');
+  var continueBtn=document.getElementById('recurContinueBtn');
+  var cancelBtn=document.getElementById('recurCancelBtn');
   if(!openBtn)return;
 
   var checked=false;
