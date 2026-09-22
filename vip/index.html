@@ -4,1097 +4,1038 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 <meta name="color-scheme" content="light"/>
-<title>JEXE Regedit — Android &amp; iOS</title>
+<title>JEXE Regedit — Planes</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%232563EB'/%3E%3Cpath d='M13 3 5 13h6l-1 8 8-10h-6l1-8z' fill='white'/%3E%3C/svg%3E">
 <style>
-:root{
-  --white:#FFFFFF;--paper:#FAFAFA;--line:#E5E5E5;--line2:#D9D9D9;
-  --ink:#0A0A0A;--ink2:#1D1D1F;--gray1:#6E6E73;--gray2:#86868B;--gray3:#AEAEB2;
-  --surface:#F5F5F7;--surface2:#EFEFF1;
-  --r-lg:22px;--r-md:16px;--r-sm:11px;
-  --tr:0.2s cubic-bezier(0.16,1,0.3,1);
-  --f-disp:'Inter Tight',-apple-system,system-ui,sans-serif;
-  --f-body:'Inter',-apple-system,system-ui,sans-serif;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-@media(prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
-html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
-body{font-family:var(--f-body);background:var(--white);color:var(--ink);min-height:100dvh;overflow-x:hidden;-webkit-font-smoothing:antialiased;padding-bottom:calc(env(safe-area-inset-bottom,0px) + 40px)}
-:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+  :root{
+    --ink:#0B1729;
+    --ink-2:#33445C;
+    --muted:#7C8CA3;
+    --muted-2:#A2AFC3;
+    --line:#E8EEF7;
+    --line-2:#D6E3F5;
+    --blue-700:#1D4ED8;
+    --blue-600:#2563EB;
+    --blue-500:#3B82F6;
+    --blue-400:#60A5FA;
+    --blue-50:#EFF5FF;
+    --grad:linear-gradient(140deg,#2563EB 0%,#60A5FA 100%);
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
 
-header{position:sticky;top:0;z-index:90;display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:54px;background:rgba(255,255,255,0.88);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--line)}
-.hdr-brand{display:flex;align-items:center;gap:9px}
-.hdr-mark{width:22px;height:22px;border-radius:6px;background:var(--ink);display:grid;place-items:center;flex-shrink:0}
-.hdr-mark svg{width:13px;height:13px}
-.hdr-name{font-family:var(--f-disp);font-size:0.94rem;font-weight:700;letter-spacing:-0.01em;color:var(--ink)}
-.hdr-name .lt{font-weight:500;color:var(--gray1)}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
 
-/* platform switch in header */
-.hdr-tag{font-size:0.62rem;font-weight:600;letter-spacing:0.05em;color:var(--ink);background:var(--surface);padding:5px 10px;border-radius:100px;border:1px solid var(--line)}
+  body{
+    font-family:'Manrope',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    color:var(--ink);
+    background:#FBFCFE;
+    line-height:1.5;
+    min-height:100dvh;
+    padding:44px 20px 56px;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    position:relative;
+  }
 
-main{position:relative;z-index:1;max-width:480px;width:100%;margin:0 auto;padding:0 18px}
+  body::before{
+    content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(720px 460px at 12% -10%, rgba(96,165,250,.14), rgba(96,165,250,0) 62%),
+      radial-gradient(680px 420px at 108% 110%, rgba(37,99,235,.08), rgba(37,99,235,0) 60%);
+  }
+  body::after{
+    content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:radial-gradient(circle, rgba(37,99,235,.10) 1px, transparent 1.3px);
+    background-size:24px 24px;
+    -webkit-mask-image:radial-gradient(ellipse 62% 55% at 50% 50%, #000 20%, transparent 78%);
+            mask-image:radial-gradient(ellipse 62% 55% at 50% 50%, #000 20%, transparent 78%);
+    opacity:.7;
+  }
 
-.hero{padding:34px 0 22px;animation:rise .6s ease both}
-.hero-kicker{font-size:0.72rem;font-weight:600;letter-spacing:0.04em;color:var(--gray1);margin-bottom:13px}
-.hero-h1{font-family:var(--f-disp);font-size:clamp(2.1rem,8.6vw,2.7rem);font-weight:800;line-height:1.05;letter-spacing:-0.025em;color:var(--ink)}
-.hero-h1 em{font-style:normal;color:var(--gray2)}
-.hero-p{font-size:0.92rem;font-weight:400;line-height:1.58;color:var(--gray1);margin-top:13px;max-width:380px}
-.hero-platform{display:inline-flex;align-items:center;gap:7px;margin-top:18px;padding:7px 13px 7px 9px;border-radius:100px;background:var(--ink);color:#fff}
-.hero-platform svg{width:13px;height:13px}
-.hero-platform span{font-size:0.74rem;font-weight:600;letter-spacing:0.01em}
+  .ico{width:20px;height:20px;display:block;flex:none}
 
-.video-wrap{position:relative;border-radius:var(--r-lg);overflow:hidden;background:var(--ink);margin-top:20px;border:1px solid var(--line);animation:rise .6s .03s ease both}
-.video-wrap video{width:100%;display:block;max-height:230px;object-fit:cover}
-.video-label{position:absolute;bottom:10px;left:10px;background:rgba(255,255,255,0.92);backdrop-filter:blur(8px);border-radius:100px;padding:5px 12px;font-size:0.68rem;font-weight:600;color:var(--ink)}
+  .stack{
+    position:relative;z-index:1;
+    width:100%;
+    max-width:480px;
+    margin:0 auto;
+    display:flex;flex-direction:column;
+    gap:16px;
+  }
 
-/* TELEGRAM REQUIREMENT */
-.tg-required{margin-top:14px;padding:16px 17px;background:var(--ink);border-radius:var(--r-lg);display:flex;gap:12px;animation:rise .6s .045s ease both}
-.tg-required-ico{width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,0.1);display:grid;place-items:center;flex-shrink:0}
-.tg-required-ico svg{width:17px;height:17px;color:#fff}
-.tg-required-title{font-size:0.83rem;font-weight:800;color:#fff;letter-spacing:-0.005em}
-.tg-required-body{font-size:0.76rem;color:rgba(255,255,255,0.62);font-weight:400;line-height:1.55;margin-top:3px}
-.tg-required-body strong{color:#fff;font-weight:700}
+  /* ── VIDEO ── */
+  .video-wrap{
+    position:relative;
+    border-radius:20px;
+    overflow:hidden;
+    background:#0B1729;
+    border:1px solid var(--line);
+    box-shadow:
+      0 1px 2px rgba(11,23,41,.03),
+      0 12px 28px -20px rgba(37,99,235,.35);
+    animation:rise .7s var(--ease) both;
+  }
+  .video-wrap video{
+    width:100%;
+    display:block;
+    max-height:280px;
+    object-fit:cover;
+  }
+  .video-label{
+    position:absolute;
+    bottom:12px;left:12px;
+    display:inline-flex;align-items:center;gap:6px;
+    padding:6px 12px;
+    border-radius:999px;
+    background:rgba(255,255,255,.94);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    font-size:.68rem;font-weight:700;
+    letter-spacing:.04em;text-transform:uppercase;
+    color:var(--ink);
+    box-shadow:0 4px 10px rgba(11,23,41,.1);
+  }
+  .video-label .ico{
+    width:12px;height:12px;
+    color:var(--blue-600);
+  }
 
-/* SEC LABEL */
-.sec-label{font-size:0.69rem;font-weight:600;letter-spacing:0.04em;color:var(--gray1);margin:28px 0 11px}
+  /* ── FAST BANNER ── */
+  .fast-banner{
+    display:flex;align-items:center;gap:12px;
+    padding:14px 16px;
+    background:linear-gradient(140deg,#F5F9FF 0%,#E7F0FE 100%);
+    border:1px solid #C9DFFB;
+    border-radius:16px;
+    animation:rise .7s .05s var(--ease) both;
+    position:relative;
+    overflow:hidden;
+  }
+  .fast-banner::before{
+    content:'';position:absolute;
+    top:-50px;right:-50px;
+    width:140px;height:140px;
+    background:radial-gradient(circle, rgba(96,165,250,.35), transparent 70%);
+    pointer-events:none;
+  }
+  .fb-ico{
+    width:38px;height:38px;flex:none;
+    border-radius:11px;
+    background:var(--grad);
+    display:grid;place-items:center;
+    color:#fff;
+    box-shadow:0 8px 18px -8px rgba(37,99,235,.75);
+    position:relative;z-index:1;
+  }
+  .fb-ico .ico{width:19px;height:19px}
+  .fb-body{position:relative;z-index:1}
+  .fb-title{
+    font-size:.88rem;font-weight:800;
+    letter-spacing:-.01em;
+    color:var(--ink);
+    line-height:1.2;
+  }
+  .fb-sub{
+    font-size:.73rem;
+    color:var(--blue-700);
+    font-weight:600;
+    margin-top:2px;
+    letter-spacing:-.002em;
+  }
 
-/* SPECS */
-.spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;animation:rise .6s .09s ease both}
-.spec-card{background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);padding:15px 14px}
-.spec-ico{width:32px;height:32px;border-radius:9px;background:var(--surface);display:grid;place-items:center;margin-bottom:10px}
-.spec-ico svg{width:16px;height:16px;color:var(--ink)}
-.spec-num{font-family:var(--f-disp);font-size:1.5rem;font-weight:800;letter-spacing:-0.02em;color:var(--ink)}
-.spec-name{font-size:0.73rem;font-weight:600;color:var(--gray1);margin-top:2px}
+  /* ── PLAN CARD ── */
+  .plan{
+    position:relative;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:22px 20px;
+    display:flex;flex-direction:column;
+    gap:16px;
+    overflow:hidden;
+    box-shadow:
+      0 1px 2px rgba(11,23,41,.03),
+      0 12px 28px -20px rgba(37,99,235,.35);
+    animation:rise .7s var(--ease) both;
+  }
+  .plan:nth-child(4){ animation-delay:80ms; }
 
-/* BENEFITS */
-.benefit-list{background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;animation:rise .6s .11s ease both}
-.benefit-row{display:flex;align-items:center;gap:12px;padding:13px 15px;border-bottom:1px solid var(--line)}
-.benefit-row:last-child{border-bottom:none}
-.benefit-ico{width:27px;height:27px;border-radius:8px;background:var(--surface);display:grid;place-items:center;flex-shrink:0}
-.benefit-ico svg{width:13px;height:13px;color:var(--ink)}
-.benefit-txt{font-size:0.83rem;font-weight:500;color:var(--ink2)}
+  .plan-hi{
+    background:linear-gradient(140deg,#F5F9FF 0%,#E7F0FE 100%);
+    border-color:#C9DFFB;
+  }
+  .plan-hi::before{
+    content:'';position:absolute;top:-70px;right:-70px;
+    width:200px;height:200px;
+    background:radial-gradient(circle, rgba(96,165,250,.35), transparent 70%);
+    pointer-events:none;
+  }
 
-/* PROOF */
-.proof-strip{display:flex;align-items:center;gap:14px;margin-top:10px;padding:15px;background:var(--surface);border-radius:var(--r-md);animation:rise .6s .13s ease both}
-.proof-num{font-family:var(--f-disp);font-size:1.55rem;font-weight:900;color:var(--ink);letter-spacing:-0.02em;white-space:nowrap}
-.proof-divider{width:1px;height:28px;background:var(--line2)}
-.proof-txt{font-size:0.77rem;color:var(--gray1);font-weight:500;line-height:1.4}
-.proof-links{display:flex;flex-direction:column;gap:8px;margin-top:8px}
-.proof-link{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);padding:13px 14px;background:var(--surface);border-radius:var(--r-md);border:1px solid var(--line);transition:border-color var(--tr);animation:rise .6s .14s ease both}
-.proof-link:hover{border-color:var(--line2)}
-.proof-link-ico{width:34px;height:34px;border-radius:9px;flex-shrink:0;background:var(--white);border:1px solid var(--line);display:grid;place-items:center}
-.proof-link-ico svg{width:16px;height:16px;color:var(--ink)}
-.proof-link-meta{flex:1;min-width:0}
-.proof-link-title{font-size:0.81rem;font-weight:700;color:var(--ink);letter-spacing:-0.005em}
-.proof-link-sub{font-size:0.7rem;color:var(--gray1);font-weight:500;margin-top:1px}
-.proof-link-arrow{color:var(--gray2);flex-shrink:0}
-.proof-link-arrow svg{width:14px;height:14px}
+  .plan-head{position:relative;z-index:1;display:flex;flex-direction:column;gap:2px}
+  .plan-badge{
+    display:inline-flex;align-items:center;gap:6px;
+    align-self:flex-start;
+    padding:5px 11px;border-radius:999px;
+    background:var(--grad);color:#fff;
+    font-size:.6rem;font-weight:800;
+    letter-spacing:.11em;text-transform:uppercase;
+    box-shadow:0 6px 14px -6px rgba(37,99,235,.6);
+    margin-bottom:9px;
+  }
+  .plan-badge .ico{width:11px;height:11px}
+  .plan-name{
+    font-size:1.32rem;font-weight:800;
+    letter-spacing:-.022em;line-height:1.1;
+    color:var(--ink);
+  }
+  .plan-price{
+    display:flex;align-items:baseline;
+    font-size:2.2rem;font-weight:800;
+    letter-spacing:-.03em;line-height:1;
+    color:var(--ink);
+    margin-top:6px;
+  }
+  .plan-price sup{font-size:1rem;font-weight:700;margin-right:2px}
+  .plan-price span{font-size:.85rem;font-weight:600;color:var(--muted);margin-left:5px}
+  .plan-note{
+    font-size:.73rem;font-weight:500;
+    color:var(--muted);margin-top:7px;
+  }
 
-/* VERSIONS */
-.ver-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;animation:rise .6s .145s ease both}
-.ver-card{background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);padding:14px}
-.ver-top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.ver-top svg{width:14px;height:14px;color:var(--ink)}
-.ver-top span{font-size:0.75rem;font-weight:700;color:var(--ink)}
-.ver-range{font-family:var(--f-disp);font-size:1.1rem;font-weight:800;color:var(--ink);letter-spacing:-0.01em}
-.ver-note{font-size:0.68rem;color:var(--gray1);font-weight:500;margin-top:3px}
+  .plan-feats{
+    position:relative;z-index:1;
+    list-style:none;
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .plan-feats li{
+    display:flex;align-items:center;gap:9px;
+    font-size:.81rem;font-weight:500;
+    color:var(--ink-2);
+    letter-spacing:-.003em;
+  }
+  .plan-feats .ico{width:14px;height:14px;color:var(--blue-600)}
 
-/* HOW IT WORKS */
-.flow-steps{display:flex;flex-direction:column;animation:rise .6s .15s ease both}
-.flow-step{display:flex;gap:14px;padding:13px 0}
-.flow-line{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:26px}
-.flow-dot{width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-family:var(--f-disp);font-size:0.72rem;font-weight:800;flex-shrink:0}
-.flow-stem{width:1px;flex:1;background:var(--line2);margin-top:4px;min-height:16px}
-.flow-step:last-child .flow-stem{display:none}
-.flow-body{padding-top:2px}
-.flow-title{font-size:0.85rem;font-weight:700;color:var(--ink);letter-spacing:-0.005em}
-.flow-desc{font-size:0.78rem;color:var(--gray1);margin-top:3px;line-height:1.5;font-weight:400}
+  .plan-actions{
+    position:relative;z-index:1;
+    display:flex;flex-direction:column;gap:8px;
+    padding-top:4px;
+  }
 
-/* PLANS */
-.plans{display:flex;flex-direction:column;gap:12px;animation:rise .6s .17s ease both}
-.plan-card{border-radius:var(--r-lg);padding:22px 20px;border:1.5px solid var(--line)}
-.plan-card.is-hi{background:var(--ink);border-color:var(--ink)}
-.plan-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
-.plan-name{font-family:var(--f-disp);font-size:1.05rem;font-weight:800;letter-spacing:-0.01em;color:var(--ink)}
-.is-hi .plan-name{color:#fff}
-.plan-badge{font-size:0.6rem;font-weight:700;letter-spacing:0.04em;color:#fff;background:var(--ink);padding:4px 9px;border-radius:100px}
-.is-hi .plan-badge{background:rgba(255,255,255,0.14);color:#fff}
-.plan-price{font-family:var(--f-disp);font-size:2.1rem;font-weight:900;letter-spacing:-0.02em;color:var(--ink);line-height:1}
-.is-hi .plan-price{color:#fff}
-.plan-price sup{font-size:1rem;font-weight:700;margin-right:1px}
-.plan-sub{font-size:0.73rem;color:var(--gray1);font-weight:500;margin-top:4px}
-.is-hi .plan-sub{color:rgba(255,255,255,0.55)}
-.plan-feats{display:flex;flex-direction:column;gap:8px;margin:15px 0 16px}
-.plan-f{display:flex;align-items:flex-start;gap:8px;font-size:0.79rem;font-weight:500;color:var(--ink2);line-height:1.4}
-.is-hi .plan-f{color:rgba(255,255,255,0.88)}
-.plan-f svg{width:14px;height:14px;flex-shrink:0;margin-top:1px;color:var(--ink)}
-.is-hi .plan-f svg{color:#fff}
-.plan-f.neg{color:var(--gray2)}
-.is-hi .plan-f.neg{color:rgba(255,255,255,0.4)}
-.plan-cta{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:50px;border:none;border-radius:100px;background:var(--ink);color:#fff;font-family:var(--f-disp);font-size:0.88rem;font-weight:800;letter-spacing:-0.005em;cursor:pointer;transition:all var(--tr);text-decoration:none}
-.is-hi .plan-cta{background:#fff;color:var(--ink)}
-.plan-cta:hover{transform:translateY(-1px)}
-.plan-cta svg{width:14px;height:14px}
+  /* ── BUTTONS ── */
+  .btn{
+    display:flex;align-items:center;justify-content:center;gap:9px;
+    height:50px;padding:0 18px;
+    border:none;border-radius:14px;
+    font-family:inherit;
+    font-size:.87rem;font-weight:800;
+    letter-spacing:-.005em;
+    cursor:pointer;text-decoration:none;
+    transition:
+      transform .35s var(--ease),
+      box-shadow .35s var(--ease),
+      background .35s var(--ease),
+      border-color .35s var(--ease),
+      color .35s var(--ease);
+    width:100%;
+  }
+  .btn .ico{width:16px;height:16px}
 
-/* EXTRA PAYMENT METHODS (collapsible, per plan) */
-.extra-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;padding:11px 13px;border-radius:var(--r-sm);background:var(--surface);border:1px solid var(--line);cursor:pointer;transition:background var(--tr)}
-.extra-toggle:hover{background:var(--surface2)}
-.is-hi .extra-toggle{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.13)}
-.is-hi .extra-toggle:hover{background:rgba(255,255,255,0.1)}
-.extra-toggle-left{display:flex;align-items:center;gap:8px}
-.extra-toggle-left svg{width:14px;height:14px;color:var(--gray1);flex-shrink:0}
-.is-hi .extra-toggle-left svg{color:rgba(255,255,255,0.6)}
-.extra-toggle-left span{font-size:0.75rem;font-weight:700;color:var(--ink2)}
-.is-hi .extra-toggle-left span{color:rgba(255,255,255,0.85)}
-.extra-chevron{color:var(--gray2);transition:transform .2s;flex-shrink:0}
-.is-hi .extra-chevron{color:rgba(255,255,255,0.45)}
-.extra-chevron svg{width:12px;height:12px}
-.extra-toggle.open .extra-chevron{transform:rotate(180deg)}
-.extra-panel{display:none;margin-top:8px}
-.extra-panel.open{display:block;animation:rise .25s ease both}
-.extra-method-wrap{display:flex;flex-direction:column;margin-bottom:6px}
-.extra-method-wrap:last-child{margin-bottom:0}
-.extra-method{display:flex;align-items:center;gap:10px;padding:9px 10px;background:var(--white);border:1.5px solid var(--line);border-radius:var(--r-sm);cursor:pointer;transition:all var(--tr)}
-.is-hi .extra-method{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.09)}
-.extra-method:hover{border-color:var(--gray3)}
-.is-hi .extra-method:hover{border-color:rgba(255,255,255,0.2)}
-.extra-method.is-sel{border-color:var(--ink);border-bottom-left-radius:0;border-bottom-right-radius:0}
-.is-hi .extra-method.is-sel{border-color:#fff;background:rgba(255,255,255,0.09)}
-.extra-m-ico{width:34px;height:24px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.extra-m-ico svg{height:24px;width:auto;display:block}
-.extra-m-info{flex:1;min-width:0}
-.extra-m-name{font-size:0.77rem;font-weight:700;color:var(--ink)}
-.is-hi .extra-m-name{color:#fff}
-.extra-m-amt{font-size:0.66rem;color:var(--gray1);font-weight:600;margin-top:1px}
-.is-hi .extra-m-amt{color:rgba(255,255,255,0.5)}
-.extra-m-chev{color:var(--gray3);flex-shrink:0;transition:transform .2s}
-.extra-method.is-sel .extra-m-chev{transform:rotate(180deg)}
-.is-hi .extra-m-chev{color:rgba(255,255,255,0.4)}
-.extra-m-chev svg{width:13px;height:13px}
-.extra-detail{display:none;padding:11px;border-radius:0 0 var(--r-sm) var(--r-sm);background:var(--surface);border:1.5px solid var(--line);border-top:none}
-.is-hi .extra-detail{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.09)}
-.extra-detail.show{display:block;animation:rise .2s ease both}
-.extra-data-row{display:flex;align-items:center;gap:8px;padding:7px 9px;margin-bottom:5px;background:var(--white);border:1px solid var(--line);border-radius:8px}
-.is-hi .extra-data-row{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.09)}
-.extra-data-row:last-of-type{margin-bottom:0}
-.extra-data-lbl{font-size:0.6rem;color:var(--gray1);font-weight:500;min-width:66px;flex-shrink:0}
-.is-hi .extra-data-lbl{color:rgba(255,255,255,0.42)}
-.extra-data-val{font-size:0.74rem;font-weight:700;color:var(--ink);flex:1;word-break:break-all}
-.is-hi .extra-data-val{color:#fff}
-.extra-data-copy{width:23px;height:23px;border-radius:6px;border:1px solid var(--line);background:var(--white);color:var(--gray1);cursor:pointer;display:grid;place-items:center;flex-shrink:0;transition:all var(--tr)}
-.is-hi .extra-data-copy{border-color:rgba(255,255,255,0.13);background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.55)}
-.extra-data-copy svg{width:11px;height:11px}
-.extra-data-copy.copied{color:var(--ink);border-color:var(--ink)}
-.is-hi .extra-data-copy.copied{color:#fff;border-color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.13)}
+  .btn-primary{
+    background:var(--grad);color:#fff;
+    box-shadow:0 4px 10px -6px rgba(37,99,235,.35);
+  }
+  .btn-primary:hover{
+    transform:translateY(-2px);
+    box-shadow:0 14px 28px -10px rgba(37,99,235,1);
+  }
+  .btn-primary:active{transform:translateY(0)}
 
-/* UPDATE POLICY NOTE */
-.policy-note{margin-top:12px;padding:15px 16px;background:var(--surface);border-radius:var(--r-md);animation:rise .6s .18s ease both}
-.policy-note-title{display:flex;align-items:center;gap:8px;font-size:0.76rem;font-weight:700;color:var(--ink);margin-bottom:8px}
-.policy-note-title svg{width:14px;height:14px}
-.policy-note-body{font-size:0.76rem;color:var(--gray1);line-height:1.6;font-weight:400}
-.policy-note-body strong{color:var(--ink);font-weight:700}
+  .btn-ghost{
+    background:#fff;color:var(--ink);
+    border:1.5px solid var(--line-2);
+    height:46px;font-size:.83rem;
+  }
+  .btn-ghost:hover{
+    border-color:var(--blue-400);
+    color:var(--blue-700);
+    background:var(--blue-50);
+    transform:translateY(-1px);
+  }
+  .btn-ghost .ico{color:var(--blue-600)}
 
-/* PAYMENT NOTE (no closing page) */
-.pay-warn{display:flex;align-items:flex-start;gap:10px;margin-top:12px;padding:14px 15px;background:var(--white);border:1.5px solid var(--ink);border-radius:var(--r-md);animation:rise .6s .19s ease both}
-.pay-warn svg{width:16px;height:16px;color:var(--ink);flex-shrink:0;margin-top:1px}
-.pay-warn span{font-size:0.78rem;color:var(--ink2);font-weight:500;line-height:1.55}
-.pay-warn span strong{font-weight:800;color:var(--ink)}
+  .btn.is-disabled{
+    opacity:.4;
+    pointer-events:none;
+    box-shadow:none;
+  }
 
-/* PAYMENT LOGOS MARQUEE */
-.plan-logos-label{font-size:0.62rem;font-weight:600;letter-spacing:0.04em;color:var(--gray2);margin:14px 0 8px}
-.is-hi .plan-logos-label{color:rgba(255,255,255,0.4)}
-.plan-marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
-.plan-marquee-track{display:flex;gap:9px;width:max-content;animation:scrollLeft 26s linear infinite}
-.plan-marquee-track.slow{animation-duration:50s}
-.logo-chip{display:flex;align-items:center;justify-content:center;height:38px;min-width:38px;padding:0 8px;background:var(--white);border:1px solid var(--line);border-radius:10px;flex-shrink:0}
-.is-hi .logo-chip{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.14)}
-.logo-chip svg{height:20px;width:auto;display:block}
-@keyframes scrollLeft{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .methods-note{
+    display:flex;align-items:center;justify-content:center;
+    gap:6px;
+    font-size:.68rem;
+    color:var(--muted);
+    font-weight:600;
+    letter-spacing:.02em;
+    margin-top:-3px;
+    margin-bottom:2px;
+  }
+  .methods-note .ico{
+    width:12px;height:12px;
+    color:var(--blue-500);
+  }
+  .methods-note strong{
+    color:var(--blue-700);
+    font-weight:800;
+  }
 
-/* SUPPORT / WA WIZARD */
-.support-card{margin-top:30px;background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;animation:rise .6s .22s ease both}
-.support-top{display:flex;align-items:center;gap:12px;margin-bottom:4px}
-.support-ico{width:36px;height:36px;border-radius:10px;flex-shrink:0;background:var(--ink);display:grid;place-items:center}
-.support-ico svg{width:17px;height:17px;color:#fff}
-.support-title{font-family:var(--f-disp);font-size:1rem;font-weight:800;color:var(--ink);letter-spacing:-0.01em}
-.support-sub{font-size:0.73rem;color:var(--gray1);font-weight:500;margin-top:2px}
-.support-body{margin-top:16px}
-.sw-step{display:none}
-.sw-step.active{display:block;animation:rise .25s ease both}
-.sw-q{font-size:0.82rem;font-weight:700;color:var(--ink);margin-bottom:10px;letter-spacing:-0.005em}
-.sw-opts{display:flex;flex-direction:column;gap:7px}
-.sw-opt{display:flex;align-items:center;gap:10px;padding:12px 13px;border:1.5px solid var(--line);border-radius:var(--r-sm);background:var(--surface);cursor:pointer;transition:all var(--tr);text-align:left;font-family:var(--f-body)}
-.sw-opt:hover{border-color:var(--gray3)}
-.sw-opt.sel{border-color:var(--ink);background:var(--ink);color:#fff}
-.sw-opt-radio{width:15px;height:15px;border-radius:50%;border:1.5px solid var(--gray3);display:grid;place-items:center;flex-shrink:0}
-.sw-opt.sel .sw-opt-radio{border-color:#fff;background:#fff}
-.sw-opt-radio svg{width:7px;height:7px;color:var(--ink);opacity:0}
-.sw-opt.sel .sw-opt-radio svg{opacity:1}
-.sw-opt-txt{font-size:0.8rem;font-weight:600}
-.sw-field{margin-top:4px}
-.sw-textarea{width:100%;padding:11px 12px;border-radius:var(--r-sm);background:var(--surface);border:1.5px solid var(--line);color:var(--ink);font-family:var(--f-body);font-size:0.82rem;font-weight:400;outline:none;transition:var(--tr);resize:vertical;min-height:70px;line-height:1.5}
-.sw-textarea:focus{border-color:var(--ink)}
-.sw-nav{display:flex;gap:8px;margin-top:16px}
-.sw-back,.sw-next{flex:1;height:46px;border-radius:100px;font-family:var(--f-disp);font-size:0.83rem;font-weight:800;letter-spacing:-0.005em;cursor:pointer;transition:all var(--tr);border:none;display:flex;align-items:center;justify-content:center;gap:6px}
-.sw-back{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
-.sw-next{background:var(--ink);color:#fff}
-.sw-next:disabled{opacity:0.3;cursor:not-allowed}
-.sw-next svg,.sw-back svg{width:13px;height:13px}
-.sw-progress{display:flex;gap:4px;margin-bottom:16px}
-.sw-progress-seg{height:3px;flex:1;background:var(--line);border-radius:2px;overflow:hidden}
-.sw-progress-seg i{display:block;height:100%;width:0;background:var(--ink);transition:width .3s}
-.sw-progress-seg.done i{width:100%}
-.sw-summary{background:var(--surface);border-radius:var(--r-sm);padding:13px;margin-bottom:14px}
-.sw-summary-row{display:flex;justify-content:space-between;gap:10px;font-size:0.74rem;padding:5px 0;border-bottom:1px solid var(--line)}
-.sw-summary-row:last-child{border-bottom:none}
-.sw-summary-lbl{color:var(--gray1);font-weight:500;flex-shrink:0}
-.sw-summary-val{color:var(--ink);font-weight:700;text-align:right}
-.sw-send{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;height:52px;border:none;border-radius:100px;background:var(--ink);color:#fff;font-family:var(--f-disp);font-size:0.9rem;font-weight:800;letter-spacing:-0.005em;cursor:pointer;transition:all var(--tr);text-decoration:none}
-.sw-send:hover{transform:translateY(-1px)}
-.sw-send svg{width:16px;height:16px}
+  /* ── OVERLAYS / MODALS ── */
+  .overlay{
+    display:none;position:fixed;inset:0;
+    background:rgba(11,23,41,.55);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    z-index:400;
+    align-items:center;justify-content:center;
+    padding:20px;
+  }
+  .overlay.show{display:flex}
 
-/* DELIVERY */
-.delivery-banner{margin-top:12px;padding:17px;background:var(--white);border:1.5px solid var(--ink);border-radius:var(--r-lg);animation:rise .6s .24s ease both}
-.db-top{display:flex;align-items:center;gap:11px;margin-bottom:9px}
-.db-ico{width:34px;height:34px;border-radius:10px;background:var(--ink);display:grid;place-items:center;flex-shrink:0}
-.db-ico svg{width:17px;height:17px;color:#fff}
-.db-title{font-family:var(--f-disp);font-size:0.95rem;font-weight:800;color:var(--ink);letter-spacing:-0.01em}
-.db-body{font-size:0.8rem;color:var(--gray1);font-weight:400;line-height:1.6;padding-left:45px}
-.db-body strong{color:var(--ink);font-weight:700}
+  .pop{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:22px;
+    padding:24px 22px;
+    max-width:420px;width:100%;
+    max-height:calc(100dvh - 40px);
+    overflow-y:auto;
+    box-shadow:0 24px 60px -20px rgba(11,23,41,.35);
+    animation:popIn .35s cubic-bezier(.34,1.4,.64,1) both;
+  }
+  @keyframes popIn{
+    from{transform:scale(.9);opacity:0}
+    to  {transform:scale(1);opacity:1}
+  }
 
-footer{margin-top:38px;padding-top:20px;border-top:1px solid var(--line);text-align:center}
-.footer-brand{font-family:var(--f-disp);font-size:0.77rem;font-weight:700;color:var(--gray1)}
-.footer-sub{font-size:0.67rem;color:var(--gray3);font-weight:500;margin-top:4px;margin-bottom:4px}
+  .pop-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .pop-ico{
+    width:46px;height:46px;
+    border-radius:13px;
+    background:var(--grad);
+    color:#fff;
+    display:grid;place-items:center;
+    box-shadow:0 8px 18px -8px rgba(37,99,235,.7);
+    flex:none;
+  }
+  .pop-ico .ico{width:22px;height:22px}
+  .pop-title{
+    font-size:1.05rem;font-weight:800;
+    letter-spacing:-.015em;color:var(--ink);
+    line-height:1.2;
+  }
+  .pop-sub{
+    font-size:.73rem;color:var(--muted);
+    font-weight:500;margin-top:3px;
+  }
 
-@keyframes rise{from{opacity:0;transform:translateY(11px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:340px){.plan-price{font-size:1.8rem}}
+  .order-label{
+    font-size:.66rem;font-weight:800;
+    color:var(--muted);
+    letter-spacing:.13em;
+    text-transform:uppercase;
+    margin-bottom:10px;
+  }
 
-/* PAYPAL BUTTON (permanente plan only) */
-.paypal-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:48px;margin-top:10px;border-radius:100px;background:#fff;border:1.5px solid rgba(255,255,255,0.9);color:var(--ink);font-family:var(--f-disp);font-size:0.83rem;font-weight:800;letter-spacing:-0.005em;cursor:pointer;transition:transform var(--tr),box-shadow var(--tr)}
-.paypal-btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,0,0,0.18)}
+  .method-list{
+    display:flex;flex-direction:column;gap:7px;
+    margin-bottom:12px;
+  }
+  .method{
+    display:flex;align-items:center;gap:12px;
+    padding:10px 12px;
+    background:#fff;
+    border:1.5px solid var(--line);
+    border-radius:12px;
+    cursor:pointer;
+    font-family:inherit;
+    text-align:left;width:100%;
+    color:inherit;
+    transition:all .28s var(--ease);
+  }
+  .method:hover{
+    border-color:#C9DEFB;
+    background:var(--blue-50);
+  }
+  .method.is-sel{
+    border-color:var(--blue-500);
+    background:var(--blue-50);
+    box-shadow:0 0 0 3px rgba(59,130,246,.12);
+  }
+  .method-ico{
+    width:38px;height:38px;
+    border-radius:10px;
+    background:linear-gradient(150deg,#F2F7FF 0%,#E2EDFE 100%);
+    border:1px solid #D9E7FB;
+    display:grid;place-items:center;
+    flex:none;overflow:hidden;
+  }
+  .method-ico svg{height:22px;width:auto;display:block}
+  .method-body{
+    flex:1;min-width:0;
+    display:flex;flex-direction:column;gap:1px;
+  }
+  .method-name{
+    display:block;
+    font-size:.85rem;font-weight:700;
+    color:var(--ink);letter-spacing:-.005em;
+    line-height:1.25;
+  }
+  .method-note{
+    display:block;
+    font-size:.67rem;color:var(--muted);
+    font-weight:500;
+    line-height:1.3;
+  }
+  .method-check{
+    width:20px;height:20px;border-radius:50%;
+    border:1.5px solid var(--line-2);
+    flex:none;display:grid;place-items:center;
+    transition:all .25s var(--ease);
+  }
+  .method.is-sel .method-check{
+    background:var(--blue-600);
+    border-color:var(--blue-600);
+  }
+  .method-check svg{
+    width:11px;height:11px;color:#fff;
+    opacity:0;transition:opacity .25s;
+    display:block;
+  }
+  .method.is-sel .method-check svg{opacity:1}
 
-/* PAYPAL CONFIRM MODAL */
-.pp-overlay{position:fixed;inset:0;background:rgba(10,10,10,0.55);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);z-index:9998;display:flex;align-items:flex-end;justify-content:center;opacity:0;visibility:hidden;transition:opacity .25s ease,visibility 0s linear .25s}
-.pp-overlay.show{opacity:1;visibility:visible;transition:opacity .25s ease}
-.pp-modal{width:100%;max-width:480px;background:var(--white);border-radius:24px 24px 0 0;padding:22px 20px calc(env(safe-area-inset-bottom,0px) + 22px);transform:translateY(24px);transition:transform .3s cubic-bezier(.16,1,.3,1)}
-.pp-overlay.show .pp-modal{transform:translateY(0)}
-.pp-modal-top{display:flex;align-items:center;gap:11px;margin-bottom:4px}
-.pp-modal-ico{width:36px;height:36px;border-radius:10px;background:var(--surface);display:grid;place-items:center;flex-shrink:0}
-.pp-modal-ico svg{width:18px;height:18px}
-.pp-modal-title{font-family:var(--f-disp);font-size:1rem;font-weight:800;color:var(--ink);letter-spacing:-0.01em}
-.pp-modal-sub{font-size:0.73rem;color:var(--gray1);font-weight:500;margin-top:2px}
-.pp-modal-body{margin-top:15px;padding:15px 16px;background:var(--surface);border-radius:var(--r-md);font-size:0.79rem;color:var(--ink2);line-height:1.6;font-weight:400}
-.pp-modal-body strong{color:var(--ink);font-weight:700}
-.pp-price-row{display:flex;justify-content:space-between;align-items:center;margin-top:13px;padding:13px 15px;background:var(--ink);border-radius:var(--r-md)}
-.pp-price-lbl{font-size:0.75rem;color:rgba(255,255,255,0.6);font-weight:600}
-.pp-price-val{font-family:var(--f-disp);font-size:1.3rem;font-weight:900;color:#fff;letter-spacing:-0.01em}
-.pp-price-sub{font-size:0.66rem;color:rgba(255,255,255,0.4);font-weight:500;margin-top:2px}
-.pp-check-row{display:flex;align-items:flex-start;gap:10px;margin-top:16px;padding:13px 14px;border:1.5px solid var(--line);border-radius:var(--r-sm);cursor:pointer;transition:border-color var(--tr),background var(--tr)}
-.pp-check-row.checked{border-color:var(--ink);background:var(--surface)}
-.pp-check-box{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--gray3);flex-shrink:0;display:grid;place-items:center;transition:all var(--tr);margin-top:1px}
-.pp-check-row.checked .pp-check-box{background:var(--ink);border-color:var(--ink)}
-.pp-check-box svg{width:11px;height:11px;color:#fff;opacity:0;transition:opacity var(--tr)}
-.pp-check-row.checked .pp-check-box svg{opacity:1}
-.pp-check-txt{font-size:0.8rem;font-weight:600;color:var(--ink2);line-height:1.4}
-.pp-actions{display:flex;gap:8px;margin-top:16px}
-.pp-cancel{flex:0 0 auto;padding:0 18px;height:50px;border-radius:100px;background:var(--surface);border:1px solid var(--line);color:var(--ink);font-family:var(--f-disp);font-size:0.85rem;font-weight:700;cursor:pointer}
-.pp-contact{flex:1;height:50px;border-radius:100px;background:var(--ink);color:#fff;border:none;font-family:var(--f-disp);font-size:0.85rem;font-weight:800;letter-spacing:-0.005em;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;transition:all var(--tr);opacity:0.4;pointer-events:none}
-.pp-contact.enabled{opacity:1;pointer-events:auto}
-.pp-contact:hover.enabled{transform:translateY(-1px)}
-.pp-contact svg{width:15px;height:15px}
+  /* ── DATOS DEL MÉTODO SELECCIONADO ── */
+  .method-details{
+    display:none;
+    margin-bottom:12px;
+    padding:14px 15px;
+    background:linear-gradient(140deg,#F5F9FF 0%,#E7F0FE 100%);
+    border:1px solid #C9DFFB;
+    border-radius:13px;
+  }
+  .method-details.show{
+    display:block;
+    animation:rise .3s var(--ease) both;
+  }
+  .md-title{
+    display:flex;align-items:center;gap:7px;
+    font-size:.65rem;font-weight:800;
+    letter-spacing:.12em;text-transform:uppercase;
+    color:var(--blue-700);
+    margin-bottom:10px;
+  }
+  .md-title .ico{width:13px;height:13px;color:var(--blue-600)}
+  .md-row{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:12px;
+    padding:7px 0;
+    font-size:.79rem;
+    border-bottom:1px solid rgba(37,99,235,.13);
+  }
+  .md-row:last-of-type{border-bottom:none;padding-bottom:0}
+  .md-row:first-of-type{padding-top:0}
+  .md-lbl{
+    color:var(--blue-700);
+    font-weight:600;
+    flex:none;
+    letter-spacing:.005em;
+  }
+  .md-val{
+    color:var(--ink);
+    font-weight:700;
+    text-align:right;
+    word-break:break-word;
+    min-width:0;
+  }
 
-/* FREE TRIAL BUTTON (1 mes plan only) */
-.trial-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:48px;margin-top:10px;border-radius:100px;background:var(--white);border:1.5px solid var(--ink);color:var(--ink);font-family:var(--f-disp);font-size:0.83rem;font-weight:800;letter-spacing:-0.005em;cursor:pointer;transition:transform var(--tr),background var(--tr)}
-.trial-btn:hover{transform:translateY(-1px);background:var(--surface)}
-.trial-btn svg{width:15px;height:15px}
+  .order-note{
+    display:flex;align-items:flex-start;gap:9px;
+    padding:11px 12px;
+    background:var(--blue-50);
+    border:1px solid #D5E4FA;
+    border-radius:11px;
+    font-size:.72rem;
+    color:var(--ink-2);
+    font-weight:500;line-height:1.5;
+    margin-bottom:14px;
+  }
+  .order-note .ico{
+    width:14px;height:14px;
+    color:var(--blue-600);
+    flex:none;margin-top:2px;
+  }
+  .order-note strong{color:var(--ink);font-weight:800}
 
-/* method-note inside modals */
-.pp-methods-note{display:flex;align-items:flex-start;gap:8px;margin-top:12px;font-size:0.71rem;color:var(--gray1);font-weight:500;line-height:1.5}
-.pp-methods-note svg{width:13px;height:13px;flex-shrink:0;margin-top:1px;color:var(--gray2)}
+  .pop-text{
+    font-size:.8rem;color:var(--ink-2);
+    line-height:1.6;font-weight:500;
+    margin-bottom:14px;
+  }
+  .pop-text strong{color:var(--ink);font-weight:800}
 
-/* PAY COMPARE BOX */
-.pay-compare{margin-top:10px;padding:13px;border-radius:var(--r-sm);background:var(--surface)}
-.is-hi .pay-compare{background:rgba(255,255,255,0.06)}
-.pay-compare-title{font-size:0.68rem;font-weight:700;letter-spacing:0.03em;color:var(--gray1);margin-bottom:9px;text-transform:uppercase}
-.is-hi .pay-compare-title{color:rgba(255,255,255,0.45)}
-.pay-compare-row{display:flex;align-items:flex-start;gap:9px;padding:6px 0}
-.pay-compare-row+.pay-compare-row{border-top:1px solid var(--line)}
-.is-hi .pay-compare-row+.pay-compare-row{border-top:1px solid rgba(255,255,255,0.1)}
-.pay-compare-tag{flex-shrink:0;font-family:var(--f-disp);font-size:0.7rem;font-weight:800;color:var(--ink);background:var(--white);border:1px solid var(--line);border-radius:100px;padding:3px 8px;white-space:nowrap;margin-top:1px}
-.is-hi .pay-compare-tag{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.16);color:#fff}
-.pay-compare-tag.hi{background:var(--ink);color:#fff;border-color:var(--ink)}
-.is-hi .pay-compare-tag.hi{background:#fff;color:var(--ink);border-color:#fff}
-.pay-compare-desc{font-size:0.74rem;color:var(--gray1);font-weight:500;line-height:1.5}
-.is-hi .pay-compare-desc{color:rgba(255,255,255,0.6)}
+  .price-box{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:13px 15px;
+    background:var(--blue-50);
+    border:1px solid #D5E4FA;
+    border-radius:12px;
+    margin-bottom:16px;
+  }
+  .price-box-lbl{
+    font-size:.68rem;color:var(--blue-700);
+    font-weight:700;letter-spacing:.06em;
+    text-transform:uppercase;
+  }
+  .price-box-val{
+    font-size:1.15rem;font-weight:800;
+    color:var(--blue-700);letter-spacing:-.02em;
+  }
 
-/* RECURRING SUBSCRIPTION BUTTON (1 mes plan) */
-.recur-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:48px;margin-top:10px;border-radius:100px;background:var(--ink);border:1.5px solid var(--ink);color:#fff;font-family:var(--f-disp);font-size:0.83rem;font-weight:800;letter-spacing:-0.005em;cursor:pointer;transition:transform var(--tr),background var(--tr)}
-.recur-btn:hover{transform:translateY(-1px)}
-.recur-btn svg{width:15px;height:15px}
-.recur-save{display:inline-flex;align-items:center;margin-left:2px;font-size:0.66rem;font-weight:700;background:rgba(255,255,255,0.16);padding:2px 7px;border-radius:100px}
+  .pop-actions{display:flex;gap:9px}
+  .pop-actions .btn-cancel{
+    flex:0 0 auto;padding:0 20px;
+    height:48px;font-size:.82rem;
+    background:#fff;color:var(--muted);
+    border:1.5px solid var(--line-2);
+    border-radius:13px;
+    font-family:inherit;font-weight:800;
+    cursor:pointer;
+    transition:all .3s var(--ease);
+  }
+  .pop-actions .btn-cancel:hover{
+    color:var(--ink-2);
+    border-color:#BFD3EE;
+  }
+  .pop-actions .btn-primary{
+    flex:1;height:48px;font-size:.84rem;
+    border-radius:13px;
+  }
+
+  /* ── ANIMATION ── */
+  @keyframes rise{
+    from{opacity:0;transform:translateY(14px) scale(.99)}
+    to  {opacity:1;transform:translateY(0) scale(1)}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{
+      animation-duration:.001ms!important;
+      transition-duration:.001ms!important;
+    }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width:420px){
+    body{padding:28px 16px 40px}
+    .stack{gap:13px;max-width:100%}
+    .video-wrap video{max-height:220px}
+    .video-label{font-size:.62rem;padding:5px 10px}
+    .fb-ico{width:34px;height:34px}
+    .fb-ico .ico{width:17px;height:17px}
+    .fb-title{font-size:.82rem}
+    .fb-sub{font-size:.68rem}
+    .plan{padding:19px 17px;border-radius:18px;gap:14px}
+    .plan-name{font-size:1.22rem}
+    .plan-price{font-size:1.95rem}
+    .plan-feats li{font-size:.78rem}
+    .btn{height:48px;font-size:.85rem}
+    .btn-ghost{height:44px;font-size:.81rem}
+    .pop{padding:22px 18px;border-radius:20px}
+    .pop-ico{width:42px;height:42px}
+    .pop-ico .ico{width:20px;height:20px}
+    .pop-title{font-size:1rem}
+    .method{padding:9px 11px;gap:10px}
+    .method-ico{width:34px;height:34px;border-radius:9px}
+    .method-ico svg{height:20px}
+    .method-name{font-size:.82rem}
+    .method-note{font-size:.64rem}
+    .md-row{font-size:.75rem}
+  }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="hdr-brand">
-    <div class="hdr-mark">
-      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
-    </div>
-    <span class="hdr-name">JEXE <span class="lt">Regedit</span></span>
-  </div>
-  <span class="hdr-tag">Android &amp; iOS</span>
-</header>
+<!-- ══ SPRITE SVG ══ -->
+<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+  <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+  </symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 6 9 17l-5-5"/>
+  </symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>
+  </symbol>
+  <symbol id="i-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="1" y="4" width="22" height="16" rx="2.5"/>
+    <path d="M1 10h22"/>
+  </symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 12V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h13a2 2 0 0 0 2-2v-5"/>
+    <path d="M21 10h-5a2 2 0 0 0 0 4h5"/>
+  </symbol>
+  <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="10"/>
+    <path d="M12 16v-4"/>
+    <path d="M12 8h.01"/>
+  </symbol>
+  <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M6 4v16a1 1 0 0 0 1.5.87l13-8a1 1 0 0 0 0-1.74l-13-8A1 1 0 0 0 6 4z"/>
+  </symbol>
+  <symbol id="i-whatsapp" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+  </symbol>
+  <symbol id="i-paypal" viewBox="0 0 24 24">
+    <path fill="#003087" d="M8.3 3.5h5.9c2.9 0 4.9 1.8 4.4 4.6-.6 3.3-3 5-6.1 5H10l-1 6H5.7L8.3 3.5z"/>
+    <path fill="#009cde" opacity=".85" d="M9.9 6.3h5.7c2.6 0 4.3 1.6 3.9 4.1-.5 3.1-2.8 4.7-5.7 4.7h-2.3l-1 6.1H7.1L9.9 6.3z"/>
+  </symbol>
+  <symbol id="i-binance" viewBox="0 0 40 24">
+    <rect width="40" height="24" rx="4" fill="#F0B90B"/>
+    <text x="20" y="16" font-family="Arial,Helvetica,sans-serif" font-size="8" font-weight="800" fill="#0A0A0A" text-anchor="middle">BINANCE</text>
+  </symbol>
+  <symbol id="i-skrill" viewBox="0 0 40 24">
+    <rect width="40" height="24" rx="4" fill="#862165"/>
+    <text x="20" y="16" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="800" fill="#fff" text-anchor="middle">skrill</text>
+  </symbol>
+  <symbol id="i-nequi" viewBox="0 0 40 24">
+    <rect width="40" height="24" rx="4" fill="#DA1884"/>
+    <text x="20" y="16" font-family="Arial,Helvetica,sans-serif" font-size="9" font-weight="800" fill="#fff" text-anchor="middle">Nequi</text>
+  </symbol>
+  <symbol id="i-breb" viewBox="0 0 40 24">
+    <rect width="40" height="24" rx="4" fill="#1C3FAA"/>
+    <text x="20" y="16" font-family="Arial,Helvetica,sans-serif" font-size="8.5" font-weight="800" fill="#fff" text-anchor="middle">BRE-B</text>
+  </symbol>
+  <symbol id="i-clabe" viewBox="0 0 40 24">
+    <rect width="40" height="24" rx="4" fill="#006341"/>
+    <text x="20" y="16" font-family="Arial,Helvetica,sans-serif" font-size="8.5" font-weight="800" fill="#fff" text-anchor="middle">CLABE</text>
+  </symbol>
+</svg>
 
-<main>
+<!-- ══ CONTENIDO ══ -->
+<main class="stack">
 
-  <div class="hero">
-    <div class="hero-kicker">Un solo acceso para Android &amp; iOS</div>
-    <h1 class="hero-h1">Maximo control.<br/><em>Android &amp; iOS.</em></h1>
-    <p class="hero-p">El mejor Regedit para Free Fire. Tu compra incluye los beneficios para ambas plataformas dentro de una sola pagina, con acceso inmediato y sin intermediarios.</p>
-    <div class="hero-platform">
-      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-6.2-8.6"/></svg>
-      <span>Android 8 — 16+  ·  Sin root  &nbsp;|&nbsp;  iOS 11 — 26.5+  ·  Sin jailbreak</span>
-    </div>
-  </div>
-
+  <!-- VIDEO -->
   <div class="video-wrap">
-    <video controls preload="metadata">
+    <video controls preload="metadata" playsinline>
       <source src="producto.mp4" type="video/mp4"/>
     </video>
-    <div class="video-label">Vista previa</div>
+    <div class="video-label">
+      <svg class="ico" aria-hidden="true"><use href="#i-play"/></svg>
+      Vista previa
+    </div>
   </div>
 
-  <div class="sec-label">Planes</div>
-  <div class="plans">
+  <!-- ENTREGA INMEDIATA -->
+  <div class="fast-banner">
+    <div class="fb-ico">
+      <svg class="ico" aria-hidden="true"><use href="#i-zap"/></svg>
+    </div>
+    <div class="fb-body">
+      <div class="fb-title">Entrega inmediata</div>
+      <div class="fb-sub">Pago con tarjeta de cualquier tipo · Débito o crédito</div>
+    </div>
+  </div>
 
-    <div class="plan-card">
-      <div class="plan-top">
-        <div><div class="plan-name">1 Mes</div><div class="plan-sub">El mas elegido</div></div>
-        <div class="plan-badge">POPULAR</div>
-      </div>
-      <div class="plan-price"><sup>$</sup>10<span style="font-size:0.95rem;font-weight:700"> USD</span></div>
-      <div class="plan-feats">
-        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Certificados premium, libres de baneo</div>
-        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Aimlock y aim assist al 70%</div>
-        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Entrega inmediata por Telegram</div>
-        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><strong>2 actualizaciones</strong> incluidas durante el mes</div>
-      </div>
-      <div class="plan-logos-label">Metodos de pago</div>
-      <div class="plan-marquee"><div class="plan-marquee-track" id="logosMes"></div></div>
-      <a href="https://checkout.bold.co/payment/LNK_QPHVA2NY2C" target="_blank" rel="noopener" class="plan-cta" style="margin-top:14px">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-        Pagar $10 USD
+  <!-- PLAN 1 MES -->
+  <article class="plan">
+    <div class="plan-head">
+      <span class="plan-badge">
+        <svg class="ico" aria-hidden="true"><use href="#i-star"/></svg>
+        Popular
+      </span>
+      <h2 class="plan-name">1 Mes</h2>
+      <div class="plan-price"><sup>$</sup>10<span>USD</span></div>
+      <p class="plan-note">Acceso por 30 días · Android &amp; iOS</p>
+    </div>
+
+    <ul class="plan-feats">
+      <li>
+        <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
+        Certificados premium, libres de baneo
+      </li>
+      <li>
+        <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
+        Aimlock y aim assist al 70%
+      </li>
+      <li>
+        <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
+        2 actualizaciones incluidas en el mes
+      </li>
+    </ul>
+
+    <div class="plan-actions">
+      <a class="btn btn-primary"
+         href="https://checkout.bold.co/payment/LNK_QPHVA2NY2C"
+         target="_blank" rel="noopener noreferrer">
+        <svg class="ico" aria-hidden="true"><use href="#i-card"/></svg>
+        Pagar con tarjeta · $10 USD
       </a>
-      <button class="extra-toggle" onclick="toggleExtra('mes',this)">
-        <div class="extra-toggle-left">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2H2v10l9.29 9.29a1 1 0 001.41 0l6.59-6.59a1 1 0 000-1.41L12 2z"/><path d="M7 7h.01"/></svg>
-          <span>Otros metodos de pago</span>
-        </div>
-        <div class="extra-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
-      </button>
-      <div class="extra-panel" id="extraPanel-mes"></div>
-
-      <div class="pay-compare">
-        <div class="pay-compare-title">¿Cual elegir?</div>
-        <div class="pay-compare-row">
-          <span class="pay-compare-tag">$10 pago unico</span>
-          <span class="pay-compare-desc">Un solo cobro por 1 mes de acceso. Al terminar el mes, debes volver a entrar y pagar manualmente otra vez si quieres seguir.</span>
-        </div>
-        <div class="pay-compare-row">
-          <span class="pay-compare-tag hi">$8 recurrente</span>
-          <span class="pay-compare-desc">Cobro automatico de $8 USD cada mes. Te ahorras $2 USD y no tienes que volver a pagar manualmente mes a mes.</span>
-        </div>
-      </div>
-      <button class="recur-btn" id="recurOpenBtn" type="button">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
-        Suscripcion $8 USD/mes <span class="recur-save">Ahorras $2</span>
+      <p class="methods-note">
+        <svg class="ico" aria-hidden="true"><use href="#i-zap"/></svg>
+        Visa · MC · Amex · <strong>Entrega inmediata</strong>
+      </p>
+      <button type="button" class="btn btn-ghost" onclick="openOrder('mes')">
+        <svg class="ico" aria-hidden="true"><use href="#i-wallet"/></svg>
+        Otros métodos de pago
       </button>
     </div>
+  </article>
 
-    <div class="plan-card is-hi">
-      <div class="plan-top">
-        <div><div class="plan-name">Permanente</div><div class="plan-sub">Acceso de por vida</div></div>
-        <div class="plan-badge">MEJOR VALOR</div>
-      </div>
-      <div class="plan-price"><sup>$</sup>20<span style="font-size:0.95rem;font-weight:700"> USD</span></div>
-      <div class="plan-feats">
-        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Certificados premium, libres de baneo</div>
-        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Aimlock y aim assist al 70%</div>
-        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Entrega inmediata por Telegram</div>
-        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><strong>Actualizaciones ilimitadas de por vida</strong></div>
-        <div class="plan-f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Acceso a todos los metodos de pago locales</div>
-      </div>
-      <div class="plan-logos-label">Metodos de pago</div>
-      <div class="plan-marquee"><div class="plan-marquee-track slow" id="logosPermanente"></div></div>
-      <a href="https://checkout.bold.co/payment/LNK_TKGTXL26QV" target="_blank" rel="noopener" class="plan-cta" style="margin-top:14px">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-        Pagar $20 USD
+  <!-- PLAN PERMANENTE -->
+  <article class="plan plan-hi">
+    <div class="plan-head">
+      <span class="plan-badge">
+        <svg class="ico" aria-hidden="true"><use href="#i-star"/></svg>
+        Mejor valor
+      </span>
+      <h2 class="plan-name">Permanente</h2>
+      <div class="plan-price"><sup>$</sup>20<span>USD</span></div>
+      <p class="plan-note">Acceso de por vida · Android &amp; iOS</p>
+    </div>
+
+    <ul class="plan-feats">
+      <li>
+        <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
+        Certificados premium, libres de baneo
+      </li>
+      <li>
+        <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
+        Aimlock y aim assist al 70%
+      </li>
+      <li>
+        <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
+        Actualizaciones ilimitadas de por vida
+      </li>
+    </ul>
+
+    <div class="plan-actions">
+      <a class="btn btn-primary"
+         href="https://checkout.bold.co/payment/LNK_TKGTXL26QV"
+         target="_blank" rel="noopener noreferrer">
+        <svg class="ico" aria-hidden="true"><use href="#i-card"/></svg>
+        Pagar con tarjeta · $20 USD
       </a>
-      <button class="extra-toggle" onclick="toggleExtra('permanente',this)">
-        <div class="extra-toggle-left">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2H2v10l9.29 9.29a1 1 0 001.41 0l6.59-6.59a1 1 0 000-1.41L12 2z"/><path d="M7 7h.01"/></svg>
-          <span>Otros metodos de pago</span>
-        </div>
-        <div class="extra-chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+      <p class="methods-note">
+        <svg class="ico" aria-hidden="true"><use href="#i-zap"/></svg>
+        Visa · MC · Amex · <strong>Entrega inmediata</strong>
+      </p>
+      <button type="button" class="btn btn-ghost" onclick="openOrder('permanente')">
+        <svg class="ico" aria-hidden="true"><use href="#i-wallet"/></svg>
+        Otros métodos de pago
       </button>
-      <div class="extra-panel" id="extraPanel-permanente"></div>
-
-      <button class="paypal-btn" id="paypalOpenBtn" type="button">
-        <svg viewBox="0 0 24 24" width="16" height="16"><path fill="#003087" d="M8.3 3.5h5.9c2.9 0 4.9 1.8 4.4 4.6-.6 3.3-3 5-6.1 5H10l-1 6H5.7L8.3 3.5z"/><path fill="#009cde" d="M9.9 6.3h5.7c2.6 0 4.3 1.6 3.9 4.1-.5 3.1-2.8 4.7-5.7 4.7h-2.3l-1 6.1H7.1L9.9 6.3z" opacity="0.85"/></svg>
-        Pagar con PayPal
+      <button type="button" class="btn btn-ghost" onclick="openPaypal()">
+        <svg class="ico" aria-hidden="true"><use href="#i-paypal"/></svg>
+        Pagar con PayPal · $23 USD
       </button>
     </div>
-
-  </div>
-
-  <div class="policy-note">
-    <div class="policy-note-title">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      Politica de actualizaciones
-    </div>
-    <div class="policy-note-body">
-      El plan de <strong>1 mes</strong> incluye <strong>2 actualizaciones</strong> durante ese periodo. El plan <strong>permanente</strong> incluye <strong>actualizaciones ilimitadas, de por vida</strong>.
-    </div>
-  </div>
-
-  <div class="pay-warn">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-    <span><strong>No cierres la pagina</strong> desde donde completaste el pago hasta que obtengas el acceso completo. Cerrarla antes de tiempo puede retrasar tu entrega.</span>
-  </div>
-
-  <div class="tg-required">
-    <div class="tg-required-ico">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-    </div>
-    <div>
-      <div class="tg-required-title">Requisito obligatorio: Telegram</div>
-      <div class="tg-required-body">Antes de comprar, ten la <strong>app de Telegram descargada, instalada y con una cuenta activa</strong>. La entrega y el soporte se hacen por Telegram, igual que reciben sus beneficios <strong>mas de 1.000 clientes activos</strong> ahora mismo.</div>
-    </div>
-  </div>
-
-  <div class="sec-label">Parametros de ajuste</div>
-  <div class="spec-grid">
-    <div class="spec-card">
-      <div class="spec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></div>
-      <div class="spec-num">70%</div>
-      <div class="spec-name">Aimlock</div>
-    </div>
-    <div class="spec-card">
-      <div class="spec-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 9h6v6H9z"/></svg></div>
-      <div class="spec-num">70%</div>
-      <div class="spec-name">Aim assist</div>
-    </div>
-  </div>
-
-  <div class="sec-label">Versiones compatibles</div>
-  <div class="ver-grid">
-    <div class="ver-card">
-      <div class="ver-top">
-        <svg viewBox="0 0 576 512" fill="currentColor"><path d="M420.55,301.93a24,24,0,1,1,24-24,24,24,0,0,1-24,24m-265.1,0a24,24,0,1,1,24-24,24,24,0,0,1-24,24m273.7-144.48,47.94-83a10,10,0,1,0-17.27-10h0l-48.54,84.07a301.25,301.25,0,0,0-246.56,0L116.18,64.45a10,10,0,1,0-17.27,10h0l47.94,83C64.53,202.22,8.24,285.55,0,384H576c-8.24-98.45-64.54-181.78-146.85-226.55"/></svg>
-        <span>Android</span>
-      </div>
-      <div class="ver-range">8 — 16+</div>
-      <div class="ver-note">Sin root · Cualquier fabricante</div>
-    </div>
-    <div class="ver-card">
-      <div class="ver-top">
-        <svg viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-19.9-30.3-50.6-46.8-91.8-49.9-37.9-3-79.6 22.4-95.5 22.4-16.9 0-53.6-21.3-83.4-21.3-58.5.9-120.8 47.1-120.8 138.7 0 28.4 5.2 57.8 15.5 88 13.8 39.4 63.4 136.3 115.1 134.7 27.1-.7 46.2-19.5 80.9-19.5 33.7 0 51.4 19.5 81.6 19.5 52.2-.7 97.2-89 110.4-128.5-70.4-33.2-62-97.5-62-99.3zM256.8 67.7c26.6-31.8 24.2-60.8 23.4-71.7-23.6 1.4-50.9 16.4-66.5 34.6-17.2 19.4-27.3 43.4-25.1 70.4 25.5 2 48.4-11.4 68.2-33.3z"/></svg>
-        <span>iOS</span>
-      </div>
-      <div class="ver-range">11 — 26.5+</div>
-      <div class="ver-note">Sin jailbreak · iPhone &amp; iPad</div>
-    </div>
-  </div>
-
-  <div class="sec-label">Incluido en tu compra</div>
-  <div class="benefit-list">
-    <div class="benefit-row">
-      <div class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5 2 7.5L12 16.5 5.5 21l2-7.5L2 9h7z"/></svg></div>
-      <div class="benefit-txt">Certificados premium, libres de baneo</div>
-    </div>
-    <div class="benefit-row">
-      <div class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/></svg></div>
-      <div class="benefit-txt">Sin blacklist, sin reinicio de rango</div>
-    </div>
-    <div class="benefit-row">
-      <div class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
-      <div class="benefit-txt">Activacion inmediata dentro de Telegram</div>
-    </div>
-    <div class="benefit-row">
-      <div class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-6.2-8.6"/></svg></div>
-      <div class="benefit-txt">Compatible con Android e iOS</div>
-    </div>
-  </div>
-
-  <div class="proof-strip">
-    <div class="proof-num">5 años</div>
-    <div class="proof-divider"></div>
-    <div class="proof-txt">de historial verificado en el mercado</div>
-  </div>
-  <div class="proof-strip" style="margin-top:8px">
-    <div class="proof-num">2.500+</div>
-    <div class="proof-divider"></div>
-    <div class="proof-txt">compras completadas y entregadas</div>
-  </div>
-  <div class="proof-strip" style="margin-top:8px">
-    <div class="proof-num">1.000+</div>
-    <div class="proof-divider"></div>
-    <div class="proof-txt">clientes activos recibiendo beneficios hoy</div>
-  </div>
-  <div class="proof-links">
-    <a class="proof-link" href="https://t.me/+56Wdh8JANmJjYzZh" target="_blank" rel="noopener">
-      <div class="proof-link-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
-      <div class="proof-link-meta">
-        <div class="proof-link-title">Ver referencias — canal 1</div>
-        <div class="proof-link-sub">Pagos verificables en Telegram</div>
-      </div>
-      <div class="proof-link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
-    </a>
-    <a class="proof-link" href="https://t.me/+56Wdh8JANmJjYzZh" target="_blank" rel="noopener">
-      <div class="proof-link-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
-      <div class="proof-link-meta">
-        <div class="proof-link-title">Ver referencias — canal 2</div>
-        <div class="proof-link-sub">Mas de 2.500 pagos verificables</div>
-      </div>
-      <div class="proof-link-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
-    </a>
-  </div>
-
-  <div class="sec-label">Como funciona</div>
-  <div class="flow-steps">
-    <div class="flow-step">
-      <div class="flow-line"><div class="flow-dot">1</div><div class="flow-stem"></div></div>
-      <div class="flow-body"><div class="flow-title">Ten Telegram listo</div><div class="flow-desc">Descarga la app, instalala y ten una cuenta activa antes de pagar. Ahi se hace la entrega.</div></div>
-    </div>
-    <div class="flow-step">
-      <div class="flow-line"><div class="flow-dot">2</div><div class="flow-stem"></div></div>
-      <div class="flow-body"><div class="flow-title">Elige tu plan y paga</div><div class="flow-desc">Tarjeta debito o credito, y otros metodos locales segun el plan que elijas.</div></div>
-    </div>
-    <div class="flow-step">
-      <div class="flow-line"><div class="flow-dot">3</div><div class="flow-stem"></div></div>
-      <div class="flow-body"><div class="flow-title">No cierres la pagina del pago</div><div class="flow-desc">Manten abierta la pestana del checkout hasta que se confirme y recibas el acceso completo.</div></div>
-    </div>
-    <div class="flow-step">
-      <div class="flow-line"><div class="flow-dot">4</div></div>
-      <div class="flow-body"><div class="flow-title">Acceso por Telegram</div><div class="flow-desc">Recibes el acceso en Telegram, igual que los mas de 1.000 clientes activos actuales.</div></div>
-    </div>
-  </div>
-
-  <div class="support-card">
-    <div class="support-top">
-      <div class="support-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65-3.8a9 9 0 111.79 1.72L3 21"/><path d="M9 10c0 5 6 5 6 0"/></svg></div>
-      <div>
-        <div class="support-title">Soporte por WhatsApp</div>
-        <div class="support-sub">Responde unas preguntas y te conectamos directo con JEXE</div>
-      </div>
-    </div>
-    <div class="support-body">
-
-      <div class="sw-progress" id="swProgress"></div>
-
-      <div class="sw-step active" data-step="0">
-        <div class="sw-q">¿Cual es el motivo de tu mensaje?</div>
-        <div class="sw-opts">
-          <button class="sw-opt" data-field="motivo" data-value="Quiero mas informacion antes de comprar">
-            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
-            <div class="sw-opt-txt">Quiero mas informacion antes de comprar</div>
-          </button>
-          <button class="sw-opt" data-field="motivo" data-value="Ya realice mi compra y tengo un problema con el acceso">
-            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
-            <div class="sw-opt-txt">Ya realice mi compra y tengo un problema</div>
-          </button>
-        </div>
-      </div>
-
-      <!-- INFO PATH -->
-      <div class="sw-step" data-step="info-1">
-        <div class="sw-q">¿Que plataforma usas?</div>
-        <div class="sw-opts">
-          <button class="sw-opt" data-field="plataforma" data-value="Android">
-            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
-            <div class="sw-opt-txt">Android</div>
-          </button>
-          <button class="sw-opt" data-field="plataforma" data-value="iOS">
-            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
-            <div class="sw-opt-txt">iOS</div>
-          </button>
-        </div>
-      </div>
-
-      <div class="sw-step" data-step="info-2">
-        <div class="sw-q">¿Que plan te interesa?</div>
-        <div class="sw-opts">
-          <button class="sw-opt" data-field="plan" data-value="1 mes — $10 USD (pago unico)">
-            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
-            <div class="sw-opt-txt">1 mes — $10 USD (pago unico)</div>
-          </button>
-          <button class="sw-opt" data-field="plan" data-value="1 mes — $8 USD/mes (suscripcion)">
-            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
-            <div class="sw-opt-txt">1 mes — $8 USD/mes (suscripcion)</div>
-          </button>
-          <button class="sw-opt" data-field="plan" data-value="Permanente — $20 USD">
-            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
-            <div class="sw-opt-txt">Permanente — $20 USD</div>
-          </button>
-          <button class="sw-opt" data-field="plan" data-value="Aun no estoy seguro">
-            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
-            <div class="sw-opt-txt">Aun no estoy seguro</div>
-          </button>
-        </div>
-      </div>
-
-      <div class="sw-step" data-step="info-3">
-        <div class="sw-q">Cuentanos tu pregunta (opcional)</div>
-        <div class="sw-field"><textarea class="sw-textarea" id="swInfoNote" placeholder="Ej: ¿funciona en mi modelo de celular?"></textarea></div>
-      </div>
-
-      <!-- PROBLEM PATH -->
-      <div class="sw-step" data-step="prob-1">
-        <div class="sw-q">¿Que plan compraste?</div>
-        <div class="sw-opts">
-          <button class="sw-opt" data-field="plan" data-value="1 mes — $10 USD (pago unico)">
-            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
-            <div class="sw-opt-txt">1 mes — $10 USD (pago unico)</div>
-          </button>
-          <button class="sw-opt" data-field="plan" data-value="1 mes — $8 USD/mes (suscripcion)">
-            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
-            <div class="sw-opt-txt">1 mes — $8 USD/mes (suscripcion)</div>
-          </button>
-          <button class="sw-opt" data-field="plan" data-value="Permanente — $20 USD">
-            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
-            <div class="sw-opt-txt">Permanente — $20 USD</div>
-          </button>
-        </div>
-      </div>
-
-      <div class="sw-step" data-step="prob-2">
-        <div class="sw-q">¿Con que metodo pagaste?</div>
-        <div class="sw-opts">
-          <button class="sw-opt" data-field="metodo" data-value="Tarjeta debito/credito">
-            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
-            <div class="sw-opt-txt">Tarjeta debito/credito</div>
-          </button>
-          <button class="sw-opt" data-field="metodo" data-value="Otro metodo local">
-            <div class="sw-opt-radio"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg></div>
-            <div class="sw-opt-txt">Otro metodo local</div>
-          </button>
-        </div>
-      </div>
-
-      <div class="sw-step" data-step="prob-3">
-        <div class="sw-q">Cuentanos que problema tuviste con el acceso</div>
-        <div class="sw-field"><textarea class="sw-textarea" id="swProbNote" placeholder="Ej: pague pero no recibi el acceso en Telegram, no me llego el link, etc."></textarea></div>
-      </div>
-
-      <!-- SUMMARY -->
-      <div class="sw-step" data-step="summary">
-        <div class="sw-q">Confirma tus respuestas</div>
-        <div class="sw-summary" id="swSummary"></div>
-        <a class="sw-send" id="swSendBtn" href="#" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65-3.8a9 9 0 111.79 1.72L3 21"/></svg>
-          Enviar por WhatsApp
-        </a>
-      </div>
-
-      <div class="sw-nav" id="swNav">
-        <button class="sw-back" id="swBack" style="display:none">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-          Atras
-        </button>
-        <button class="sw-next" id="swNext" disabled>
-          Siguiente
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="delivery-banner">
-    <div class="db-top">
-      <div class="db-ico"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-      <div class="db-title">Entrega inmediata, 24/7</div>
-    </div>
-    <div class="db-body">Sin intermediarios ni tiempos de espera. <strong>No cierres la pagina de pago</strong> hasta recibir tu acceso completo por Telegram, a cualquier hora del dia.</div>
-  </div>
-
-  <footer>
-    <div class="footer-brand">JEXE Regedit</div>
-    <div class="footer-sub">Android &amp; iOS · 1 mes o acceso permanente</div>
-  </footer>
+  </article>
 
 </main>
 
-<div class="pp-overlay" id="ppOverlay">
-  <div class="pp-modal">
-    <div class="pp-modal-top">
-      <div class="pp-modal-ico">
-        <svg viewBox="0 0 24 24"><path fill="#003087" d="M8.3 3.5h5.9c2.9 0 4.9 1.8 4.4 4.6-.6 3.3-3 5-6.1 5H10l-1 6H5.7L8.3 3.5z"/><path fill="#009cde" d="M9.9 6.3h5.7c2.6 0 4.3 1.6 3.9 4.1-.5 3.1-2.8 4.7-5.7 4.7h-2.3l-1 6.1H7.1L9.9 6.3z" opacity="0.85"/></svg>
+<!-- ══ MODAL · PEDIDO POR OTRO MÉTODO ══ -->
+<div class="overlay" id="orderOverlay" role="dialog" aria-modal="true" aria-labelledby="orderTitle">
+  <div class="pop">
+    <div class="pop-head">
+      <div class="pop-ico">
+        <svg class="ico" aria-hidden="true"><use href="#i-wallet"/></svg>
       </div>
       <div>
-        <div class="pp-modal-title">Pago con PayPal — Permanente</div>
-        <div class="pp-modal-sub">Antes de continuar, lee esto</div>
+        <h3 class="pop-title" id="orderTitle">Pagar con otro método</h3>
+        <p class="pop-sub" id="orderPlanInfo">Plan: 1 Mes — $10 USD</p>
       </div>
     </div>
-    <div class="pp-modal-body">
-      El pago con <strong>PayPal</strong> para el plan <strong>Permanente</strong> se hace <strong>personalmente con JEXE</strong>, no es un checkout automatico. Por las comisiones de envio que cobra la plataforma, el valor total con PayPal tiene un <strong>recargo de $3 USD</strong> sobre el precio normal.
+
+    <p class="order-label">Selecciona tu método de pago</p>
+    <div class="method-list" id="methodList"></div>
+
+    <div class="method-details" id="methodDetails"></div>
+
+    <div class="order-note">
+      <svg class="ico" aria-hidden="true"><use href="#i-info"/></svg>
+      <span>Al enviar el pedido, <strong>JEXE</strong> te confirmará por WhatsApp que los datos estén correctos para que realices el pago y recibas la entrega inmediata.</span>
     </div>
-    <div class="pp-price-row">
-      <div>
-        <div class="pp-price-lbl">Total a pagar por PayPal</div>
-        <div class="pp-price-sub">$20 USD + $3 USD comision de envio</div>
-      </div>
-      <div class="pp-price-val">$23 USD</div>
-    </div>
-    <div class="pp-check-row" id="ppCheckRow">
-      <div class="pp-check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <div class="pp-check-txt">He leido y quiero pagar $23 USD por PayPal (plan Permanente + comision de envio)</div>
-    </div>
-    <div class="pp-actions">
-      <button class="pp-cancel" id="ppCancelBtn" type="button">Cancelar</button>
-      <a class="pp-contact" id="ppContactBtn" href="#" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65-3.8a9 9 0 111.79 1.72L3 21"/></svg>
-        Contactar para pagar
+
+    <div class="pop-actions">
+      <button type="button" class="btn-cancel" onclick="closeModal('orderOverlay')">Cancelar</button>
+      <a class="btn btn-primary is-disabled" id="orderWa" href="#" target="_blank" rel="noopener noreferrer">
+        <svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg>
+        Enviar pedido
       </a>
     </div>
   </div>
 </div>
 
-<div class="pp-overlay" id="recurOverlay">
-  <div class="pp-modal">
-    <div class="pp-modal-top">
-      <div class="pp-modal-ico">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+<!-- ══ MODAL · PAYPAL ══ -->
+<div class="overlay" id="paypalOverlay" role="dialog" aria-modal="true" aria-labelledby="paypalTitle">
+  <div class="pop">
+    <div class="pop-head">
+      <div class="pop-ico">
+        <svg class="ico" aria-hidden="true"><use href="#i-paypal"/></svg>
       </div>
       <div>
-        <div class="pp-modal-title">Suscripcion $8 USD/mes</div>
-        <div class="pp-modal-sub">Antes de continuar, confirma que entendiste la diferencia</div>
+        <h3 class="pop-title" id="paypalTitle">Pagar con PayPal</h3>
+        <p class="pop-sub">Plan Permanente · Android &amp; iOS</p>
       </div>
     </div>
-    <div class="pp-modal-body">
-      Hay <strong>dos formas</strong> de pagar el acceso de 1 mes:
-      <br/><br/>
-      <strong>$10 USD — pago unico:</strong> pagas una sola vez por 1 mes de acceso. Cuando se vence, tienes que volver a la pagina y pagar manualmente otra vez si quieres seguir usandolo.
-      <br/><br/>
-      <strong>$8 USD — pago recurrente:</strong> se cobra automaticamente cada mes a tu tarjeta. Te ahorras $2 USD cada mes frente al pago unico y no tienes que preocuparte de volver a pagar manualmente. Puedes cancelar la suscripcion cuando quieras desde Whop.
+
+    <p class="pop-text">
+      El pago con PayPal se hace <strong>personalmente conmigo</strong>. Por las comisiones de envío de la plataforma, el total tiene un <strong>recargo de $3 USD</strong> sobre el precio normal del plan Permanente.
+    </p>
+
+    <div class="price-box">
+      <span class="price-box-lbl">Total a pagar</span>
+      <span class="price-box-val">$23 USD</span>
     </div>
-    <div class="pp-price-row">
-      <div>
-        <div class="pp-price-lbl">Cobro recurrente</div>
-        <div class="pp-price-sub">$8 USD cada mes, automatico, hasta que canceles</div>
-      </div>
-      <div class="pp-price-val">$8 USD</div>
-    </div>
-    <div class="pp-check-row" id="recurCheckRow">
-      <div class="pp-check-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <div class="pp-check-txt">Entendi la diferencia: el boton de $10 es un pago unico manual y el de $8 es un pago recurrente automatico que me ahorra $2 USD al mes</div>
-    </div>
-    <div class="pp-actions">
-      <button class="pp-cancel" id="recurCancelBtn" type="button">Cancelar</button>
-      <a class="pp-contact" id="recurContinueBtn" href="https://whop.com/checkout/plan_20jKmvamAI8af" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-        Continuar con $8 USD/mes
+
+    <div class="pop-actions">
+      <button type="button" class="btn-cancel" onclick="closeModal('paypalOverlay')">Cancelar</button>
+      <a class="btn btn-primary" id="paypalWa" href="#" target="_blank" rel="noopener noreferrer">
+        <svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg>
+        Contactar
       </a>
     </div>
   </div>
 </div>
 
 <script>
-/* ---------- PAYMENT LOGOS (icon-only, real brand colors, per plan) ---------- */
-var LOGOS={
-  visa:'<svg viewBox="0 0 48 24"><text x="24" y="16.5" font-family="Arial,Helvetica,sans-serif" font-style="italic" font-weight="900" font-size="15" letter-spacing="-0.5" fill="#1A1F71" text-anchor="middle">VISA</text></svg>',
-  mastercard:'<svg viewBox="0 0 40 24"><circle cx="15" cy="12" r="9.5" fill="#EB001B"/><circle cx="25" cy="12" r="9.5" fill="#F79E1B"/><path d="M20 4.6a9.48 9.48 0 010 14.8 9.48 9.48 0 010-14.8z" fill="#FF5F00"/></svg>',
-  amex:'<svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="3" fill="#006FCF"/><text x="12" y="14.5" font-family="Arial,sans-serif" font-size="5.6" font-weight="800" fill="#fff" text-anchor="middle">AMEX</text></svg>',
-  diners:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#0079BE"/><circle cx="12" cy="12" r="6.2" fill="#fff"/><path d="M12 5.8a6.2 6.2 0 010 12.4V5.8z" fill="#0079BE"/></svg>',
-  binance:'<svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="3" fill="#F0B90B"/><text x="12" y="14.5" font-family="Arial,sans-serif" font-size="6" font-weight="800" fill="#0A0A0A" text-anchor="middle">Binance</text></svg>',
-  skrill:'<svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="3" fill="#862165"/><text x="12" y="14.5" font-family="Arial,sans-serif" font-size="6.3" font-weight="800" fill="#fff" text-anchor="middle">skrill</text></svg>',
-  nequi:'<svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="3" fill="#DA1884"/><text x="12" y="14.5" font-family="Arial,sans-serif" font-size="6.3" font-weight="800" fill="#fff" text-anchor="middle">Nequi</text></svg>',
-  breb:'<svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="3" fill="#1C3FAA"/><text x="12" y="14.5" font-family="Arial,sans-serif" font-size="6" font-weight="800" fill="#fff" text-anchor="middle">Bre-B</text></svg>',
-  clabe:'<svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="3" fill="#006341"/><text x="12" y="14.5" font-family="Arial,sans-serif" font-size="6.3" font-weight="800" fill="#fff" text-anchor="middle">CLABE</text></svg>'
-};
-var CARDS=['visa','mastercard','amex','diners'];
-var EXTRA_METHODS=['binance','skrill','nequi','breb','clabe'];
-var PERMANENT=CARDS.concat(EXTRA_METHODS);
-
-function buildLogos(elId,list){
-  var el=document.getElementById(elId);
-  if(!el)return;
-  var full=list.concat(list); // duplicate for seamless loop
-  el.innerHTML=full.map(function(id){
-    return '<div class="logo-chip">'+LOGOS[id]+'</div>';
-  }).join('');
-}
-buildLogos('logosMes',CARDS);
-buildLogos('logosPermanente',PERMANENT);
-
-/* ---------- EXTRA PAYMENT METHODS (per plan, hidden until tapped) ---------- */
-var COP_RATE=3300, MXN_RATE=18;
-var PLAN_RATES={
-  mes:{usd:10},
-  permanente:{usd:20}
-};
-var _eci=0;
-function fmtCOP(n){return '$'+n.toLocaleString('es-CO')+' COP'}
-function fmtMXN(n){return '$'+n.toLocaleString('es-MX')+' MXN'}
-function eRow(lbl,val){
-  var id='ecp'+(++_eci);
-  return '<div class="extra-data-row"><span class="extra-data-lbl">'+lbl+'</span><span class="extra-data-val">'+val+'</span><button class="extra-data-copy" id="'+id+'" onclick="cpExtra(\''+val.replace(/'/g,"\\'")+"','"+id+"')\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\" rx=\"2\"/><path d=\"M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1\"/></svg></button></div>";
-}
-function cpExtra(txt,id){
-  var b=document.getElementById(id);
-  navigator.clipboard.writeText(txt).then(function(){
-    b.classList.add('copied');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
-    setTimeout(function(){b.classList.remove('copied');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>'},1800);
-  }).catch(function(){});
-}
-function extraAmountLabel(methodId,usd){
-  if(methodId==='binance')return usd+' USDT';
-  if(methodId==='skrill')return '$'+usd+' USD';
-  if(methodId==='nequi'||methodId==='breb')return fmtCOP(Math.round(usd*COP_RATE));
-  if(methodId==='clabe')return fmtMXN(Math.round(usd*MXN_RATE));
-  return '';
-}
-function extraDetailHtml(methodId,usd){
-  _eci=0;
-  if(methodId==='binance'){
-    return '<div class="extra-data-lbl" style="margin-bottom:8px;font-weight:700;color:inherit">Binance Pay</div>'
-      +eRow('Monto',usd+' USDT')+eRow('Binance ID','538653875')+eRow('Usuario','@jexeregedit');
-  }else if(methodId==='skrill'){
-    return eRow('Monto','$'+usd+' USD')+eRow('Email Skrill','juanpabloaguirregrosso@gmail.com');
-  }else if(methodId==='nequi'){
-    return eRow('Monto',fmtCOP(Math.round(usd*COP_RATE)))+eRow('Numero','3115593037')+eRow('Titular','Juan Aguirre');
-  }else if(methodId==='breb'){
-    return eRow('Monto',fmtCOP(Math.round(usd*COP_RATE)))+eRow('Entidad','Bold CF')+eRow('Email / ID','mediaspaceapp@gmail.com')+eRow('Titular','Juan Aguirre');
-  }else if(methodId==='clabe'){
-    return eRow('Monto',fmtMXN(Math.round(usd*MXN_RATE)))+eRow('Titular','Juan Pablo Aguirre Grosso')+eRow('CLABE','646180546701915656')+eRow('Entidad','STP');
-  }
-  return '';
-}
-var METHOD_NAMES={binance:'Binance Pay',skrill:'Skrill',nequi:'Nequi',breb:'Llave / BRE-B',clabe:'CLABE — Mexico'};
-
-function buildExtraPanel(planId){
-  var usd=PLAN_RATES[planId].usd;
-  var panel=document.getElementById('extraPanel-'+planId);
-  panel.innerHTML=EXTRA_METHODS.map(function(mid){
-    return '<div class="extra-method-wrap">'
-      +'<div class="extra-method" data-plan="'+planId+'" data-method="'+mid+'">'
-        +'<div class="extra-m-ico">'+LOGOS[mid]+'</div>'
-        +'<div class="extra-m-info"><div class="extra-m-name">'+METHOD_NAMES[mid]+'</div><div class="extra-m-amt">Equivale a '+extraAmountLabel(mid,usd)+'</div></div>'
-        +'<div class="extra-m-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>'
-      +'</div>'
-      +'<div class="extra-detail" data-detail-for="'+planId+'-'+mid+'"></div>'
-    +'</div>';
-  }).join('');
-
-  panel.querySelectorAll('.extra-method').forEach(function(el){
-    el.addEventListener('click',function(){
-      var mid=el.dataset.method;
-      var det=panel.querySelector('[data-detail-for="'+planId+'-'+mid+'"]');
-      var already=el.classList.contains('is-sel');
-      panel.querySelectorAll('.extra-method').forEach(function(i){i.classList.remove('is-sel')});
-      panel.querySelectorAll('.extra-detail').forEach(function(i){i.classList.remove('show');i.innerHTML=''});
-      if(!already){
-        el.classList.add('is-sel');
-        det.innerHTML=extraDetailHtml(mid,usd);
-        det.classList.add('show');
-      }
-    });
-  });
-}
-
-function toggleExtra(planId,btn){
-  var panel=document.getElementById('extraPanel-'+planId);
-  var open=panel.classList.toggle('open');
-  btn.classList.toggle('open',open);
-  if(open&&!panel.children.length)buildExtraPanel(planId);
-}
-
-/* ---------- SUPPORT WIZARD ---------- */
 (function(){
-  var answers={motivo:'',plataforma:'',plan:'',metodo:'',nota:''};
-  var flow=['start']; // dynamic step order, built as user answers
-  var currentIndex=0;
-  var steps=document.querySelectorAll('.sw-step');
-  var nextBtn=document.getElementById('swNext'),backBtn=document.getElementById('swBack');
-  var progressBox=document.getElementById('swProgress');
+  'use strict';
 
-  function stepEl(name){
-    return document.querySelector('.sw-step[data-step="'+name+'"]');
-  }
-  function showStep(name){
-    steps.forEach(function(s){s.classList.remove('active')});
-    var el = name==='start' ? stepEl('0') : stepEl(name);
-    el.classList.add('active');
-    updateNextState(name);
-    renderProgress();
-  }
-  function updateNextState(name){
-    if(name==='summary'){nextBtn.style.display='none';return}
-    nextBtn.style.display='flex';
-    var el = name==='start' ? stepEl('0') : stepEl(name);
-    if(el.querySelector('.sw-textarea')){
-      nextBtn.disabled=false; // notes optional
-    }else{
-      var hasSel = el.querySelector('.sw-opt.sel');
-      nextBtn.disabled=!hasSel;
+  /* ── CONFIG ── */
+  var WA_NUMBER = '573115593037';
+  var USD_TO_COP = 3300;
+  var USD_TO_MXN = 18;
+
+  var PLANS = {
+    mes:        { name: '1 Mes',      priceStr: '$10 USD', usd: 10 },
+    permanente: { name: 'Permanente', priceStr: '$20 USD', usd: 20 }
+  };
+
+  var METHODS = [
+    { id: 'binance', name: 'Binance Pay',   note: 'Cripto · USDT',   icon: 'i-binance' },
+    { id: 'skrill',  name: 'Skrill',        note: 'Cartera digital', icon: 'i-skrill'  },
+    { id: 'nequi',   name: 'Nequi',         note: 'Colombia · COP',  icon: 'i-nequi'   },
+    { id: 'breb',    name: 'Llave / BRE-B', note: 'Colombia · COP',  icon: 'i-breb'    },
+    { id: 'clabe',   name: 'CLABE',         note: 'México · MXN',    icon: 'i-clabe'   }
+  ];
+
+  /* Datos de cada método en función del monto USD del plan */
+  var METHOD_DATA = {
+    binance: function(usd){
+      return [
+        ['Monto',     usd + ' USDT'],
+        ['Binance ID','538653875'],
+        ['Usuario',   '@jexeregedit']
+      ];
+    },
+    skrill: function(usd){
+      return [
+        ['Monto',       '$' + usd + ' USD'],
+        ['Email Skrill','juanpabloaguirregrosso@gmail.com']
+      ];
+    },
+    nequi: function(usd){
+      return [
+        ['Monto',   '$' + (usd * USD_TO_COP).toLocaleString('es-CO') + ' COP'],
+        ['Número',  '3115593037'],
+        ['Titular', 'Juan Aguirre']
+      ];
+    },
+    breb: function(usd){
+      return [
+        ['Monto',      '$' + (usd * USD_TO_COP).toLocaleString('es-CO') + ' COP'],
+        ['Entidad',    'Bold CF'],
+        ['Llave / ID', '@bold3115593037'],
+        ['Titular',    'Juan Aguirre']
+      ];
+    },
+    clabe: function(usd){
+      return [
+        ['Monto',   '$' + (usd * USD_TO_MXN).toLocaleString('es-MX') + ' MXN'],
+        ['Titular', 'Juan Pablo Aguirre Grosso'],
+        ['CLABE',   '646180546701915656'],
+        ['Entidad', 'STP']
+      ];
     }
-    backBtn.style.display = currentIndex===0 ? 'none':'flex';
+  };
+
+  var currentPlan   = null;
+  var currentMethod = null;
+
+  function $(id){ return document.getElementById(id); }
+  function show(id){ var el = $(id); if (el) el.classList.add('show'); }
+  function hide(id){ var el = $(id); if (el) el.classList.remove('show'); }
+  function findMethod(id){
+    for (var i = 0; i < METHODS.length; i++) if (METHODS[i].id === id) return METHODS[i];
+    return null;
   }
-  function renderProgress(){
-    var total = flow.length>1? flow.length-1 : 4;
-    progressBox.innerHTML='';
-    for(var i=0;i<Math.max(total,1);i++){
-      var seg=document.createElement('div');seg.className='sw-progress-seg'+(i<currentIndex?' done':'');
-      seg.innerHTML='<i style="width:'+(i<currentIndex?'100%':(i===currentIndex?'40%':'0%'))+'"></i>';
-      progressBox.appendChild(seg);
-    }
-  }
 
-  document.querySelectorAll('.sw-opt').forEach(function(btn){
-    btn.addEventListener('click',function(){
-      var parent=btn.closest('.sw-step');
-      parent.querySelectorAll('.sw-opt').forEach(function(o){o.classList.remove('sel')});
-      btn.classList.add('sel');
-      answers[btn.dataset.field]=btn.dataset.value;
-      nextBtn.disabled=false;
-
-      // build flow dynamically once motivo is chosen
-      if(btn.dataset.field==='motivo'){
-        if(btn.dataset.value.indexOf('mas informacion')>-1){
-          flow=['start','info-1','info-2','info-3','summary'];
-        }else{
-          flow=['start','prob-1','prob-2','prob-3','summary'];
-        }
-      }
-    });
-  });
-
-  nextBtn.addEventListener('click',function(){
-    if(currentIndex>=flow.length-1)return;
-    currentIndex++;
-    var name=flow[currentIndex];
-    if(name==='summary')buildSummary();
-    showStep(name);
-  });
-  backBtn.addEventListener('click',function(){
-    if(currentIndex<=0)return;
-    currentIndex--;
-    showStep(flow[currentIndex]);
-  });
-
-  function buildSummary(){
-    answers.nota = answers.motivo.indexOf('mas informacion')>-1
-      ? (document.getElementById('swInfoNote').value.trim())
-      : (document.getElementById('swProbNote').value.trim());
-
-    var box=document.getElementById('swSummary');
-    var rows=[['Motivo',answers.motivo]];
-    if(answers.plataforma)rows.push(['Plataforma',answers.plataforma]);
-    if(answers.plan)rows.push(['Plan',answers.plan]);
-    if(answers.metodo)rows.push(['Metodo de pago',answers.metodo]);
-    if(answers.nota)rows.push(['Detalle',answers.nota]);
-    box.innerHTML=rows.map(function(r){
-      return '<div class="sw-summary-row"><span class="sw-summary-lbl">'+r[0]+'</span><span class="sw-summary-val">'+r[1]+'</span></div>';
+  /* ── BUILD METHOD LIST ── */
+  function buildMethods(){
+    var list = $('methodList');
+    list.innerHTML = METHODS.map(function(m){
+      return '' +
+        '<button type="button" class="method" data-method="' + m.id + '">' +
+          '<span class="method-ico"><svg aria-hidden="true"><use href="#' + m.icon + '"/></svg></span>' +
+          '<span class="method-body">' +
+            '<span class="method-name">' + m.name + '</span>' +
+            '<span class="method-note">' + m.note + '</span>' +
+          '</span>' +
+          '<span class="method-check">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">' +
+              '<polyline points="20 6 9 17 4 12"/>' +
+            '</svg>' +
+          '</span>' +
+        '</button>';
     }).join('');
 
-    var isInfo = answers.motivo.indexOf('mas informacion')>-1;
-    var msg = 'Hola JEXE, te escribo desde la pagina de JEXE Regedit.\n\n';
-    msg += '================================\n';
-    msg += isInfo ? ' CONSULTA — Antes de comprar\n' : ' SOPORTE — Problema con el acceso\n';
-    msg += '================================\n';
-    if(answers.plataforma)msg += 'Plataforma: '+answers.plataforma+'\n';
-    if(answers.plan)msg += 'Plan: '+answers.plan+'\n';
-    if(answers.metodo)msg += 'Metodo de pago: '+answers.metodo+'\n';
-    if(answers.nota)msg += 'Detalle: '+answers.nota+'\n';
-    msg += '================================';
-
-    document.getElementById('swSendBtn').href='https://wa.me/573115593037?text='+encodeURIComponent(msg);
+    list.querySelectorAll('.method').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        selectMethod(btn.dataset.method);
+      });
+    });
   }
 
-  showStep('start');
-})();
+  /* ── SELECT METHOD ── */
+  function selectMethod(id){
+    currentMethod = id;
+    var list = $('methodList');
+    list.querySelectorAll('.method').forEach(function(b){
+      b.classList.toggle('is-sel', b.dataset.method === id);
+    });
 
-/* ---------- PAYPAL CONFIRM MODAL (permanente only) ---------- */
-(function(){
-  var openBtn=document.getElementById('paypalOpenBtn');
-  var overlay=document.getElementById('ppOverlay');
-  var checkRow=document.getElementById('ppCheckRow');
-  var contactBtn=document.getElementById('ppContactBtn');
-  var cancelBtn=document.getElementById('ppCancelBtn');
-  if(!openBtn)return;
-
-  var checked=false;
-
-  function open(){
-    overlay.classList.add('show');
+    renderMethodDetails();
+    updateWaLink();
   }
-  function close(){
-    overlay.classList.remove('show');
-  }
-  function setChecked(v){
-    checked=v;
-    checkRow.classList.toggle('checked',checked);
-    contactBtn.classList.toggle('enabled',checked);
-    if(checked){
-      var msg='Hola JEXE, quiero pagar el plan Permanente ($20 USD + $3 USD comision de envio = $23 USD) por PayPal.\n\nHe leido y acepto el precio total con PayPal.';
-      contactBtn.href='https://wa.me/573115593037?text='+encodeURIComponent(msg);
-    }else{
-      contactBtn.href='#';
+
+  /* ── RENDER DETAILS IN MODAL ── */
+  function renderMethodDetails(){
+    var box = $('methodDetails');
+    if (!currentPlan || !currentMethod){
+      box.classList.remove('show');
+      box.innerHTML = '';
+      return;
     }
+
+    var usd = PLANS[currentPlan].usd;
+    var data = METHOD_DATA[currentMethod](usd);
+
+    var html =
+      '<div class="md-title">' +
+        '<svg class="ico" aria-hidden="true"><use href="#i-info"/></svg>' +
+        'Datos para pagar' +
+      '</div>';
+
+    data.forEach(function(row){
+      html +=
+        '<div class="md-row">' +
+          '<span class="md-lbl">' + row[0] + '</span>' +
+          '<span class="md-val">' + row[1] + '</span>' +
+        '</div>';
+    });
+
+    box.innerHTML = html;
+    box.classList.add('show');
   }
 
-  openBtn.addEventListener('click',function(){
-    setChecked(false);
-    open();
-  });
-  cancelBtn.addEventListener('click',close);
-  overlay.addEventListener('click',function(e){
-    if(e.target===overlay)close();
-  });
-  checkRow.addEventListener('click',function(){
-    setChecked(!checked);
-  });
-  contactBtn.addEventListener('click',function(e){
-    if(!checked)e.preventDefault();
-  });
-})();
+  /* ── UPDATE WHATSAPP LINK (con datos del método) ── */
+  function updateWaLink(){
+    var btn = $('orderWa');
+    if (!currentPlan || !currentMethod){
+      btn.classList.add('is-disabled');
+      btn.setAttribute('href', '#');
+      return;
+    }
 
-/* ---------- RECURRING SUBSCRIPTION CONFIRM MODAL ($8/mes, 1 mes plan) ---------- */
-(function(){
-  var openBtn=document.getElementById('recurOpenBtn');
-  var overlay=document.getElementById('recurOverlay');
-  var checkRow=document.getElementById('recurCheckRow');
-  var continueBtn=document.getElementById('recurContinueBtn');
-  var cancelBtn=document.getElementById('recurCancelBtn');
-  if(!openBtn)return;
+    var plan   = PLANS[currentPlan];
+    var method = findMethod(currentMethod);
+    if (!method) return;
 
-  var checked=false;
+    var data = METHOD_DATA[currentMethod](plan.usd);
 
-  function open(){overlay.classList.add('show')}
-  function close(){overlay.classList.remove('show')}
-  function setChecked(v){
-    checked=v;
-    checkRow.classList.toggle('checked',checked);
-    continueBtn.classList.toggle('enabled',checked);
+    var msg =
+      'Hola JEXE, quiero hacer un pedido:\n\n' +
+      '• Plan: ' + plan.name + ' — ' + plan.priceStr + '\n' +
+      '• Método de pago: ' + method.name + '\n\n' +
+      'Datos del método:\n';
+
+    data.forEach(function(row){
+      msg += '• ' + row[0] + ': ' + row[1] + '\n';
+    });
+
+    msg +=
+      '\n¿Me confirmas si estos datos están correctos para realizar el pago ' +
+      'y darme la entrega inmediata?';
+
+    btn.href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
+    btn.classList.remove('is-disabled');
   }
 
-  openBtn.addEventListener('click',function(){
-    setChecked(false);
-    open();
+  /* ── PUBLIC ACTIONS ── */
+  window.openOrder = function(plan){
+    currentPlan = plan;
+    currentMethod = null;
+
+    var info = $('orderPlanInfo');
+    if (info){
+      var p = PLANS[plan];
+      info.textContent = 'Plan: ' + p.name + ' — ' + p.priceStr;
+    }
+
+    buildMethods();
+    renderMethodDetails();
+    updateWaLink();
+    show('orderOverlay');
+  };
+
+  window.openPaypal = function(){
+    show('paypalOverlay');
+  };
+
+  window.closeModal = function(id){
+    hide(id);
+  };
+
+  /* ── SETUP PAYPAL WA LINK ── */
+  (function(){
+    var msg =
+      'Hola JEXE, quiero pagar el plan Permanente por PayPal.\n\n' +
+      '• Total: $23 USD ($20 + $3 de comisión de envío)\n\n' +
+      'Por favor confírmame los datos para realizar el pago y darme la entrega inmediata.';
+    var link = $('paypalWa');
+    if (link){
+      link.href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
+    }
+  })();
+
+  /* ── CERRAR MODALES ── */
+  document.querySelectorAll('.overlay').forEach(function(ov){
+    ov.addEventListener('click', function(e){
+      if (e.target === ov) hide(ov.id);
+    });
   });
-  cancelBtn.addEventListener('click',close);
-  overlay.addEventListener('click',function(e){
-    if(e.target===overlay)close();
+
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape'){
+      document.querySelectorAll('.overlay.show').forEach(function(o){
+        hide(o.id);
+      });
+    }
   });
-  checkRow.addEventListener('click',function(){
-    setChecked(!checked);
-  });
-  continueBtn.addEventListener('click',function(e){
-    if(!checked)e.preventDefault();
-  });
+
 })();
 </script>
 </body>
