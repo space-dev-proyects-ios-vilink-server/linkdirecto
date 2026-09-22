@@ -1,643 +1,732 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 <meta name="color-scheme" content="light"/>
-<title>JEXE Regedit — Descargas Oficiales</title>
+<title>Descargas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@500;600;700;800;900&display=swap" rel="stylesheet"/>
-<script>(function(s){s.dataset.zone='10863747',s.src='https://al5sm.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%232563EB'/%3E%3Cpath d='M12 4v10m0 0-3.5-3.5M12 14l3.5-3.5M5 18h14' stroke='white' stroke-width='1.9' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <style>
-:root{
-  --white:#FFFFFF;--paper:#FAFAFA;--line:#E5E5E5;--line2:#D9D9D9;
-  --ink:#0A0A0A;--ink2:#1D1D1F;--gray1:#6E6E73;--gray2:#86868B;--gray3:#AEAEB2;
-  --surface:#F5F5F7;--surface2:#EFEFF1;
-  --r-lg:22px;--r-md:16px;--r-sm:11px;
-  --tr:0.2s cubic-bezier(0.16,1,0.3,1);
-  --f-disp:'Inter Tight',-apple-system,system-ui,sans-serif;
-  --f-body:'Inter',-apple-system,system-ui,sans-serif;
-  --danger:#D92D20;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-@media(prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
-html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
-body{
-  font-family:var(--f-body);background:var(--white);color:var(--ink);
-  min-height:100dvh;overflow-x:hidden;-webkit-font-smoothing:antialiased;
-  padding-bottom:calc(env(safe-area-inset-bottom,0px) + 40px);
-}
-:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+  /* ── TOKENS ── */
+  :root{
+    --ink:#0B1729;
+    --ink-2:#33445C;
+    --muted:#7C8CA3;
+    --muted-2:#A2AFC3;
 
-/* HEADER */
-header{
-  position:sticky;top:0;z-index:90;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 20px;height:54px;
-  background:rgba(255,255,255,0.88);
-  backdrop-filter:blur(20px) saturate(180%);
-  -webkit-backdrop-filter:blur(20px) saturate(180%);
-  border-bottom:1px solid var(--line);
-}
-.hdr-brand{display:flex;align-items:center;gap:9px}
-.hdr-mark{width:22px;height:22px;border-radius:6px;background:var(--ink);display:grid;place-items:center;flex-shrink:0}
-.hdr-mark svg{width:13px;height:13px}
-.hdr-name{font-family:var(--f-disp);font-size:0.94rem;font-weight:700;letter-spacing:-0.01em;color:var(--ink)}
-.hdr-name .lt{font-weight:500;color:var(--gray1)}
-.hdr-tag{font-size:0.62rem;font-weight:600;letter-spacing:0.05em;color:var(--ink);background:var(--surface);padding:5px 10px;border-radius:100px;border:1px solid var(--line)}
+    --line:#E8EEF7;
+    --line-2:#D6E3F5;
 
-main{position:relative;z-index:1;max-width:480px;width:100%;margin:0 auto;padding:0 18px}
+    --blue-700:#1D4ED8;
+    --blue-600:#2563EB;
+    --blue-500:#3B82F6;
+    --blue-400:#60A5FA;
+    --blue-50:#EFF5FF;
 
-/* HERO */
-.hero{padding:36px 0 24px;animation:rise .6s ease both}
-.hero-kicker{font-size:0.72rem;font-weight:600;letter-spacing:0.04em;color:var(--gray1);margin-bottom:13px}
-.hero-h1{font-family:var(--f-disp);font-size:clamp(2.2rem,9vw,2.9rem);font-weight:800;line-height:1.05;letter-spacing:-0.025em;color:var(--ink);margin-bottom:6px}
-.hero-p{font-size:0.92rem;font-weight:400;line-height:1.58;color:var(--gray1);margin-top:12px;max-width:380px}
+    --grad:linear-gradient(140deg,#2563EB 0%,#60A5FA 100%);
 
-/* ALERT */
-.alert{
-  display:flex;align-items:flex-start;gap:11px;
-  padding:12px 14px;margin-top:18px;margin-bottom:20px;
-  border-radius:var(--r-sm);background:var(--surface);border:1px solid var(--line2);
-  font-size:0.74rem;color:var(--gray1);font-weight:400;line-height:1.55;
-  animation:rise .6s .05s ease both;
-}
-.alert svg{width:16px;height:16px;color:var(--ink);flex-shrink:0;margin-top:1px}
+    --r:16px;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
 
-/* SEC LABEL */
-.sec-label{
-  font-size:0.69rem;font-weight:600;letter-spacing:0.04em;
-  color:var(--gray1);margin:28px 0 14px;
-}
+  /* ── RESET ── */
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
 
-/* ════════════════════════════════════════
-   PREMIUM BANNER — HERO EDITION
-   High visual hierarchy, enticing, no sales pressure
-════════════════════════════════════════ */
-.premium-hero{
-  position:relative;overflow:hidden;
-  background:linear-gradient(135deg,#0F0F0F 0%,#1A1515 35%,#0D0D0D 100%);
-  border:1px solid rgba(255,255,255,0.1);
-  border-radius:var(--r-lg);
-  padding:28px 22px;
-  animation:rise .6s .08s ease both;
-  cursor:pointer;transition:all var(--tr);
-  display:block;
-}
-.premium-hero:hover{
-  border-color:rgba(255,255,255,0.18);
-  box-shadow:0 12px 40px rgba(0,0,0,0.35);
-  transform:translateY(-2px);
-}
-/* ambient glow */
-.premium-hero::before{
-  content:'';position:absolute;top:-40px;right:-40px;
-  width:200px;height:200px;border-radius:50%;
-  background:radial-gradient(circle,rgba(255,255,255,0.08) 0%,transparent 70%);
-  pointer-events:none;
-}
-.premium-hero-inner{position:relative;z-index:1}
+  /* ── BODY (grid centering robusto) ── */
+  body{
+    font-family:'Manrope',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    color:var(--ink);
+    background:#FBFCFE;
+    line-height:1.5;
+    min-height:100vh;
+    min-height:100dvh;
+    display:grid;
+    place-items:center;
+    padding:40px 20px;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    position:relative;
+  }
 
-.prem-badge{
-  display:inline-flex;align-items:center;gap:6px;
-  padding:6px 12px;border-radius:100px;
-  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);
-  font-size:0.62rem;font-weight:700;letter-spacing:0.08em;
-  color:#fff;margin-bottom:12px;
-}
-.prem-badge svg{width:13px;height:13px;flex-shrink:0}
+  /* Fondo decorativo */
+  body::before{
+    content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(720px 460px at 12% -10%, rgba(96,165,250,.14), rgba(96,165,250,0) 62%),
+      radial-gradient(680px 420px at 108% 110%, rgba(37,99,235,.08), rgba(37,99,235,0) 60%),
+      radial-gradient(900px 560px at 50% 50%, rgba(255,255,255,1), rgba(255,255,255,0) 70%);
+  }
+  body::after{
+    content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:radial-gradient(circle, rgba(37,99,235,.10) 1px, transparent 1.3px);
+    background-size:24px 24px;
+    -webkit-mask-image:radial-gradient(ellipse 62% 55% at 50% 50%, #000 20%, transparent 78%);
+            mask-image:radial-gradient(ellipse 62% 55% at 50% 50%, #000 20%, transparent 78%);
+    opacity:.7;
+  }
 
-.prem-headline{
-  font-family:var(--f-disp);font-size:1.75rem;font-weight:900;
-  color:#fff;letter-spacing:-0.02em;line-height:1.1;
-  margin-bottom:8px;
-}
-.prem-subhead{
-  font-size:0.8rem;color:rgba(255,255,255,0.65);
-  line-height:1.5;margin-bottom:16px;font-weight:400;
-}
+  /* ── ICON BASE ── */
+  .ico{width:20px;height:20px;display:block;flex:none}
 
-.prem-features{
-  display:grid;grid-template-columns:1fr 1fr;gap:10px;
-  margin-bottom:16px;
-}
-.prem-feat-item{
-  display:flex;align-items:flex-start;gap:7px;
-  padding:10px;background:rgba(255,255,255,0.04);
-  border-radius:10px;border:1px solid rgba(255,255,255,0.08);
-}
-.prem-feat-ico{
-  width:20px;height:20px;display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;color:#fff;font-size:0.9rem;margin-top:1px;
-}
-.prem-feat-ico svg{width:14px;height:14px;display:block}
-.prem-feat-txt{font-size:0.68rem;color:rgba(255,255,255,0.72);font-weight:500;line-height:1.35}
+  /* ── STACK ── */
+  .stack{
+    position:relative;z-index:1;
+    width:100%;
+    max-width:460px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
 
-.prem-footer{
-  display:flex;align-items:center;justify-content:space-between;
-  padding-top:14px;border-top:1px solid rgba(255,255,255,0.1);
-}
-.prem-price{
-  display:flex;flex-direction:column;gap:2px;
-}
-.prem-price-from{font-size:0.65rem;color:rgba(255,255,255,0.42);font-weight:500;letter-spacing:0.02em}
-.prem-price-val{font-family:var(--f-disp);font-size:1.3rem;font-weight:900;color:#fff;letter-spacing:-0.01em}
-.prem-cta{
-  display:flex;align-items:center;gap:8px;
-  padding:11px 18px;border-radius:12px;
-  background:#fff;color:#000;
-  font-family:var(--f-disp);font-size:0.9rem;font-weight:800;
-  letter-spacing:-0.005em;cursor:pointer;
-  transition:all var(--tr);text-decoration:none;
-  box-shadow:0 4px 12px rgba(255,255,255,0.2);
-  flex-shrink:0;white-space:nowrap;
-}
-.premium-hero:hover .prem-cta{
-  transform:scale(1.05);
-  box-shadow:0 6px 18px rgba(255,255,255,0.3);
-}
-.prem-cta svg{width:14px;height:14px;flex-shrink:0;display:block}
+  /* ── PREMIUM CARD ── */
+  .premium{
+    position:relative;
+    display:flex;flex-direction:column;gap:14px;
+    padding:22px 20px;
+    border-radius:20px;
+    background:linear-gradient(140deg,#F5F9FF 0%,#E7F0FE 100%);
+    border:1px solid #C9DFFB;
+    text-decoration:none;color:inherit;
+    overflow:hidden;
+    box-shadow:
+      0 1px 2px rgba(11,23,41,.03),
+      0 12px 28px -20px rgba(37,99,235,.4);
+    transition:
+      transform .4s var(--ease),
+      box-shadow .4s var(--ease),
+      border-color .4s var(--ease);
+  }
+  .premium::before{
+    content:'';position:absolute;top:-70px;right:-70px;
+    width:200px;height:200px;
+    background:radial-gradient(circle, rgba(96,165,250,.35), transparent 70%);
+    pointer-events:none;
+  }
+  .premium:hover{
+    transform:translateY(-3px);
+    border-color:#A9CCF7;
+    box-shadow:
+      0 2px 4px rgba(11,23,41,.03),
+      0 24px 44px -22px rgba(37,99,235,.55);
+  }
+  .premium:focus-visible{outline:2px solid var(--blue-500);outline-offset:2px}
 
-/* COMPARISON SNIPPET */
-.compare-banner{
-  display:flex;align-items:center;justify-content:center;gap:14px;
-  padding:12px;background:var(--surface);border-radius:var(--r-sm);
-  border:1px solid var(--line);font-size:0.74rem;color:var(--gray1);
-  margin-bottom:22px;animation:rise .6s .1s ease both;
-}
-.comp-item{display:flex;align-items:center;gap:6px;font-weight:500}
-.comp-item svg{width:16px;height:16px;color:var(--ink);flex-shrink:0;display:block}
-.comp-divider{width:1px;height:18px;background:var(--line2);flex-shrink:0}
+  .p-badge{
+    position:relative;z-index:1;
+    display:inline-flex;align-items:center;gap:7px;
+    align-self:flex-start;
+    padding:6px 12px;
+    border-radius:999px;
+    background:var(--grad);color:#fff;
+    font-size:.63rem;font-weight:800;
+    letter-spacing:.11em;text-transform:uppercase;
+    box-shadow:0 6px 14px -6px rgba(37,99,235,.6);
+  }
+  .p-badge .ico{width:12px;height:12px}
 
-/* DL BUTTONS GRID */
-.dl-grid{
-  display:grid;grid-template-columns:1fr 1fr;gap:10px;
-  margin-bottom:18px;animation:rise .6s .12s ease both;
-}
-.dl-btn{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:9px;padding:18px 14px;
-  border:1.5px solid var(--line);border-radius:var(--r-md);
-  background:var(--white);color:var(--ink);
-  font-family:var(--f-disp);font-size:1rem;font-weight:800;
-  letter-spacing:-0.005em;cursor:pointer;
-  transition:all var(--tr);text-decoration:none;
-  min-height:90px;
-}
-.dl-btn:hover{border-color:var(--ink);background:var(--surface);transform:translateY(-2px)}
-.dl-btn:active{transform:translateY(0)}
-.dl-btn svg{width:28px;height:28px;opacity:0.8;display:block;flex-shrink:0}
-.dl-btn .label{font-size:0.87rem;margin-top:2px}
-.dl-btn .sub{font-size:0.68rem;font-weight:500;color:var(--gray1);letter-spacing:0.01em}
+  .p-title{
+    position:relative;z-index:1;
+    font-size:1.45rem;font-weight:800;
+    letter-spacing:-.022em;line-height:1.1;
+    color:var(--ink);
+  }
 
-/* FEATURES GRID */
-.features-grid{
-  display:grid;grid-template-columns:1fr 1fr;gap:9px;
-  margin-bottom:18px;animation:rise .6s .14s ease both;
-}
-.feat-card{
-  padding:14px;border:1px solid var(--line);
-  border-radius:var(--r-sm);background:var(--white);
-  text-align:center;transition:all var(--tr);
-}
-.feat-card:hover{border-color:var(--line2);background:var(--surface)}
-.feat-card svg{width:24px;height:24px;margin:0 auto 8px;color:var(--ink);display:block}
-.feat-card-name{font-size:0.82rem;font-weight:700;color:var(--ink);margin-bottom:2px;letter-spacing:-0.005em}
-.feat-card-desc{font-size:0.68rem;color:var(--gray1);font-weight:400;line-height:1.4}
+  .p-feats{
+    position:relative;z-index:1;
+    list-style:none;
+    display:grid;grid-template-columns:1fr 1fr;gap:8px;
+  }
+  .p-feats li{
+    display:flex;align-items:center;gap:7px;
+    padding:8px 10px;
+    background:rgba(255,255,255,.7);
+    border:1px solid #D5E4FA;
+    border-radius:10px;
+    font-size:.72rem;font-weight:600;
+    color:var(--ink-2);
+    letter-spacing:-.005em;
+    min-width:0;
+  }
+  .p-feats li span{
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .p-feats .ico{width:13px;height:13px;color:var(--blue-600)}
 
-/* PROOF BADGES */
-.proof-badges{
-  display:flex;gap:8px;flex-wrap:wrap;
-  margin-bottom:22px;animation:rise .6s .16s ease both;
-}
-.badge{
-  display:flex;align-items:center;gap:6px;
-  padding:9px 12px;border-radius:100px;
-  background:var(--surface);border:1px solid var(--line);
-  font-size:0.71rem;font-weight:600;color:var(--gray2);
-  letter-spacing:0.02em;
-}
-.badge svg{width:14px;height:14px;color:var(--ink);flex-shrink:0;display:block}
+  .p-foot{
+    position:relative;z-index:1;
+    display:flex;align-items:center;justify-content:space-between;
+    padding-top:14px;
+    border-top:1px solid #D5E4FA;
+    gap:12px;
+  }
+  .p-price{display:flex;flex-direction:column;gap:1px}
+  .p-price small{
+    font-size:.6rem;font-weight:700;
+    color:var(--muted);
+    letter-spacing:.08em;text-transform:uppercase;
+  }
+  .p-price strong{
+    font-size:1.1rem;font-weight:800;
+    color:var(--ink);letter-spacing:-.02em;
+  }
+  .p-cta{
+    display:inline-flex;align-items:center;gap:7px;
+    padding:10px 16px;
+    border-radius:11px;
+    background:var(--grad);color:#fff;
+    font-size:.8rem;font-weight:800;
+    letter-spacing:-.005em;
+    box-shadow:0 8px 18px -8px rgba(37,99,235,.8);
+    transition:transform .35s var(--ease),box-shadow .35s var(--ease);
+    white-space:nowrap;flex:none;
+  }
+  .p-cta .ico{width:13px;height:13px}
+  .premium:hover .p-cta{
+    transform:translateX(2px);
+    box-shadow:0 10px 22px -8px rgba(37,99,235,.95);
+  }
 
-/* YOUTUBE SECTION */
-.yt-section{
-  padding:16px;border:1px solid var(--line);
-  border-radius:var(--r-md);background:var(--white);
-  text-align:center;animation:rise .6s .18s ease both;
-}
-.yt-label{font-size:0.68rem;font-weight:600;letter-spacing:0.04em;color:var(--gray1);margin-bottom:10px}
-.yt-link{
-  display:inline-flex;align-items:center;gap:9px;
-  padding:12px 20px;border-radius:var(--r-sm);
-  background:var(--ink);color:#fff;
-  text-decoration:none;transition:all var(--tr);
-  font-size:0.87rem;font-weight:700;letter-spacing:-0.005em;
-}
-.yt-link:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,0.2)}
-.yt-link svg{width:16px;height:16px;flex-shrink:0;display:block}
+  /* ── ITEM ── */
+  .item{
+    position:relative;
+    display:flex;align-items:center;gap:15px;
+    padding:16px 18px;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:var(--r);
+    text-decoration:none;color:inherit;
+    box-shadow:
+      0 1px 2px rgba(11,23,41,.03),
+      0 6px 16px -12px rgba(11,23,41,.1);
+    cursor:pointer;
+    font-family:inherit;
+    font-size:1rem;
+    text-align:left;
+    width:100%;
+    transition:
+      transform .38s var(--ease),
+      box-shadow .38s var(--ease),
+      border-color .38s var(--ease);
+  }
+  .item:hover{
+    transform:translateY(-3px);
+    border-color:#C9DEFB;
+    box-shadow:
+      0 2px 4px rgba(11,23,41,.03),
+      0 22px 40px -22px rgba(37,99,235,.55);
+  }
+  .item:active{transform:translateY(-1px)}
+  .item:focus-visible{outline:2px solid var(--blue-500);outline-offset:2px}
 
-/* OVERLAYS */
-.overlay{
-  display:none;position:fixed;inset:0;
-  background:rgba(0,0,0,0.6);backdrop-filter:blur(12px);
-  z-index:400;align-items:center;justify-content:center;padding:20px;
-}
-.overlay.show{display:flex}
-.pop{
-  background:var(--white);border:1px solid var(--line);
-  border-radius:var(--r-lg);padding:28px 24px;
-  max-width:380px;width:100%;
-  box-shadow:0 12px 40px rgba(0,0,0,0.25);
-  animation:popIn .3s cubic-bezier(.34,1.56,.64,1) both;
-}
-@keyframes popIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+  .box{
+    width:46px;height:46px;flex:none;
+    border-radius:13px;
+    display:grid;place-items:center;
+    background:linear-gradient(150deg,#F2F7FF 0%,#E2EDFE 100%);
+    border:1px solid #D9E7FB;
+    color:var(--blue-600);
+    transition:
+      background .4s var(--ease),
+      color .4s var(--ease),
+      border-color .4s var(--ease),
+      box-shadow .4s var(--ease),
+      transform .4s var(--ease);
+  }
+  .box .ico{width:21px;height:21px}
+  .item:hover .box{
+    background:var(--grad);
+    border-color:transparent;color:#fff;
+    transform:scale(1.05);
+    box-shadow:0 10px 22px -12px rgba(37,99,235,.85);
+  }
 
-.pop-ico{text-align:center;margin-bottom:16px}
-.big-ico{
-  width:64px;height:64px;border-radius:18px;
-  background:var(--ink);display:flex;align-items:center;justify-content:center;
-  margin:0 auto;color:#fff;font-size:1.9rem;
-}
-.big-ico svg{width:30px;height:30px;display:block;flex-shrink:0}
-.pop-title{
-  font-family:var(--f-disp);font-size:1.4rem;font-weight:800;
-  text-align:center;margin-bottom:8px;letter-spacing:-0.01em;
-}
-.pop-sub{
-  text-align:center;font-size:0.79rem;color:var(--gray1);
-  line-height:1.6;margin-bottom:18px;font-weight:400;
-}
-.device-badge{
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  padding:11px 16px;background:var(--surface);border-radius:var(--r-sm);
-  font-size:0.81rem;font-weight:600;margin-bottom:16px;color:var(--ink);
-}
-.device-badge svg{width:17px;height:17px;flex-shrink:0;display:block}
+  .body{flex:1;min-width:0}
+  .title{
+    display:block;
+    font-size:.96rem;font-weight:700;
+    letter-spacing:-.008em;color:var(--ink);
+    line-height:1.25;
+  }
+  .sub{
+    display:block;
+    font-size:.76rem;color:var(--muted);
+    font-weight:500;margin-top:2px;
+  }
 
-.pop-actions{display:flex;gap:10px}
-.pop-btn{
-  flex:1;padding:12px;border:none;border-radius:var(--r-sm);
-  font-family:var(--f-disp);font-weight:800;font-size:0.87rem;
-  cursor:pointer;transition:all var(--tr);text-decoration:none;
-  letter-spacing:-0.005em;
-}
-.pop-btn.primary{background:var(--ink);color:#fff;box-shadow:0 4px 12px rgba(0,0,0,0.2)}
-.pop-btn.primary:hover{transform:translateY(-2px);filter:brightness(1.1)}
-.pop-btn.cancel{background:var(--surface);border:1px solid var(--line);color:var(--gray1)}
-.pop-btn.cancel:hover{color:var(--ink);border-color:var(--line2)}
+  .arrow{
+    width:32px;height:32px;flex:none;
+    border-radius:50%;
+    display:grid;place-items:center;
+    background:transparent;
+    border:1px solid var(--line);
+    color:var(--muted-2);
+    transition:
+      background .38s var(--ease),
+      color .38s var(--ease),
+      border-color .38s var(--ease),
+      transform .38s var(--ease),
+      box-shadow .38s var(--ease);
+  }
+  .arrow .ico{width:14px;height:14px}
+  .item:hover .arrow{
+    background:var(--blue-600);
+    border-color:var(--blue-600);
+    color:#fff;
+    transform:translateX(3px);
+    box-shadow:0 8px 18px -10px rgba(37,99,235,.9);
+  }
 
-.captcha-row{
-  display:flex;align-items:center;gap:12px;
-  padding:13px;background:var(--surface);border:2px solid var(--line);
-  border-radius:var(--r-sm);cursor:pointer;user-select:none;
-  margin-bottom:14px;transition:all var(--tr);
-}
-.captcha-row:hover{border-color:var(--ink)}
-.captcha-row.checked{border-color:var(--ink);background:rgba(0,0,0,0.04)}
-.cbox{
-  width:24px;height:24px;border:2px solid var(--line);
-  border-radius:6px;background:var(--white);
-  display:flex;align-items:center;justify-content:center;font-size:0.8rem;
-  color:transparent;transition:all var(--tr);flex-shrink:0;
-}
-.cbox svg{width:14px;height:14px;display:block}
-.captcha-row.checked .cbox{background:var(--ink);border-color:var(--ink);color:#fff}
-.clabel{font-size:0.84rem;font-weight:600;flex:1}
-.cbrand{display:flex;flex-direction:column;gap:2px;align-items:flex-end;flex-shrink:0}
-.cbl{font-size:0.62rem;color:var(--gray1);font-weight:500;letter-spacing:0.02em}
-.cbdots{display:flex;gap:2px}
-.cbdots span{width:6px;height:6px;border-radius:50%;background:var(--ink)}
+  /* ── OVERLAYS ── */
+  .overlay{
+    display:none;position:fixed;inset:0;
+    background:rgba(11,23,41,.55);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    z-index:400;
+    align-items:center;justify-content:center;
+    padding:20px;
+  }
+  .overlay.show{display:flex}
 
-.cap-continue{
-  width:100%;height:50px;border:none;border-radius:var(--r-sm);
-  font-family:var(--f-disp);font-size:1rem;font-weight:800;
-  background:var(--ink);color:#fff;cursor:pointer;
-  opacity:0.3;transition:all var(--tr);letter-spacing:-0.005em;
-}
-.cap-continue.ready{
-  opacity:1;box-shadow:0 4px 16px rgba(0,0,0,0.2);
-}
-.cap-continue.ready:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(0,0,0,0.3)}
+  .pop{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:22px;
+    padding:26px 22px;
+    max-width:380px;width:100%;
+    box-shadow:0 24px 60px -20px rgba(11,23,41,.35);
+    animation:popIn .35s cubic-bezier(.34,1.4,.64,1) both;
+  }
+  @keyframes popIn{
+    from{transform:scale(.9);opacity:0}
+    to  {transform:scale(1);opacity:1}
+  }
 
-/* PASSWORD STEP */
-.pw-hint{
-  display:flex;align-items:center;gap:8px;
-  padding:10px 12px;background:var(--surface);border:1px solid var(--line2);
-  border-radius:var(--r-sm);font-size:0.72rem;color:var(--gray1);
-  margin-bottom:16px;line-height:1.5;text-align:left;
-}
-.pw-hint svg{width:15px;height:15px;color:var(--ink);flex-shrink:0;margin-top:1px}
-.pw-field{
-  width:100%;height:50px;border:1.5px solid var(--line2);border-radius:var(--r-sm);
-  padding:0 14px;font-family:var(--f-body);font-size:0.95rem;font-weight:600;
-  color:var(--ink);background:var(--white);margin-bottom:6px;
-  letter-spacing:0.02em;transition:all var(--tr);
-}
-.pw-field:focus{border-color:var(--ink)}
-.pw-field.error{border-color:var(--danger)}
-.pw-error{
-  font-size:0.72rem;color:var(--danger);font-weight:600;
-  margin-bottom:12px;min-height:16px;display:none;
-}
-.pw-error.show{display:block}
-.pw-submit{
-  width:100%;height:50px;border:none;border-radius:var(--r-sm);
-  font-family:var(--f-disp);font-size:1rem;font-weight:800;
-  background:var(--ink);color:#fff;cursor:pointer;
-  transition:all var(--tr);letter-spacing:-0.005em;margin-bottom:10px;
-}
-.pw-submit:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(0,0,0,0.3)}
-.pw-submit:active{transform:translateY(0)}
+  .big-ico{
+    width:58px;height:58px;
+    border-radius:16px;
+    background:var(--grad);
+    color:#fff;
+    display:grid;place-items:center;
+    margin:0 auto 16px;
+    box-shadow:0 12px 26px -12px rgba(37,99,235,.7);
+  }
+  .big-ico .ico{width:26px;height:26px}
 
-footer{
-  margin-top:40px;padding-top:18px;text-align:center;
-  border-top:1px solid var(--line);font-size:0.68rem;
-  color:var(--gray2);font-weight:500;letter-spacing:0.02em;
-}
+  .pop-title{
+    font-size:1.25rem;font-weight:800;
+    letter-spacing:-.02em;
+    text-align:center;margin-bottom:6px;
+    color:var(--ink);
+  }
+  .pop-sub{
+    font-size:.79rem;color:var(--muted);
+    font-weight:500;line-height:1.55;
+    text-align:center;margin-bottom:18px;
+  }
+  .pop-sub strong{color:var(--ink);font-weight:700}
 
-@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-@keyframes shake{10%,90%{transform:translateX(-1px)}20%,80%{transform:translateX(2px)}30%,50%,70%{transform:translateX(-4px)}40%,60%{transform:translateX(4px)}}
-.shake{animation:shake .4s cubic-bezier(.36,.07,.19,.97) both}
-@media(max-width:360px){.dl-grid{grid-template-columns:1fr}}
+  .device-badge{
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    padding:11px 16px;
+    background:var(--blue-50);
+    border:1px solid #D5E4FA;
+    border-radius:12px;
+    font-size:.8rem;font-weight:700;
+    color:var(--blue-700);
+    margin-bottom:16px;
+  }
+  .device-badge .ico{width:16px;height:16px}
+
+  .pop-actions{display:flex;gap:9px}
+  .pop-btn{
+    flex:1;padding:12px;border:none;border-radius:12px;
+    font-family:inherit;font-weight:800;font-size:.84rem;
+    cursor:pointer;transition:all var(--ease);
+    text-decoration:none;
+    display:flex;align-items:center;justify-content:center;
+    letter-spacing:-.005em;
+  }
+  .pop-btn.primary{
+    background:var(--grad);color:#fff;
+    box-shadow:0 8px 20px -10px rgba(37,99,235,.9);
+  }
+  .pop-btn.primary:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 26px -10px rgba(37,99,235,1);
+  }
+  .pop-btn.cancel{
+    background:#fff;
+    border:1px solid var(--line-2);
+    color:var(--muted);
+  }
+  .pop-btn.cancel:hover{border-color:#BFD3EE;color:var(--ink-2)}
+
+  /* captcha */
+  .captcha-row{
+    display:flex;align-items:center;gap:12px;
+    padding:14px;
+    background:#fff;
+    border:1.5px solid var(--line-2);
+    border-radius:12px;
+    cursor:pointer;user-select:none;
+    margin-bottom:14px;
+    transition:all var(--ease);
+  }
+  .captcha-row:hover{border-color:var(--blue-400)}
+  .captcha-row.checked{
+    border-color:var(--blue-600);
+    background:var(--blue-50);
+  }
+  .cbox{
+    width:24px;height:24px;
+    border:1.5px solid var(--line-2);
+    border-radius:7px;
+    background:#fff;
+    display:grid;place-items:center;
+    color:transparent;
+    transition:all var(--ease);
+    flex:none;
+  }
+  .cbox .ico{width:13px;height:13px}
+  .captcha-row.checked .cbox{
+    background:var(--blue-600);
+    border-color:var(--blue-600);
+    color:#fff;
+  }
+  .clabel{
+    font-size:.85rem;font-weight:600;
+    flex:1;color:var(--ink);
+  }
+  .cbrand{
+    display:flex;flex-direction:column;gap:3px;
+    align-items:flex-end;flex:none;
+  }
+  .cbl{
+    font-size:.6rem;color:var(--muted);
+    font-weight:600;letter-spacing:.05em;
+  }
+  .cbdots{display:flex;gap:2px}
+  .cbdots span{
+    width:5px;height:5px;border-radius:50%;
+    background:var(--blue-400);
+  }
+  .cap-continue{
+    width:100%;height:48px;border:none;border-radius:12px;
+    font-family:inherit;font-size:.92rem;font-weight:800;
+    background:var(--grad);color:#fff;cursor:pointer;
+    opacity:.35;
+    transition:all var(--ease);
+    letter-spacing:-.005em;
+  }
+  .cap-continue.ready{
+    opacity:1;
+    box-shadow:0 10px 22px -10px rgba(37,99,235,.9);
+  }
+  .cap-continue.ready:hover{transform:translateY(-2px)}
+
+  /* ── ANIMACIÓN DE ENTRADA (solo CSS) ── */
+  @keyframes drop{
+    from{opacity:0;transform:translateY(18px) scale(.985)}
+    to  {opacity:1;transform:translateY(0) scale(1)}
+  }
+  .stack > *{
+    animation:drop .7s var(--ease) both;
+  }
+  .stack > *:nth-child(1){animation-delay:0ms}
+  .stack > *:nth-child(2){animation-delay:80ms}
+  .stack > *:nth-child(3){animation-delay:160ms}
+  .stack > *:nth-child(4){animation-delay:240ms}
+
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{
+      animation-duration:.001ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:.001ms !important;
+    }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width:420px){
+    body{padding:28px 16px}
+    .stack{gap:10px;max-width:100%}
+    .item{padding:14px 15px;gap:13px}
+    .box{width:42px;height:42px;border-radius:12px}
+    .box .ico{width:19px;height:19px}
+    .title{font-size:.92rem}
+    .sub{font-size:.73rem}
+    .arrow{width:30px;height:30px}
+    .premium{padding:18px 16px;border-radius:18px}
+    .p-title{font-size:1.25rem}
+    .p-feats li{font-size:.68rem;padding:7px 9px}
+    .p-price strong{font-size:1rem}
+    .p-cta{padding:9px 14px;font-size:.76rem}
+    .pop{padding:22px 18px;border-radius:20px}
+  }
+  @media (max-width:340px){
+    .p-feats{grid-template-columns:1fr}
+  }
 </style>
 </head>
 <body>
 
-<header>
+<!-- ══ SPRITE SVG ══ -->
+<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+  <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+  </symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 6 9 17l-5-5"/>
+  </symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 12h14"/>
+    <path d="m13 6 6 6-6 6"/>
+  </symbol>
+  <symbol id="i-apple" viewBox="0 0 384 512" fill="currentColor">
+    <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-19.9-30.3-50.6-46.8-91.8-49.9-37.9-3-79.6 22.4-95.5 22.4-16.9 0-53.6-21.3-83.4-21.3-58.5.9-120.8 47.1-120.8 138.7 0 28.4 5.2 57.8 15.5 88 13.8 39.4 63.4 136.3 115.1 134.7 27.1-.7 46.2-19.5 80.9-19.5 33.7 0 51.4 19.5 81.6 19.5 52.2-.7 97.2-89 110.4-128.5-70.4-33.2-62-97.5-62-99.3zM256.8 67.7c26.6-31.8 24.2-60.8 23.4-71.7-23.6 1.4-50.9 16.4-66.5 34.6-17.2 19.4-27.3 43.4-25.1 70.4 25.5 2 48.4-11.4 68.2-33.3z"/>
+  </symbol>
+  <symbol id="i-android" viewBox="0 0 576 512" fill="currentColor">
+    <path d="M420.55,301.93a24,24,0,1,1,24-24,24,24,0,0,1-24,24m-265.1,0a24,24,0,1,1,24-24,24,24,0,0,1-24,24m273.7-144.48,47.94-83a10,10,0,1,0-17.27-10h0l-48.54,84.07a301.25,301.25,0,0,0-246.56,0L116.18,64.45a10,10,0,1,0-17.27,10h0l47.94,83C64.53,202.22,8.24,285.55,0,384H576c-8.24-98.45-64.54-181.78-146.85-226.55"/>
+  </symbol>
+  <symbol id="i-youtube" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+  </symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/>
+    <path d="m9 12 2 2 4-4"/>
+  </symbol>
+</svg>
 
-    <span class="hdr-name">Link <span class="lt">Directo</span></span>
-  </div>
-  <span class="hdr-tag">Descargas</span>
-</header>
+<!-- ══ CONTENIDO ══ -->
+<main class="stack">
 
-<main>
+  <!-- PREMIUM -->
+  <a class="premium"
+     href="https://www.link-directo.com/premium/" target="_blank" rel="noopener noreferrer">
+    <span class="p-badge">
+      <svg class="ico" aria-hidden="true"><use href="#i-star"/></svg>
+      Premium
+    </span>
 
-  <div class="hero">
-    <div class="hero-kicker">Descarga gratuita oficial</div>
-    <h1 class="hero-h1">Scripts, Modulos<br/>Proxy & más.</h1>
-    <p class="hero-p">Regedit verificado y actualizado. iOS y Android, sin jailbreak ni root.</p>
-  </div>
+    <h2 class="p-title">REGEDIT VIP</h2>
 
-  <div class="alert">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-    <span>Verifica que el video oficial este actualizado antes de descargar la configuracion.</span>
-  </div>
+    <ul class="p-feats">
+      <li>
+        <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
+        <span>Aimlock 70%</span>
+      </li>
+      <li>
+        <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
+        <span>Aim assist 70%</span>
+      </li>
+      <li>
+        <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
+        <span>Sin jailbreak</span>
+      </li>
+      <li>
+        <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
+        <span>Updates</span>
+      </li>
+    </ul>
 
-  <!-- PREMIUM HERO BANNER -->
-  <div class="sec-label">Actualiza a Premium (opcional)</div>
-  <a class="premium-hero" href="https://www.link-directo.com/premium/" target="_blank" rel="noopener">
-    <div class="premium-hero-inner">
-      <div class="prem-badge">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        ACCESO VIP — PRECIO ESPECIAL
+    <div class="p-foot">
+      <div class="p-price">
+        <small>Desde</small>
+        <strong>$9.99 USD</strong>
       </div>
-
-      <div class="prem-headline">REGEDIT VIP</div>
-      <div class="prem-subhead">Configuracion premium con actualizaciones exclusivas, mayor precision y rendimiento garantizado.</div>
-
-      <div class="prem-features">
-        <div class="prem-feat-item">
-          <div class="prem-feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <div class="prem-feat-txt">Aimlock 70%</div>
-        </div>
-        <div class="prem-feat-item">
-          <div class="prem-feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <div class="prem-feat-txt">Aim assist 70%</div>
-        </div>
-        <div class="prem-feat-item">
-          <div class="prem-feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <div class="prem-feat-txt">Sin jailbreak/root</div>
-        </div>
-        <div class="prem-feat-item">
-          <div class="prem-feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <div class="prem-feat-txt">Actualizaciones ilimitadas</div>
-        </div>
-      </div>
-
-      <div class="prem-footer">
-        <div class="prem-price">
-          <div class="prem-price-from">DESDE</div>
-          <div class="prem-price-val">$5.99 USD</div>
-        </div>
-        <div class="prem-cta">
-          <span>VER AHORA</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </div>
-      </div>
+      <span class="p-cta">
+        Ver
+        <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg>
+      </span>
     </div>
   </a>
 
-  <div class="compare-banner">
-    <div class="comp-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Gratis</div>
-    <div class="comp-divider"></div>
-    <div class="comp-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg> Premium</div>
-  </div>
+  <!-- iOS -->
+  <button type="button" class="item" id="btnIos">
+    <span class="box"><svg class="ico" aria-hidden="true"><use href="#i-apple"/></svg></span>
+    <span class="body">
+      <span class="title">iOS</span>
+      <span class="sub">iPhone · iPad</span>
+    </span>
+    <span class="arrow"><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+  </button>
 
-  <div class="sec-label">Descargar version gratuita</div>
+  <!-- Android -->
+  <button type="button" class="item" id="btnAndroid">
+    <span class="box"><svg class="ico" aria-hidden="true"><use href="#i-android"/></svg></span>
+    <span class="body">
+      <span class="title">Android</span>
+      <span class="sub">Todas las marcas</span>
+    </span>
+    <span class="arrow"><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+  </button>
 
-  <!-- FEATURE CARDS -->
-  <div class="features-grid">
-    <div class="feat-card">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12a3 3 0 110-6 3 3 0 010 6z"/></svg>
-      <div class="feat-card-name">Rendimiento</div>
-      <div class="feat-card-desc">Optimizado para Free Fire</div>
-    </div>
-    <div class="feat-card">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
-      <div class="feat-card-name">Seguro</div>
-      <div class="feat-card-desc">Certificado y verificado</div>
-    </div>
-    <div class="feat-card">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 12a9 9 0 11-3-6.7M21 4v5h-5"/></svg>
-      <div class="feat-card-name">Actualizado</div>
-      <div class="feat-card-desc">Revision semanal de cambios</div>
-    </div>
-    <div class="feat-card">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/></svg>
-      <div class="feat-card-name">Instalacion</div>
-      <div class="feat-card-desc">Menos de 2 minutos</div>
-    </div>
-  </div>
-
-  <!-- PROOF BADGES -->
-  <div class="proof-badges">
-    <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg> 5 años</div>
-    <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/></svg> Sin baneo</div>
-    <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12a9 9 0 010-18 4.5 4.5 0 018 2c0-1.657 1.343-3 3-3s3 1.343 3 3c0-1.657 1.343-3 3-3s3 1.343 3 3a4.5 4.5 0 018-2 9 9 0 010 18z"/></svg> 550K +usuarios</div>
-  </div>
-
-  <!-- DOWNLOAD BUTTONS -->
-  <div class="dl-grid">
-    <button class="dl-btn" id="btnIos">
-      <svg viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-19.9-30.3-50.6-46.8-91.8-49.9-37.9-3-79.6 22.4-95.5 22.4-16.9 0-53.6-21.3-83.4-21.3-58.5.9-120.8 47.1-120.8 138.7 0 28.4 5.2 57.8 15.5 88 13.8 39.4 63.4 136.3 115.1 134.7 27.1-.7 46.2-19.5 80.9-19.5 33.7 0 51.4 19.5 81.6 19.5 52.2-.7 97.2-89 110.4-128.5-70.4-33.2-62-97.5-62-99.3zM256.8 67.7c26.6-31.8 24.2-60.8 23.4-71.7-23.6 1.4-50.9 16.4-66.5 34.6-17.2 19.4-27.3 43.4-25.1 70.4 25.5 2 48.4-11.4 68.2-33.3z"/></svg>
-      <div class="label">iOS</div>
-      <div class="sub">iPhone · iPad</div>
-    </button>
-    <button class="dl-btn" id="btnAndroid">
-      <svg viewBox="0 0 576 512" fill="currentColor"><path d="M420.55,301.93a24,24,0,1,1,24-24,24,24,0,0,1-24,24m-265.1,0a24,24,0,1,1,24-24,24,24,0,0,1-24,24m273.7-144.48,47.94-83a10,10,0,1,0-17.27-10h0l-48.54,84.07a301.25,301.25,0,0,0-246.56,0L116.18,64.45a10,10,0,1,0-17.27,10h0l47.94,83C64.53,202.22,8.24,285.55,0,384H576c-8.24-98.45-64.54-181.78-146.85-226.55"/></svg>
-      <div class="label">ANDROID</div>
-      <div class="sub">Todas las marcas</div>
-    </button>
-  </div>
-
-  <!-- YOUTUBE -->
-  <div class="yt-section">
-    <div class="yt-label">Aprende como instalar</div>
-    <a href="https://youtube.com/@jexeregedit?si=iZOBRg4PZtZ0NKbP" class="yt-link" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-      Ver tutorial oficial
-    </a>
-  </div>
-
-  <footer>
-    © JEXE Regedit — Descargas oficiales
-  </footer>
+  <!-- YouTube -->
+  <a class="item"
+     href="https://youtube.com/@jexeregedit?si=iZOBRg4PZtZ0NKbP" target="_blank" rel="noopener noreferrer">
+    <span class="box"><svg class="ico" aria-hidden="true"><use href="#i-youtube"/></svg></span>
+    <span class="body">
+      <span class="title">Tutorial de instalación</span>
+      <span class="sub">YouTube · @jexeregedit</span>
+    </span>
+    <span class="arrow"><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+  </a>
 
 </main>
 
-<!-- CAPTCHA OVERLAY -->
+<!-- ══ OVERLAY · CAPTCHA ══ -->
 <div class="overlay" id="ovCaptcha">
   <div class="pop">
-    <div class="pop-ico"><div class="big-ico"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/><circle cx="5" cy="12" r="1.6"/></svg></div></div>
-    <h3 class="pop-title">Verificacion</h3>
-    <p class="pop-sub">Confirma que no eres un robot para descargar la configuracion.</p>
+    <div class="big-ico"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg></div>
+    <h3 class="pop-title">Verificación</h3>
+    <p class="pop-sub">Confirma que no eres un robot para continuar.</p>
+
     <div class="captcha-row" id="captchaRow">
-      <div class="cbox" id="captchaBox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="cbox" id="captchaBox">
+        <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
+      </div>
       <span class="clabel">No soy un robot</span>
       <div class="cbrand">
         <span class="cbl">reCAPTCHA</span>
         <div class="cbdots"><span></span><span></span><span></span></div>
       </div>
     </div>
-    <button class="cap-continue" id="capContinue" disabled>CONTINUAR</button>
+
+    <button type="button" class="cap-continue" id="capContinue" disabled>Continuar</button>
   </div>
 </div>
 
-<!-- PASSWORD OVERLAY -->
-<div class="overlay" id="ovPassword">
-  <div class="pop">
-    <div class="pop-ico"><div class="big-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg></div></div>
-    <h3 class="pop-title">Contraseña requerida</h3>
-    <p class="pop-sub">Ingresa la contraseña para desbloquear el enlace de descarga.</p>
-    <div class="pw-hint">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-      <span>La contraseña se muestra en el video oficial del tutorial. Si vienes directo a descargar sin haberlo visto, pon el video primero.</span>
-    </div>
-    <input type="text" class="pw-field" id="pwInput" placeholder="Contraseña" autocomplete="off" autocapitalize="off" spellcheck="false"/>
-    <div class="pw-error" id="pwError">Contraseña incorrecta. Intenta de nuevo.</div>
-    <button class="pw-submit" id="pwSubmit">DESBLOQUEAR</button>
-    <div class="pop-actions">
-      <button class="pop-btn cancel" data-cancel="ovPassword">Cancelar</button>
-      <a href="https://youtube.com/@jexeregedit?si=iZOBRg4PZtZ0NKbP" target="_blank" rel="noopener" class="pop-btn primary" style="display:flex;align-items:center;justify-content:center;text-decoration:none;">Ver video</a>
-    </div>
-  </div>
-</div>
-
-<!-- CONFIRM iOS -->
+<!-- ══ OVERLAY · iOS ══ -->
 <div class="overlay" id="ovConfirmIos">
   <div class="pop">
-    <div class="pop-ico"><div class="big-ico"><svg viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-19.9-30.3-50.6-46.8-91.8-49.9-37.9-3-79.6 22.4-95.5 22.4-16.9 0-53.6-21.3-83.4-21.3-58.5.9-120.8 47.1-120.8 138.7 0 28.4 5.2 57.8 15.5 88 13.8 39.4 63.4 136.3 115.1 134.7 27.1-.7 46.2-19.5 80.9-19.5 33.7 0 51.4 19.5 81.6 19.5 52.2-.7 97.2-89 110.4-128.5-70.4-33.2-62-97.5-62-99.3zM256.8 67.7c26.6-31.8 24.2-60.8 23.4-71.7-23.6 1.4-50.9 16.4-66.5 34.6-17.2 19.4-27.3 43.4-25.1 70.4 25.5 2 48.4-11.4 68.2-33.3z"/></svg></div></div>
+    <div class="big-ico"><svg class="ico" aria-hidden="true"><use href="#i-apple"/></svg></div>
     <h3 class="pop-title">Listo para descargar</h3>
-    <p class="pop-sub">Se descargara <strong>proxyzaim1.0.mobileconfig</strong> en tu iPhone o iPad. Sigue las instrucciones del video para instalarlo.</p>
-    <div class="device-badge"><svg viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-19.9-30.3-50.6-46.8-91.8-49.9-37.9-3-79.6 22.4-95.5 22.4-16.9 0-53.6-21.3-83.4-21.3-58.5.9-120.8 47.1-120.8 138.7 0 28.4 5.2 57.8 15.5 88 13.8 39.4 63.4 136.3 115.1 134.7 27.1-.7 46.2-19.5 80.9-19.5 33.7 0 51.4 19.5 81.6 19.5 52.2-.7 97.2-89 110.4-128.5-70.4-33.2-62-97.5-62-99.3zM256.8 67.7c26.6-31.8 24.2-60.8 23.4-71.7-23.6 1.4-50.9 16.4-66.5 34.6-17.2 19.4-27.3 43.4-25.1 70.4 25.5 2 48.4-11.4 68.2-33.3z"/></svg> iPhone / iPad</div>
+    <p class="pop-sub">Se descargará <strong>PROXYZAIM.mobileconfig</strong>. Sigue el tutorial para instalarlo.</p>
+
+    <div class="device-badge">
+      <svg class="ico" aria-hidden="true"><use href="#i-apple"/></svg>
+      iPhone / iPad
+    </div>
+
     <div class="pop-actions">
-      <button class="pop-btn cancel" data-cancel="ovConfirmIos">Cancelar</button>
-      <button class="pop-btn primary" id="proceedIos">Descargar</button>
+      <button type="button" class="pop-btn cancel" data-cancel="ovConfirmIos">Cancelar</button>
+      <button type="button" class="pop-btn primary" id="proceedIos">Descargar</button>
     </div>
   </div>
 </div>
 
-<!-- CONFIRM ANDROID -->
+<!-- ══ OVERLAY · Android ══ -->
 <div class="overlay" id="ovConfirmAnd">
   <div class="pop">
-    <div class="pop-ico"><div class="big-ico"><svg viewBox="0 0 576 512" fill="currentColor"><path d="M420.55,301.93a24,24,0,1,1,24-24,24,24,0,0,1-24,24m-265.1,0a24,24,0,1,1,24-24,24,24,0,0,1-24,24m273.7-144.48,47.94-83a10,10,0,1,0-17.27-10h0l-48.54,84.07a301.25,301.25,0,0,0-246.56,0L116.18,64.45a10,10,0,1,0-17.27,10h0l47.94,83C64.53,202.22,8.24,285.55,0,384H576c-8.24-98.45-64.54-181.78-146.85-226.55"/></svg></div></div>
+    <div class="big-ico"><svg class="ico" aria-hidden="true"><use href="#i-android"/></svg></div>
     <h3 class="pop-title">Listo para descargar</h3>
-    <p class="pop-sub">Se descargara la configuracion <strong>proxyzaim1.0.zip</strong> para Android. Sigue el tutorial del video para aplicarla en tu dispositivo.</p>
-    <div class="device-badge"><svg viewBox="0 0 576 512" fill="currentColor"><path d="M420.55,301.93a24,24,0,1,1,24-24,24,24,0,0,1-24,24m-265.1,0a24,24,0,1,1,24-24,24,24,0,0,1-24,24m273.7-144.48,47.94-83a10,10,0,1,0-17.27-10h0l-48.54,84.07a301.25,301.25,0,0,0-246.56,0L116.18,64.45a10,10,0,1,0-17.27,10h0l47.94,83C64.53,202.22,8.24,285.55,0,384H576c-8.24-98.45-64.54-181.78-146.85-226.55"/></svg> Android</div>
+    <p class="pop-sub">Se descargará <strong>PROXYZAIM1.0.zip</strong>. Sigue el tutorial para aplicarlo.</p>
+
+    <div class="device-badge">
+      <svg class="ico" aria-hidden="true"><use href="#i-android"/></svg>
+      Android
+    </div>
+
     <div class="pop-actions">
-      <button class="pop-btn cancel" data-cancel="ovConfirmAnd">Cancelar</button>
-      <button class="pop-btn primary" id="proceedAnd">Descargar</button>
+      <button type="button" class="pop-btn cancel" data-cancel="ovConfirmAnd">Cancelar</button>
+      <button type="button" class="pop-btn primary" id="proceedAnd">Descargar</button>
     </div>
   </div>
 </div>
 
 <script>
 (function(){
-  const IOS_URL='https://www.mediafire.com/file/lcdn0v543ozelw2/PROXYZAIM.mobileconfig/file';
-  const ANDROID_URL='https://www.mediafire.com/file/5kurcf37kh0payt/PROXYZAIM1.0.zip/file';
-  const PW={ios:'proxy',android:'proxy'};
-  const $=id=>document.getElementById(id);
+  'use strict';
 
-  let pending=null,captchaChecked=false;
+  var IOS_URL     = 'https://www.mediafire.com/file/lcdn0v543ozelw2/PROXYZAIM.mobileconfig/file';
+  var ANDROID_URL = 'https://www.mediafire.com/file/5kurcf37kh0payt/PROXYZAIM1.0.zip/file';
 
-  const show=id=>$(id).classList.add('show');
-  const hide=id=>$(id).classList.remove('show');
-  const resetCap=()=>{
-    captchaChecked=false;
-    $('captchaRow').classList.remove('checked');
-    $('captchaBox').classList.remove('checked');
-    $('capContinue').disabled=true;
-    $('capContinue').classList.remove('ready');
-  };
-  const resetPw=()=>{
-    $('pwInput').value='';
-    $('pwInput').classList.remove('error');
-    $('pwError').classList.remove('show');
-  };
+  function $(id){ return document.getElementById(id); }
+  function show(id){ var el = $(id); if (el) el.classList.add('show'); }
+  function hide(id){ var el = $(id); if (el) el.classList.remove('show'); }
 
-  $('btnIos').addEventListener('click',()=>{pending='ios';resetCap();show('ovCaptcha')});
-  $('btnAndroid').addEventListener('click',()=>{pending='android';resetCap();show('ovCaptcha')});
+  var pending = null;
+  var captchaChecked = false;
 
-  $('captchaRow').addEventListener('click',()=>{
-    if(captchaChecked)return;
-    captchaChecked=true;
-    $('captchaRow').classList.add('checked');
-    $('captchaBox').classList.add('checked');
-    setTimeout(()=>{
-      $('capContinue').disabled=false;
-      $('capContinue').classList.add('ready');
-    },650);
-  });
-
-  $('capContinue').addEventListener('click',()=>{
-    if($('capContinue').disabled)return;
-    hide('ovCaptcha');
-    resetPw();
-    show('ovPassword');
-    setTimeout(()=>$('pwInput').focus(),300);
-  });
-
-  function checkPassword(){
-    const val=$('pwInput').value.trim().toLowerCase();
-    const correct=PW[pending];
-    if(val===correct){
-      hide('ovPassword');
-      show(pending==='ios'?'ovConfirmIos':'ovConfirmAnd');
-    }else{
-      $('pwInput').classList.add('error');
-      $('pwError').classList.add('show');
-      $('pwInput').closest('.pop').classList.add('shake');
-      setTimeout(()=>$('pwInput').closest('.pop').classList.remove('shake'),400);
+  function resetCap(){
+    captchaChecked = false;
+    var row = $('captchaRow');
+    var btn = $('capContinue');
+    if (row) row.classList.remove('checked');
+    if (btn){
+      btn.disabled = true;
+      btn.classList.remove('ready');
     }
   }
-  $('pwSubmit').addEventListener('click',checkPassword);
-  $('pwInput').addEventListener('keydown',e=>{
-    if(e.key==='Enter')checkPassword();
-    $('pwInput').classList.remove('error');
-    $('pwError').classList.remove('show');
+
+  var btnIos = $('btnIos');
+  var btnAndroid = $('btnAndroid');
+  var captchaRow = $('captchaRow');
+  var capContinue = $('capContinue');
+  var proceedIos = $('proceedIos');
+  var proceedAnd = $('proceedAnd');
+
+  if (btnIos) btnIos.addEventListener('click', function(){
+    pending = 'ios';
+    resetCap();
+    show('ovCaptcha');
   });
 
-  $('proceedIos').addEventListener('click',()=>{hide('ovConfirmIos');window.location.href=IOS_URL});
-  $('proceedAnd').addEventListener('click',()=>{hide('ovConfirmAnd');window.location.href=ANDROID_URL});
-
-  document.querySelectorAll('[data-cancel]').forEach(b=>{
-    b.addEventListener('click',()=>hide(b.dataset.cancel));
+  if (btnAndroid) btnAndroid.addEventListener('click', function(){
+    pending = 'android';
+    resetCap();
+    show('ovCaptcha');
   });
 
-  document.querySelectorAll('.overlay').forEach(o=>{
-    o.addEventListener('click',e=>{if(e.target===o)hide(o.id)});
+  if (captchaRow) captchaRow.addEventListener('click', function(){
+    if (captchaChecked) return;
+    captchaChecked = true;
+    captchaRow.classList.add('checked');
+    setTimeout(function(){
+      if (capContinue){
+        capContinue.disabled = false;
+        capContinue.classList.add('ready');
+      }
+    }, 650);
+  });
+
+  if (capContinue) capContinue.addEventListener('click', function(){
+    if (capContinue.disabled) return;
+    hide('ovCaptcha');
+    show(pending === 'ios' ? 'ovConfirmIos' : 'ovConfirmAnd');
+  });
+
+  if (proceedIos) proceedIos.addEventListener('click', function(){
+    hide('ovConfirmIos');
+    window.location.href = IOS_URL;
+  });
+
+  if (proceedAnd) proceedAnd.addEventListener('click', function(){
+    hide('ovConfirmAnd');
+    window.location.href = ANDROID_URL;
+  });
+
+  document.querySelectorAll('[data-cancel]').forEach(function(b){
+    b.addEventListener('click', function(){ hide(b.dataset.cancel); });
+  });
+
+  document.querySelectorAll('.overlay').forEach(function(o){
+    o.addEventListener('click', function(e){
+      if (e.target === o) hide(o.id);
+    });
+  });
+
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape'){
+      document.querySelectorAll('.overlay.show').forEach(function(o){
+        hide(o.id);
+      });
+    }
   });
 })();
 </script>
