@@ -78,40 +78,499 @@
 <body>
 <main id="lista"></main>
 
+<!-- ============================================================
+     AQUI PEGAS LOS CODIGOS
+     Cada bloque <script type="text/plain" class="sh"> es un apartado.
+     Pega el codigo tal cual, entre la etiqueta de apertura y la de
+     cierre. No hay que escapar nada: puedes usar ${variable}, $(...),
+     comillas, comillas invertidas y barras invertidas sin problema.
+
+     Titulo opcional: <script type="text/plain" class="sh" data-titulo="Nombre">
+     Para agregar mas apartados, copia un bloque completo y pegalo debajo.
+     Un bloque vacio se muestra como "Espacio disponible".
+     ============================================================ -->
+
+<script type="text/plain" class="sh" data-titulo="">
+
+#!/system/bin/sh
+
+if [ "$(id -u)" -ne 0 ]; then
+    echo "ERROR: Root access required!" >&2
+    exit 1
+fi
+
+clear
+sync
+
+for touch in /sys/class/input/input*/device/device/; do
+    [ -f "$touch/pressure_scale" ] && echo "0.001" > "$touch/pressure_scale"
+    [ -f "$touch/size_scale" ] && echo "0.5" > "$touch/size_scale"
+    [ -f "$touch/filter" ] && echo "0" > "$touch/filter"
+    [ -f "$touch/sampling_rate" ] && echo "1000" > "$touch/sampling_rate"
+    [ -f "$touch/report_gesture" ] && echo "0" > "$touch/report_gesture"
+done
+
+echo "0" > /proc/sys/kernel/sched_child_runs_first
+echo "1" > /proc/sys/kernel/sched_autogroup_enabled
+echo "1000000" > /proc/sys/kernel/sched_latency_ns
+echo "100000" > /proc/sys/kernel/sched_min_granularity_ns
+echo "500000" > /proc/sys/kernel/sched_wakeup_granularity_ns
+
+echo "0" > /proc/sys/vm/swappiness
+echo "50" > /proc/sys/vm/vfs_cache_pressure
+echo "256" > /proc/sys/vm/min_free_kbytes
+echo "1" > /proc/sys/vm/overcommit_memory
+echo "80" > /proc/sys/vm/overcommit_ratio
+
+settings put system touch.pressure.scale 0.0001
+settings put system touch.size.scale 0.3
+settings put system touch.orientation.calibration matrix
+settings put system touch.distance.calibration precise
+settings put system touch.coverage.calibration octagram
+
+settings put system touch.min_pressure 0.001
+settings put system touch.max_pressure 1.5
+settings put system touch.size.calibration geometric
+settings put system touch.size.bias 0.05
+settings put system touch.size.isSummed 0
+
+settings put system touch.tracking.speed 15
+settings put system touch.tracking.size 2
+settings put system touch.tracking.pressure 6
+settings put system touch.touchSlop 1
+settings put system touch.doubleTapSlop 1
+settings put system touch.gestureMode spots
+
+settings put system touch.motion.filter none
+settings put system touch.motion.speed 15
+settings put system touch.motion.scale 0.05
+settings put system touch.motion.threshold 0
+
+setprop debug.egl.swapinterval 0
+setprop debug.sf.latch_unsignaled 1
+setprop debug.sf.enable_gl_backpressure 0
+setprop debug.sf.hw 1
+setprop debug.egl.hw 1
+setprop debug.composition.type gpu
+
+setprop debug.hwui.renderer opengl
+setprop debug.hwui.profile true
+setprop debug.hwui.overdraw false
+setprop debug.hwui.disable_vsync true
+setprop debug.hwui.empty_frame_rate 144
+setprop debug.hwui.texture_cache_size 512
+
+for cpu in /sys/devices/system/cpu/cpu*/cpufreq/; do
+    [ -f "$cpu/scaling_governor" ] && echo "performance" > "$cpu/scaling_governor"
+    [ -f "$cpu/scaling_min_freq" ] && echo "$(cat ${cpu}cpuinfo_max_freq)" > "$cpu/scaling_min_freq"
+    [ -f "$cpu/scaling_max_freq" ] && echo "$(cat ${cpu}cpuinfo_max_freq)" > "$cpu/scaling_max_freq"
+done
+
+settings put secure touch_prediction_enabled 1
+settings put secure touch_prediction_duration 0.05
+settings put secure touch_prediction_offset 0.02
+settings put secure touch_palm_rejection 4
+settings put secure touch_block_duration 0
+settings put secure touch_jump_filtering 0
+
+settings put system touch.sampling_rate 2000
+settings put system touch.sampling_duration 0.5
+settings put system touch.sampling_period 0
+settings put system touch.boost_duration 5000
+
+settings put system gaming_mode_enabled 2
+settings put system game_touch_boost 2
+settings put system game_touch_response 0.005
+settings put system game_touch_precision 15
+settings put system game_disable_touch_filter 1
+settings put system game_high_performance_mode 1
+
+setprop persist.sys.power_profile extreme
+setprop persist.sys.performance true
+setprop persist.sys.cpu_boost 2
+setprop persist.sys.gpu_boost 2
+setprop persist.sys.io_boost 1
+setprop persist.sys.touch_boost 3
+
+setprop net.tcp.buffersize.default 4096,87380,256960,4096,16384,256960
+setprop net.tcp.buffersize.wifi 4096,87380,256960,4096,16384,256960
+setprop net.tcp.buffersize.umts 4096,87380,256960,4096,16384,256960
+setprop net.tcp.buffersize.gprs 4096,87380,256960,4096,16384,256960
+setprop net.tcp.buffersize.edge 4096,87380,256960,4096,16384,256960
+
+setprop net.ipv4.tcp_timestamps 0
+setprop net.ipv4.tcp_tw_reuse 1
+setprop net.ipv4.tcp_sack 1
+setprop net.ipv4.tcp_dsack 1
+setprop net.ipv4.tcp_fack 1
+setprop net.ipv4.tcp_window_scaling 1
+setprop net.ipv4.tcp_keepalive_probes 3
+setprop net.ipv4.tcp_keepalive_intvl 20
+setprop net.ipv4.tcp_fin_timeout 15
+
+setprop ro.config.oom_min_free_KB 1048576
+setprop ro.config.oom_adj -1000
+setprop ro.config.zram_enabled 0
+setprop ro.config.disable_trim_emmc 1
+setprop ro.config.fha_enable true
+
+setprop security.perf_harden 0
+setprop security.adb.notify 0
+setprop security.selinux permissive
+setprop security.mdf.result none
+setprop security.aslr.disable 1
+
+setprop debug.sf.frame_rate_multiple_threshold 144
+setprop debug.sf.late.sf.duration 500000
+setprop debug.sf.early.sf.duration 500000
+setprop debug.sf.early.app.duration 500000
+setprop debug.sf.earlyGl.sf.duration 500000
+setprop debug.sf.earlyGl.app.duration 500000
+
+setprop debug.touch.pressure.scale 0.0001
+setprop debug.touch.size.scale 0.3
+setprop debug.touch.orientation.calibration matrix
+setprop debug.touch.sampling_rate 2000
+setprop debug.touch.response_time 1
+
+for thermal in /sys/class/thermal/thermal_zone*/; do
+    [ -f "$thermal/mode" ] && echo "disabled" > "$thermal/mode"
+    [ -f "$thermal/policy" ] && echo "0" > "$thermal/policy"
+done
+
+sync
+echo 3 > /proc/sys/vm/drop_caches
+am kill-all
+pm trim-caches 99999999999999
+
+exit 0
+
+</script>
+
+<script type="text/plain" class="sh" data-titulo="">
+
+#!/system/bin/sh
+
+clear
+sleep 0.1
+
+MODEL=$(getprop ro.product.model)
+BRAND=$(getprop ro.product.brand)
+SOC=$(getprop ro.product.board)
+ANDROID=$(getprop ro.build.version.release)
+KERNEL=$(uname -r)
+RAM=$(free -m | awk '/Mem:/ {print $2}')
+STORAGE=$(df -h /data | awk '/data/ {print $2}')
+
+apply_performance_tweaks() {
+    echo "performance" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    echo "performance" > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
+    echo 1 > /sys/devices/system/cpu/cpu0/online
+    echo 1 > /sys/devices/system/cpu/cpu1/online
+    echo 1 > /sys/devices/system/cpu/cpu2/online
+    echo 1 > /sys/devices/system/cpu/cpu3/online
+    echo 1 > /sys/devices/system/cpu/cpu4/online
+    echo 1 > /sys/devices/system/cpu/cpu5/online
+    echo 1 > /sys/devices/system/cpu/cpu6/online
+    echo 1 > /sys/devices/system/cpu/cpu7/online
+
+    echo "performance" > /sys/class/kgsl/kgsl-3d0/devfreq/governor
+    echo 0 > /sys/class/kgsl/kgsl-3d0/bus_split
+    echo 1 > /sys/class/kgsl/kgsl-3d0/force_clk_on
+    echo 10000 > /sys/class/kgsl/kgsl-3d0/idle_timer
+
+    echo 0 > /proc/sys/vm/swappiness
+    echo 100 > /proc/sys/vm/vfs_cache_pressure
+    echo 1 > /proc/sys/vm/overcommit_memory
+    echo 0 > /proc/sys/vm/oom_kill_allocating_task
+
+    for i in /sys/block/*/queue; do
+        echo "noop" > $i/scheduler
+        echo 0 > $i/add_random
+        echo 0 > $i/iostats
+        echo 256 > $i/nr_requests
+        echo 2048 > $i/read_ahead_kb
+        echo 1 > $i/iosched/fifo_batch
+    done
+
+    echo 0 > /proc/sys/net/ipv4/tcp_timestamps
+    echo 1 > /proc/sys/net/ipv4/tcp_tw_reuse
+    echo 1 > /proc/sys/net/ipv4/tcp_sack
+    echo 1 > /proc/sys/net/ipv4/tcp_dsack
+    echo 1 > /proc/sys/net/ipv4/tcp_fack
+    echo 1 > /proc/sys/net/ipv4/tcp_window_scaling
+    echo 5 > /proc/sys/net/ipv4/tcp_keepalive_probes
+    echo 30 > /proc/sys/net/ipv4/tcp_keepalive_intvl
+    echo 30 > /proc/sys/net/ipv4/tcp_fin_timeout
+
+    for i in /sys/class/thermal/thermal_zone*; do
+        echo disabled > $i/mode
+    done
+
+    echo 10 > /proc/sys/vm/dirty_ratio
+    echo 5 > /proc/sys/vm/dirty_background_ratio
+    echo 500 > /proc/sys/vm/dirty_expire_centisecs
+    echo 100 > /proc/sys/vm/dirty_writeback_centisecs
+
+    echo 0 > /proc/sys/kernel/randomize_va_space
+    echo 0 > /proc/sys/kernel/nmi_watchdog
+    echo 0 > /proc/sys/kernel/panic_on_oops
+    echo 0 > /proc/sys/kernel/sched_tunable_scaling
+
+    for i in $(find /sys/ -name debug_mask); do echo 0 > $i; done
+    for i in $(find /sys/ -name debug_level); do echo 0 > $i; done
+    for i in $(find /sys/ -name debug); do echo 0 > $i; done
+    for i in $(find /sys/ -name logging); do echo 0 > $i; done
+
+    echo 0 > /sys/kernel/debug/tracing/tracing_on
+    echo 0 > /sys/kernel/debug/tracing/events/enable
+}
+
+set_system_properties() {
+    setprop debug.cpu_core_ctl_active 1
+    setprop debug.game.max.cpu.proc 8
+    setprop debug.cpu_core_ctrl_hispeed_load 90
+    setprop debug.cpuprio 7
+    setprop debug.gpuprio 7
+
+    setprop debug.egl.force_msaa false
+    setprop debug.hwui.renderer opengl
+    setprop debug.hwui.disable_vsync true
+    setprop debug.hwui.texture_cache_size 256
+    setprop debug.force-opengl 1
+
+    setprop debug.refresh_rate.min_fps 120
+    setprop debug.peak_refresh_rate 120
+    setprop debug.min_refresh_rate 120
+    setprop debug.max_refresh_rate 120
+    setprop debug.lock_refresh_rate 120
+
+    cmd power set-fixed-performance-mode-enabled true
+    setprop debug.performance_schema 1
+    setprop debug.performance.tuning 1
+
+    setprop debug.ram.tuning true
+    setprop debug.ram.disable_kernel_idle true
+    setprop debug.ram.disable_kernel_throttling true
+
+    setprop net.tcp.buffersize.default 4096,87380,256960,4096,16384,256960
+    setprop net.tcp.buffersize.wifi 4096,87380,256960,4096,16384,256960
+    setprop net.tcp.delack.seg 2
+    setprop net.ipv4.tcp_slow_start_after_idle 0
+    setprop net.ipv4.tcp_window_scaling 1
+}
+
+clean_system() {
+    sync
+    echo 3 > /proc/sys/vm/drop_caches
+    am kill-all
+    pm trim-caches 99999999999999
+    fstrim -v /data
+    fstrim -v /cache
+    fstrim -v /system
+}
+
+optimize_power() {
+    for i in /sys/class/thermal/thermal_zone*/policy; do
+        echo 0 > $i
+    done
+
+    echo 1 > /sys/kernel/fast_charge/force_fast_charge
+    echo 3000 > /sys/class/power_supply/battery/constant_charge_current_max
+    echo 5000 > /sys/class/power_supply/battery/input_current_limit
+
+    echo 0 > /sys/module/msm_thermal/core_control/enabled
+    echo N > /sys/module/msm_thermal/parameters/enabled
+    echo 0 > /sys/module/msm_thermal/vdd_restriction/enabled
+}
+
+apply_all_tweaks() {
+    apply_performance_tweaks
+    set_system_properties
+    clean_system
+    optimize_power
+
+    for cpu in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor; do
+        echo "performance" > $cpu
+    done
+
+    echo 1 > /sys/power/cpuhotplug/enabled
+    echo 0 > /sys/power/cpuhotplug/suspend_deferred
+
+    renice -20 -p 1
+    renice -20 -p 2
+    renice -20 -p 3
+}
+
+apply_all_tweaks > /dev/null 2>&1
+
+sleep 1
+exit 0
+
+</script>
+
+<script type="text/plain" class="sh" data-titulo="">
+
+#!/system/bin/sh
+
+if [ "$(id -u)" -ne 0 ]; then
+    echo "ERROR: Root access required!" >&2
+    exit 1
+fi
+
+clear
+sync
+
+for touch in /sys/class/input/input*/device/device/; do
+    [ -f "$touch/pressure_scale" ] && echo "1.0" > "$touch/pressure_scale"
+    [ -f "$touch/size_scale" ] && echo "1.0" > "$touch/size_scale"
+    [ -f "$touch/filter" ] && echo "1" > "$touch/filter"
+    [ -f "$touch/sampling_rate" ] && echo "60" > "$touch/sampling_rate"
+    [ -f "$touch/report_gesture" ] && echo "1" > "$touch/report_gesture"
+done
+
+settings delete system touch.pressure.scale
+settings delete system touch.size.scale
+settings delete system touch.orientation.calibration
+settings delete system touch.distance.calibration
+settings delete system touch.coverage.calibration
+settings delete system touch.min_pressure
+settings delete system touch.max_pressure
+settings delete system touch.size.calibration
+settings delete system touch.size.bias
+settings delete system touch.size.isSummed
+settings delete system touch.tracking.speed
+settings delete system touch.tracking.size
+settings delete system touch.tracking.pressure
+settings delete system touch.touchSlop
+settings delete system touch.doubleTapSlop
+settings delete system touch.gestureMode
+settings delete system touch.motion.filter
+settings delete system touch.motion.speed
+settings delete system touch.motion.scale
+settings delete system touch.motion.threshold
+settings delete system touch.sampling_rate
+settings delete system touch.sampling_duration
+settings delete system touch.sampling_period
+settings delete system touch.boost_duration
+
+for cpu in /sys/devices/system/cpu/cpu*/cpufreq/; do
+    [ -f "$cpu/scaling_governor" ] && echo "interactive" > "$cpu/scaling_governor"
+    [ -f "$cpu/scaling_min_freq" ] && echo "$(cat ${cpu}cpuinfo_min_freq)" > "$cpu/scaling_min_freq"
+done
+
+[ -f /sys/class/kgsl/kgsl-3d0/devfreq/governor ] && echo "msm-adreno-tz" > /sys/class/kgsl/kgsl-3d0/devfreq/governor
+[ -f /sys/class/kgsl/kgsl-3d0/bus_split ] && echo "1" > /sys/class/kgsl/kgsl-3d0/bus_split
+[ -f /sys/class/kgsl/kgsl-3d0/force_clk_on ] && echo "0" > /sys/class/kgsl/kgsl-3d0/force_clk_on
+[ -f /sys/class/kgsl/kgsl-3d0/idle_timer ] && echo "1000" > /sys/class/kgsl/kgsl-3d0/idle_timer
+
+setprop debug.performance.tuning 0
+setprop debug.egl.swapinterval 1
+setprop debug.sf.latch_unsignaled 0
+setprop debug.sf.enable_gl_backpressure 1
+setprop debug.sf.hw 0
+setprop debug.egl.hw 0
+setprop debug.composition.type ""
+setprop debug.hwui.renderer ""
+setprop debug.hwui.profile ""
+setprop debug.hwui.overdraw ""
+setprop debug.hwui.disable_vsync ""
+setprop debug.hwui.empty_frame_rate ""
+setprop debug.hwui.texture_cache_size ""
+
+echo "1" > /proc/sys/kernel/sched_child_runs_first
+echo "0" > /proc/sys/kernel/sched_autogroup_enabled
+echo "24000000" > /proc/sys/kernel/sched_latency_ns
+echo "3000000" > /proc/sys/kernel/sched_min_granularity_ns
+echo "4000000" > /proc/sys/kernel/sched_wakeup_granularity_ns
+
+echo "60" > /proc/sys/vm/swappiness
+echo "100" > /proc/sys/vm/vfs_cache_pressure
+echo "8192" > /proc/sys/vm/min_free_kbytes
+echo "0" > /proc/sys/vm/overcommit_memory
+echo "50" > /proc/sys/vm/overcommit_ratio
+
+settings delete system gaming_mode_enabled
+settings delete system game_touch_boost
+settings delete system game_touch_response
+settings delete system game_touch_precision
+settings delete system game_disable_touch_filter
+settings delete system game_high_performance_mode
+
+setprop persist.sys.power_profile ""
+setprop persist.sys.performance ""
+setprop persist.sys.cpu_boost ""
+setprop persist.sys.gpu_boost ""
+setprop persist.sys.io_boost ""
+setprop persist.sys.touch_boost ""
+
+setprop net.tcp.buffersize.default ""
+setprop net.tcp.buffersize.wifi ""
+setprop net.tcp.buffersize.umts ""
+setprop net.tcp.buffersize.gprs ""
+setprop net.tcp.buffersize.edge ""
+setprop net.ipv4.tcp_timestamps ""
+setprop net.ipv4.tcp_tw_reuse ""
+setprop net.ipv4.tcp_sack ""
+setprop net.ipv4.tcp_dsack ""
+setprop net.ipv4.tcp_fack ""
+setprop net.ipv4.tcp_window_scaling ""
+setprop net.ipv4.tcp_keepalive_probes ""
+setprop net.ipv4.tcp_keepalive_intvl ""
+setprop net.ipv4.tcp_fin_timeout ""
+
+setprop security.perf_harden ""
+setprop security.adb.notify ""
+setprop security.selinux ""
+setprop security.mdf.result ""
+setprop security.aslr.disable ""
+
+setprop debug.sf.frame_rate_multiple_threshold ""
+setprop debug.sf.late.sf.duration ""
+setprop debug.sf.early.sf.duration ""
+setprop debug.sf.early.app.duration ""
+setprop debug.sf.earlyGl.sf.duration ""
+setprop debug.sf.earlyGl.app.duration ""
+setprop debug.touch.pressure.scale ""
+setprop debug.touch.size.scale ""
+setprop debug.touch.orientation.calibration ""
+setprop debug.touch.sampling_rate ""
+setprop debug.touch.response_time ""
+
+for thermal in /sys/class/thermal/thermal_zone*/; do
+    [ -f "$thermal/mode" ] && echo "enabled" > "$thermal/mode"
+    [ -f "$thermal/policy" ] && echo "step_wise" > "$thermal/policy"
+done
+
+setprop thermal.disable ""
+setprop thermal.management ""
+setprop thermal.engine.disable ""
+
+settings delete secure touch_prediction_enabled
+settings delete secure touch_prediction_duration
+settings delete secure touch_prediction_offset
+settings delete secure touch_palm_rejection
+settings delete secure touch_block_duration
+settings delete secure touch_jump_filtering
+
+stop surfaceflinger
+start surfaceflinger
+am kill-all
+
+echo ""
+echo "SYSTEM RESTORE COMPLETED SUCCESSFULLY!"
+echo "All performance tweaks have been reverted to stock values"
+echo ""
+
+sync
+exit 0
+
+</script>
+
+
 <script>
-/* ============================================================
-   AQUI AGREGAS LOS CODIGOS
-   Cada linea de la lista es un apartado. Dos formas de uso:
-
-   1) Solo el codigo (sin titulo):
-      `su -c "echo hola"`,
-
-   2) Con titulo opcional:
-      { titulo: "Nombre del codigo", codigo: `contenido del .sh` },
-
-   Para agregar mas apartados, copia una linea y pegala debajo.
-   Para dejar un espacio vacio, usa: "",
-   Usa comillas invertidas ` ` para poder escribir varias lineas.
-   ============================================================ */
-const CODIGOS = [
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-];
-/* ============================================================ */
-
 const ICONO_COPIAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>';
 const ICONO_OK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
-
-function normalizar(item) {
-  if (typeof item === "string") return { titulo: "", codigo: item };
-  return { titulo: item.titulo || "", codigo: item.codigo || "" };
-}
 
 async function copiarTexto(texto) {
   try {
@@ -133,8 +592,10 @@ async function copiarTexto(texto) {
 
 const lista = document.getElementById("lista");
 
-CODIGOS.map(normalizar).forEach((item) => {
-  const vacio = item.codigo.trim() === "";
+document.querySelectorAll("script.sh").forEach((fuente) => {
+  const codigo = fuente.textContent.replace(/^(\r?\n)+/, "").replace(/\s+$/, "");
+  const tituloTxt = fuente.getAttribute("data-titulo") || "";
+  const vacio = codigo === "";
 
   const slot = document.createElement("section");
   slot.className = "slot";
@@ -143,8 +604,8 @@ CODIGOS.map(normalizar).forEach((item) => {
   head.className = "slot-head";
 
   const titulo = document.createElement("div");
-  titulo.className = "slot-title" + (item.titulo ? "" : " empty");
-  titulo.textContent = item.titulo;
+  titulo.className = "slot-title" + (tituloTxt ? "" : " empty");
+  titulo.textContent = tituloTxt;
 
   const btn = document.createElement("button");
   btn.type = "button";
@@ -154,10 +615,10 @@ CODIGOS.map(normalizar).forEach((item) => {
 
   const pre = document.createElement("pre");
   pre.className = "code" + (vacio ? " empty" : "");
-  pre.textContent = vacio ? "Espacio disponible" : item.codigo;
+  pre.textContent = vacio ? "Espacio disponible" : codigo;
 
   btn.addEventListener("click", async () => {
-    const ok = await copiarTexto(item.codigo);
+    const ok = await copiarTexto(codigo);
     if (!ok) return;
     btn.classList.add("done");
     btn.innerHTML = ICONO_OK + "<span>Copiado</span>";
