@@ -3,76 +3,194 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>&#8203;</title>
+<title>Performance Pro · Android Tweaks</title>
 <style>
-  :root {
-    --bg: #000000;
-    --ink: #f1f4fa;
-    --muted: #8b95aa;
-    --line: #262b36;
-    --code-bg: #0f1218;
-    --code-ink: #e3e9f5;
-    --accent: #2f5bff;
-    --ok: #12805c;
-    box-sizing: border-box;
+  :root{
+    --ink:#f1f4fa;--muted:#8b95aa;--line:#262b36;--line2:#10141a;
+    --code-bg:#0b0e14;--code-ink:#e3e9f5;
+    --accent:#2f5bff;--accent2:#7c4dff;--ok:#12805c;
+    --green:#22c07a;--red:#ef4a5a;--amber:#f5a524;
+    --bg:#000;--bg-card:#07090d;--bg-soft:#0b0e14;
+    box-sizing:border-box;
   }
-  *, *::before, *::after { box-sizing: inherit; }
-  html, body { margin: 0; background: #000; color: var(--ink); min-height: 100%; }
-  :root { color-scheme: dark; }
-  body {
-    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    padding: 20px 16px 40px;
+  *,*::before,*::after{box-sizing:inherit}
+  html,body{margin:0;background:var(--bg);color:var(--ink);min-height:100%}
+  :root{color-scheme:dark}
+  body{
+    font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    padding:16px 12px 48px;
+    background:
+      radial-gradient(1200px 600px at 50% -200px,rgba(47,91,255,.10),transparent 60%),
+      radial-gradient(900px 500px at 100% 100%,rgba(124,77,255,.08),transparent 60%),
+      #000;
   }
-  main { max-width: 760px; margin: 0 auto; display: grid; gap: 14px; }
+  #lista{max-width:860px;margin:0 auto;display:grid;gap:8px}
 
-  .slot {
-    background: #07090d;
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    overflow: hidden;
+  .hero{
+    display:flex;align-items:center;gap:14px;
+    padding:18px 16px;margin-bottom:6px;
+    background:linear-gradient(135deg,rgba(47,91,255,.14),rgba(124,77,255,.08) 60%,transparent);
+    border:1px solid var(--line);border-radius:14px;
+    position:relative;overflow:hidden;
   }
-  .slot-head {
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    padding: 8px 8px 8px 14px;
-    border-bottom: 1px solid var(--line);
-    min-height: 48px;
+  .hero::before{
+    content:"";position:absolute;inset:-1px;border-radius:14px;padding:1px;
+    background:linear-gradient(135deg,rgba(47,91,255,.5),transparent 40%,rgba(124,77,255,.5));
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;
   }
-  .slot-title { font-size: 14px; font-weight: 600; color: var(--ink); overflow-wrap: anywhere; }
-  .slot-title.empty { color: var(--muted); font-weight: 500; }
+  .hero-logo{
+    width:52px;height:52px;flex-shrink:0;display:grid;place-items:center;
+    background:linear-gradient(135deg,#2f5bff,#7c4dff);
+    border-radius:12px;color:#fff;
+    box-shadow:0 8px 24px rgba(47,91,255,.35);
+  }
+  .hero-logo svg{width:26px;height:26px}
+  .hero-txt{display:flex;flex-direction:column;gap:2px;min-width:0}
+  .hero-title{font-size:18px;font-weight:800;letter-spacing:-.01em;color:#fff}
+  .hero-sub{font-size:12.5px;color:var(--muted);font-weight:500}
 
-  .copy-btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    font: inherit; font-size: 14px; font-weight: 600;
-    color: #fff; background: var(--accent);
-    border: 0; border-radius: 8px;
-    padding: 10px 14px; min-height: 40px;
-    cursor: pointer; flex-shrink: 0;
-    transition: background .15s;
+  .stats{display:flex;gap:8px;padding:0 2px 6px;flex-wrap:wrap}
+  .stat{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+    padding:6px 10px;border-radius:999px;border:1px solid var(--line);
+    color:#c6cfde;background:rgba(255,255,255,.02);
   }
-  .copy-btn:hover { background: #1f45d6; }
-  .copy-btn:focus-visible { outline: 3px solid #9db3ff; outline-offset: 2px; }
-  .copy-btn.done { background: var(--ok); }
-  .copy-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
-  .copy-btn[disabled] { background: #2a303c; color: #6b7587; cursor: default; }
+  .stat svg{width:13px;height:13px}
+  .stat.on{color:#7ef1bf;border-color:rgba(34,192,122,.35)}
+  .stat.off{color:#ff97a2;border-color:rgba(239,74,90,.35)}
+  .stat.pro{color:#b7c2ff;border-color:rgba(124,77,255,.35)}
 
-  pre.code {
-    margin: 0;
-    padding: 14px;
-    background: var(--code-bg);
-    color: var(--code-ink);
-    font-family: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-    font-size: 13px; line-height: 1.6;
-    white-space: pre-wrap; overflow-wrap: anywhere;
-    max-height: 320px; overflow: auto;
-    user-select: all; -webkit-user-select: all;
-    min-height: 64px;
+  .section-title{
+    display:flex;align-items:center;gap:10px;
+    padding:22px 4px 10px;margin:10px 0 2px;
+    font-size:13px;font-weight:800;letter-spacing:.10em;text-transform:uppercase;
+    border-bottom:1px solid var(--line);
   }
-  pre.code.empty {
-    color: #7c869b; user-select: none; -webkit-user-select: none;
-    display: flex; align-items: center;
+  .section-title .s-icon{
+    width:26px;height:26px;flex-shrink:0;display:grid;place-items:center;border-radius:8px;
+  }
+  .section-title .s-icon svg{width:15px;height:15px}
+  .section-title.on .s-icon{background:rgba(34,192,122,.14);color:#4ed999}
+  .section-title.off .s-icon{background:rgba(239,74,90,.14);color:#ff7a88}
+  .section-title.on{color:#c8f7e0}
+  .section-title.off{color:#ffd1d6}
+
+  .cat-title{
+    display:flex;align-items:center;gap:8px;
+    font-size:11.5px;font-weight:700;color:var(--muted);
+    letter-spacing:.08em;text-transform:uppercase;margin:16px 4px 6px;
+  }
+  .cat-title .c-icon{
+    width:22px;height:22px;flex-shrink:0;display:grid;place-items:center;
+    background:#0e131c;border:1px solid var(--line);border-radius:6px;color:#93a0b8;
+  }
+  .cat-title .c-icon svg{width:12px;height:12px}
+  .cat-title .c-count{
+    margin-left:auto;font-size:10.5px;font-weight:600;color:#6d7a90;letter-spacing:.05em;
   }
 
-  @media (prefers-reduced-motion: reduce) { .copy-btn { transition: none; } }
+  .pair{
+    background:var(--bg-card);border:1px solid var(--line);border-radius:11px;
+    overflow:hidden;transition:border-color .15s;
+  }
+  .pair:hover{border-color:#31384a}
+  .pair + .pair{margin-top:6px}
+
+  .pair-head{
+    display:flex;align-items:center;justify-content:space-between;gap:8px;
+    padding:8px 10px 8px 12px;
+    background:linear-gradient(180deg,#0b0e14,#090c11);
+    border-bottom:1px solid var(--line);
+  }
+  .pair-name{
+    font-family:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:12.5px;font-weight:600;color:#d8dfeb;
+    overflow-wrap:anywhere;min-width:0;flex:1 1 auto;
+  }
+  .pair-head .badge{
+    font-size:9.5px;font-weight:800;letter-spacing:.10em;
+    padding:3px 7px;border-radius:5px;
+    background:linear-gradient(135deg,#2f5bff,#7c4dff);
+    color:#fff;flex-shrink:0;
+  }
+
+  .info-btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:30px;height:30px;flex-shrink:0;
+    background:transparent;border:1px solid var(--line);border-radius:8px;
+    color:var(--muted);cursor:pointer;
+    transition:background .15s,color .15s,border-color .15s;
+  }
+  .info-btn:hover{background:#131822;color:var(--ink);border-color:#3a465c}
+  .info-btn.active{background:#1a2130;color:var(--ink);border-color:#3a465c}
+  .info-btn:focus-visible{outline:3px solid #9db3ff;outline-offset:2px}
+  .info-btn svg{width:14px;height:14px}
+
+  .pair-desc{
+    padding:10px 12px;background:var(--bg-soft);border-bottom:1px solid var(--line);
+    color:#b8c1d1;font-size:12.5px;line-height:1.55;
+  }
+
+  .row{
+    display:grid;grid-template-columns:70px 1fr 40px;align-items:center;gap:8px;
+    padding:8px 10px;border-bottom:1px solid var(--line2);
+  }
+  .row:last-child{border-bottom:0}
+  .row.on{background:linear-gradient(90deg,rgba(34,192,122,.07),transparent 45%)}
+  .row.off{background:linear-gradient(90deg,rgba(239,74,90,.07),transparent 45%)}
+
+  .tag{
+    display:inline-flex;align-items:center;justify-content:center;gap:4px;
+    font-size:10px;font-weight:800;letter-spacing:.09em;
+    padding:5px 6px;border-radius:7px;text-transform:uppercase;
+  }
+  .tag svg{width:11px;height:11px}
+  .tag.on{color:#0b2018;background:linear-gradient(135deg,#22c07a,#1aa364)}
+  .tag.off{color:#2a0d12;background:linear-gradient(135deg,#ef4a5a,#c8384a)}
+
+  code.cmd{
+    font-family:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    font-size:12.5px;line-height:1.55;color:var(--code-ink);
+    background:var(--code-bg);border:1px solid #1a1f28;border-radius:7px;
+    padding:7px 10px;white-space:pre-wrap;word-break:break-all;
+    user-select:all;-webkit-user-select:all;min-width:0;
+  }
+
+  .copy-btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:36px;height:36px;flex-shrink:0;
+    background:var(--accent);border:0;border-radius:8px;
+    color:#fff;cursor:pointer;transition:background .15s,transform .08s;
+  }
+  .copy-btn:hover{background:#1f45d6}
+  .copy-btn:active{transform:scale(.94)}
+  .copy-btn:focus-visible{outline:3px solid #9db3ff;outline-offset:2px}
+  .copy-btn.done{background:var(--ok)}
+  .copy-btn svg{width:16px;height:16px}
+
+  .foot{
+    margin-top:24px;padding:14px 16px;
+    border:1px solid var(--line);border-radius:12px;
+    background:rgba(255,255,255,.02);color:var(--muted);
+    font-size:12px;line-height:1.6;display:flex;gap:10px;align-items:flex-start;
+  }
+  .foot svg{width:16px;height:16px;flex-shrink:0;color:var(--amber);margin-top:2px}
+  .foot b{color:#e8edf5}
+  .foot code{
+    font-family:"JetBrains Mono",ui-monospace,monospace;
+    background:#12161f;padding:1px 5px;border-radius:4px;font-size:11.5px;color:#d8dfeb;
+  }
+
+  @media (prefers-reduced-motion:reduce){.copy-btn,.info-btn,.pair{transition:none}}
+  @media (max-width:520px){
+    .row{grid-template-columns:58px 1fr 36px;gap:6px;padding:7px 8px}
+    code.cmd{font-size:11.8px;padding:6px 8px}
+    .pair-name{font-size:11.5px}
+    .hero-title{font-size:16px}
+    .hero-logo{width:46px;height:46px}
+  }
 </style>
 </head>
 <body>
@@ -80,97 +198,819 @@
 
 <script>
 /* ============================================================
-   AQUI AGREGAS LOS CODIGOS
-   Cada linea de la lista es un apartado. Dos formas de uso:
-
-   1) Solo el codigo (sin titulo):
-      `su -c "echo hola"`,
-
-   2) Con titulo opcional:
-      { titulo: "Nombre del codigo", codigo: `contenido del .sh` },
-
-   Para agregar mas apartados, copia una linea y pegala debajo.
-   Para dejar un espacio vacio, usa: "",
-   Usa comillas invertidas ` ` para poder escribir varias lineas.
+   ICON PACK · SVG inline (Lucide)
    ============================================================ */
-const CODIGOS = [
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
-  "",
+var I = {
+  zap:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>',
+  power:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg>',
+  copy:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>',
+  check:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
+  info:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>',
+  cpu:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M20 9h2M20 14h2M2 9h2M2 14h2"/></svg>',
+  gpu:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>',
+  mem:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 19v-3M10 19v-3M14 19v-3M18 19v-3"/><path d="M8 11V9M16 11V9M12 11V9"/><path d="M2 15h20"/><path d="M2 7a1 1 0 0 1 1-1h18a1 1 0 0 1 1 1v1.3a1 1 0 0 1-.3.7l-1.4 1.4a1 1 0 0 1-.7.3H4.4a1 1 0 0 1-.7-.3L2.3 9.7A1 1 0 0 1 2 9V7z"/></svg>',
+  net:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3M12 12V8"/></svg>',
+  display:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>',
+  shield:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.7 8.9a1 1 0 0 1-.6 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.2-2.7a1.2 1.2 0 0 1 1.5 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z"/></svg>',
+  thermo:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4v10.5a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0z"/></svg>',
+  db:       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>',
+  gauge:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>',
+  finger:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-4 0"/><path d="M14 10V4a2 2 0 0 0-4 0v2"/><path d="M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.9-6-2.3l-3.6-3.6a2 2 0 0 1 2.8-2.8L7 15"/></svg>',
+  game:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="11" y2="11"/><line x1="8" x2="8" y1="9" y2="13"/><line x1="15" x2="15.01" y1="12" y2="12"/><line x1="18" x2="18.01" y1="10" y2="10"/><path d="M17.3 5H6.7a4 4 0 0 0-4 3.6C2.6 9.4 2 14.5 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.4-1.4A2 2 0 0 1 9.8 16h4.3a2 2 0 0 1 1.4.6L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.5-.6-6.6-.7-7.3A4 4 0 0 0 17.3 5z"/></svg>',
+  bug:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 2 1.9 1.9M14.1 3.9 16 2"/><path d="M9 7.1v-1a3 3 0 1 1 6 0v1"/><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6"/><path d="M12 20v-9"/><path d="M6.5 9C4.6 8.8 3 7.1 3 5"/><path d="M6 13H2"/><path d="M3 21c0-2.1 1.7-3.9 3.8-4"/><path d="M21 5c0 2.1-1.6 3.8-3.5 4"/><path d="M22 13h-4"/><path d="M17.2 17c2.1.1 3.8 1.9 3.8 4"/></svg>',
+  battery:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="10" x="2" y="7" rx="2"/><line x1="22" x2="22" y1="11" y2="13"/></svg>',
+  spark:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3z"/><path d="M5 3v4M19 17v4M3 5h4M17 19h4"/></svg>',
+  cog:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>',
+  terminal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg>',
+  wifi:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h.01"/><path d="M2 8.8a15 15 0 0 1 20 0"/><path d="M5 12.9a10 10 0 0 1 14 0"/><path d="M8.5 16.4a5 5 0 0 1 7 0"/></svg>',
+  disk:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" x2="2" y1="12" y2="12"/><path d="M5.4 5.1 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.4-6.9A2 2 0 0 0 16.8 4H7.2a2 2 0 0 0-1.8 1.1z"/><line x1="6" x2="6.01" y1="16" y2="16"/><line x1="10" x2="10.01" y1="16" y2="16"/></svg>',
+  palette:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.9 0 1.6-.7 1.6-1.7 0-.4-.2-.8-.4-1.1-.3-.3-.4-.7-.4-1.1a1.6 1.6 0 0 1 1.7-1.7h2c3 0 5.5-2.5 5.5-5.6C21.9 6 17.5 2 12 2z"/></svg>',
+  radio:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/><path d="M19.1 4.9C23 8.8 23 15.1 19.1 19"/></svg>',
+  rocket:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.9.7-2.2-.1-3-.8-.8-2.1-.8-2.9 0z"/><path d="M12 15 9 12a11 11 0 0 1 2-6.5A11 11 0 0 1 20 2c0 3.5-1 6.5-3.5 9a11 11 0 0 1-4.5 4z"/><path d="M9 12H4s.5-2.8 2-4c1.7-1.3 5 0 5 0"/><path d="M12 15v5s2.8-.5 4-2c1.3-1.7 0-5 0-5"/></svg>',
+  alert:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>',
+  lock:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>',
+  refresh:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.7 9.7 0 0 1 6.7 2.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.7 9.7 0 0 1-6.7-2.7L3 16"/><path d="M3 21v-5h5"/></svg>',
+  flame:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.4-.5-2-1-3-1-2.1-.3-4 2-6 0 2.2 1.5 3.7 3 5 1.7 1.5 3 3.4 3 6a7 7 0 1 1-14 0c0-1.3.5-2.6 1.5-4a2.6 2.6 0 0 1 3 4.5z"/></svg>',
+  clock:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+  play:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg>'
+};
+
+/* ============================================================
+   DATA · cada item = { cat, icon, name, lvl, on, off, desc }
+   ============================================================ */
+var DATA = [
+/* ---------- TÁCTIL · MUESTREO ---------- */
+{cat:"Táctil · Muestreo",icon:"finger",name:"touch.sampling_rate",lvl:"EXTREME",
+ on:"settings put system touch.sampling_rate 4000",
+ off:"settings delete system touch.sampling_rate",
+ desc:"Fuerza la tasa de muestreo táctil a 4000 Hz. Cuádruple del valor normal. Reduce drásticamente la latencia del tacto."},
+{cat:"Táctil · Muestreo",icon:"finger",name:"touch.sampling_duration",lvl:"MAX",
+ on:"settings put system touch.sampling_duration 1.0",
+ off:"settings delete system touch.sampling_duration",
+ desc:"Extiende la ventana de muestreo a 1 segundo para mantener la tasa alta durante más tiempo."},
+{cat:"Táctil · Muestreo",icon:"finger",name:"touch.sampling_period",lvl:"MAX",
+ on:"settings put system touch.sampling_period 0",
+ off:"settings delete system touch.sampling_period",
+ desc:"Periodo entre muestras = 0 (la tasa más rápida posible del driver)."},
+{cat:"Táctil · Muestreo",icon:"finger",name:"touch.boost_duration",lvl:"EXTREME",
+ on:"settings put system touch.boost_duration 10000",
+ off:"settings delete system touch.boost_duration",
+ desc:"Boost táctil extendido a 10 segundos tras cada toque."},
+{cat:"Táctil · Muestreo",icon:"finger",name:"debug.touch.sampling_rate",lvl:"MAX",
+ on:"setprop debug.touch.sampling_rate 4000",
+ off:"setprop debug.touch.sampling_rate \"\"",
+ desc:"Tasa de muestreo a nivel propiedad de sistema (persiste hasta reinicio)."},
+
+/* ---------- TÁCTIL · SENSIBILIDAD ---------- */
+{cat:"Táctil · Sensibilidad",icon:"gauge",name:"touch.pressure.scale",lvl:"EXTREME",
+ on:"settings put system touch.pressure.scale 0.00001",
+ off:"settings delete system touch.pressure.scale",
+ desc:"Escala de presión ultra reducida: registra toques casi imperceptibles."},
+{cat:"Táctil · Sensibilidad",icon:"gauge",name:"touch.size.scale",lvl:"EXTREME",
+ on:"settings put system touch.size.scale 0.1",
+ off:"settings delete system touch.size.scale",
+ desc:"Reduce la escala del tamaño del toque. Acepta dedos más pequeños."},
+{cat:"Táctil · Sensibilidad",icon:"gauge",name:"touch.min_pressure",lvl:"EXTREME",
+ on:"settings put system touch.min_pressure 0.0001",
+ off:"settings delete system touch.min_pressure",
+ desc:"Presión mínima aceptada 0.0001. Cualquier roce cuenta como toque."},
+{cat:"Táctil · Sensibilidad",icon:"gauge",name:"touch.max_pressure",lvl:"MAX",
+ on:"settings put system touch.max_pressure 2.0",
+ off:"settings delete system touch.max_pressure",
+ desc:"Presión máxima ampliada a 2.0 (más rango dinámico)."},
+{cat:"Táctil · Sensibilidad",icon:"gauge",name:"touch.size.calibration",lvl:"PRO",
+ on:"settings put system touch.size.calibration geometric",
+ off:"settings delete system touch.size.calibration",
+ desc:"Calibración geométrica del tamaño táctil."},
+{cat:"Táctil · Sensibilidad",icon:"gauge",name:"touch.size.bias",lvl:"PRO",
+ on:"settings put system touch.size.bias 0.05",
+ off:"settings delete system touch.size.bias",
+ desc:"Compensación de tamaño para reducir falsos negativos."},
+{cat:"Táctil · Sensibilidad",icon:"gauge",name:"touch.size.isSummed",lvl:"PRO",
+ on:"settings put system touch.size.isSummed 0",
+ off:"settings delete system touch.size.isSummed",
+ desc:"No sumar tamaño entre toques multitáctiles."},
+{cat:"Táctil · Sensibilidad",icon:"gauge",name:"touch.orientation.calibration",lvl:"PRO",
+ on:"settings put system touch.orientation.calibration matrix",
+ off:"settings delete system touch.orientation.calibration",
+ desc:"Calibración por matriz (más precisa en rotaciones)."},
+{cat:"Táctil · Sensibilidad",icon:"gauge",name:"touch.distance.calibration",lvl:"PRO",
+ on:"settings put system touch.distance.calibration precise",
+ off:"settings delete system touch.distance.calibration",
+ desc:"Calibración de distancia precisa."},
+{cat:"Táctil · Sensibilidad",icon:"gauge",name:"touch.coverage.calibration",lvl:"PRO",
+ on:"settings put system touch.coverage.calibration octagram",
+ off:"settings delete system touch.coverage.calibration",
+ desc:"Calibración de cobertura en octagrama."},
+{cat:"Táctil · Sensibilidad",icon:"gauge",name:"debug.touch.pressure.scale",lvl:"MAX",
+ on:"setprop debug.touch.pressure.scale 0.00001",
+ off:"setprop debug.touch.pressure.scale \"\"",
+ desc:"Escala de presión a nivel debug."},
+{cat:"Táctil · Sensibilidad",icon:"gauge",name:"debug.touch.size.scale",lvl:"MAX",
+ on:"setprop debug.touch.size.scale 0.1",
+ off:"setprop debug.touch.size.scale \"\"",
+ desc:"Escala de tamaño a nivel debug."},
+
+/* ---------- TÁCTIL · TRACKING ---------- */
+{cat:"Táctil · Tracking",icon:"radio",name:"touch.tracking.speed",lvl:"EXTREME",
+ on:"settings put system touch.tracking.speed 30",
+ off:"settings delete system touch.tracking.speed",
+ desc:"Velocidad de tracking al doble. Sigue mejor los movimientos rápidos."},
+{cat:"Táctil · Tracking",icon:"radio",name:"touch.tracking.size",lvl:"MAX",
+ on:"settings put system touch.tracking.size 2",
+ off:"settings delete system touch.tracking.size",
+ desc:"Tamaño mínimo para tracking (acepta toques finos)."},
+{cat:"Táctil · Tracking",icon:"radio",name:"touch.tracking.pressure",lvl:"MAX",
+ on:"settings put system touch.tracking.pressure 6",
+ off:"settings delete system touch.tracking.pressure",
+ desc:"Sensibilidad de presión durante tracking."},
+{cat:"Táctil · Tracking",icon:"radio",name:"touch.touchSlop",lvl:"EXTREME",
+ on:"settings put system touch.touchSlop 0",
+ off:"settings delete system touch.touchSlop",
+ desc:"Umbral cero para convertir toque en scroll."},
+{cat:"Táctil · Tracking",icon:"radio",name:"touch.doubleTapSlop",lvl:"EXTREME",
+ on:"settings put system touch.doubleTapSlop 0",
+ off:"settings delete system touch.doubleTapSlop",
+ desc:"Umbral cero de doble toque."},
+{cat:"Táctil · Tracking",icon:"radio",name:"touch.gestureMode",lvl:"PRO",
+ on:"settings put system touch.gestureMode spots",
+ off:"settings delete system touch.gestureMode",
+ desc:"Modo spots = cada toque es independiente."},
+
+/* ---------- TÁCTIL · MOTION ---------- */
+{cat:"Táctil · Motion",icon:"refresh",name:"touch.motion.filter",lvl:"MAX",
+ on:"settings put system touch.motion.filter none",
+ off:"settings delete system touch.motion.filter",
+ desc:"Desactiva el filtro de suavizado (menos latencia)."},
+{cat:"Táctil · Motion",icon:"refresh",name:"touch.motion.speed",lvl:"EXTREME",
+ on:"settings put system touch.motion.speed 30",
+ off:"settings delete system touch.motion.speed",
+ desc:"Velocidad de movimiento al doble."},
+{cat:"Táctil · Motion",icon:"refresh",name:"touch.motion.scale",lvl:"MAX",
+ on:"settings put system touch.motion.scale 0.05",
+ off:"settings delete system touch.motion.scale",
+ desc:"Escala del movimiento reducida."},
+{cat:"Táctil · Motion",icon:"refresh",name:"touch.motion.threshold",lvl:"MAX",
+ on:"settings put system touch.motion.threshold 0",
+ off:"settings delete system touch.motion.threshold",
+ desc:"Umbral cero: sin filtro adicional."},
+
+/* ---------- TÁCTIL · PREDICCIÓN IA ---------- */
+{cat:"Táctil · Predicción IA",icon:"spark",name:"touch_prediction_enabled",lvl:"MAX",
+ on:"settings put secure touch_prediction_enabled 1",
+ off:"settings delete secure touch_prediction_enabled",
+ desc:"Activa el motor de predicción táctil del sistema."},
+{cat:"Táctil · Predicción IA",icon:"spark",name:"touch_prediction_duration",lvl:"EXTREME",
+ on:"settings put secure touch_prediction_duration 0.08",
+ off:"settings delete secure touch_prediction_duration",
+ desc:"Ventana de predicción extendida a 80 ms."},
+{cat:"Táctil · Predicción IA",icon:"spark",name:"touch_prediction_offset",lvl:"MAX",
+ on:"settings put secure touch_prediction_offset 0.02",
+ off:"settings delete secure touch_prediction_offset",
+ desc:"Offset de predicción 20 ms."},
+{cat:"Táctil · Predicción IA",icon:"spark",name:"touch_palm_rejection",lvl:"MAX",
+ on:"settings put secure touch_palm_rejection 4",
+ off:"settings delete secure touch_palm_rejection",
+ desc:"Rechazo de palma agresivo nivel 4."},
+{cat:"Táctil · Predicción IA",icon:"spark",name:"touch_block_duration",lvl:"MAX",
+ on:"settings put secure touch_block_duration 0",
+ off:"settings delete secure touch_block_duration",
+ desc:"Sin bloqueo por palma."},
+{cat:"Táctil · Predicción IA",icon:"spark",name:"touch_jump_filtering",lvl:"MAX",
+ on:"settings put secure touch_jump_filtering 0",
+ off:"settings delete secure touch_jump_filtering",
+ desc:"Filtro anti-saltos desactivado."},
+
+/* ---------- TÁCTIL · DEBUG ---------- */
+{cat:"Táctil · Debug",icon:"bug",name:"debug.touch.orientation.calibration",lvl:"PRO",
+ on:"setprop debug.touch.orientation.calibration matrix",
+ off:"setprop debug.touch.orientation.calibration \"\"",
+ desc:"Calibración de orientación a nivel debug."},
+{cat:"Táctil · Debug",icon:"bug",name:"debug.touch.response_time",lvl:"EXTREME",
+ on:"setprop debug.touch.response_time 0",
+ off:"setprop debug.touch.response_time \"\"",
+ desc:"Tiempo de respuesta táctil = 0 ms."},
+
+/* ---------- GAMING ---------- */
+{cat:"Gaming Mode",icon:"game",name:"gaming_mode_enabled",lvl:"MAX",
+ on:"settings put system gaming_mode_enabled 2",
+ off:"settings delete system gaming_mode_enabled",
+ desc:"Modo gaming del sistema en nivel máximo."},
+{cat:"Gaming Mode",icon:"game",name:"game_touch_boost",lvl:"MAX",
+ on:"settings put system game_touch_boost 2",
+ off:"settings delete system game_touch_boost",
+ desc:"Boost táctil gaming al máximo."},
+{cat:"Gaming Mode",icon:"game",name:"game_touch_response",lvl:"EXTREME",
+ on:"settings put system game_touch_response 0.001",
+ off:"settings delete system game_touch_response",
+ desc:"Tiempo de respuesta táctil gaming reducido a 1 ms."},
+{cat:"Gaming Mode",icon:"game",name:"game_touch_precision",lvl:"EXTREME",
+ on:"settings put system game_touch_precision 30",
+ off:"settings delete system game_touch_precision",
+ desc:"Precisión táctil gaming al doble."},
+{cat:"Gaming Mode",icon:"game",name:"game_disable_touch_filter",lvl:"MAX",
+ on:"settings put system game_disable_touch_filter 1",
+ off:"settings delete system game_disable_touch_filter",
+ desc:"Desactiva el filtro táctil durante juegos."},
+{cat:"Gaming Mode",icon:"game",name:"game_high_performance_mode",lvl:"MAX",
+ on:"settings put system game_high_performance_mode 1",
+ off:"settings delete system game_high_performance_mode",
+ desc:"Modo alto rendimiento gaming activado."},
+
+/* ---------- CPU · GOVERNOR ---------- */
+{cat:"CPU · Governor",icon:"cpu",name:"scaling_governor (all cores)",lvl:"EXTREME",
+ on:"for c in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor; do echo performance > \"$c\"; done",
+ off:"for c in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor; do echo interactive > \"$c\"; done",
+ desc:"Gobernador de todos los núcleos a performance (máximo absoluto)."},
+{cat:"CPU · Governor",icon:"cpu",name:"debug.cpu_core_ctl_active",lvl:"MAX",
+ on:"setprop debug.cpu_core_ctl_active 1",
+ off:"setprop debug.cpu_core_ctl_active \"\"",
+ desc:"Activa el control de núcleos de CPU del sistema."},
+{cat:"CPU · Governor",icon:"cpu",name:"debug.cpu_core_ctrl_hispeed_load",lvl:"MAX",
+ on:"setprop debug.cpu_core_ctrl_hispeed_load 90",
+ off:"setprop debug.cpu_core_ctrl_hispeed_load \"\"",
+ desc:"Umbral de carga para saltar a frecuencia alta."},
+{cat:"CPU · Governor",icon:"cpu",name:"debug.game.max.cpu.proc",lvl:"MAX",
+ on:"setprop debug.game.max.cpu.proc 8",
+ off:"setprop debug.game.max.cpu.proc \"\"",
+ desc:"Máximo de procesos CPU durante juegos."},
+{cat:"CPU · Governor",icon:"cpu",name:"debug.cpuprio",lvl:"MAX",
+ on:"setprop debug.cpuprio 7",
+ off:"setprop debug.cpuprio \"\"",
+ desc:"Prioridad de CPU máxima (7)."},
+
+/* ---------- CPU · FRECUENCIA ---------- */
+{cat:"CPU · Frecuencia",icon:"flame",name:"scaling_min_freq (max out)",lvl:"EXTREME",
+ on:"for c in /sys/devices/system/cpu/cpu*/cpufreq/; do [ -f \"$c/scaling_min_freq\" ] && cat \"$c/cpuinfo_max_freq\" > \"$c/scaling_min_freq\"; done",
+ off:"for c in /sys/devices/system/cpu/cpu*/cpufreq/; do [ -f \"$c/scaling_min_freq\" ] && cat \"$c/cpuinfo_min_freq\" > \"$c/scaling_min_freq\"; done",
+ desc:"Fija la frecuencia mínima al máximo soportado."},
+{cat:"CPU · Frecuencia",icon:"flame",name:"scaling_max_freq (lock)",lvl:"MAX",
+ on:"for c in /sys/devices/system/cpu/cpu*/cpufreq/; do [ -f \"$c/scaling_max_freq\" ] && cat \"$c/cpuinfo_max_freq\" > \"$c/scaling_max_freq\"; done",
+ off:"for c in /sys/devices/system/cpu/cpu*/cpufreq/; do [ -f \"$c/scaling_max_freq\" ] && cat \"$c/cpuinfo_max_freq\" > \"$c/scaling_max_freq\"; done",
+ desc:"Bloquea la frecuencia máxima al máximo del chip."},
+{cat:"CPU · Frecuencia",icon:"flame",name:"online all cores",lvl:"EXTREME",
+ on:"for c in /sys/devices/system/cpu/cpu*/online; do [ -f \"$c\" ] && echo 1 > \"$c\"; done",
+ off:"echo 0 > /sys/devices/system/cpu/cpu7/online 2>/dev/null",
+ desc:"Enciende todos los núcleos de la CPU."},
+
+/* ---------- CPU · BOOST ---------- */
+{cat:"CPU · Boost",icon:"rocket",name:"persist.sys.cpu_boost",lvl:"MAX",
+ on:"setprop persist.sys.cpu_boost 2",
+ off:"setprop persist.sys.cpu_boost \"\"",
+ desc:"Nivel de boost de CPU al máximo."},
+{cat:"CPU · Boost",icon:"rocket",name:"persist.sys.io_boost",lvl:"MAX",
+ on:"setprop persist.sys.io_boost 1",
+ off:"setprop persist.sys.io_boost \"\"",
+ desc:"Boost de I/O activado."},
+{cat:"CPU · Boost",icon:"rocket",name:"debug.performance.tuning",lvl:"MAX",
+ on:"setprop debug.performance.tuning 1",
+ off:"setprop debug.performance.tuning 0",
+ desc:"Tuning global de performance."},
+
+/* ---------- GPU ---------- */
+{cat:"GPU",icon:"gpu",name:"kgsl devfreq governor",lvl:"MAX",
+ on:"[ -f /sys/class/kgsl/kgsl-3d0/devfreq/governor ] && echo performance > /sys/class/kgsl/kgsl-3d0/devfreq/governor",
+ off:"[ -f /sys/class/kgsl/kgsl-3d0/devfreq/governor ] && echo msm-adreno-tz > /sys/class/kgsl/kgsl-3d0/devfreq/governor",
+ desc:"Gobernador de GPU Adreno a performance."},
+{cat:"GPU",icon:"gpu",name:"kgsl force_clk_on",lvl:"MAX",
+ on:"[ -f /sys/class/kgsl/kgsl-3d0/force_clk_on ] && echo 1 > /sys/class/kgsl/kgsl-3d0/force_clk_on",
+ off:"[ -f /sys/class/kgsl/kgsl-3d0/force_clk_on ] && echo 0 > /sys/class/kgsl/kgsl-3d0/force_clk_on",
+ desc:"Fuerza el reloj de GPU siempre encendido."},
+{cat:"GPU",icon:"gpu",name:"kgsl idle_timer",lvl:"EXTREME",
+ on:"[ -f /sys/class/kgsl/kgsl-3d0/idle_timer ] && echo 10000 > /sys/class/kgsl/kgsl-3d0/idle_timer",
+ off:"[ -f /sys/class/kgsl/kgsl-3d0/idle_timer ] && echo 1000 > /sys/class/kgsl/kgsl-3d0/idle_timer",
+ desc:"Idle timer extendido a 10 s (no baja frecuencia)."},
+{cat:"GPU",icon:"gpu",name:"kgsl bus_split",lvl:"MAX",
+ on:"[ -f /sys/class/kgsl/kgsl-3d0/bus_split ] && echo 0 > /sys/class/kgsl/kgsl-3d0/bus_split",
+ off:"[ -f /sys/class/kgsl/kgsl-3d0/bus_split ] && echo 1 > /sys/class/kgsl/kgsl-3d0/bus_split",
+ desc:"Desactiva bus split (mayor ancho de banda)."},
+{cat:"GPU",icon:"gpu",name:"persist.sys.gpu_boost",lvl:"MAX",
+ on:"setprop persist.sys.gpu_boost 2",
+ off:"setprop persist.sys.gpu_boost \"\"",
+ desc:"Boost de GPU al máximo."},
+{cat:"GPU",icon:"gpu",name:"debug.gpuprio",lvl:"MAX",
+ on:"setprop debug.gpuprio 7",
+ off:"setprop debug.gpuprio \"\"",
+ desc:"Prioridad de GPU máxima (7)."},
+
+/* ---------- SCHEDULER ---------- */
+{cat:"Scheduler",icon:"clock",name:"sched_child_runs_first",lvl:"MAX",
+ on:"echo 0 > /proc/sys/kernel/sched_child_runs_first",
+ off:"echo 1 > /proc/sys/kernel/sched_child_runs_first",
+ desc:"El proceso hijo no se ejecuta primero (mejor para UI)."},
+{cat:"Scheduler",icon:"clock",name:"sched_autogroup_enabled",lvl:"MAX",
+ on:"echo 1 > /proc/sys/kernel/sched_autogroup_enabled",
+ off:"echo 0 > /proc/sys/kernel/sched_autogroup_enabled",
+ desc:"Auto-agrupación de tareas activada."},
+{cat:"Scheduler",icon:"clock",name:"sched_latency_ns",lvl:"EXTREME",
+ on:"echo 1000000 > /proc/sys/kernel/sched_latency_ns",
+ off:"echo 24000000 > /proc/sys/kernel/sched_latency_ns",
+ desc:"Latencia objetivo del scheduler a 1 ms."},
+{cat:"Scheduler",icon:"clock",name:"sched_min_granularity_ns",lvl:"EXTREME",
+ on:"echo 100000 > /proc/sys/kernel/sched_min_granularity_ns",
+ off:"echo 3000000 > /proc/sys/kernel/sched_min_granularity_ns",
+ desc:"Granularidad mínima 100 µs."},
+{cat:"Scheduler",icon:"clock",name:"sched_wakeup_granularity_ns",lvl:"EXTREME",
+ on:"echo 500000 > /proc/sys/kernel/sched_wakeup_granularity_ns",
+ off:"echo 4000000 > /proc/sys/kernel/sched_wakeup_granularity_ns",
+ desc:"Granularidad de despertar 500 µs."},
+{cat:"Scheduler",icon:"clock",name:"sched_tunable_scaling",lvl:"MAX",
+ on:"echo 0 > /proc/sys/kernel/sched_tunable_scaling",
+ off:"echo 1 > /proc/sys/kernel/sched_tunable_scaling",
+ desc:"Escalado de valores del scheduler fijo."},
+
+/* ---------- VM · MEMORIA ---------- */
+{cat:"VM · Memoria",icon:"mem",name:"vm.swappiness",lvl:"EXTREME",
+ on:"echo 0 > /proc/sys/vm/swappiness",
+ off:"echo 60 > /proc/sys/vm/swappiness",
+ desc:"Swappiness = 0. El sistema evita escribir a swap."},
+{cat:"VM · Memoria",icon:"mem",name:"vm.vfs_cache_pressure",lvl:"MAX",
+ on:"echo 50 > /proc/sys/vm/vfs_cache_pressure",
+ off:"echo 100 > /proc/sys/vm/vfs_cache_pressure",
+ desc:"Presión de caché VFS reducida."},
+{cat:"VM · Memoria",icon:"mem",name:"vm.min_free_kbytes",lvl:"EXTREME",
+ on:"echo 256 > /proc/sys/vm/min_free_kbytes",
+ off:"echo 8192 > /proc/sys/vm/min_free_kbytes",
+ desc:"Mínimo de RAM libre reducido a 256 KB."},
+{cat:"VM · Memoria",icon:"mem",name:"vm.overcommit_memory",lvl:"MAX",
+ on:"echo 1 > /proc/sys/vm/overcommit_memory",
+ off:"echo 0 > /proc/sys/vm/overcommit_memory",
+ desc:"Permite overcommit de memoria."},
+{cat:"VM · Memoria",icon:"mem",name:"vm.overcommit_ratio",lvl:"MAX",
+ on:"echo 80 > /proc/sys/vm/overcommit_ratio",
+ off:"echo 50 > /proc/sys/vm/overcommit_ratio",
+ desc:"Ratio de overcommit al 80%."},
+{cat:"VM · Memoria",icon:"mem",name:"oom_kill_allocating_task",lvl:"MAX",
+ on:"echo 0 > /proc/sys/vm/oom_kill_allocating_task",
+ off:"echo 1 > /proc/sys/vm/oom_kill_allocating_task",
+ desc:"No matar la tarea que pide memoria."},
+
+/* ---------- VM · DIRTY ---------- */
+{cat:"VM · Dirty",icon:"disk",name:"vm.dirty_ratio",lvl:"EXTREME",
+ on:"echo 10 > /proc/sys/vm/dirty_ratio",
+ off:"echo 20 > /proc/sys/vm/dirty_ratio",
+ desc:"Ratio de páginas sucias reducido."},
+{cat:"VM · Dirty",icon:"disk",name:"vm.dirty_background_ratio",lvl:"EXTREME",
+ on:"echo 5 > /proc/sys/vm/dirty_background_ratio",
+ off:"echo 10 > /proc/sys/vm/dirty_background_ratio",
+ desc:"Background dirty ratio al 5%."},
+{cat:"VM · Dirty",icon:"disk",name:"vm.dirty_expire_centisecs",lvl:"MAX",
+ on:"echo 500 > /proc/sys/vm/dirty_expire_centisecs",
+ off:"echo 200 > /proc/sys/vm/dirty_expire_centisecs",
+ desc:"Expiración de páginas sucias a 5 s."},
+{cat:"VM · Dirty",icon:"disk",name:"vm.dirty_writeback_centisecs",lvl:"MAX",
+ on:"echo 100 > /proc/sys/vm/dirty_writeback_centisecs",
+ off:"echo 500 > /proc/sys/vm/dirty_writeback_centisecs",
+ desc:"Intervalo de writeback a 1 s."},
+
+/* ---------- I/O ---------- */
+{cat:"I/O Scheduler",icon:"disk",name:"block scheduler = noop",lvl:"MAX",
+ on:"for q in /sys/block/*/queue; do echo noop > \"$q/scheduler\" 2>/dev/null; done",
+ off:"for q in /sys/block/*/queue; do echo cfq > \"$q/scheduler\" 2>/dev/null; done",
+ desc:"Planificador noop (mínimo overhead de CPU)."},
+{cat:"I/O Scheduler",icon:"disk",name:"queue.read_ahead_kb",lvl:"EXTREME",
+ on:"for q in /sys/block/*/queue; do echo 2048 > \"$q/read_ahead_kb\" 2>/dev/null; done",
+ off:"for q in /sys/block/*/queue; do echo 128 > \"$q/read_ahead_kb\" 2>/dev/null; done",
+ desc:"Lectura anticipada 2048 KB."},
+{cat:"I/O Scheduler",icon:"disk",name:"queue.nr_requests",lvl:"MAX",
+ on:"for q in /sys/block/*/queue; do echo 256 > \"$q/nr_requests\" 2>/dev/null; done",
+ off:"for q in /sys/block/*/queue; do echo 128 > \"$q/nr_requests\" 2>/dev/null; done",
+ desc:"Más peticiones en cola (256)."},
+{cat:"I/O Scheduler",icon:"disk",name:"queue.add_random + iostats",lvl:"MAX",
+ on:"for q in /sys/block/*/queue; do echo 0 > \"$q/add_random\" 2>/dev/null; echo 0 > \"$q/iostats\" 2>/dev/null; done",
+ off:"for q in /sys/block/*/queue; do echo 1 > \"$q/add_random\" 2>/dev/null; echo 1 > \"$q/iostats\" 2>/dev/null; done",
+ desc:"Desactiva add_random e iostats."},
+
+/* ---------- FILESYSTEM ---------- */
+{cat:"Filesystem",icon:"db",name:"drop_caches",lvl:"PRO",
+ on:"sync; echo 3 > /proc/sys/vm/drop_caches",
+ off:"echo 0 > /proc/sys/vm/drop_caches 2>/dev/null",
+ desc:"Libera toda la caché del kernel."},
+{cat:"Filesystem",icon:"db",name:"fstrim data/cache",lvl:"PRO",
+ on:"fstrim -v /data 2>/dev/null; fstrim -v /cache 2>/dev/null",
+ off:"true",
+ desc:"Aplica TRIM al almacenamiento."},
+{cat:"Filesystem",icon:"db",name:"pm trim-caches",lvl:"PRO",
+ on:"pm trim-caches 99999999999999",
+ off:"true",
+ desc:"Libera caché de todas las apps."},
+
+/* ---------- RED · TCP ---------- */
+{cat:"Red · TCP",icon:"net",name:"tcp_timestamps",lvl:"MAX",
+ on:"echo 0 > /proc/sys/net/ipv4/tcp_timestamps",
+ off:"echo 1 > /proc/sys/net/ipv4/tcp_timestamps",
+ desc:"Desactiva timestamps TCP."},
+{cat:"Red · TCP",icon:"net",name:"tcp_tw_reuse",lvl:"MAX",
+ on:"echo 1 > /proc/sys/net/ipv4/tcp_tw_reuse",
+ off:"echo 0 > /proc/sys/net/ipv4/tcp_tw_reuse",
+ desc:"Reutiliza sockets en TIME_WAIT."},
+{cat:"Red · TCP",icon:"net",name:"tcp_sack",lvl:"MAX",
+ on:"echo 1 > /proc/sys/net/ipv4/tcp_sack",
+ off:"echo 0 > /proc/sys/net/ipv4/tcp_sack",
+ desc:"Activa SACK."},
+{cat:"Red · TCP",icon:"net",name:"tcp_dsack",lvl:"MAX",
+ on:"echo 1 > /proc/sys/net/ipv4/tcp_dsack",
+ off:"echo 0 > /proc/sys/net/ipv4/tcp_dsack",
+ desc:"Activa DSACK."},
+{cat:"Red · TCP",icon:"net",name:"tcp_window_scaling",lvl:"MAX",
+ on:"echo 1 > /proc/sys/net/ipv4/tcp_window_scaling",
+ off:"echo 0 > /proc/sys/net/ipv4/tcp_window_scaling",
+ desc:"Escalado de ventana TCP."},
+{cat:"Red · TCP",icon:"net",name:"tcp_keepalive_probes",lvl:"EXTREME",
+ on:"echo 3 > /proc/sys/net/ipv4/tcp_keepalive_probes",
+ off:"echo 9 > /proc/sys/net/ipv4/tcp_keepalive_probes",
+ desc:"Solo 3 sondas keepalive."},
+{cat:"Red · TCP",icon:"net",name:"tcp_keepalive_intvl",lvl:"EXTREME",
+ on:"echo 20 > /proc/sys/net/ipv4/tcp_keepalive_intvl",
+ off:"echo 75 > /proc/sys/net/ipv4/tcp_keepalive_intvl",
+ desc:"Intervalo keepalive 20 s."},
+{cat:"Red · TCP",icon:"net",name:"tcp_fin_timeout",lvl:"EXTREME",
+ on:"echo 15 > /proc/sys/net/ipv4/tcp_fin_timeout",
+ off:"echo 60 > /proc/sys/net/ipv4/tcp_fin_timeout",
+ desc:"Timeout FIN reducido a 15 s."},
+{cat:"Red · TCP",icon:"net",name:"tcp_slow_start_after_idle",lvl:"MAX",
+ on:"setprop net.ipv4.tcp_slow_start_after_idle 0",
+ off:"setprop net.ipv4.tcp_slow_start_after_idle \"\"",
+ desc:"No ralentizar conexiones inactivas."},
+
+/* ---------- RED · BUFFERS ---------- */
+{cat:"Red · Buffers",icon:"wifi",name:"net.tcp.buffersize.default",lvl:"MAX",
+ on:"setprop net.tcp.buffersize.default 4096,87380,256960,4096,16384,256960",
+ off:"setprop net.tcp.buffersize.default \"\"",
+ desc:"Buffers TCP por defecto ampliados."},
+{cat:"Red · Buffers",icon:"wifi",name:"net.tcp.buffersize.wifi",lvl:"MAX",
+ on:"setprop net.tcp.buffersize.wifi 4096,87380,256960,4096,16384,256960",
+ off:"setprop net.tcp.buffersize.wifi \"\"",
+ desc:"Buffers TCP para WiFi ampliados."},
+{cat:"Red · Buffers",icon:"wifi",name:"net.tcp.delack.seg",lvl:"MAX",
+ on:"setprop net.tcp.delack.seg 2",
+ off:"setprop net.tcp.delack.seg \"\"",
+ desc:"Delayed ACK con 2 segmentos."},
+
+/* ---------- THERMAL ---------- */
+{cat:"Thermal",icon:"thermo",name:"thermal_zone mode",lvl:"EXTREME",
+ on:"for t in /sys/class/thermal/thermal_zone*/; do [ -f \"$t/mode\" ] && echo disabled > \"$t/mode\"; done",
+ off:"for t in /sys/class/thermal/thermal_zone*/; do [ -f \"$t/mode\" ] && echo enabled > \"$t/mode\"; done",
+ desc:"Desactiva todas las zonas térmicas."},
+{cat:"Thermal",icon:"thermo",name:"thermal_zone policy",lvl:"EXTREME",
+ on:"for t in /sys/class/thermal/thermal_zone*/; do [ -f \"$t/policy\" ] && echo 0 > \"$t/policy\"; done",
+ off:"for t in /sys/class/thermal/thermal_zone*/; do [ -f \"$t/policy\" ] && echo step_wise > \"$t/policy\"; done",
+ desc:"Política térmica 0 = sin limitar."},
+{cat:"Thermal",icon:"thermo",name:"msm_thermal enabled",lvl:"EXTREME",
+ on:"[ -f /sys/module/msm_thermal/parameters/enabled ] && echo N > /sys/module/msm_thermal/parameters/enabled",
+ off:"[ -f /sys/module/msm_thermal/parameters/enabled ] && echo Y > /sys/module/msm_thermal/parameters/enabled",
+ desc:"Desactiva el módulo msm_thermal."},
+{cat:"Thermal",icon:"thermo",name:"msm_thermal core_control",lvl:"EXTREME",
+ on:"[ -f /sys/module/msm_thermal/core_control/enabled ] && echo 0 > /sys/module/msm_thermal/core_control/enabled",
+ off:"[ -f /sys/module/msm_thermal/core_control/enabled ] && echo 1 > /sys/module/msm_thermal/core_control/enabled",
+ desc:"Desactiva el control de núcleos por temperatura."},
+{cat:"Thermal",icon:"thermo",name:"msm_thermal vdd_restriction",lvl:"EXTREME",
+ on:"[ -f /sys/module/msm_thermal/vdd_restriction/enabled ] && echo 0 > /sys/module/msm_thermal/vdd_restriction/enabled",
+ off:"[ -f /sys/module/msm_thermal/vdd_restriction/enabled ] && echo 1 > /sys/module/msm_thermal/vdd_restriction/enabled",
+ desc:"Desactiva la restricción de voltaje por temperatura."},
+
+/* ---------- DISPLAY · SURFACEFLINGER ---------- */
+{cat:"Display · SurfaceFlinger",icon:"display",name:"debug.egl.swapinterval",lvl:"EXTREME",
+ on:"setprop debug.egl.swapinterval 0",
+ off:"setprop debug.egl.swapinterval 1",
+ desc:"Desactiva vsync (más FPS, puede causar tearing)."},
+{cat:"Display · SurfaceFlinger",icon:"display",name:"debug.sf.latch_unsignaled",lvl:"MAX",
+ on:"setprop debug.sf.latch_unsignaled 1",
+ off:"setprop debug.sf.latch_unsignaled 0",
+ desc:"Latched sin señal (menos latencia)."},
+{cat:"Display · SurfaceFlinger",icon:"display",name:"debug.sf.enable_gl_backpressure",lvl:"MAX",
+ on:"setprop debug.sf.enable_gl_backpressure 0",
+ off:"setprop debug.sf.enable_gl_backpressure 1",
+ desc:"Desactiva backpressure GL."},
+{cat:"Display · SurfaceFlinger",icon:"display",name:"debug.sf.hw",lvl:"MAX",
+ on:"setprop debug.sf.hw 1",
+ off:"setprop debug.sf.hw 0",
+ desc:"Composición por hardware."},
+{cat:"Display · SurfaceFlinger",icon:"display",name:"debug.egl.hw",lvl:"MAX",
+ on:"setprop debug.egl.hw 1",
+ off:"setprop debug.egl.hw 0",
+ desc:"EGL por hardware."},
+{cat:"Display · SurfaceFlinger",icon:"display",name:"debug.composition.type",lvl:"MAX",
+ on:"setprop debug.composition.type gpu",
+ off:"setprop debug.composition.type \"\"",
+ desc:"Composición en GPU."},
+{cat:"Display · SurfaceFlinger",icon:"display",name:"debug.sf.frame_rate_multiple_threshold",lvl:"MAX",
+ on:"setprop debug.sf.frame_rate_multiple_threshold 144",
+ off:"setprop debug.sf.frame_rate_multiple_threshold \"\"",
+ desc:"Umbral de múltiplos a 144."},
+
+/* ---------- DISPLAY · HWUI ---------- */
+{cat:"Display · HWUI",icon:"palette",name:"debug.hwui.renderer",lvl:"MAX",
+ on:"setprop debug.hwui.renderer opengl",
+ off:"setprop debug.hwui.renderer \"\"",
+ desc:"Render de UI por OpenGL."},
+{cat:"Display · HWUI",icon:"palette",name:"debug.hwui.profile",lvl:"MAX",
+ on:"setprop debug.hwui.profile true",
+ off:"setprop debug.hwui.profile \"\"",
+ desc:"Profiling de render activado."},
+{cat:"Display · HWUI",icon:"palette",name:"debug.hwui.overdraw",lvl:"MAX",
+ on:"setprop debug.hwui.overdraw false",
+ off:"setprop debug.hwui.overdraw \"\"",
+ desc:"Sin visualización de overdraw."},
+{cat:"Display · HWUI",icon:"palette",name:"debug.hwui.disable_vsync",lvl:"EXTREME",
+ on:"setprop debug.hwui.disable_vsync true",
+ off:"setprop debug.hwui.disable_vsync \"\"",
+ desc:"Desactiva vsync en HWUI."},
+{cat:"Display · HWUI",icon:"palette",name:"debug.hwui.empty_frame_rate",lvl:"EXTREME",
+ on:"setprop debug.hwui.empty_frame_rate 240",
+ off:"setprop debug.hwui.empty_frame_rate \"\"",
+ desc:"Frame rate para frames vacíos a 240 Hz."},
+{cat:"Display · HWUI",icon:"palette",name:"debug.hwui.texture_cache_size",lvl:"EXTREME",
+ on:"setprop debug.hwui.texture_cache_size 1024",
+ off:"setprop debug.hwui.texture_cache_size \"\"",
+ desc:"Caché de texturas de 1024 MB."},
+
+/* ---------- REFRESH RATE ---------- */
+{cat:"Refresh Rate",icon:"radio",name:"debug.refresh_rate.min_fps",lvl:"EXTREME",
+ on:"setprop debug.refresh_rate.min_fps 144",
+ off:"setprop debug.refresh_rate.min_fps \"\"",
+ desc:"FPS mínimo permitido a 144."},
+{cat:"Refresh Rate",icon:"radio",name:"debug.peak_refresh_rate",lvl:"EXTREME",
+ on:"setprop debug.peak_refresh_rate 144",
+ off:"setprop debug.peak_refresh_rate \"\"",
+ desc:"Pico de refresh rate 144 Hz."},
+{cat:"Refresh Rate",icon:"radio",name:"debug.min_refresh_rate",lvl:"EXTREME",
+ on:"setprop debug.min_refresh_rate 144",
+ off:"setprop debug.min_refresh_rate \"\"",
+ desc:"Refresh rate mínimo 144 Hz."},
+{cat:"Refresh Rate",icon:"radio",name:"debug.max_refresh_rate",lvl:"EXTREME",
+ on:"setprop debug.max_refresh_rate 144",
+ off:"setprop debug.max_refresh_rate \"\"",
+ desc:"Refresh rate máximo 144 Hz."},
+{cat:"Refresh Rate",icon:"radio",name:"debug.lock_refresh_rate",lvl:"EXTREME",
+ on:"setprop debug.lock_refresh_rate 144",
+ off:"setprop debug.lock_refresh_rate \"\"",
+ desc:"Bloquea el refresh rate a 144 Hz."},
+
+/* ---------- PERFORMANCE · PERSIST ---------- */
+{cat:"Performance · Persist",icon:"rocket",name:"persist.sys.power_profile",lvl:"EXTREME",
+ on:"setprop persist.sys.power_profile extreme",
+ off:"setprop persist.sys.power_profile \"\"",
+ desc:"Perfil de energía extreme."},
+{cat:"Performance · Persist",icon:"rocket",name:"persist.sys.performance",lvl:"MAX",
+ on:"setprop persist.sys.performance true",
+ off:"setprop persist.sys.performance \"\"",
+ desc:"Modo performance activado."},
+{cat:"Performance · Persist",icon:"rocket",name:"persist.sys.touch_boost",lvl:"MAX",
+ on:"setprop persist.sys.touch_boost 3",
+ off:"setprop persist.sys.touch_boost \"\"",
+ desc:"Boost táctil al máximo."},
+{cat:"Performance · Persist",icon:"rocket",name:"debug.performance_schema",lvl:"MAX",
+ on:"setprop debug.performance_schema 1",
+ off:"setprop debug.performance_schema \"\"",
+ desc:"Schema de performance activado."},
+{cat:"Performance · Persist",icon:"rocket",name:"debug.force-opengl",lvl:"MAX",
+ on:"setprop debug.force-opengl 1",
+ off:"setprop debug.force-opengl \"\"",
+ desc:"Forzar OpenGL global."},
+
+/* ---------- SEGURIDAD ---------- */
+{cat:"Seguridad",icon:"shield",name:"security.perf_harden",lvl:"MAX",
+ on:"setprop security.perf_harden 0",
+ off:"setprop security.perf_harden \"\"",
+ desc:"Desactiva el hardening de performance."},
+{cat:"Seguridad",icon:"shield",name:"security.adb.notify",lvl:"MAX",
+ on:"setprop security.adb.notify 0",
+ off:"setprop security.adb.notify \"\"",
+ desc:"Sin notificación de depuración ADB."},
+{cat:"Seguridad",icon:"shield",name:"security.selinux",lvl:"EXTREME",
+ on:"setprop security.selinux permissive",
+ off:"setprop security.selinux \"\"",
+ desc:"SELinux en modo permisivo."},
+{cat:"Seguridad",icon:"shield",name:"security.mdf.result",lvl:"MAX",
+ on:"setprop security.mdf.result none",
+ off:"setprop security.mdf.result \"\"",
+ desc:"Sin MDF result."},
+{cat:"Seguridad",icon:"shield",name:"security.aslr.disable",lvl:"EXTREME",
+ on:"setprop security.aslr.disable 1",
+ off:"setprop security.aslr.disable \"\"",
+ desc:"Desactiva ASLR."},
+{cat:"Seguridad",icon:"shield",name:"kernel.randomize_va_space",lvl:"EXTREME",
+ on:"echo 0 > /proc/sys/kernel/randomize_va_space",
+ off:"echo 2 > /proc/sys/kernel/randomize_va_space",
+ desc:"Desactiva randomización de direcciones."},
+{cat:"Seguridad",icon:"shield",name:"kernel.nmi_watchdog",lvl:"MAX",
+ on:"echo 0 > /proc/sys/kernel/nmi_watchdog",
+ off:"echo 1 > /proc/sys/kernel/nmi_watchdog",
+ desc:"Desactiva el watchdog NMI."},
+
+/* ---------- POWER · BATTERY ---------- */
+{cat:"Power · Battery",icon:"battery",name:"fixed-performance-mode",lvl:"EXTREME",
+ on:"cmd power set-fixed-performance-mode-enabled true",
+ off:"cmd power set-fixed-performance-mode-enabled false",
+ desc:"Rendimiento fijo del sistema activado."},
+{cat:"Power · Battery",icon:"battery",name:"force_fast_charge",lvl:"EXTREME",
+ on:"[ -f /sys/kernel/fast_charge/force_fast_charge ] && echo 1 > /sys/kernel/fast_charge/force_fast_charge",
+ off:"[ -f /sys/kernel/fast_charge/force_fast_charge ] && echo 0 > /sys/kernel/fast_charge/force_fast_charge",
+ desc:"Fuerza carga rápida."},
+{cat:"Power · Battery",icon:"battery",name:"constant_charge_current_max",lvl:"EXTREME",
+ on:"[ -f /sys/class/power_supply/battery/constant_charge_current_max ] && echo 3000 > /sys/class/power_supply/battery/constant_charge_current_max",
+ off:"[ -f /sys/class/power_supply/battery/constant_charge_current_max ] && echo 1500 > /sys/class/power_supply/battery/constant_charge_current_max",
+ desc:"Corriente de carga máxima a 3000 mA."},
+{cat:"Power · Battery",icon:"battery",name:"input_current_limit",lvl:"EXTREME",
+ on:"[ -f /sys/class/power_supply/battery/input_current_limit ] && echo 5000 > /sys/class/power_supply/battery/input_current_limit",
+ off:"[ -f /sys/class/power_supply/battery/input_current_limit ] && echo 2500 > /sys/class/power_supply/battery/input_current_limit",
+ desc:"Límite de corriente a 5000 mA."},
+
+/* ---------- DALVIK · ART ---------- */
+{cat:"Dalvik · ART",icon:"terminal",name:"dalvik.vm.heapsize",lvl:"MAX",
+ on:"setprop dalvik.vm.heapsize 512m",
+ off:"setprop dalvik.vm.heapsize \"\"",
+ desc:"Heap máximo por proceso 512 MB."},
+{cat:"Dalvik · ART",icon:"terminal",name:"dalvik.vm.heapgrowthlimit",lvl:"MAX",
+ on:"setprop dalvik.vm.heapgrowthlimit 256m",
+ off:"setprop dalvik.vm.heapgrowthlimit \"\"",
+ desc:"Límite de crecimiento del heap 256 MB."},
+{cat:"Dalvik · ART",icon:"terminal",name:"dalvik.vm.heapstartsize",lvl:"MAX",
+ on:"setprop dalvik.vm.heapstartsize 16m",
+ off:"setprop dalvik.vm.heapstartsize \"\"",
+ desc:"Heap inicial 16 MB."},
+
+/* ---------- MANTENIMIENTO ---------- */
+{cat:"Mantenimiento",icon:"cog",name:"am kill-all",lvl:"PRO",
+ on:"am kill-all",
+ off:"true",
+ desc:"Mata todos los procesos en segundo plano."},
+{cat:"Mantenimiento",icon:"cog",name:"sync",lvl:"PRO",
+ on:"sync",
+ off:"true",
+ desc:"Sincroniza todos los buffers de disco."},
+{cat:"Mantenimiento",icon:"refresh",name:"restart surfaceflinger",lvl:"PRO",
+ on:"stop surfaceflinger; start surfaceflinger",
+ off:"true",
+ desc:"Reinicia SurfaceFlinger."},
+{cat:"Mantenimiento",icon:"cog",name:"renice init + kthreadd",lvl:"PRO",
+ on:"renice -20 -p 1 2>/dev/null; renice -20 -p 2 2>/dev/null",
+ off:"renice 0 -p 1 2>/dev/null; renice 0 -p 2 2>/dev/null",
+ desc:"Prioriza init y kthreadd al máximo."}
 ];
-/* ============================================================ */
 
-const ICONO_COPIAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>';
-const ICONO_OK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
-
-function normalizar(item) {
-  if (typeof item === "string") return { titulo: "", codigo: item };
-  return { titulo: item.titulo || "", codigo: item.codigo || "" };
+/* ============================================================
+   UTILIDADES
+   ============================================================ */
+function el(tag, cls, txt){
+  var n = document.createElement(tag);
+  if(cls) n.className = cls;
+  if(txt != null) n.textContent = txt;
+  return n;
 }
-
-async function copiarTexto(texto) {
-  try {
-    await navigator.clipboard.writeText(texto);
-    return true;
-  } catch (e) {
-    const t = document.createElement("textarea");
-    t.value = texto;
-    t.style.position = "fixed";
-    t.style.opacity = "0";
-    document.body.appendChild(t);
-    t.select();
-    let ok = false;
-    try { ok = document.execCommand("copy"); } catch (_) {}
-    t.remove();
-    return ok;
+function svgSpan(cls, svg){
+  var s = el("span", cls);
+  s.innerHTML = svg;
+  return s;
+}
+function copiarTexto(txt){
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    return navigator.clipboard.writeText(txt).then(function(){return true;}).catch(function(){return fallback(txt);});
+  }
+  return Promise.resolve(fallback(txt));
+  function fallback(t){
+    var ta = document.createElement("textarea");
+    ta.value = t; ta.style.position="fixed"; ta.style.opacity="0";
+    document.body.appendChild(ta); ta.select();
+    var ok=false; try{ok=document.execCommand("copy");}catch(e){}
+    ta.remove(); return ok;
   }
 }
 
-const lista = document.getElementById("lista");
+function crearFila(tipo, cmd){
+  var row = el("div", "row " + tipo);
 
-CODIGOS.map(normalizar).forEach((item) => {
-  const vacio = item.codigo.trim() === "";
+  var tag = el("span", "tag " + tipo);
+  tag.innerHTML = (tipo==="on" ? I.zap : I.power) + (tipo==="on" ? "ON" : "OFF");
 
-  const slot = document.createElement("section");
-  slot.className = "slot";
+  var code = el("code", "cmd", cmd);
 
-  const head = document.createElement("div");
-  head.className = "slot-head";
-
-  const titulo = document.createElement("div");
-  titulo.className = "slot-title" + (item.titulo ? "" : " empty");
-  titulo.textContent = item.titulo;
-
-  const btn = document.createElement("button");
+  var btn = el("button", "copy-btn");
   btn.type = "button";
-  btn.className = "copy-btn";
-  btn.innerHTML = ICONO_COPIAR + "<span>Copiar</span>";
-  btn.disabled = vacio;
-
-  const pre = document.createElement("pre");
-  pre.className = "code" + (vacio ? " empty" : "");
-  pre.textContent = vacio ? "Espacio disponible" : item.codigo;
-
-  btn.addEventListener("click", async () => {
-    const ok = await copiarTexto(item.codigo);
-    if (!ok) return;
-    btn.classList.add("done");
-    btn.innerHTML = ICONO_OK + "<span>Copiado</span>";
-    setTimeout(() => {
-      btn.classList.remove("done");
-      btn.innerHTML = ICONO_COPIAR + "<span>Copiar</span>";
-    }, 1800);
+  btn.setAttribute("aria-label","Copiar comando");
+  btn.innerHTML = I.copy;
+  btn.addEventListener("click", function(){
+    copiarTexto(cmd).then(function(ok){
+      if(!ok) return;
+      btn.classList.add("done");
+      btn.innerHTML = I.check;
+      setTimeout(function(){
+        btn.classList.remove("done");
+        btn.innerHTML = I.copy;
+      }, 1400);
+    });
   });
 
-  head.append(titulo, btn);
-  slot.append(head, pre);
-  lista.appendChild(slot);
-});
+  row.appendChild(tag);
+  row.appendChild(code);
+  row.appendChild(btn);
+  return row;
+}
+
+function crearPar(item){
+  var wrap = el("div", "pair");
+
+  var head = el("div", "pair-head");
+  var nombre = el("div", "pair-name", item.name);
+  var badge = el("span", "badge", item.lvl || "PRO");
+
+  var infoBtn = el("button", "info-btn");
+  infoBtn.type = "button";
+  infoBtn.setAttribute("aria-label","Información");
+  infoBtn.innerHTML = I.info;
+
+  var desc = el("div", "pair-desc", item.desc || "");
+  desc.hidden = true;
+
+  infoBtn.addEventListener("click", function(){
+    var abrir = desc.hidden;
+    desc.hidden = !abrir;
+    infoBtn.classList.toggle("active", abrir);
+  });
+
+  head.appendChild(nombre);
+  head.appendChild(badge);
+  head.appendChild(infoBtn);
+
+  wrap.appendChild(head);
+  wrap.appendChild(desc);
+  wrap.appendChild(crearFila("on",  item.on));
+  wrap.appendChild(crearFila("off", item.off));
+  return wrap;
+}
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+(function render(){
+  var lista = document.getElementById("lista");
+  if(!lista) return;
+
+  /* --- HERO --- */
+  var hero = el("div", "hero");
+  var logo = el("div", "hero-logo"); logo.innerHTML = I.spark;
+  var heroTxt = el("div", "hero-txt");
+  var heroTitle = el("div", "hero-title", "Performance Pro · Android Tweaks");
+  var heroSub = el("div", "hero-sub", DATA.length + " ajustes · activador + desactivador por comando");
+  heroTxt.appendChild(heroTitle);
+  heroTxt.appendChild(heroSub);
+  hero.appendChild(logo);
+  hero.appendChild(heroTxt);
+  lista.appendChild(hero);
+
+  /* --- STATS --- */
+  var cats = {};
+  for(var i=0;i<DATA.length;i++){ cats[DATA[i].cat] = true; }
+  var nCats = Object.keys(cats).length;
+
+  var stats = el("div", "stats");
+  var s1 = el("span", "stat pro"); s1.innerHTML = I.spark + " " + nCats + " categorías";
+  var s2 = el("span", "stat on");  s2.innerHTML = I.zap   + " " + DATA.length + " activadores";
+  var s3 = el("span", "stat off"); s3.innerHTML = I.power + " " + DATA.length + " resets";
+  stats.appendChild(s1);
+  stats.appendChild(s2);
+  stats.appendChild(s3);
+  lista.appendChild(stats);
+
+  /* --- SECTION HEADER ACTIVADORES --- */
+  var secOn = el("div", "section-title on");
+  var sOnIcon = el("span", "s-icon"); sOnIcon.innerHTML = I.zap;
+  var sOnTxt = el("span", null, "Activadores");
+  secOn.appendChild(sOnIcon);
+  secOn.appendChild(sOnTxt);
+  lista.appendChild(secOn);
+
+  /* --- ITER DATA --- */
+  var catActual = null;
+  for(var k=0;k<DATA.length;k++){
+    var item = DATA[k];
+    if(item.cat !== catActual){
+      catActual = item.cat;
+      var ct = el("div", "cat-title");
+      var cIcon = el("span","c-icon"); cIcon.innerHTML = I[item.icon] || I.cog;
+      var cName = el("span", null, catActual);
+      var cCount = el("span","c-count", String(DATA.filter(function(d){return d.cat===catActual;}).length));
+      ct.appendChild(cIcon);
+      ct.appendChild(cName);
+      ct.appendChild(cCount);
+      lista.appendChild(ct);
+    }
+    lista.appendChild(crearPar(item));
+  }
+
+  /* --- SECTION HEADER DESACTIVADORES (referencia visual) --- */
+  var secOff = el("div", "section-title off");
+  var sOffIcon = el("span","s-icon"); sOffIcon.innerHTML = I.power;
+  var sOffTxt = el("span", null, "Desactivadores (usa el botón OFF de cada par)");
+  secOff.appendChild(sOffIcon);
+  secOff.appendChild(sOffTxt);
+  lista.appendChild(secOff);
+
+  var infoBox = el("div", "foot");
+  infoBox.innerHTML = I.alert + '<div><b>Nota:</b> cada tarjeta contiene el comando <b>ON</b> (activar) y el <b>OFF</b> (reset). Copia el que necesites. Los cambios en <code>settings</code> y <code>persist.*</code> sobreviven reinicios; los de <code>/proc</code> y <code>/sys</code> se reinician al apagar. Algunos valores pueden no existir en tu kernel: si un comando falla, simplemente no tiene efecto.</div>';
+  lista.appendChild(infoBox);
+})();
 </script>
 </body>
 </html>
