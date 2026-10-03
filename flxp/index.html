@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>&#8203;</title>
+<style>
+  :root {
+    --bg: #000000;
+    --ink: #f1f4fa;
+    --muted: #8b95aa;
+    --line: #262b36;
+    --code-bg: #0f1218;
+    --code-ink: #e3e9f5;
+    --accent: #2f5bff;
+    --ok: #12805c;
+    box-sizing: border-box;
+  }
+  *, *::before, *::after { box-sizing: inherit; }
+  html, body { margin: 0; background: #000; color: var(--ink); min-height: 100%; }
+  :root { color-scheme: dark; }
+  body {
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    padding: 20px 16px 40px;
+  }
+  main { max-width: 760px; margin: 0 auto; display: grid; gap: 14px; }
+
+  .slot {
+    background: #07090d;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .slot-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 8px 8px 8px 14px;
+    border-bottom: 1px solid var(--line);
+    min-height: 48px;
+  }
+  .slot-title { font-size: 14px; font-weight: 600; color: var(--ink); overflow-wrap: anywhere; }
+  .slot-title.empty { color: var(--muted); font-weight: 500; }
+
+  .copy-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font: inherit; font-size: 14px; font-weight: 600;
+    color: #fff; background: var(--accent);
+    border: 0; border-radius: 8px;
+    padding: 10px 14px; min-height: 40px;
+    cursor: pointer; flex-shrink: 0;
+    transition: background .15s;
+  }
+  .copy-btn:hover { background: #1f45d6; }
+  .copy-btn:focus-visible { outline: 3px solid #9db3ff; outline-offset: 2px; }
+  .copy-btn.done { background: var(--ok); }
+  .copy-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .copy-btn[disabled] { background: #2a303c; color: #6b7587; cursor: default; }
+
+  pre.code {
+    margin: 0;
+    padding: 14px;
+    background: var(--code-bg);
+    color: var(--code-ink);
+    font-family: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 13px; line-height: 1.6;
+    white-space: pre-wrap; overflow-wrap: anywhere;
+    max-height: 320px; overflow: auto;
+    user-select: all; -webkit-user-select: all;
+    min-height: 64px;
+  }
+  pre.code.empty {
+    color: #7c869b; user-select: none; -webkit-user-select: none;
+    display: flex; align-items: center;
+  }
+
+  @media (prefers-reduced-motion: reduce) { .copy-btn { transition: none; } }
+</style>
+</head>
+<body>
+<main id="lista"></main>
+
+<script>
+/* ============================================================
+   AQUI AGREGAS LOS CODIGOS
+   Cada linea de la lista es un apartado. Dos formas de uso:
+
+   1) Solo el codigo (sin titulo):
+      `su -c "echo hola"`,
+
+   2) Con titulo opcional:
+      { titulo: "Nombre del codigo", codigo: `contenido del .sh` },
+
+   Para agregar mas apartados, copia una linea y pegala debajo.
+   Para dejar un espacio vacio, usa: "",
+   Usa comillas invertidas ` ` para poder escribir varias lineas.
+   ============================================================ */
+const CODIGOS = [
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+  "",
+];
+/* ============================================================ */
+
+const ICONO_COPIAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>';
+const ICONO_OK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+
+function normalizar(item) {
+  if (typeof item === "string") return { titulo: "", codigo: item };
+  return { titulo: item.titulo || "", codigo: item.codigo || "" };
+}
+
+async function copiarTexto(texto) {
+  try {
+    await navigator.clipboard.writeText(texto);
+    return true;
+  } catch (e) {
+    const t = document.createElement("textarea");
+    t.value = texto;
+    t.style.position = "fixed";
+    t.style.opacity = "0";
+    document.body.appendChild(t);
+    t.select();
+    let ok = false;
+    try { ok = document.execCommand("copy"); } catch (_) {}
+    t.remove();
+    return ok;
+  }
+}
+
+const lista = document.getElementById("lista");
+
+CODIGOS.map(normalizar).forEach((item) => {
+  const vacio = item.codigo.trim() === "";
+
+  const slot = document.createElement("section");
+  slot.className = "slot";
+
+  const head = document.createElement("div");
+  head.className = "slot-head";
+
+  const titulo = document.createElement("div");
+  titulo.className = "slot-title" + (item.titulo ? "" : " empty");
+  titulo.textContent = item.titulo;
+
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "copy-btn";
+  btn.innerHTML = ICONO_COPIAR + "<span>Copiar</span>";
+  btn.disabled = vacio;
+
+  const pre = document.createElement("pre");
+  pre.className = "code" + (vacio ? " empty" : "");
+  pre.textContent = vacio ? "Espacio disponible" : item.codigo;
+
+  btn.addEventListener("click", async () => {
+    const ok = await copiarTexto(item.codigo);
+    if (!ok) return;
+    btn.classList.add("done");
+    btn.innerHTML = ICONO_OK + "<span>Copiado</span>";
+    setTimeout(() => {
+      btn.classList.remove("done");
+      btn.innerHTML = ICONO_COPIAR + "<span>Copiar</span>";
+    }, 1800);
+  });
+
+  head.append(titulo, btn);
+  slot.append(head, pre);
+  lista.appendChild(slot);
+});
+</script>
+</body>
+</html>
