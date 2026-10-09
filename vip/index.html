@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 <meta name="color-scheme" content="light"/>
-<title>JEXE Regedit — Planes</title>
+<title>JEXE Regedit — Oferta Personalizada</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
@@ -292,6 +292,24 @@
     color:var(--blue-700);
     font-weight:800;
   }
+
+  /* ── PROMO ── */
+  .plan-old{
+    position:relative;z-index:1;
+    display:inline-flex;align-items:center;gap:8px;
+    margin-top:8px;
+    font-size:.95rem;font-weight:700;color:var(--muted);
+  }
+  .plan-old s{text-decoration-thickness:2px;text-decoration-color:#E05A5A}
+  .plan-off{
+    padding:3px 9px;border-radius:999px;
+    background:var(--blue-600);color:#fff;
+    font-size:.62rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  }
+  .plan-local{
+    font-size:.76rem;font-weight:700;color:var(--blue-700);margin-top:6px;
+  }
+  .fast-banner.is-ended{background:#F4F6FA;border-color:var(--line-2)}
 
   /* ── PROOF / REFERENCIAS ── */
   .proof{
@@ -764,107 +782,70 @@
     </div>
   </div>
 
-  <!-- ENTREGA INMEDIATA -->
-  <div class="fast-banner">
+  <!-- OFERTA POR TIEMPO LIMITADO -->
+  <div class="fast-banner" id="promoBanner">
     <div class="fb-ico">
-      <svg class="ico" aria-hidden="true"><use href="#i-zap"/></svg>
+      <svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg>
     </div>
     <div class="fb-body">
-      <div class="fb-title">Entrega inmediata</div>
-      <div class="fb-sub">Pago con tarjeta de cualquier tipo · Débito o crédito</div>
+      <div class="fb-title" id="promoTitle">Oferta especial · solo 10 días</div>
+      <div class="fb-sub" id="promoCountdown">Calculando tiempo restante…</div>
     </div>
   </div>
 
-  <!-- PLAN 1 MES -->
-  <article class="plan">
-    <div class="plan-head">
-      <span class="plan-badge">
-        <svg class="ico" aria-hidden="true"><use href="#i-star"/></svg>
-        Popular
-      </span>
-      <h2 class="plan-name">1 Mes</h2>
-      <div class="plan-price"><sup>$</sup>10<span>USD</span></div>
-      <p class="plan-note">Acceso por 30 días · Android &amp; iOS</p>
-    </div>
-
-    <ul class="plan-feats">
-      <li>
-        <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
-        Certificados premium, libres de baneo
-      </li>
-      <li>
-        <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
-        Aimlock y aim assist al 70%
-      </li>
-      <li>
-        <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
-        2 actualizaciones incluidas en el mes
-      </li>
-    </ul>
-
-    <div class="plan-actions">
-      <a class="btn btn-primary"
-         href="https://checkout.bold.co/payment/LNK_QPHVA2NY2C"
-         target="_blank" rel="noopener noreferrer">
-        <svg class="ico" aria-hidden="true"><use href="#i-card"/></svg>
-        Pagar con tarjeta · $10 USD
-      </a>
-      <p class="methods-note">
-        <svg class="ico" aria-hidden="true"><use href="#i-zap"/></svg>
-        Visa · MC · Amex · <strong>Entrega inmediata</strong>
-      </p>
-      <button type="button" class="btn btn-ghost" onclick="openOrder('mes')">
-        <svg class="ico" aria-hidden="true"><use href="#i-wallet"/></svg>
-        Otros métodos de pago
-      </button>
-    </div>
-  </article>
-
-  <!-- PLAN PERMANENTE -->
+  <!-- VERSIÓN PERSONALIZADA -->
   <article class="plan plan-hi">
     <div class="plan-head">
       <span class="plan-badge">
         <svg class="ico" aria-hidden="true"><use href="#i-star"/></svg>
-        Mejor valor
+        Versión personalizada
       </span>
-      <h2 class="plan-name">Permanente</h2>
-      <div class="plan-price"><sup>$</sup>20<span>USD</span></div>
-      <p class="plan-note">Acceso de por vida · Android &amp; iOS</p>
+      <h2 class="plan-name">Personalizada · 3 meses</h2>
+      <div class="plan-old"><s>$50 USD</s><span class="plan-off">−50%</span></div>
+      <div class="plan-price"><sup>$</sup>24.99<span>USD</span></div>
+      <p class="plan-local">≈ $475 MXN · ≈ $82.467 COP</p>
+      <p class="plan-note">Precio de promoción · Android &amp; iOS</p>
     </div>
 
     <ul class="plan-feats">
       <li>
         <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
-        Certificados premium, libres de baneo
+        Certificado personal privado
       </li>
       <li>
         <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
-        Aimlock y aim assist al 70%
+        Duración de 3 meses
       </li>
       <li>
         <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
-        Actualizaciones ilimitadas de por vida
+        Hecho al 100% para el dispositivo del cliente
+      </li>
+      <li>
+        <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
+        Aimlock y aim assist al 80%
+      </li>
+      <li>
+        <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
+        Garantía de entrega
       </li>
     </ul>
 
     <div class="plan-actions">
-      <a class="btn btn-primary"
-         href="https://checkout.bold.co/payment/LNK_TKGTXL26QV"
-         target="_blank" rel="noopener noreferrer">
+      <a class="btn btn-primary" id="cardBtn" href="#" target="_blank" rel="noopener noreferrer">
         <svg class="ico" aria-hidden="true"><use href="#i-card"/></svg>
-        Pagar con tarjeta · $20 USD
+        Pagar con tarjeta · $24.99 USD
       </a>
       <p class="methods-note">
-        <svg class="ico" aria-hidden="true"><use href="#i-zap"/></svg>
-        Visa · MC · Amex · <strong>Entrega inmediata</strong>
+        <svg class="ico" aria-hidden="true"><use href="#i-card"/></svg>
+        Visa · MC · Amex · <strong>Débito o crédito</strong>
       </p>
-      <button type="button" class="btn btn-ghost" onclick="openOrder('permanente')">
+      <button type="button" class="btn btn-ghost" onclick="openOrder('promo')">
         <svg class="ico" aria-hidden="true"><use href="#i-wallet"/></svg>
         Otros métodos de pago
       </button>
       <button type="button" class="btn btn-ghost" onclick="openPaypal()">
         <svg class="ico" aria-hidden="true"><use href="#i-paypal"/></svg>
-        Pagar con PayPal · $23 USD
+        Pagar con PayPal · $27.99 USD
       </button>
     </div>
   </article>
@@ -877,14 +858,14 @@
           <svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg>
         </div>
         <div class="stat-num">+5 años</div>
-        <div class="stat-lbl">de trayectoria verificada en el mercado</div>
+        <div class="stat-lbl">de servicio y trayectoria verificada</div>
       </div>
       <div class="stat">
         <div class="stat-ico">
           <svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg>
         </div>
         <div class="stat-num">+5.000</div>
-        <div class="stat-lbl">ventas entregadas con éxito</div>
+        <div class="stat-lbl">entregas realizadas con éxito</div>
       </div>
     </div>
 
@@ -915,7 +896,7 @@
       </div>
       <div>
         <h3 class="pop-title" id="orderTitle">Pagar con otro método</h3>
-        <p class="pop-sub" id="orderPlanInfo">Plan: 1 Mes — $10 USD</p>
+        <p class="pop-sub" id="orderPlanInfo">Versión Personalizada — $24.99 USD</p>
       </div>
     </div>
 
@@ -926,7 +907,7 @@
 
     <div class="order-note">
       <svg class="ico" aria-hidden="true"><use href="#i-info"/></svg>
-      <span>Al enviar el pedido, <strong>JEXE</strong> te confirmará por WhatsApp que los datos estén correctos para que realices el pago y recibas la entrega inmediata.</span>
+      <span>Al enviar el pedido, <strong>JEXE</strong> te confirmará por WhatsApp que los datos estén correctos para que realices el pago y coordinemos tu entrega.</span>
     </div>
 
     <div class="pop-actions">
@@ -948,17 +929,17 @@
       </div>
       <div>
         <h3 class="pop-title" id="paypalTitle">Pagar con PayPal</h3>
-        <p class="pop-sub">Plan Permanente · Android &amp; iOS</p>
+        <p class="pop-sub">Versión Personalizada · 3 meses · Android &amp; iOS</p>
       </div>
     </div>
 
     <p class="pop-text">
-      El pago con PayPal se hace <strong>personalmente conmigo</strong>. Por las comisiones de envío de la plataforma, el total tiene un <strong>recargo de $3 USD</strong> sobre el precio normal del plan Permanente.
+      El pago con PayPal se hace <strong>personalmente conmigo</strong>. Por las comisiones de envío de la plataforma, el total tiene un <strong>recargo de $3 USD</strong> sobre el precio de la promoción ($24.99 USD).
     </p>
 
     <div class="price-box">
       <span class="price-box-lbl">Total a pagar</span>
-      <span class="price-box-val">$23 USD</span>
+      <span class="price-box-val">$27.99 USD</span>
     </div>
 
     <div class="pop-actions">
@@ -978,12 +959,15 @@
   /* ── CONFIG ── */
   var WA_NUMBER = '573115593037';
   var USD_TO_COP = 3300;
-  var USD_TO_MXN = 18;
+  var USD_TO_MXN = 19;
 
   var PLANS = {
-    mes:        { name: '1 Mes',      priceStr: '$10 USD', usd: 10 },
-    permanente: { name: 'Permanente', priceStr: '$20 USD', usd: 20 }
+    promo: { name: 'Versión Personalizada · 3 meses', priceStr: '$24.99 USD', usd: 24.99 }
   };
+
+  /* Pega aquí el link de pago de Bold por $24.99 USD cuando lo tengas.
+     Si queda vacío, el botón de tarjeta abre WhatsApp para pedir el link. */
+  var CARD_LINK = 'https://checkout.bold.co/payment/LNK_1KX7YGMSGW';
 
   var METHODS = [
     { id: 'binance', name: 'Binance Pay',   note: 'Cripto · USDT',   icon: 'i-binance' },
@@ -1010,14 +994,14 @@
     },
     nequi: function(usd){
       return [
-        ['Monto',   '$' + (usd * USD_TO_COP).toLocaleString('es-CO') + ' COP'],
+        ['Monto',   '$' + Math.round(usd * USD_TO_COP).toLocaleString('es-CO') + ' COP'],
         ['Número',  '3115593037'],
         ['Titular', 'Juan Aguirre']
       ];
     },
     breb: function(usd){
       return [
-        ['Monto',      '$' + (usd * USD_TO_COP).toLocaleString('es-CO') + ' COP'],
+        ['Monto',      '$' + Math.round(usd * USD_TO_COP).toLocaleString('es-CO') + ' COP'],
         ['Entidad',    'Bold CF'],
         ['Llave / ID', '@bold3115593037'],
         ['Titular',    'Juan Aguirre']
@@ -1025,7 +1009,7 @@
     },
     clabe: function(usd){
       return [
-        ['Monto',   '$' + (usd * USD_TO_MXN).toLocaleString('es-MX') + ' MXN'],
+        ['Monto',   '$' + Math.round(usd * USD_TO_MXN).toLocaleString('es-MX') + ' MXN'],
         ['Titular', 'Juan Pablo Aguirre Grosso'],
         ['CLABE',   '646180546701915656'],
         ['Entidad', 'STP']
@@ -1139,7 +1123,7 @@
 
     msg +=
       '\n¿Me confirmas si estos datos están correctos para realizar el pago ' +
-      'y darme la entrega inmediata?';
+      'y coordinar mi entrega?';
 
     btn.href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
     btn.classList.remove('is-disabled');
@@ -1173,9 +1157,9 @@
   /* ── SETUP PAYPAL WA LINK ── */
   (function(){
     var msg =
-      'Hola JEXE, quiero pagar el plan Permanente por PayPal.\n\n' +
-      '• Total: $23 USD ($20 + $3 de comisión de envío)\n\n' +
-      'Por favor confírmame los datos para realizar el pago y darme la entrega inmediata.';
+      'Hola JEXE, quiero pagar la Versión Personalizada (3 meses) por PayPal.\n\n' +
+      '• Total: $27.99 USD ($24.99 + $3 de comisión de envío)\n\n' +
+      'Por favor confírmame los datos para realizar el pago y coordinar mi entrega.';
     var link = $('paypalWa');
     if (link){
       link.href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
@@ -1197,6 +1181,51 @@
     }
   });
 
+})();
+</script>
+<script>
+(function(){
+  'use strict';
+  /* Oferta válida 10 días desde el 9-oct-2026 → hasta el 19-oct-2026 23:59 (hora Colombia) */
+  var END = new Date('2026-10-19T23:59:59-05:00').getTime();
+  var WA_NUMBER = '573115593037';
+  var CARD_LINK = '';
+
+  var card = document.getElementById('cardBtn');
+  var banner = document.getElementById('promoBanner');
+  var title = document.getElementById('promoTitle');
+  var sub = document.getElementById('promoCountdown');
+
+  if (card){
+    if (CARD_LINK){
+      card.href = CARD_LINK;
+    } else {
+      var msg = 'Hola JEXE, quiero la Versión Personalizada (3 meses) por $24.99 USD y pagar con tarjeta. ¿Me envías el link de pago?';
+      card.href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
+    }
+  }
+
+  function pad(n){ return n < 10 ? '0' + n : '' + n; }
+
+  function tick(){
+    var left = END - Date.now();
+    if (left <= 0){
+      title.textContent = 'Oferta finalizada';
+      sub.textContent = 'La promoción de 10 días terminó';
+      banner.classList.add('is-ended');
+      document.querySelectorAll('.plan-actions .btn').forEach(function(b){ b.classList.add('is-disabled'); });
+      clearInterval(timer);
+      return;
+    }
+    var d = Math.floor(left / 86400000);
+    var h = Math.floor(left % 86400000 / 3600000);
+    var m = Math.floor(left % 3600000 / 60000);
+    var s = Math.floor(left % 60000 / 1000);
+    sub.textContent = 'Termina en ' + d + 'd ' + pad(h) + 'h ' + pad(m) + 'm ' + pad(s) + 's';
+  }
+
+  var timer = setInterval(tick, 1000);
+  tick();
 })();
 </script>
 </body>
