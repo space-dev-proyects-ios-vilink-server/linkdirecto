@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 <meta name="color-scheme" content="light"/>
-<title>JEXE Regedit — Planes</title>
+<title>JEXE Regedit — Promo 50% OFF</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
@@ -22,7 +22,9 @@
     --blue-500:#3B82F6;
     --blue-400:#60A5FA;
     --blue-50:#EFF5FF;
+    --red-600:#DC2626;
     --grad:linear-gradient(140deg,#2563EB 0%,#60A5FA 100%);
+    --grad-hot:linear-gradient(140deg,#DC2626 0%,#F97316 100%);
     --ease:cubic-bezier(.22,.61,.36,1);
   }
 
@@ -105,6 +107,92 @@
     color:var(--blue-600);
   }
 
+  /* ── PROMO / COUNTDOWN ── */
+  .promo{
+    position:relative;
+    overflow:hidden;
+    border-radius:20px;
+    padding:20px 18px 18px;
+    background:linear-gradient(140deg,#0B1729 0%,#16294A 100%);
+    color:#fff;
+    box-shadow:0 14px 30px -18px rgba(11,23,41,.7);
+    animation:rise .7s .03s var(--ease) both;
+    text-align:center;
+  }
+  .promo::before{
+    content:'';position:absolute;top:-80px;right:-60px;
+    width:220px;height:220px;
+    background:radial-gradient(circle, rgba(249,115,22,.45), transparent 70%);
+    pointer-events:none;
+  }
+  .promo::after{
+    content:'';position:absolute;bottom:-90px;left:-70px;
+    width:220px;height:220px;
+    background:radial-gradient(circle, rgba(96,165,250,.35), transparent 70%);
+    pointer-events:none;
+  }
+  .promo > *{position:relative;z-index:1}
+  .promo-tag{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:5px 12px;border-radius:999px;
+    background:var(--grad-hot);
+    font-size:.62rem;font-weight:800;
+    letter-spacing:.12em;text-transform:uppercase;
+    box-shadow:0 6px 14px -6px rgba(220,38,38,.7);
+  }
+  .promo-tag .ico{width:11px;height:11px}
+  .promo-title{
+    font-size:1.55rem;font-weight:800;
+    letter-spacing:-.025em;line-height:1.1;
+    margin-top:12px;
+  }
+  .promo-title em{
+    font-style:normal;
+    background:var(--grad-hot);
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;color:transparent;
+  }
+  .promo-sub{
+    font-size:.74rem;font-weight:500;
+    color:#B8C6DD;margin-top:5px;
+  }
+  .timer{
+    display:flex;justify-content:center;align-items:flex-start;gap:8px;
+    margin-top:16px;
+  }
+  .t-box{
+    flex:1;max-width:92px;
+    padding:12px 6px 9px;
+    border-radius:14px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.14);
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+  }
+  .t-num{
+    font-size:2rem;font-weight:800;
+    letter-spacing:-.02em;line-height:1;
+    font-variant-numeric:tabular-nums;
+  }
+  .t-lbl{
+    font-size:.6rem;font-weight:700;
+    letter-spacing:.14em;text-transform:uppercase;
+    color:#9FB2D0;margin-top:6px;
+  }
+  .t-sep{
+    font-size:1.6rem;font-weight:800;
+    line-height:1;padding-top:14px;
+    color:#F97316;
+  }
+  .promo-end{
+    font-size:.68rem;font-weight:600;
+    color:#9FB2D0;margin-top:13px;
+    letter-spacing:.02em;
+  }
+  .promo-end strong{color:#fff;font-weight:800}
+  .promo.is-over .promo-tag{background:#475569;box-shadow:none}
+  .promo.is-over .t-sep{color:#64748B}
+
   /* ── FAST BANNER ── */
   .fast-banner{
     display:flex;align-items:center;gap:12px;
@@ -163,7 +251,6 @@
       0 12px 28px -20px rgba(37,99,235,.35);
     animation:rise .7s var(--ease) both;
   }
-  .plan:nth-child(4){ animation-delay:80ms; }
 
   .plan-hi{
     background:linear-gradient(140deg,#F5F9FF 0%,#E7F0FE 100%);
@@ -177,6 +264,7 @@
   }
 
   .plan-head{position:relative;z-index:1;display:flex;flex-direction:column;gap:2px}
+  .plan-badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}
   .plan-badge{
     display:inline-flex;align-items:center;gap:6px;
     align-self:flex-start;
@@ -185,7 +273,10 @@
     font-size:.6rem;font-weight:800;
     letter-spacing:.11em;text-transform:uppercase;
     box-shadow:0 6px 14px -6px rgba(37,99,235,.6);
-    margin-bottom:9px;
+  }
+  .plan-badge.hot{
+    background:var(--grad-hot);
+    box-shadow:0 6px 14px -6px rgba(220,38,38,.6);
   }
   .plan-badge .ico{width:11px;height:11px}
   .plan-name{
@@ -202,6 +293,13 @@
   }
   .plan-price sup{font-size:1rem;font-weight:700;margin-right:2px}
   .plan-price span{font-size:.85rem;font-weight:600;color:var(--muted);margin-left:5px}
+  .plan-price .old{
+    font-size:1.05rem;font-weight:700;
+    color:var(--muted-2);
+    text-decoration:line-through;
+    text-decoration-thickness:2px;
+    margin-left:12px;letter-spacing:-.01em;
+  }
   .plan-note{
     font-size:.73rem;font-weight:500;
     color:var(--muted);margin-top:7px;
@@ -649,6 +747,10 @@
     .stack{gap:13px;max-width:100%}
     .video-wrap video{max-height:220px}
     .video-label{font-size:.62rem;padding:5px 10px}
+    .promo{padding:18px 14px 16px;border-radius:18px}
+    .promo-title{font-size:1.35rem}
+    .t-num{font-size:1.65rem}
+    .t-box{padding:10px 4px 8px}
     .fb-ico{width:34px;height:34px}
     .fb-ico .ico{width:17px;height:17px}
     .fb-title{font-size:.82rem}
@@ -764,6 +866,26 @@
     </div>
   </div>
 
+  <!-- PROMO + CONTADOR -->
+  <section class="promo" id="promo" aria-live="off">
+    <span class="promo-tag">
+      <svg class="ico" aria-hidden="true"><use href="#i-zap"/></svg>
+      <span id="promoTag">Oferta por tiempo limitado</span>
+    </span>
+    <h1 class="promo-title" id="promoTitle"><em>50% OFF</em> en todos los planes</h1>
+    <p class="promo-sub" id="promoSub">La promoción termina hoy a las 12:00 a.m. (hora de Colombia)</p>
+
+    <div class="timer" role="timer" aria-label="Tiempo restante de la promoción">
+      <div class="t-box"><div class="t-num" id="tH">00</div><div class="t-lbl">Horas</div></div>
+      <div class="t-sep">:</div>
+      <div class="t-box"><div class="t-num" id="tM">00</div><div class="t-lbl">Min</div></div>
+      <div class="t-sep">:</div>
+      <div class="t-box"><div class="t-num" id="tS">00</div><div class="t-lbl">Seg</div></div>
+    </div>
+
+    <p class="promo-end">Hora actual en Colombia: <strong id="coNow">--:--:--</strong></p>
+  </section>
+
   <!-- ENTREGA INMEDIATA -->
   <div class="fast-banner">
     <div class="fb-ico">
@@ -778,12 +900,18 @@
   <!-- PLAN 1 MES -->
   <article class="plan">
     <div class="plan-head">
-      <span class="plan-badge">
-        <svg class="ico" aria-hidden="true"><use href="#i-star"/></svg>
-        Popular
-      </span>
+      <div class="plan-badges">
+        <span class="plan-badge hot">
+          <svg class="ico" aria-hidden="true"><use href="#i-zap"/></svg>
+          -50% Promo
+        </span>
+        <span class="plan-badge">
+          <svg class="ico" aria-hidden="true"><use href="#i-star"/></svg>
+          Popular
+        </span>
+      </div>
       <h2 class="plan-name">1 Mes</h2>
-      <div class="plan-price"><sup>$</sup>10<span>USD</span></div>
+      <div class="plan-price"><sup>$</sup>5<span>USD</span><span class="old">$10</span></div>
       <p class="plan-note">Acceso por 30 días · Android &amp; iOS</p>
     </div>
 
@@ -803,17 +931,17 @@
     </ul>
 
     <div class="plan-actions">
-      <a class="btn btn-primary"
-         href="https://checkout.bold.co/payment/LNK_QPHVA2NY2C"
+      <a class="btn btn-primary" data-promo-lock
+         href="https://checkout.bold.co/payment/LNK_UU0SKPMG86"
          target="_blank" rel="noopener noreferrer">
         <svg class="ico" aria-hidden="true"><use href="#i-card"/></svg>
-        Pagar con tarjeta · $10 USD
+        Pagar con tarjeta · $5 USD
       </a>
       <p class="methods-note">
         <svg class="ico" aria-hidden="true"><use href="#i-zap"/></svg>
         Visa · MC · Amex · <strong>Entrega inmediata</strong>
       </p>
-      <button type="button" class="btn btn-ghost" onclick="openOrder('mes')">
+      <button type="button" class="btn btn-ghost" data-promo-lock onclick="openOrder('mes')">
         <svg class="ico" aria-hidden="true"><use href="#i-wallet"/></svg>
         Otros métodos de pago
       </button>
@@ -823,12 +951,18 @@
   <!-- PLAN PERMANENTE -->
   <article class="plan plan-hi">
     <div class="plan-head">
-      <span class="plan-badge">
-        <svg class="ico" aria-hidden="true"><use href="#i-star"/></svg>
-        Mejor valor
-      </span>
+      <div class="plan-badges">
+        <span class="plan-badge hot">
+          <svg class="ico" aria-hidden="true"><use href="#i-zap"/></svg>
+          -50% Promo
+        </span>
+        <span class="plan-badge">
+          <svg class="ico" aria-hidden="true"><use href="#i-star"/></svg>
+          Mejor valor
+        </span>
+      </div>
       <h2 class="plan-name">Permanente</h2>
-      <div class="plan-price"><sup>$</sup>20<span>USD</span></div>
+      <div class="plan-price"><sup>$</sup>10<span>USD</span><span class="old">$20</span></div>
       <p class="plan-note">Acceso de por vida · Android &amp; iOS</p>
     </div>
 
@@ -848,23 +982,23 @@
     </ul>
 
     <div class="plan-actions">
-      <a class="btn btn-primary"
-         href="https://checkout.bold.co/payment/LNK_TKGTXL26QV"
+      <a class="btn btn-primary" data-promo-lock
+         href="https://checkout.bold.co/payment/LNK_X87E4JFX2K"
          target="_blank" rel="noopener noreferrer">
         <svg class="ico" aria-hidden="true"><use href="#i-card"/></svg>
-        Pagar con tarjeta · $20 USD
+        Pagar con tarjeta · $10 USD
       </a>
       <p class="methods-note">
         <svg class="ico" aria-hidden="true"><use href="#i-zap"/></svg>
         Visa · MC · Amex · <strong>Entrega inmediata</strong>
       </p>
-      <button type="button" class="btn btn-ghost" onclick="openOrder('permanente')">
+      <button type="button" class="btn btn-ghost" data-promo-lock onclick="openOrder('permanente')">
         <svg class="ico" aria-hidden="true"><use href="#i-wallet"/></svg>
         Otros métodos de pago
       </button>
-      <button type="button" class="btn btn-ghost" onclick="openPaypal()">
+      <button type="button" class="btn btn-ghost" data-promo-lock onclick="openPaypal()">
         <svg class="ico" aria-hidden="true"><use href="#i-paypal"/></svg>
-        Pagar con PayPal · $23 USD
+        Pagar con PayPal · $13 USD
       </button>
     </div>
   </article>
@@ -915,7 +1049,7 @@
       </div>
       <div>
         <h3 class="pop-title" id="orderTitle">Pagar con otro método</h3>
-        <p class="pop-sub" id="orderPlanInfo">Plan: 1 Mes — $10 USD</p>
+        <p class="pop-sub" id="orderPlanInfo">Plan: 1 Mes — $5 USD</p>
       </div>
     </div>
 
@@ -953,12 +1087,12 @@
     </div>
 
     <p class="pop-text">
-      El pago con PayPal se hace <strong>personalmente conmigo</strong>. Por las comisiones de envío de la plataforma, el total tiene un <strong>recargo de $3 USD</strong> sobre el precio normal del plan Permanente.
+      El pago con PayPal se hace <strong>personalmente conmigo</strong>. Por las comisiones de envío de la plataforma, el total tiene un <strong>recargo de $3 USD</strong> sobre el precio promocional del plan Permanente.
     </p>
 
     <div class="price-box">
       <span class="price-box-lbl">Total a pagar</span>
-      <span class="price-box-val">$23 USD</span>
+      <span class="price-box-val">$13 USD</span>
     </div>
 
     <div class="pop-actions">
@@ -980,9 +1114,15 @@
   var USD_TO_COP = 3300;
   var USD_TO_MXN = 18;
 
+  /* Fin de la promo: medianoche exacta, hora de Colombia (UTC-5, sin horario de verano).
+     Para reutilizar la página en otra fecha, cambia solo esta línea. */
+  var PROMO_END = new Date('2026-10-12T00:00:00-05:00').getTime();
+
+  var promoOver = false;
+
   var PLANS = {
-    mes:        { name: '1 Mes',      priceStr: '$10 USD', usd: 10 },
-    permanente: { name: 'Permanente', priceStr: '$20 USD', usd: 20 }
+    mes:        { name: '1 Mes (Promo -50%)',      priceStr: '$5 USD',  usd: 5  },
+    permanente: { name: 'Permanente (Promo -50%)', priceStr: '$10 USD', usd: 10 }
   };
 
   var METHODS = [
@@ -1039,6 +1179,7 @@
   function $(id){ return document.getElementById(id); }
   function show(id){ var el = $(id); if (el) el.classList.add('show'); }
   function hide(id){ var el = $(id); if (el) el.classList.remove('show'); }
+  function pad(n){ return (n < 10 ? '0' : '') + n; }
   function findMethod(id){
     for (var i = 0; i < METHODS.length; i++) if (METHODS[i].id === id) return METHODS[i];
     return null;
@@ -1115,7 +1256,7 @@
   /* ── UPDATE WHATSAPP LINK (con datos del método) ── */
   function updateWaLink(){
     var btn = $('orderWa');
-    if (!currentPlan || !currentMethod){
+    if (!currentPlan || !currentMethod || promoOver){
       btn.classList.add('is-disabled');
       btn.setAttribute('href', '#');
       return;
@@ -1128,7 +1269,7 @@
     var data = METHOD_DATA[currentMethod](plan.usd);
 
     var msg =
-      'Hola JEXE, quiero hacer un pedido:\n\n' +
+      'Hola JEXE, quiero hacer un pedido con la promo 50% OFF:\n\n' +
       '• Plan: ' + plan.name + ' — ' + plan.priceStr + '\n' +
       '• Método de pago: ' + method.name + '\n\n' +
       'Datos del método:\n';
@@ -1147,6 +1288,7 @@
 
   /* ── PUBLIC ACTIONS ── */
   window.openOrder = function(plan){
+    if (promoOver) return;
     currentPlan = plan;
     currentMethod = null;
 
@@ -1163,6 +1305,7 @@
   };
 
   window.openPaypal = function(){
+    if (promoOver) return;
     show('paypalOverlay');
   };
 
@@ -1173,8 +1316,8 @@
   /* ── SETUP PAYPAL WA LINK ── */
   (function(){
     var msg =
-      'Hola JEXE, quiero pagar el plan Permanente por PayPal.\n\n' +
-      '• Total: $23 USD ($20 + $3 de comisión de envío)\n\n' +
+      'Hola JEXE, quiero pagar el plan Permanente por PayPal con la promo 50% OFF.\n\n' +
+      '• Total: $13 USD ($10 + $3 de comisión de envío)\n\n' +
       'Por favor confírmame los datos para realizar el pago y darme la entrega inmediata.';
     var link = $('paypalWa');
     if (link){
@@ -1196,6 +1339,54 @@
       });
     }
   });
+
+  /* ── CONTADOR EN TIEMPO REAL (hora de Colombia) ── */
+  function colombiaClock(now){
+    /* Colombia = UTC-5 todo el año */
+    var d = new Date(now - 5 * 3600000);
+    return pad(d.getUTCHours()) + ':' + pad(d.getUTCMinutes()) + ':' + pad(d.getUTCSeconds());
+  }
+
+  function endPromo(){
+    if (promoOver) return;
+    promoOver = true;
+
+    $('promo').classList.add('is-over');
+    $('promoTag').textContent = 'Promoción finalizada';
+    $('promoTitle').innerHTML = 'La promo <em>terminó</em>';
+    $('promoSub').textContent = 'Gracias por tu interés. Escríbenos para conocer los precios actuales.';
+
+    document.querySelectorAll('[data-promo-lock]').forEach(function(el){
+      el.classList.add('is-disabled');
+      el.setAttribute('aria-disabled', 'true');
+      el.removeAttribute('href');
+      el.disabled = true;
+    });
+    hide('orderOverlay');
+    hide('paypalOverlay');
+  }
+
+  function tick(){
+    var now = Date.now();
+    $('coNow').textContent = colombiaClock(now);
+
+    var left = PROMO_END - now;
+    if (left <= 0){
+      $('tH').textContent = '00';
+      $('tM').textContent = '00';
+      $('tS').textContent = '00';
+      endPromo();
+      return;
+    }
+
+    var total = Math.floor(left / 1000);
+    $('tH').textContent = pad(Math.floor(total / 3600));
+    $('tM').textContent = pad(Math.floor((total % 3600) / 60));
+    $('tS').textContent = pad(total % 60);
+  }
+
+  tick();
+  setInterval(tick, 250);
 
 })();
 </script>
