@@ -37,7 +37,7 @@
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   html{-webkit-text-size-adjust:100%}
 
-  /* ── BODY (grid centering robusto) ── */
+  /* ── BODY ── */
   body{
     font-family:'Manrope',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
     color:var(--ink);
@@ -54,7 +54,6 @@
     position:relative;
   }
 
-  /* Fondo decorativo */
   body::before{
     content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
@@ -71,10 +70,8 @@
     opacity:.7;
   }
 
-  /* ── ICON BASE ── */
   .ico{width:20px;height:20px;display:block;flex:none}
 
-  /* ── STACK ── */
   .stack{
     position:relative;z-index:1;
     width:100%;
@@ -282,6 +279,33 @@
     box-shadow:0 8px 18px -10px rgba(37,99,235,.9);
   }
 
+  /* ── AVISO SIN ANUNCIOS ── */
+  .support-note{
+    display:flex;align-items:flex-start;gap:13px;
+    padding:15px 17px;
+    background:var(--blue-50);
+    border:1px solid #D5E4FA;
+    border-radius:var(--r);
+  }
+  .support-note .sn-ico{
+    width:38px;height:38px;flex:none;
+    border-radius:11px;
+    display:grid;place-items:center;
+    background:var(--grad);color:#fff;
+    box-shadow:0 8px 18px -10px rgba(37,99,235,.8);
+  }
+  .support-note .sn-ico .ico{width:19px;height:19px}
+  .support-note strong{
+    display:block;
+    font-size:.88rem;font-weight:800;
+    letter-spacing:-.01em;color:var(--ink);
+    line-height:1.25;margin-bottom:2px;
+  }
+  .support-note p{
+    font-size:.76rem;font-weight:500;
+    color:var(--ink-2);line-height:1.5;
+  }
+
   /* ── OVERLAYS ── */
   .overlay{
     display:none;position:fixed;inset:0;
@@ -348,7 +372,7 @@
   .pop-btn{
     flex:1;padding:12px;border:none;border-radius:12px;
     font-family:inherit;font-weight:800;font-size:.84rem;
-    cursor:pointer;transition:all var(--ease);
+    cursor:pointer;transition:all .3s var(--ease);
     text-decoration:none;
     display:flex;align-items:center;justify-content:center;
     letter-spacing:-.005em;
@@ -368,61 +392,62 @@
   }
   .pop-btn.cancel:hover{border-color:#BFD3EE;color:var(--ink-2)}
 
-  /* captcha */
-  .captcha-row{
+  /* ── PASOS DE APOYO ── */
+  .steps{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+  .step{
     display:flex;align-items:center;gap:12px;
-    padding:14px;
+    width:100%;
+    padding:13px 14px;
     background:#fff;
     border:1.5px solid var(--line-2);
     border-radius:12px;
-    cursor:pointer;user-select:none;
-    margin-bottom:14px;
-    transition:all var(--ease);
+    font-family:inherit;text-align:left;
+    cursor:pointer;color:var(--ink);
+    transition:border-color .3s var(--ease),background .3s var(--ease),transform .3s var(--ease);
   }
-  .captcha-row:hover{border-color:var(--blue-400)}
-  .captcha-row.checked{
-    border-color:var(--blue-600);
-    background:var(--blue-50);
+  .step:hover{border-color:var(--blue-400);transform:translateY(-1px)}
+  .step .s-ico{
+    width:38px;height:38px;flex:none;
+    border-radius:10px;
+    display:grid;place-items:center;
+    background:linear-gradient(150deg,#F2F7FF 0%,#E2EDFE 100%);
+    border:1px solid #D9E7FB;
+    color:var(--blue-600);
+    transition:all .3s var(--ease);
   }
-  .cbox{
-    width:24px;height:24px;
+  .step .s-ico .ico{width:18px;height:18px}
+  .step .s-txt{flex:1;min-width:0}
+  .step .s-txt b{display:block;font-size:.86rem;font-weight:700;line-height:1.25}
+  .step .s-txt small{display:block;font-size:.7rem;color:var(--muted);font-weight:500;margin-top:1px}
+  .step .s-state{
+    width:24px;height:24px;flex:none;
     border:1.5px solid var(--line-2);
-    border-radius:7px;
-    background:#fff;
+    border-radius:50%;
     display:grid;place-items:center;
     color:transparent;
-    transition:all var(--ease);
-    flex:none;
+    transition:all .3s var(--ease);
   }
-  .cbox .ico{width:13px;height:13px}
-  .captcha-row.checked .cbox{
-    background:var(--blue-600);
-    border-color:var(--blue-600);
-    color:#fff;
+  .step .s-state .ico{width:12px;height:12px}
+
+  .step.loading{border-color:var(--blue-400);background:var(--blue-50);cursor:progress}
+  .step.loading .s-state{
+    border-color:var(--blue-200,#BFDBFE);
+    border-top-color:var(--blue-600);
+    animation:spin .8s linear infinite;
   }
-  .clabel{
-    font-size:.85rem;font-weight:600;
-    flex:1;color:var(--ink);
-  }
-  .cbrand{
-    display:flex;flex-direction:column;gap:3px;
-    align-items:flex-end;flex:none;
-  }
-  .cbl{
-    font-size:.6rem;color:var(--muted);
-    font-weight:600;letter-spacing:.05em;
-  }
-  .cbdots{display:flex;gap:2px}
-  .cbdots span{
-    width:5px;height:5px;border-radius:50%;
-    background:var(--blue-400);
-  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  .step.done{border-color:var(--blue-600);background:var(--blue-50);cursor:default}
+  .step.done:hover{transform:none}
+  .step.done .s-ico{background:var(--grad);border-color:transparent;color:#fff}
+  .step.done .s-state{background:var(--blue-600);border-color:var(--blue-600);color:#fff}
+
   .cap-continue{
     width:100%;height:48px;border:none;border-radius:12px;
     font-family:inherit;font-size:.92rem;font-weight:800;
     background:var(--grad);color:#fff;cursor:pointer;
     opacity:.35;
-    transition:all var(--ease);
+    transition:all .3s var(--ease);
     letter-spacing:-.005em;
   }
   .cap-continue.ready{
@@ -430,8 +455,9 @@
     box-shadow:0 10px 22px -10px rgba(37,99,235,.9);
   }
   .cap-continue.ready:hover{transform:translateY(-2px)}
+  .cap-continue:disabled{cursor:not-allowed}
 
-  /* ── ANIMACIÓN DE ENTRADA (solo CSS) ── */
+  /* ── ANIMACIÓN DE ENTRADA ── */
   @keyframes drop{
     from{opacity:0;transform:translateY(18px) scale(.985)}
     to  {opacity:1;transform:translateY(0) scale(1)}
@@ -443,6 +469,7 @@
   .stack > *:nth-child(2){animation-delay:80ms}
   .stack > *:nth-child(3){animation-delay:160ms}
   .stack > *:nth-child(4){animation-delay:240ms}
+  .stack > *:nth-child(5){animation-delay:320ms}
 
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{
@@ -501,6 +528,17 @@
     <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/>
     <path d="m9 12 2 2 4-4"/>
   </symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21.2l7.8-7.7 1-1.1a5.5 5.5 0 0 0 0-7.8z"/>
+  </symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/>
+    <path d="M13.7 21a2 2 0 0 1-3.4 0"/>
+  </symbol>
+  <symbol id="i-like" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 10v12"/>
+    <path d="M15 5.9 14 10h5.8a2 2 0 0 1 1.9 2.5l-2.3 8a2 2 0 0 1-1.9 1.5H7V10l4.1-8.2A3.1 3.1 0 0 1 15 5.9z"/>
+  </symbol>
 </svg>
 
 <!-- ══ CONTENIDO ══ -->
@@ -547,6 +585,15 @@
     </div>
   </a>
 
+  <!-- AVISO: SIN ANUNCIOS -->
+  <div class="support-note">
+    <span class="sn-ico"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg></span>
+    <div>
+      <strong>Página 100% libre de anuncios</strong>
+      <p>Sin publicidad ni acortadores. Lo único que te pedimos es tu apoyo al creador.</p>
+    </div>
+  </div>
+
   <!-- iOS -->
   <button type="button" class="item" id="btnIos">
     <span class="box"><svg class="ico" aria-hidden="true"><use href="#i-apple"/></svg></span>
@@ -569,36 +616,45 @@
 
   <!-- YouTube -->
   <a class="item"
-     href="https://youtube.com/@jexeregedit?si=iZOBRg4PZtZ0NKbP" target="_blank" rel="noopener noreferrer">
+     href="https://youtube.com/@jexeregeditff" target="_blank" rel="noopener noreferrer">
     <span class="box"><svg class="ico" aria-hidden="true"><use href="#i-youtube"/></svg></span>
     <span class="body">
       <span class="title">Tutorial de instalación</span>
-      <span class="sub">YouTube · @jexeregedit</span>
+      <span class="sub">YouTube · @jexeregeditff</span>
     </span>
     <span class="arrow"><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span>
   </a>
 
 </main>
 
-<!-- ══ OVERLAY · CAPTCHA ══ -->
-<div class="overlay" id="ovCaptcha">
+<!-- ══ OVERLAY · APOYO AL CREADOR ══ -->
+<div class="overlay" id="ovSupport">
   <div class="pop">
-    <div class="big-ico"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg></div>
-    <h3 class="pop-title">Verificación</h3>
-    <p class="pop-sub">Confirma que no eres un robot para continuar.</p>
+    <div class="big-ico"><svg class="ico" aria-hidden="true"><use href="#i-heart"/></svg></div>
+    <h3 class="pop-title">Apoya al creador</h3>
+    <p class="pop-sub">Esta página no tiene anuncios. Completa los <strong>2 pasos</strong> para desbloquear la descarga.</p>
 
-    <div class="captcha-row" id="captchaRow">
-      <div class="cbox" id="captchaBox">
-        <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
-      </div>
-      <span class="clabel">No soy un robot</span>
-      <div class="cbrand">
-        <span class="cbl">reCAPTCHA</span>
-        <div class="cbdots"><span></span><span></span><span></span></div>
-      </div>
+    <div class="steps">
+      <button type="button" class="step" id="stepSub">
+        <span class="s-ico"><svg class="ico" aria-hidden="true"><use href="#i-bell"/></svg></span>
+        <span class="s-txt">
+          <b>Suscribirte al canal</b>
+          <small>YouTube · @jexeregeditff</small>
+        </span>
+        <span class="s-state"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span>
+      </button>
+
+      <button type="button" class="step" id="stepLike">
+        <span class="s-ico"><svg class="ico" aria-hidden="true"><use href="#i-like"/></svg></span>
+        <span class="s-txt">
+          <b>Dar like al último video</b>
+          <small>Se abre en YouTube</small>
+        </span>
+        <span class="s-state"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></span>
+      </button>
     </div>
 
-    <button type="button" class="cap-continue" id="capContinue" disabled>Continuar</button>
+    <button type="button" class="cap-continue" id="capContinue" disabled>Desbloquear descarga</button>
   </div>
 </div>
 
@@ -647,58 +703,90 @@
   var IOS_URL     = 'https://www.mediafire.com/file/f0tze1tk5vjcdhr/4IMB0T3.mobileconfig/file';
   var ANDROID_URL = 'https://www.mediafire.com/file/94xsbos7mjrn71i/4IMB0T3.zip/file';
 
+  var SUB_URL  = 'https://youtube.com/@jexeregeditff';
+  var LIKE_URL = 'https://youtu.be/Z2x6t0o58Sk?si=CbCJ173lC5aKvg2m';
+
+  /* Segundos que el paso queda en "verificando" tras abrir YouTube */
+  var VERIFY_MS = 5000;
+  var STORE_KEY = 'support_steps_v1';
+
   function $(id){ return document.getElementById(id); }
   function show(id){ var el = $(id); if (el) el.classList.add('show'); }
   function hide(id){ var el = $(id); if (el) el.classList.remove('show'); }
 
   var pending = null;
-  var captchaChecked = false;
+  var state = { sub:false, like:false };
 
-  function resetCap(){
-    captchaChecked = false;
-    var row = $('captchaRow');
-    var btn = $('capContinue');
-    if (row) row.classList.remove('checked');
-    if (btn){
-      btn.disabled = true;
-      btn.classList.remove('ready');
+  var stepSub  = $('stepSub');
+  var stepLike = $('stepLike');
+  var capContinue = $('capContinue');
+
+  /* Recordar pasos completados (opcional, no rompe si el almacenamiento falla) */
+  function loadState(){
+    try{
+      var raw = localStorage.getItem(STORE_KEY);
+      if (raw){
+        var s = JSON.parse(raw);
+        state.sub  = !!s.sub;
+        state.like = !!s.like;
+      }
+    }catch(e){}
+  }
+  function saveState(){
+    try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  function render(){
+    if (stepSub){
+      stepSub.classList.toggle('done', state.sub);
+      if (state.sub) stepSub.classList.remove('loading');
     }
+    if (stepLike){
+      stepLike.classList.toggle('done', state.like);
+      if (state.like) stepLike.classList.remove('loading');
+    }
+    var ready = state.sub && state.like;
+    if (capContinue){
+      capContinue.disabled = !ready;
+      capContinue.classList.toggle('ready', ready);
+    }
+  }
+
+  function runStep(key, btn, url){
+    if (state[key] || btn.classList.contains('loading')) return;
+    window.open(url, '_blank', 'noopener,noreferrer');
+    btn.classList.add('loading');
+    setTimeout(function(){
+      state[key] = true;
+      saveState();
+      render();
+    }, VERIFY_MS);
+  }
+
+  if (stepSub)  stepSub.addEventListener('click',  function(){ runStep('sub',  stepSub,  SUB_URL); });
+  if (stepLike) stepLike.addEventListener('click', function(){ runStep('like', stepLike, LIKE_URL); });
+
+  function openSupport(which){
+    pending = which;
+    if (state.sub && state.like){
+      show(which === 'ios' ? 'ovConfirmIos' : 'ovConfirmAnd');
+      return;
+    }
+    render();
+    show('ovSupport');
   }
 
   var btnIos = $('btnIos');
   var btnAndroid = $('btnAndroid');
-  var captchaRow = $('captchaRow');
-  var capContinue = $('capContinue');
   var proceedIos = $('proceedIos');
   var proceedAnd = $('proceedAnd');
 
-  if (btnIos) btnIos.addEventListener('click', function(){
-    pending = 'ios';
-    resetCap();
-    show('ovCaptcha');
-  });
-
-  if (btnAndroid) btnAndroid.addEventListener('click', function(){
-    pending = 'android';
-    resetCap();
-    show('ovCaptcha');
-  });
-
-  if (captchaRow) captchaRow.addEventListener('click', function(){
-    if (captchaChecked) return;
-    captchaChecked = true;
-    captchaRow.classList.add('checked');
-    setTimeout(function(){
-      if (capContinue){
-        capContinue.disabled = false;
-        capContinue.classList.add('ready');
-      }
-    }, 650);
-  });
+  if (btnIos)     btnIos.addEventListener('click', function(){ openSupport('ios'); });
+  if (btnAndroid) btnAndroid.addEventListener('click', function(){ openSupport('android'); });
 
   if (capContinue) capContinue.addEventListener('click', function(){
     if (capContinue.disabled) return;
-    hide('ovCaptcha');
+    hide('ovSupport');
     show(pending === 'ios' ? 'ovConfirmIos' : 'ovConfirmAnd');
   });
 
@@ -729,6 +817,9 @@
       });
     }
   });
+
+  loadState();
+  render();
 })();
 </script>
 </body>
