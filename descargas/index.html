@@ -708,7 +708,6 @@
 
   /* Segundos que el paso queda en "verificando" tras abrir YouTube */
   var VERIFY_MS = 5000;
-  var STORE_KEY = 'support_steps_v1';
 
   function $(id){ return document.getElementById(id); }
   function show(id){ var el = $(id); if (el) el.classList.add('show'); }
@@ -720,21 +719,6 @@
   var stepSub  = $('stepSub');
   var stepLike = $('stepLike');
   var capContinue = $('capContinue');
-
-  /* Recordar pasos completados (opcional, no rompe si el almacenamiento falla) */
-  function loadState(){
-    try{
-      var raw = localStorage.getItem(STORE_KEY);
-      if (raw){
-        var s = JSON.parse(raw);
-        state.sub  = !!s.sub;
-        state.like = !!s.like;
-      }
-    }catch(e){}
-  }
-  function saveState(){
-    try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){}
-  }
 
   function render(){
     if (stepSub){
@@ -756,23 +740,29 @@
     if (state[key] || btn.classList.contains('loading')) return;
     window.open(url, '_blank', 'noopener,noreferrer');
     btn.classList.add('loading');
-    setTimeout(function(){
+    timers.push(setTimeout(function(){
       state[key] = true;
-      saveState();
       render();
-    }, VERIFY_MS);
+    }, VERIFY_MS));
   }
 
   if (stepSub)  stepSub.addEventListener('click',  function(){ runStep('sub',  stepSub,  SUB_URL); });
   if (stepLike) stepLike.addEventListener('click', function(){ runStep('like', stepLike, LIKE_URL); });
 
+  var timers = [];
+  function resetSteps(){
+    timers.forEach(clearTimeout);
+    timers = [];
+    state.sub = false;
+    state.like = false;
+    if (stepSub)  stepSub.classList.remove('loading','done');
+    if (stepLike) stepLike.classList.remove('loading','done');
+    render();
+  }
+
   function openSupport(which){
     pending = which;
-    if (state.sub && state.like){
-      show(which === 'ios' ? 'ovConfirmIos' : 'ovConfirmAnd');
-      return;
-    }
-    render();
+    resetSteps();
     show('ovSupport');
   }
 
@@ -818,7 +808,6 @@
     }
   });
 
-  loadState();
   render();
 })();
 </script>
