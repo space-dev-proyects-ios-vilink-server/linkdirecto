@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="color-scheme" content="light" />
+  <title>Criptomonedas, Finanzas e Inversión · Guía Completa 2026</title>
+
+  <!-- Monetag: unidad de anuncios (más de 5 formatos) -->
+  <script src="https://quge5.com/88/tag.min.js" data-zone="301112" async data-cfasync="false"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%232563EB'/%3E%3Cpath d='M12 4v10m0 0-3.5-3.5M12 14l3.5-3.5M5 18h14' stroke='white' stroke-width='1.9' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+
+  <style>
+    /* ── TOKENS ── */
+    :root {
+      --ink: #0B1729;
+      --ink-2: #33445C;
+      --muted: #7C8CA3;
+      --muted-2: #A2AFC3;
+      --line: #E8EEF7;
+      --line-2: #D6E3F5;
+      --blue-700: #1D4ED8;
+      --blue-600: #2563EB;
+      --blue-500: #3B82F6;
+      --blue-400: #60A5FA;
+      --blue-50: #EFF5FF;
+      --grad: linear-gradient(140deg, #2563EB 0%, #60A5FA 100%);
+      --r: 18px;
+      --ease: cubic-bezier(.22, .61, .36, 1);
+    }
+
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html {
+      -webkit-text-size-adjust: 100%;
+      overflow-x: hidden;
+    }
+    body {
+      font-family: 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      color: var(--ink);
+      background: #FBFCFE;
+      line-height: 1.65;
+      font-size: 16px;
+      min-height: 100vh;
+      padding: 48px 24px 40px;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      position: relative;
+      overflow-wrap: break-word;
+    }
+
+    /* Fondo decorativo */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(720px 460px at 12% -10%, rgba(96, 165, 250, .14), rgba(96, 165, 250, 0) 62%),
+        radial-gradient(680px 420px at 108% 110%, rgba(37, 99, 235, .08), rgba(37, 99, 235, 0) 60%),
+        radial-gradient(900px 560px at 50% 50%, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 70%);
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image: radial-gradient(circle, rgba(37, 99, 235, .10) 1px, transparent 1.3px);
+      background-size: 24px 24px;
+      -webkit-mask-image: radial-gradient(ellipse 62% 55% at 50% 50%, #000 20%, transparent 78%);
+      mask-image: radial-gradient(ellipse 62% 55% at 50% 50%, #000 20%, transparent 78%);
+      opacity: .7;
+    }
+
+    .ico { width: 20px; height: 20px; display: block; flex: none; }
+
+    /* ── CONTENEDOR ── */
+    .stack {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      padding: 52px 40px;
+      border-radius: 26px;
+      background: linear-gradient(145deg, #0B1729 0%, #1D4ED8 60%, #3B82F6 100%);
+      color: #fff;
+      overflow: hidden;
+      box-shadow: 0 24px 48px -24px rgba(37, 99, 235, .45);
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      right: -80px;
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(255, 255, 255, .18), transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 15px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .15);
+      border: 1px solid rgba(255, 255, 255, .22);
+      font-size: .74rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(1.8rem, 4.2vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -.03em;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      max-width: 900px;
+    }
+    .hero p {
+      font-size: clamp(.95rem, 1.4vw, 1.1rem);
+      font-weight: 500;
+      color: rgba(255, 255, 255, .88);
+      max-width: 760px;
+      line-height: 1.65;
+    }
+
+    /* ── TARJETAS ── */
+    .card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 32px 32px;
+      box-shadow: 0 1px 2px rgba(11, 23, 41, .03), 0 6px 16px -12px rgba(11, 23, 41, .1);
+      transition: box-shadow .35s var(--ease), border-color .35s var(--ease);
+      min-width: 0;
+    }
+    .card:hover {
+      border-color: #C9DEFB;
+      box-shadow: 0 2px 4px rgba(11, 23, 41, .03), 0 22px 40px -22px rgba(37, 99, 235, .55);
+    }
+    .card h2 {
+      font-size: clamp(1.2rem, 2.4vw, 1.55rem);
+      font-weight: 800;
+      letter-spacing: -.02em;
+      color: var(--ink);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      line-height: 1.25;
+    }
+    .card h2 .ico { color: var(--blue-600); width: 24px; height: 24px; }
+    .card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin: 24px 0 10px;
+      letter-spacing: -.01em;
+    }
+    .card p {
+      font-size: .98rem;
+      color: var(--ink-2);
+      margin-bottom: 14px;
+      line-height: 1.7;
+    }
+    .card p:last-child { margin-bottom: 0; }
+    .card p strong { color: var(--ink); font-weight: 700; }
+
+    /* ── TABLA DE CRIPTOMONEDAS ── */
+    .coin-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 12px;
+    }
+    .coin-grid {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .9rem;
+      margin: 6px 0 2px;
+      min-width: 100%;
+    }
+    .coin-grid th {
+      text-align: left;
+      font-size: .72rem;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 12px 10px;
+      border-bottom: 1px solid var(--line);
+      white-space: nowrap;
+    }
+    .coin-grid td {
+      padding: 14px 10px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: middle;
+    }
+    .coin-grid tr:last-child td { border-bottom: none; }
+    .coin-name {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .coin-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 13px;
+      font-weight: 800;
+      color: #fff;
+      flex: none;
+    }
+    .coin-price { font-weight: 700; color: var(--ink); white-space: nowrap; }
+    .coin-cap { color: var(--ink-2); white-space: nowrap; }
+    .coin-change.up { color: #0f9d58; font-weight: 700; white-space: nowrap; }
+    .coin-change.down { color: #d93025; font-weight: 700; white-space: nowrap; }
+
+    /* ── LISTAS ── */
+    .tips-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 8px 0 4px;
+    }
+    .tips-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: .95rem;
+      color: var(--ink-2);
+      line-height: 1.65;
+    }
+    .tips-list li .ico { width: 18px; height: 18px; color: var(--blue-600); margin-top: 4px; flex: none; }
+
+    /* ── CAJA DE ALERTA ── */
+    .alert-box {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px 18px;
+      background: #FFFBEB;
+      border: 1px solid #FDE68A;
+      border-radius: var(--r);
+      margin: 18px 0 4px;
+    }
+    .alert-box .ico { width: 22px; height: 22px; color: #D97706; flex: none; margin-top: 2px; }
+    .alert-box p { font-size: .9rem; color: #92400E; margin: 0; }
+
+    /* ── PIE ── */
+    .footer-note {
+      text-align: center;
+      font-size: .78rem;
+      color: var(--muted-2);
+      padding: 20px 12px 8px;
+      line-height: 1.7;
+    }
+    .footer-note strong { color: var(--muted); font-weight: 700; }
+
+    /* ══════════ RESPONSIVE ══════════ */
+
+    /* Escritorio grande: ajuste fino */
+    @media (min-width: 1280px) {
+      .stack { max-width: 1160px; }
+    }
+
+    /* Tablet / iPad horizontal y pequeños portátiles */
+    @media (max-width: 1024px) {
+      body { padding: 36px 20px 32px; }
+      .card { padding: 28px 26px; }
+      .hero { padding: 44px 32px; }
+    }
+
+    /* iPad vertical y tablets medianas: apilamos la tabla */
+    @media (max-width: 860px) {
+      body { padding: 28px 16px; }
+      .stack { gap: 16px; }
+      .hero { padding: 36px 24px; border-radius: 22px; }
+      .hero-badge { font-size: .68rem; padding: 6px 12px; margin-bottom: 16px; }
+      .card { padding: 24px 22px; border-radius: 18px; }
+      .card h2 { gap: 10px; }
+      .card h2 .ico { width: 22px; height: 22px; }
+      .card h3 { font-size: 1.05rem; margin-top: 20px; }
+      .card p { font-size: .94rem; }
+
+      /* TABLA → TARJETAS APILADAS */
+      .coin-table-wrap { overflow: visible; }
+      .coin-grid {
+        display: block;
+        width: 100%;
+        min-width: 0;
+        font-size: .92rem;
+        border: none;
+      }
+      .coin-grid thead { display: none; }
+      .coin-grid tbody { display: block; width: 100%; }
+      .coin-grid tr {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-areas:
+          "name  price"
+          "change cap";
+        align-items: baseline;
+        gap: 6px 14px;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .coin-grid tr:last-child { border-bottom: none; }
+      .coin-grid td {
+        display: block;
+        padding: 0;
+        border: none;
+        white-space: normal;
+        min-width: 0;
+      }
+      .coin-grid td:nth-child(1) { display: none; } /* rank */
+      .coin-grid td:nth-child(2) { grid-area: name; }
+      .coin-grid td:nth-child(3) { grid-area: price; text-align: right; font-size: .98rem; }
+      .coin-grid td:nth-child(4) {
+        grid-area: cap;
+        text-align: right;
+        font-size: .78rem;
+        color: var(--muted);
+      }
+      .coin-grid td:nth-child(4)::before {
+        content: "Cap. ";
+        font-weight: 700;
+        color: var(--muted-2);
+      }
+      .coin-grid td:nth-child(5) { grid-area: change; font-size: .82rem; }
+      .coin-grid td:nth-child(5)::before {
+        content: "24h ";
+        font-weight: 700;
+        color: var(--muted-2);
+      }
+      .coin-name { gap: 9px; }
+      .coin-icon { width: 28px; height: 28px; font-size: 12px; }
+    }
+
+    /* Teléfonos */
+    @media (max-width: 560px) {
+      body { padding: 20px 12px 28px; font-size: 15px; }
+      .stack { gap: 14px; }
+      .hero { padding: 28px 20px; border-radius: 20px; }
+      .hero h1 { letter-spacing: -.025em; }
+      .card { padding: 20px 18px; border-radius: 16px; }
+      .card h2 { font-size: 1.15rem; }
+      .card h3 { font-size: 1rem; margin-top: 18px; }
+      .card p { font-size: .92rem; line-height: 1.65; }
+      .tips-list li { font-size: .9rem; gap: 10px; }
+      .tips-list li .ico { width: 16px; height: 16px; margin-top: 4px; }
+      .alert-box { padding: 14px 14px; gap: 10px; }
+      .alert-box p { font-size: .85rem; }
+      .coin-grid tr { padding: 12px 0; gap: 5px 10px; }
+      .coin-grid td:nth-child(3) { font-size: .94rem; }
+      .coin-grid td:nth-child(4),
+      .coin-grid td:nth-child(5) { font-size: .76rem; }
+      .footer-note { font-size: .74rem; padding: 16px 8px 4px; }
+    }
+
+    /* Móviles muy pequeños */
+    @media (max-width: 380px) {
+      body { padding: 16px 10px 24px; }
+      .card { padding: 18px 15px; }
+      .hero { padding: 24px 18px; }
+      .coin-icon { width: 26px; height: 26px; font-size: 11px; }
+      .coin-grid td:nth-child(3) { font-size: .88rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ SPRITE SVG ══ -->
+  <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+    <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 3v18h18" />
+      <path d="m7 14 4-4 3 3 5-6" />
+    </symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z" />
+      <path d="m9 12 2 2 4-4" />
+    </symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 6 9 17l-5-5" />
+    </symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 9v4" />
+      <path d="M12 17h.01" />
+      <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" />
+    </symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
+      <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
+      <path d="M18 12a2 2 0 0 0 0 4h4v-4z" />
+    </symbol>
+    <symbol id="i-trend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m3 17 6-6 4 4 8-8" />
+      <path d="M17 7h4v4" />
+    </symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14" />
+      <path d="m13 6 6 6-6 6" />
+    </symbol>
+  </svg>
+
+  <main class="stack">
+
+    <!-- ══ PORTADA ══ -->
+    <header class="hero">
+      <span class="hero-badge">
+        <svg class="ico" style="width:14px;height:14px" aria-hidden="true"><use href="#i-chart" /></svg>
+        Guía 2026 · Mercados y finanzas
+      </span>
+      <h1>Criptomonedas, finanzas e inversión: todo lo que necesitas saber</h1>
+      <p>Un recorrido completo por el ecosistema cripto: desde Bitcoin y Ethereum hasta las estrategias de gestión de riesgo, el diseño de carteras y los principios de las finanzas personales que marcan la diferencia entre invertir y apostar.</p>
+    </header>
+
+    <!-- ══ 1. INTRODUCCIÓN ══ -->
+    <article class="card">
+      <h2>
+        <svg class="ico" aria-hidden="true"><use href="#i-trend" /></svg>
+        ¿Qué son las criptomonedas y por qué importan?
+      </h2>
+      <p>Las criptomonedas son activos digitales que utilizan criptografía y tecnología de registro distribuido (blockchain) para facilitar transacciones peer-to-peer sin intermediarios. A diferencia del dinero fiduciario, no dependen de un banco central; su emisión y transferencia están programadas en código. Esta arquitectura las convierte en un instrumento financiero único: <strong>global, transparente, divisible y resistente a la censura</strong>, aunque también extremadamente volátil.</p>
+      <p>En 2026, el mercado cripto ya no es un experimento marginal. La capitalización total supera los <strong>2,7 billones de dólares</strong> y los ETF de Bitcoin al contado han canalizado cientos de miles de millones desde instituciones. Bitcoin domina cerca del <strong>60% del mercado</strong>, mientras Ethereum y las principales altcoins compiten por capturar valor en sectores como las finanzas descentralizadas (DeFi), los activos del mundo real (RWA), la inteligencia artificial y la infraestructura física descentralizada (DePIN).</p>
+      <p>Entender este mercado requiere algo más que seguir titulares. Exige comprender sus ciclos, sus riesgos y, sobre todo, la disciplina financiera que separa a un inversor paciente de un especulador impulsivo.</p>
+    </article>
+
+    <!-- ══ 2. PRINCIPALES CRIPTOMONEDAS ══ -->
+    <article class="card">
+      <h2>
+        <svg class="ico" aria-hidden="true"><use href="#i-chart" /></svg>
+        Las criptomonedas más importantes del mercado
+      </h2>
+      <p>Estos son los activos que concentran la mayor capitalización y liquidez. Los datos de precio y capitalización corresponden a una instantánea de mercado de octubre de 2026, útiles como referencia educativa, no como consejo de inversión.</p>
+
+      <div class="coin-table-wrap">
+        <table class="coin-grid">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Activo</th>
+              <th>Precio (USD)</th>
+              <th>Capitalización</th>
+              <th>Var. 24h</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td><span class="coin-name"><span class="coin-icon" style="background:#F7931A">₿</span> Bitcoin <span style="font-weight:400;color:var(--muted)">BTC</span></span></td>
+              <td class="coin-price">$84,205.54</td>
+              <td class="coin-cap">$1.69 T</td>
+              <td class="coin-change up">+1.85%</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td><span class="coin-name"><span class="coin-icon" style="background:#627EEA">♦</span> Ethereum <span style="font-weight:400;color:var(--muted)">ETH</span></span></td>
+              <td class="coin-price">$2,474.93</td>
+              <td class="coin-cap">$302.3 B</td>
+              <td class="coin-change up">+1.17%</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td><span class="coin-name"><span class="coin-icon" style="background:#26A17B">₮</span> Tether <span style="font-weight:400;color:var(--muted)">USDT</span></span></td>
+              <td class="coin-price">$0.9994</td>
+              <td class="coin-cap">$182.7 B</td>
+              <td class="coin-change up">+0.03%</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td><span class="coin-name"><span class="coin-icon" style="background:#F3BA2F">BNB</span> BNB</span></td>
+              <td class="coin-price">$748.49</td>
+              <td class="coin-cap">$98.4 B</td>
+              <td class="coin-change up">+1.08%</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td><span class="coin-name"><span class="coin-icon" style="background:#23292F">XRP</span> XRP</span></td>
+              <td class="coin-price">$1.3647</td>
+              <td class="coin-cap">$86.1 B</td>
+              <td class="coin-change up">+2.41%</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td><span class="coin-name"><span class="coin-icon" style="background:#2775CA">$</span> USDC</span></td>
+              <td class="coin-price">$1.0001</td>
+              <td class="coin-cap">$72.6 B</td>
+              <td class="coin-change up">+0.01%</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td><span class="coin-name"><span class="coin-icon" style="background:#9945FF">S</span> Solana <span style="font-weight:400;color:var(--muted)">SOL</span></span></td>
+              <td class="coin-price">$107.31</td>
+              <td class="coin-cap">$63.2 B</td>
+              <td class="coin-change up">+1.12%</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td><span class="coin-name"><span class="coin-icon" style="background:#FF060A">T</span> TRON <span style="font-weight:400;color:var(--muted)">TRX</span></span></td>
+              <td class="coin-price">$0.3305</td>
+              <td class="coin-cap">$31.4 B</td>
+              <td class="coin-change down">−0.08%</td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td><span class="coin-name"><span class="coin-icon" style="background:#F4B728">Z</span> Zcash <span style="font-weight:400;color:var(--muted)">ZEC</span></span></td>
+              <td class="coin-price">$1,334.20</td>
+              <td class="coin-cap">$21.7 B</td>
+              <td class="coin-change up">+5.62%</td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td><span class="coin-name"><span class="coin-icon" style="background:#00C2A8">H</span> Hyperliquid <span style="font-weight:400;color:var(--muted)">HYPE</span></span></td>
+              <td class="coin-price">$78.31</td>
+              <td class="coin-cap">$19.8 B</td>
+              <td class="coin-change up">+0.24%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p style="margin-top:16px;font-size:.82rem;color:var(--muted);">*Datos de referencia de Coinpaprika (octubre 2026). La capitalización y el precio fluctúan constantemente; consulta siempre fuentes en vivo antes de operar.</p>
+    </article>
+
+    <!-- ══ 3. CÓMO INVERTIR ══ -->
+    <article class="card">
+      <h2>
+        <svg class="ico" aria-hidden="true"><use href="#i-wallet" /></svg>
+        Cómo invertir en criptomonedas: primeros pasos
+      </h2>
+      <p>Invertir en cripto no empieza comprando un token; empieza entendiendo el terreno. Antes de destinar un solo dólar, necesitas tres cosas: <strong>un exchange confiable</strong>, <strong>una cartera (wallet) adecuada</strong> y <strong>una estrategia clara</strong>.</p>
+
+      <h3>1. Elegir un exchange</h3>
+      <p>Los exchanges centralizados (CEX) como Binance, Coinbase o Kraken son la puerta de entrada más común. Ofrecen liquidez, facilidad de uso y opciones de compra con tarjeta o transferencia. Sin embargo, no son bóvedas: <strong>mantener grandes cantidades en un exchange es un riesgo de custodia</strong>. La regla de oro es simple: si no controlas tus claves privadas, no controlas tus fondos.</p>
+
+      <h3>2. Configurar una cartera</h3>
+      <p>Para montos significativos, una <strong>cartera de hardware (cold wallet)</strong> es el estándar. Dispositivos como Ledger o Trezor mantienen tus claves offline, fuera del alcance de hackers y quiebras de exchanges. Para el día a día o para interactuar con aplicaciones descentralizadas, una wallet móvil o de extensión (MetaMask, Trust Wallet) es suficiente, pero debe usarse con cantidades pequeñas y con extrema precaución.</p>
+
+      <h3>3. Empezar con poco y con lógica</h3>
+      <p>No existe una cantidad “correcta”, pero los expertos coinciden en que la exposición a cripto no debería superar el <strong>5–10% del patrimonio neto</strong> si no eres un trader a tiempo completo. El resto de tu dinero debe estar en activos estables, liquidez y herramientas de ahorro tradicionales. La cripto es un activo de alto riesgo: úsala como una porción satélite de tu cartera, nunca como el núcleo de tu estabilidad financiera.</p>
+    </article>
+
+    <!-- ══ 4. ESTRATEGIAS ══ -->
+    <article class="card">
+      <h2>
+        <svg class="ico" aria-hidden="true"><use href="#i-trend" /></svg>
+        Estrategias de inversión que funcionan (y las que no)
+      </h2>
+      <p>La diferencia entre ganar y perder en cripto rara vez está en acertar el próximo token de moda. Está en la <strong>gestión del riesgo</strong> y en la <strong>disciplina</strong>. Estas son las estrategias más sólidas para construir patrimonio en este mercado.</p>
+
+      <h3>DCA (Dollar-Cost Averaging)</h3>
+      <p>Consiste en invertir una cantidad fija de dinero de forma periódica (semanal o mensual), independientemente del precio. Esto suaviza la volatilidad, elimina la presión de “comprar en el momento perfecto” y reduce el estrés emocional. Es la estrategia predilecta de los inversores institucionales y de largo plazo. En 2026, con Bitcoin rondando los $80,000, el DCA sigue siendo una forma sensata de acumular sin apostar todo a un solo punto de entrada.</p>
+
+      <h3>Modelo núcleo-satélite</h3>
+      <p>Una estructura de cartera probada: asigna <strong>60–70% a activos blue-chip</strong> (Bitcoin, Ethereum y, en menor medida, grandes Layer-1 como Solana o BNB) y un <strong>20–30% a oportunidades de crecimiento</strong> (tokens de IA, RWA, DePIN o sectores emergentes). El resto, en stablecoins o efectivo, sirve como reserva para comprar caídas. Este modelo captura el potencial de las tendencias sin exponer todo el capital a la altcoin más volátil.</p>
+
+      <h3>HODL con tesis, no por terquedad</h3>
+      <p>Mantener a largo plazo funciona cuando tu tesis de inversión sigue intacta. Bitcoin ha sufrido drawdowns del 84% (2017) y del 77% (2021) antes de recuperarse. El HODL ciego es peligroso; el HODL informado, que revisa los fundamentos y ajusta la posición cuando el contexto cambia, es una estrategia legítima. La clave es no confundir una buena empresa o protocolo con un buen precio de entrada.</p>
+
+      <h3>Gestión activa de riesgo (para traders)</h3>
+      <p>Si operas con frecuencia, la regla número uno es <strong>no arriesgar más del 0.5–2% del capital por operación</strong>. Usa stop-loss, define objetivos de toma de ganancias y evita el apalancamiento excesivo. La mayoría de los traders minoristas pierden porque no dimensionan sus posiciones ni controlan las emociones. El trading rentable es aburrido: consiste en repetir un sistema con disciplina.</p>
+    </article>
+
+    <!-- ══ 5. FINANZAS PERSONALES ══ -->
+    <article class="card">
+      <h2>
+        <svg class="ico" aria-hidden="true"><use href="#i-shield" /></svg>
+        Finanzas personales: el cimiento de cualquier inversión
+      </h2>
+      <p>Ninguna estrategia cripto compensa una mala base financiera. Antes de buscar rendimientos en activos volátiles, asegura estos pilares:</p>
+      <ul class="tips-list">
+        <li><svg class="ico" aria-hidden="true"><use href="#i-check" /></svg> <span><strong>Fondo de emergencia:</strong> 3–6 meses de gastos (idealmente 12) en efectivo o stablecoins de alta liquidez. Este colchón evita que tengas que vender tus inversiones en el peor momento.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-check" /></svg> <span><strong>Cero deudas de alto interés:</strong> ninguna inversión en cripto justifica arrastrar una deuda de tarjeta de crédito al 30% anual. Paga primero lo que te cobra intereses abusivos.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-check" /></svg> <span><strong>Presupuesto y flujo de caja:</strong> conoce cuánto entra y cuánto sale cada mes. Invierte solo el excedente real, nunca el dinero del alquiler o de la comida.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-check" /></svg> <span><strong>Diversificación fuera de cripto:</strong> acciones, bonos, bienes raíces y oro siguen siendo la columna vertebral de un patrimonio resiliente. La cripto es una capa de oportunidad, no el edificio completo.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-check" /></svg> <span><strong>Seguros y previsión:</strong> salud, vida y discapacidad. Un imprevisto médico puede liquidar años de ahorro e inversión en semanas.</span></li>
+      </ul>
+      <p style="margin-top:12px;">La verdadera libertad financiera no se construye con un golpe de suerte en una meme coin, sino con <strong>hábitos sostenidos</strong>: gastar menos de lo que ganas, invertir con regularidad y proteger tu capital de los riesgos evitables.</p>
+    </article>
+
+    <!-- ══ 6. SEGURIDAD ══ -->
+    <article class="card">
+      <h2>
+        <svg class="ico" aria-hidden="true"><use href="#i-shield" /></svg>
+        Seguridad: cómo no perder tus criptomonedas
+      </h2>
+      <p>En cripto, la seguridad es responsabilidad personal. No hay un banco central que revierta una transacción ni un número de atención al cliente que recupere fondos robados. Estas prácticas son no negociables:</p>
+      <ul class="tips-list">
+        <li><svg class="ico" aria-hidden="true"><use href="#i-check" /></svg> <span><strong>Autenticación de dos factores (2FA):</strong> actívala en todos los exchanges y correos asociados. Prefiere aplicaciones de autenticación (Google Authenticator, Authy) sobre SMS, que son vulnerables al SIM swapping.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-check" /></svg> <span><strong>Frases semilla offline:</strong> tu frase de recuperación de 12 o 24 palabras nunca debe guardarse en una foto, en la nube o en un chat. Escríbela en papel o metal y guárdala en un lugar seguro y físico.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-check" /></svg> <span><strong>Cold storage para holdings grandes:</strong> si tu cartera supera lo que estarías dispuesto a perder, una hardware wallet es la mejor inversión en seguridad que puedes hacer.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-check" /></svg> <span><strong>Cuidado con los permisos:</strong> al interactuar con DeFi, revisa y revoca regularmente los permisos de tokens que ya no uses. Un contrato malicioso puede vaciar tu wallet sin que lo notes.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-check" /></svg> <span><strong>Desconfía de rendimientos “garantizados”:</strong> si un proyecto promete un APY fijo del 10–15% sin riesgo, es casi con certeza una estafa o un esquema Ponzi. En cripto, el riesgo y el rendimiento siempre van de la mano.</span></li>
+      </ul>
+    </article>
+
+    <!-- ══ 7. ERRORES COMUNES ══ -->
+    <article class="card">
+      <h2>
+        <svg class="ico" aria-hidden="true"><use href="#i-alert" /></svg>
+        Los errores que más caro cuestan
+      </h2>
+      <p>Incluso los inversores experimentados cometen errores. Estos son los que más patrimonio destruyen y cómo evitarlos:</p>
+      <ul class="tips-list">
+        <li><svg class="ico" aria-hidden="true"><use href="#i-alert" /></svg> <span><strong>Invertir sin plan de salida:</strong> comprar es fácil; vender con disciplina es lo difícil. Define de antemano en qué punto tomarás ganancias y qué invalidaría tu tesis.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-alert" /></svg> <span><strong>Usar apalancamiento excesivo:</strong> el margen amplifica las ganancias, pero también las pérdidas. Una liquidación puede borrar tu cuenta en minutos. Si no eres un profesional, evita el trading con margen.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-alert" /></svg> <span><strong>Perseguir velas verdes (FOMO):</strong> comprar después de una subida vertical suele terminar en comprar el techo. El mercado siempre da segundas oportunidades; la paciencia paga.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-alert" /></svg> <span><strong>Concentrar todo en una sola altcoin:</strong> incluso proyectos sólidos pueden caer un 70–90%. La diversificación no elimina el riesgo, pero evita la ruina total.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-alert" /></svg> <span><strong>Ignorar los impuestos:</strong> cada venta o intercambio de cripto puede generar una obligación fiscal. Llevar un registro ordenado de transacciones te ahorrará problemas y dinero.</span></li>
+      </ul>
+      <div class="alert-box">
+        <svg class="ico" aria-hidden="true"><use href="#i-alert" /></svg>
+        <p><strong>Regla de oro:</strong> nunca inviertas dinero que no puedas permitirte perder por completo. La volatilidad de las criptomonedas es extrema y los mercados bajistas pueden durar años.</p>
+      </div>
+    </article>
+
+    <!-- ══ 8. CONCLUSIÓN ══ -->
+    <article class="card">
+      <h2>
+        <svg class="ico" aria-hidden="true"><use href="#i-arrow" /></svg>
+        Conclusión: invertir es un maratón, no un sprint
+      </h2>
+      <p>Las criptomonedas han redefinido la forma en que pensamos sobre el dinero, la propiedad y las oportunidades financieras. Pero también han multiplicado las formas de perder capital. La diferencia entre un inversor que prospera y uno que se quema no está en la suerte ni en el timing perfecto: está en la <strong>educación, la gestión del riesgo y la disciplina emocional</strong>.</p>
+      <p>Empieza con poco, prioriza tu estabilidad financiera, diversifica, protege tus claves y mantén una perspectiva de largo plazo. El mercado cripto seguirá ofreciendo ciclos de euforia y pánico; tu trabajo no es predecirlos, sino <strong>sobrevivir a ellos con tu capital y tu tranquilidad intactos</strong>.</p>
+      <p style="font-weight:700;color:var(--ink);margin-top:18px;">La verdadera rentabilidad no se mide solo en dólares, sino en la libertad de decidir sin que el mercado dicte tu estado de ánimo.</p>
+    </article>
+
+    <!-- ══ PIE ══ -->
+    <div class="footer-note">
+      <strong>Aviso legal:</strong> Este artículo tiene fines exclusivamente educativos e informativos. No constituye asesoramiento financiero, legal ni fiscal. Las criptomonedas son activos de alto riesgo y su valor puede fluctuar significativamente. Consulta a un profesional certificado antes de tomar decisiones de inversión.<br />
+      © 2026 · Guía de criptomonedas, finanzas e inversión.
+    </div>
+
+  </main>
+
+</body>
+</html>
