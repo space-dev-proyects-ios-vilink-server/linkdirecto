@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Multi-Ventana · Recargador automático</title>
+<style>
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    background:#0e1116;color:#e6edf3;
+  }
+
+  /* ---------- Barra superior ---------- */
+  .topbar{
+    display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;
+    padding:10px 14px;background:#161b22;border-bottom:1px solid #2a313c;
+  }
+  .brand{font-weight:700;font-size:15px;align-self:center;margin-right:6px;white-space:nowrap}
+  .field{display:flex;flex-direction:column;gap:3px;font-size:10.5px;color:#8b949e}
+  .field label{text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+  input[type=text],input[type=number]{
+    background:#0d1117;border:1px solid #30363d;color:#e6edf3;
+    padding:7px 9px;border-radius:7px;font-size:13px;outline:none;transition:.15s;
+  }
+  input[type=text]:focus,input[type=number]:focus{
+    border-color:#388bfd;box-shadow:0 0 0 2px rgba(56,139,253,.25);
+  }
+  .url-field{flex:1 1 340px}
+  .url-field input{width:100%}
+  input[type=number]{width:105px}
+  .checks{flex-direction:row;gap:14px;align-items:center;padding-bottom:7px;flex-wrap:wrap}
+  .checks label{
+    display:flex;align-items:center;gap:5px;font-size:12px;
+    text-transform:none;color:#c9d1d9;cursor:pointer;letter-spacing:0;
+  }
+  .checks input{accent-color:#1f6feb;cursor:pointer}
+  .buttons{display:flex;gap:7px;flex-wrap:wrap}
+  button{
+    background:#21262d;border:1px solid #30363d;color:#e6edf3;
+    padding:8px 13px;border-radius:7px;font-size:13px;cursor:pointer;transition:.15s;
+    font-family:inherit;white-space:nowrap;
+  }
+  button:hover{background:#2d333b;border-color:#484f58}
+  button.primary{background:#1f6feb;border-color:#1f6feb}
+  button.primary:hover{background:#388bfd}
+  button.ok{background:#238636;border-color:#238636}
+  button.ok:hover{background:#2ea043}
+  button.warn{background:#9e6a03;border-color:#9e6a03}
+  button.warn:hover{background:#bb8009}
+  button:disabled{opacity:.4;cursor:not-allowed;filter:grayscale(.4)}
+
+  /* ---------- Barra de estado ---------- */
+  .statusbar{
+    display:flex;gap:22px;flex-wrap:wrap;padding:6px 14px;
+    background:#0d1117;border-bottom:1px solid #21262d;font-size:12px;color:#8b949e;
+  }
+  .statusbar b{color:#e6edf3;font-weight:600}
+  .statusbar .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#484f58;margin-right:6px;vertical-align:middle}
+  .statusbar .dot.on{background:#3fb950;box-shadow:0 0 8px #3fb950}
+
+  /* ---------- Rejilla de ventanas ---------- */
+  .grid{
+    flex:1;min-height:0;display:grid;gap:10px;padding:10px;overflow:auto;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  }
+  .pane{
+    display:flex;flex-direction:column;min-height:250px;
+    background:#161b22;border:1px solid #21262d;border-radius:10px;overflow:hidden;
+  }
+  .pane-head{
+    display:flex;align-items:center;gap:7px;padding:6px 9px;
+    background:#1b2230;border-bottom:1px solid #21262d;font-size:12px;
+  }
+  .pane-title{font-weight:600}
+  .badge{
+    background:#0d1117;border:1px solid #30363d;border-radius:20px;
+    padding:1px 8px;font-size:11px;color:#8b949e;white-space:nowrap;
+  }
+  .badge.ok{color:#3fb950;border-color:#238636}
+  .badge.load{color:#d29922;border-color:#9e6a03}
+  .spacer{flex:1}
+  .mini{padding:2px 9px;font-size:12px;border-radius:6px;line-height:1.5}
+  .frame-wrap{flex:1;position:relative;background:#0d1117}
+  .frame-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff}
+  .placeholder{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    color:#484f58;font-size:13px;text-align:center;padding:18px;line-height:1.5;
+  }
+  .toast{
+    position:fixed;bottom:18px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:#1f6feb;color:#fff;padding:10px 18px;border-radius:8px;font-size:13px;
+    opacity:0;pointer-events:none;transition:.25s;z-index:99;box-shadow:0 8px 24px rgba(0,0,0,.5);
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- ================= CONTROLES ================= -->
+<header class="topbar">
+  <div class="brand">🪟 Multi-Ventana</div>
+
+  <div class="field url-field">
+    <label for="url">Enlace a abrir en las 5 ventanas</label>
+    <input id="url" type="text" placeholder="https://ejemplo.com" spellcheck="false" autocomplete="off">
+  </div>
+
+  <div class="field">
+    <label for="interval">Intervalo (seg)</label>
+    <input id="interval" type="number" min="1" step="1" value="5">
+  </div>
+
+  <div class="field">
+    <label for="limit">Límite de ciclos</label>
+    <input id="limit" type="number" min="0" step="1" value="0" title="0 = sin límite">
+  </div>
+
+  <div class="field checks">
+    <label><input type="checkbox" id="manualOnly"> Sin auto-recarga</label>
+    <label><input type="checkbox" id="noCache"> Evitar caché</label>
+    <label><input type="checkbox" id="popupMode"> Ventanas emergentes</label>
+  </div>
+
+  <div class="buttons">
+    <button id="applyBtn" class="primary">Aplicar a las 5</button>
+    <button id="startBtn" class="ok">▶ Iniciar</button>
+    <button id="stopBtn" class="warn" disabled>⏸ Detener</button>
+    <button id="reloadAllBtn">⟳ Recargar ahora</button>
+    <button id="resetBtn">↺ Reiniciar</button>
+  </div>
+</header>
+
+<div class="statusbar">
+  <span><span id="runDot" class="dot"></span><b id="statusText">Listo</b></span>
+  <span id="cycleText">Ciclos: <b>0</b> / ∞</span>
+  <span id="totalText">Recargas totales: <b>0</b></span>
+  <span style="margin-left:auto">Si una web no carga en el marco, activa <b>Ventanas emergentes</b></span>
+</div>
+
+<!-- ================= REJILLA ================= -->
+<main id="grid" class="grid"></main>
+
+<div id="toast" class="toast"></div>
+
+<script>
+/* =========================================================
+   CONFIGURACIÓN
+   ========================================================= */
+const PANE_COUNT = 5;
+
+const $ = id => document.getElementById(id);
+const grid        = $('grid');
+const urlInput    = $('url');
+const intervalIn  = $('interval');
+const limitIn     = $('limit');
+const manualOnly  = $('manualOnly');
+const noCache     = $('noCache');
+const popupMode   = $('popupMode');
+const applyBtn    = $('applyBtn');
+const startBtn    = $('startBtn');
+const stopBtn     = $('stopBtn');
+const reloadAllBtn= $('reloadAllBtn');
+const resetBtn    = $('resetBtn');
+const statusText  = $('statusText');
+const runDot      = $('runDot');
+const cycleText   = $('cycleText');
+const totalText   = $('totalText');
+
+const state = {
+  url: '',
+  running: false,
+  timer: null,
+  cycles: 0,
+  totalReloads: 0,
+  windows: []       // referencias a ventanas emergentes
+};
+
+const panes = [];
+
+/* =========================================================
+   CREACIÓN DE LAS 5 VENTANAS
+   ========================================================= */
+for (let i = 0; i < PANE_COUNT; i++) {
+  const el = document.createElement('div');
+  el.className = 'pane';
+  el.innerHTML = `
+    <div class="pane-head">
+      <span class="pane-title">Ventana ${i + 1}</span>
+      <span class="badge count" title="Recargas de esta ventana">0</span>
+      <span class="spacer"></span>
+      <span class="badge status">vacía</span>
+      <button class="mini" data-act="reload" title="Recargar esta ventana">⟳</button>
+    </div>
+    <div class="frame-wrap">
+      <div class="placeholder">Sin enlace.<br>Pega una URL arriba y pulsa «Aplicar a las 5».</div>
+    </div>`;
+  grid.appendChild(el);
+
+  const pane = {
+    index: i,
+    el,
+    wrap: el.querySelector('.frame-wrap'),
+    countEl: el.querySelector('.count'),
+    statusEl: el.querySelector('.status'),
+    iframe: null,
+    count: 0
+  };
+
+  el.querySelector('[data-act="reload"]')
+    .addEventListener('click', () => { if (state.url) reloadPane(pane); });
+
+  panes.push(pane);
+}
+
+/* =========================================================
+   UTILIDADES
+   ========================================================= */
+function normalizeUrl(raw) {
+  const v = (raw || '').trim();
+  if (!v) return '';
+  if (/^[a-z][a-z0-9+.\-]*:\/\//i.test(v)) return v;   // ya tiene protocolo
+  return 'https://' + v;
+}
+
+function buildUrl() {
+  if (!state.url) return '';
+  if (!noCache.checked) return state.url;
+  try {
+    const u = new URL(state.url);
+    u.searchParams.set('_ts', Date.now());
+    return u.toString();
+  } catch { return state.url; }
+}
+
+function setStatus(txt) { statusText.textContent = txt; }
+
+let toastTimer;
+function toast(msg) {
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+function updatePaneCount(p) { p.countEl.textContent = p.count; }
+
+function updateStatusBar() {
+  const limit = Math.max(0, parseInt(limitIn.value, 10) || 0);
+  cycleText.innerHTML = `Ciclos: <b>${state.cycles}</b> / ${limit > 0 ? limit : '∞'}`;
+  totalText.innerHTML = `Recargas totales: <b>${state.totalReloads}</b>`;
+  runDot.classList.toggle('on', state.running);
+}
+
+/* =========================================================
+   CARGA DE UN IFRAME (recrear = recarga real garantizada)
+   ========================================================= */
+function setPaneUrl(pane, url) {
+  const old = pane.wrap.querySelector('iframe');
+  const iframe = document.createElement('iframe');
+  iframe.setAttribute('referrerpolicy', 'no-referrer');
+  iframe.setAttribute('allow', 'clipboard-write; fullscreen; autoplay');
+  iframe.src = url;
+
+  pane.statusEl.textContent = 'cargando';
+  pane.statusEl.className = 'badge status load';
+
+  iframe.addEventListener('load', () => {
+    if (pane.iframe !== iframe) return;
+    pane.statusEl.textContent = 'activa';
+    pane.statusEl.className = 'badge status ok';
+  });
+
+  if (old) {
+    pane.wrap.replaceChild(iframe, old);
+  } else {
+    const ph = pane.wrap.querySelector('.placeholder');
+    if (ph) ph.remove();
+    pane.wrap.appendChild(iframe);
+  }
+  pane.iframe = iframe;
+}
+
+/* =========================================================
+   MODO VENTANAS EMERGENTES
+   ========================================================= */
+function closePopups() {
+  state.windows.forEach(w => { try { if (w && !w.closed) w.close(); } catch (e) {} });
+  state.windows = [];
+}
+
+function openPopups(url) {
+  closePopups();
+  let bloqueadas = 0;
+
+  for (let i = 0; i < PANE_COUNT; i++) {
+    const w = window.open(url, 'mw_win_' + i,
+      'width=900,height=650,menubar=yes,toolbar=yes,scrollbars=yes,resizable=yes');
+    state.windows[i] = w;
+    const p = panes[i];
+
+    if (w) {
+      p.iframe = null;
+      p.wrap.innerHTML = '<div class="placeholder">Abierta en ventana emergente</div>';
+      p.statusEl.textContent = 'emergente';
+      p.statusEl.className = 'badge status ok';
+    } else {
+      bloqueadas++;
+      p.statusEl.textContent = 'bloqueada';
+      p.statusEl.className = 'badge status';
+    }
+  }
+  if (bloqueadas) toast(`El navegador bloqueó ${bloqueadas} ventana(s). Permite las ventanas emergentes.`);
+}
+
+/* =========================================================
+   RECARGAR UNA VENTANA
+   ========================================================= */
+function reloadPane(pane) {
+  if (!state.url) return;
+
+  if (popupMode.checked) {
+    const w = state.windows[pane.index];
+    if (!w || w.closed) return;              // ventana cerrada → no hacer nada
+    try { w.location.href = buildUrl(); } catch (e) { /* cross-origin: se ignora */ }
+  } else {
+    if (!pane.iframe) return;
+    setPaneUrl(pane, buildUrl());
+  }
+
+  pane.count++;
+  state.totalReloads++;
+  updatePaneCount(pane);
+  updateStatusBar();
+}
+
+/* =========================================================
+   CICLO DE RECARGA (refresca las 5 a la vez)
+   ========================================================= */
+function cycle(isManual = false) {
+  if (!state.url) { if (isManual) toast('Primero aplica un enlace'); return; }
+
+  const limit = Math.max(0, parseInt(limitIn.value, 10) || 0);
+
+  if (!isManual && limit > 0 && state.cycles >= limit) {
+    stopAuto();
+    setStatus('Límite de ciclos alcanzado');
+    toast('Se alcanzó el límite de recargas');
+    return;
+  }
+
+  panes.forEach(p => reloadPane(p));
+  state.cycles++;
+  updateStatusBar();
+
+  if (limit > 0 && state.cycles >= limit) {
+    stopAuto();
+    setStatus('Límite de ciclos alcanzado');
+    toast('Se alcanzó el límite de recargas');
+  }
+}
+
+/* =========================================================
+   INICIAR / DETENER
+   ========================================================= */
+function startAuto() {
+  if (!state.url) { toast('Aplica un enlace primero'); return; }
+
+  const sec = parseFloat(intervalIn.value);
+  if (!isFinite(sec) || sec < 1) { toast('El intervalo mínimo es 1 segundo'); return; }
+
+  const limit = Math.max(0, parseInt(limitIn.value, 10) || 0);
+  if (limit > 0 && state.cycles >= limit) { toast('Reinicia los contadores para continuar'); return; }
+
+  clearInterval(state.timer);
+  state.running = true;
+  state.timer = setInterval(cycle, sec * 1000);
+
+  startBtn.disabled = true;
+  stopBtn.disabled = false;
+  setStatus(`Auto-recarga cada ${sec}s`);
+  updateStatusBar();
+}
+
+function stopAuto() {
+  clearInterval(state.timer);
+  state.timer = null;
+  state.running = false;
+  startBtn.disabled = false;
+  stopBtn.disabled = true;
+  setStatus('Detenido');
+  updateStatusBar();
+}
+
+/* =========================================================
+   APLICAR ENLACE A LAS 5 VENTANAS
+   ========================================================= */
+function applyToAll() {
+  const url = normalizeUrl(urlInput.value);
+  if (!url) { toast('Escribe un enlace'); urlInput.focus(); return; }
+
+  urlInput.value = url;
+  state.url = url;
+  state.cycles = 0;
+  state.totalReloads = 0;
+
+  panes.forEach(p => { p.count = 0; updatePaneCount(p); });
+
+  if (popupMode.checked) {
+    openPopups(url);
+  } else {
+    closePopups();
+    panes.forEach(p => setPaneUrl(p, buildUrl()));
+  }
+
+  updateStatusBar();
+  setStatus('Enlace aplicado a las 5 ventanas');
+  toast('Enlace aplicado a las 5 ventanas');
+}
+
+/* =========================================================
+   EVENTOS
+   ========================================================= */
+applyBtn.addEventListener('click', applyToAll);
+
+urlInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter') { applyToAll(); }
+});
+
+startBtn.addEventListener('click', startAuto);
+stopBtn.addEventListener('click', stopAuto);
+
+reloadAllBtn.addEventListener('click', () => cycle(true));
+
+resetBtn.addEventListener('click', () => {
+  stopAuto();
+  state.cycles = 0;
+  state.totalReloads = 0;
+  panes.forEach(p => { p.count = 0; updatePaneCount(p); });
+  updateStatusBar();
+  setStatus('Contadores reiniciados');
+});
+
+manualOnly.addEventListener('change', () => {
+  intervalIn.disabled = manualOnly.checked;
+  if (manualOnly.checked) stopAuto();
+});
+
+popupMode.addEventListener('change', () => {
+  if (!popupMode.checked) closePopups();
+  toast(popupMode.checked
+    ? 'Modo ventanas emergentes: pulsa «Aplicar a las 5»'
+    : 'Modo marco integrado (iframe)');
+});
+
+/* Al cerrar la página, cerrar las ventanas emergentes abiertas */
+window.addEventListener('beforeunload', () => { closePopups(); });
+
+/* Estado inicial */
+intervalIn.disabled = false;
+updateStatusBar();
+</script>
+</body>
+</html>
