@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Multi-Ventana · Recargador automático</title>
+<title>Multi-Ventana · Historial + Anti-popups</title>
 <style>
   *{box-sizing:border-box}
   html,body{height:100%}
@@ -15,84 +15,121 @@
 
   /* ---------- Barra superior ---------- */
   .topbar{
-    display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;
-    padding:10px 14px;background:#161b22;border-bottom:1px solid #2a313c;
+    display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;
+    padding:8px 12px;background:#161b22;border-bottom:1px solid #2a313c;
   }
-  .brand{font-weight:700;font-size:15px;align-self:center;margin-right:6px;white-space:nowrap}
-  .field{display:flex;flex-direction:column;gap:3px;font-size:10.5px;color:#8b949e}
-  .field label{text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+  .brand{font-weight:700;font-size:14px;align-self:center;margin-right:4px;white-space:nowrap}
+  .field{display:flex;flex-direction:column;gap:2px;font-size:10px;color:#8b949e}
+  .field label{text-transform:uppercase;letter-spacing:.04em;font-weight:600}
   input[type=text],input[type=number]{
     background:#0d1117;border:1px solid #30363d;color:#e6edf3;
-    padding:7px 9px;border-radius:7px;font-size:13px;outline:none;transition:.15s;
+    padding:6px 8px;border-radius:6px;font-size:12.5px;outline:none;transition:.12s;
   }
-  input[type=text]:focus,input[type=number]:focus{
-    border-color:#388bfd;box-shadow:0 0 0 2px rgba(56,139,253,.25);
-  }
-  .url-field{flex:1 1 340px}
+  input[type=text]:focus,input[type=number]:focus{border-color:#388bfd;box-shadow:0 0 0 2px rgba(56,139,253,.25)}
+  .url-field{flex:1 1 300px}
   .url-field input{width:100%}
-  input[type=number]{width:105px}
-  .checks{flex-direction:row;gap:14px;align-items:center;padding-bottom:7px;flex-wrap:wrap}
-  .checks label{
-    display:flex;align-items:center;gap:5px;font-size:12px;
-    text-transform:none;color:#c9d1d9;cursor:pointer;letter-spacing:0;
+  input[type=number]{width:82px}
+  .checks{
+    display:flex;flex-wrap:wrap;gap:9px;align-items:center;
+    padding:4px 0;font-size:11.5px;
   }
-  .checks input{accent-color:#1f6feb;cursor:pointer}
-  .buttons{display:flex;gap:7px;flex-wrap:wrap}
+  .checks label{display:flex;align-items:center;gap:4px;color:#c9d1d9;cursor:pointer}
+  .checks input{accent-color:#1f6feb;cursor:pointer;margin:0}
+  .checks .key{color:#3fb950}
+  .buttons{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
   button{
     background:#21262d;border:1px solid #30363d;color:#e6edf3;
-    padding:8px 13px;border-radius:7px;font-size:13px;cursor:pointer;transition:.15s;
-    font-family:inherit;white-space:nowrap;
+    padding:6px 11px;border-radius:6px;font-size:12px;cursor:pointer;
+    font-family:inherit;white-space:nowrap;transition:.12s;
   }
-  button:hover{background:#2d333b;border-color:#484f58}
+  button:hover{background:#2d333b}
   button.primary{background:#1f6feb;border-color:#1f6feb}
   button.primary:hover{background:#388bfd}
   button.ok{background:#238636;border-color:#238636}
   button.ok:hover{background:#2ea043}
   button.warn{background:#9e6a03;border-color:#9e6a03}
   button.warn:hover{background:#bb8009}
-  button:disabled{opacity:.4;cursor:not-allowed;filter:grayscale(.4)}
+  button:disabled{opacity:.4;cursor:not-allowed}
 
   /* ---------- Barra de estado ---------- */
   .statusbar{
-    display:flex;gap:22px;flex-wrap:wrap;padding:6px 14px;
-    background:#0d1117;border-bottom:1px solid #21262d;font-size:12px;color:#8b949e;
+    display:flex;gap:16px;flex-wrap:wrap;padding:5px 12px;
+    background:#0d1117;border-bottom:1px solid #21262d;font-size:11.5px;color:#8b949e;
   }
   .statusbar b{color:#e6edf3;font-weight:600}
-  .statusbar .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#484f58;margin-right:6px;vertical-align:middle}
+  .statusbar .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#484f58;margin-right:5px;vertical-align:middle;transition:.2s}
   .statusbar .dot.on{background:#3fb950;box-shadow:0 0 8px #3fb950}
 
-  /* ---------- Rejilla de ventanas ---------- */
+  /* ---------- Barra de historial ---------- */
+  .history-bar{
+    display:flex;gap:8px;align-items:center;
+    padding:5px 12px;background:#0a0d12;border-bottom:1px solid #21262d;
+    flex-shrink:0;font-size:11px;min-height:32px;
+  }
+  .history-label{color:#8b949e;font-weight:600;white-space:nowrap;font-size:11px}
+  .history-chips{
+    display:flex;gap:5px;flex:1;overflow-x:auto;padding-bottom:2px;
+    scrollbar-width:thin;scrollbar-color:#30363d transparent;
+  }
+  .history-chips::-webkit-scrollbar{height:5px}
+  .history-chips::-webkit-scrollbar-thumb{background:#30363d;border-radius:3px}
+  .chip{
+    background:#21262d;border:1px solid #30363d;color:#c9d1d9;
+    padding:2px 4px 2px 9px;border-radius:12px;font-size:11px;
+    cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;
+    gap:5px;flex-shrink:0;font-family:inherit;transition:.12s;
+  }
+  .chip:hover{background:#2d333b;border-color:#484f58}
+  .chip-del{
+    color:#6e7681;font-weight:bold;font-size:14px;line-height:1;
+    cursor:pointer;padding:0 3px;border-radius:50%;
+  }
+  .chip-del:hover{color:#f85149;background:rgba(248,81,73,.15)}
+  .chip-meta{color:#6e7681;font-size:9.5px}
+  .history-empty{color:#484f58;font-size:11px;font-style:italic}
+  .mini{padding:1px 7px;font-size:11px;border-radius:5px;line-height:1.4}
+
+  /* ---------- Rejilla ---------- */
   .grid{
-    flex:1;min-height:0;display:grid;gap:10px;padding:10px;overflow:auto;
-    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    flex:1;min-height:0;display:grid;gap:8px;padding:8px;overflow:auto;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
   }
   .pane{
-    display:flex;flex-direction:column;min-height:250px;
-    background:#161b22;border:1px solid #21262d;border-radius:10px;overflow:hidden;
+    display:flex;flex-direction:column;min-height:220px;
+    background:#161b22;border:1px solid #21262d;border-radius:8px;overflow:hidden;
+    transition:box-shadow .15s;
   }
+  .pane.flash{box-shadow:0 0 0 2px #3fb950, 0 0 14px rgba(63,185,80,.45)}
   .pane-head{
-    display:flex;align-items:center;gap:7px;padding:6px 9px;
-    background:#1b2230;border-bottom:1px solid #21262d;font-size:12px;
+    display:flex;align-items:center;gap:6px;padding:5px 8px;
+    background:#1b2230;border-bottom:1px solid #21262d;font-size:11.5px;
   }
-  .pane-title{font-weight:600}
+  .pane-title{font-weight:600;font-size:12px}
   .badge{
     background:#0d1117;border:1px solid #30363d;border-radius:20px;
-    padding:1px 8px;font-size:11px;color:#8b949e;white-space:nowrap;
+    padding:1px 7px;font-size:10.5px;color:#8b949e;white-space:nowrap;
   }
   .badge.ok{color:#3fb950;border-color:#238636}
   .badge.load{color:#d29922;border-color:#9e6a03}
+  .badge.warn{color:#f85149;border-color:#da3633}
   .spacer{flex:1}
-  .mini{padding:2px 9px;font-size:12px;border-radius:6px;line-height:1.5}
-  .frame-wrap{flex:1;position:relative;background:#0d1117}
-  .frame-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff}
+
+  .frame-wrap{
+    flex:1;min-height:0;position:relative;background:#0d1117;overflow:hidden;
+  }
+  .frame-wrap.scrollable{overflow-y:auto;overflow-x:hidden}
+  .frame-wrap iframe{width:100%;height:100%;border:0;background:#fff;display:block}
+  .frame-wrap.scrollable iframe{height:3000px}
   .placeholder{
     position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-    color:#484f58;font-size:13px;text-align:center;padding:18px;line-height:1.5;
+    color:#484f58;font-size:12px;text-align:center;padding:16px;line-height:1.4;
   }
+
   .toast{
-    position:fixed;bottom:18px;left:50%;transform:translateX(-50%) translateY(20px);
-    background:#1f6feb;color:#fff;padding:10px 18px;border-radius:8px;font-size:13px;
-    opacity:0;pointer-events:none;transition:.25s;z-index:99;box-shadow:0 8px 24px rgba(0,0,0,.5);
+    position:fixed;bottom:16px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:#1f6feb;color:#fff;padding:9px 16px;border-radius:7px;font-size:12px;
+    opacity:0;pointer-events:none;transition:.25s;z-index:99;
+    box-shadow:0 8px 24px rgba(0,0,0,.5);max-width:90vw;text-align:center;
   }
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
@@ -109,26 +146,40 @@
   </div>
 
   <div class="field">
-    <label for="interval">Intervalo (seg)</label>
+    <label for="interval">Recarga (s)</label>
     <input id="interval" type="number" min="1" step="1" value="5">
   </div>
 
   <div class="field">
-    <label for="limit">Límite de ciclos</label>
+    <label for="limit">Límite ciclos</label>
     <input id="limit" type="number" min="0" step="1" value="0" title="0 = sin límite">
   </div>
 
-  <div class="field checks">
-    <label><input type="checkbox" id="manualOnly"> Sin auto-recarga</label>
-    <label><input type="checkbox" id="noCache"> Evitar caché</label>
-    <label><input type="checkbox" id="popupMode"> Ventanas emergentes</label>
+  <div class="field">
+    <label for="speed">Vel. scroll</label>
+    <input id="speed" type="number" min="1" max="10" step="1" value="2">
+  </div>
+
+  <div class="field">
+    <label for="clickEvery">Click cada (s)</label>
+    <input id="clickEvery" type="number" min="1" step="1" value="4">
+  </div>
+
+  <div class="checks">
+    <label><input type="checkbox" id="scrollOn" checked> Scroll</label>
+    <label><input type="checkbox" id="clickOn" checked> Clicks</label>
+    <label class="key"><input type="checkbox" id="sandboxOn" checked> Bloquear popups/escape</label>
+    <label><input type="checkbox" id="noCache"> Sin caché</label>
+    <label><input type="checkbox" id="proxyOn" title="Evita bloqueos X-Frame-Options"> Proxy</label>
+    <label><input type="checkbox" id="popupMode"> Popups</label>
+    <label><input type="checkbox" id="manualOnly"> Sin auto</label>
   </div>
 
   <div class="buttons">
     <button id="applyBtn" class="primary">Aplicar a las 5</button>
     <button id="startBtn" class="ok">▶ Iniciar</button>
     <button id="stopBtn" class="warn" disabled>⏸ Detener</button>
-    <button id="reloadAllBtn">⟳ Recargar ahora</button>
+    <button id="reloadAllBtn">⟳ Recargar</button>
     <button id="resetBtn">↺ Reiniciar</button>
   </div>
 </header>
@@ -136,38 +187,62 @@
 <div class="statusbar">
   <span><span id="runDot" class="dot"></span><b id="statusText">Listo</b></span>
   <span id="cycleText">Ciclos: <b>0</b> / ∞</span>
-  <span id="totalText">Recargas totales: <b>0</b></span>
-  <span style="margin-left:auto">Si una web no carga en el marco, activa <b>Ventanas emergentes</b></span>
+  <span id="totalText">Recargas: <b>0</b></span>
+  <span id="activityText">Scroll: ON · Clicks: ON</span>
+  <span style="margin-left:auto;color:#484f58">Los enlaces clickeados dentro de cada panel se abren en el mismo panel</span>
+</div>
+
+<!-- ================= HISTORIAL ================= -->
+<div class="history-bar">
+  <span class="history-label">🕘 Historial</span>
+  <div class="history-chips" id="historyChips"></div>
+  <button class="mini" id="clearHistoryBtn">Limpiar</button>
 </div>
 
 <!-- ================= REJILLA ================= -->
 <main id="grid" class="grid"></main>
-
 <div id="toast" class="toast"></div>
 
 <script>
 /* =========================================================
-   CONFIGURACIÓN
+   Referencias DOM
+   ========================================================= */
+const $ = id => document.getElementById(id);
+const grid = $('grid');
+const urlInput = $('url');
+const intervalIn = $('interval');
+const limitIn = $('limit');
+const speedIn = $('speed');
+const clickEveryIn = $('clickEvery');
+const scrollOn = $('scrollOn');
+const clickOn = $('clickOn');
+const sandboxOn = $('sandboxOn');
+const noCache = $('noCache');
+const proxyOn = $('proxyOn');
+const popupMode = $('popupMode');
+const manualOnly = $('manualOnly');
+const applyBtn = $('applyBtn');
+const startBtn = $('startBtn');
+const stopBtn = $('stopBtn');
+const reloadAllBtn = $('reloadAllBtn');
+const resetBtn = $('resetBtn');
+const statusText = $('statusText');
+const runDot = $('runDot');
+const cycleText = $('cycleText');
+const totalText = $('totalText');
+const activityText = $('activityText');
+const historyChips = $('historyChips');
+const clearHistoryBtn = $('clearHistoryBtn');
+
+/* =========================================================
+   Constantes y estado
    ========================================================= */
 const PANE_COUNT = 5;
+const HISTORY_KEY = 'mw_history_v1';
+const HISTORY_MAX = 30;
 
-const $ = id => document.getElementById(id);
-const grid        = $('grid');
-const urlInput    = $('url');
-const intervalIn  = $('interval');
-const limitIn     = $('limit');
-const manualOnly  = $('manualOnly');
-const noCache     = $('noCache');
-const popupMode   = $('popupMode');
-const applyBtn    = $('applyBtn');
-const startBtn    = $('startBtn');
-const stopBtn     = $('stopBtn');
-const reloadAllBtn= $('reloadAllBtn');
-const resetBtn    = $('resetBtn');
-const statusText  = $('statusText');
-const runDot      = $('runDot');
-const cycleText   = $('cycleText');
-const totalText   = $('totalText');
+/* Sandbox: permite scripts/formularios/cookies pero BLOQUEA popups y salir del iframe */
+const SANDBOX = 'allow-scripts allow-forms allow-same-origin allow-modals allow-downloads allow-pointer-lock';
 
 const state = {
   url: '',
@@ -175,13 +250,14 @@ const state = {
   timer: null,
   cycles: 0,
   totalReloads: 0,
-  windows: []       // referencias a ventanas emergentes
+  windows: [],
+  raf: null,
+  clickTimers: []
 };
-
 const panes = [];
 
 /* =========================================================
-   CREACIÓN DE LAS 5 VENTANAS
+   Crear las 5 ventanas
    ========================================================= */
 for (let i = 0; i < PANE_COUNT; i++) {
   const el = document.createElement('div');
@@ -191,11 +267,11 @@ for (let i = 0; i < PANE_COUNT; i++) {
       <span class="pane-title">Ventana ${i + 1}</span>
       <span class="badge count" title="Recargas de esta ventana">0</span>
       <span class="spacer"></span>
-      <span class="badge status">vacía</span>
+      <span class="badge status" title="Estado de la ventana">vacía</span>
       <button class="mini" data-act="reload" title="Recargar esta ventana">⟳</button>
     </div>
     <div class="frame-wrap">
-      <div class="placeholder">Sin enlace.<br>Pega una URL arriba y pulsa «Aplicar a las 5».</div>
+      <div class="placeholder">Sin enlace.<br>Pega una URL y pulsa «Aplicar a las 5».</div>
     </div>`;
   grid.appendChild(el);
 
@@ -206,7 +282,8 @@ for (let i = 0; i < PANE_COUNT; i++) {
     countEl: el.querySelector('.count'),
     statusEl: el.querySelector('.status'),
     iframe: null,
-    count: 0
+    count: 0,
+    scrollPause: 0
   };
 
   el.querySelector('[data-act="reload"]')
@@ -216,23 +293,41 @@ for (let i = 0; i < PANE_COUNT; i++) {
 }
 
 /* =========================================================
-   UTILIDADES
+   Utilidades
    ========================================================= */
 function normalizeUrl(raw) {
   const v = (raw || '').trim();
   if (!v) return '';
-  if (/^[a-z][a-z0-9+.\-]*:\/\//i.test(v)) return v;   // ya tiene protocolo
+  if (/^[a-z][a-z0-9+.\-]*:\/\//i.test(v)) return v;
   return 'https://' + v;
+}
+
+function applyProxy(url) {
+  if (!proxyOn.checked || !url) return url;
+  try {
+    const u = new URL(url);
+    const host = u.hostname.replace(/\./g, '-');
+    const proxy = new URL(`https://${host}.translate.goog${u.pathname}`);
+    u.searchParams.forEach((v, k) => proxy.searchParams.set(k, v));
+    proxy.searchParams.set('_x_tr_sl', 'auto');
+    proxy.searchParams.set('_x_tr_tl', 'es');
+    proxy.searchParams.set('_x_tr_hl', 'es');
+    proxy.hash = u.hash;
+    return proxy.toString();
+  } catch (e) { return url; }
 }
 
 function buildUrl() {
   if (!state.url) return '';
-  if (!noCache.checked) return state.url;
-  try {
-    const u = new URL(state.url);
-    u.searchParams.set('_ts', Date.now());
-    return u.toString();
-  } catch { return state.url; }
+  let u = state.url;
+  if (noCache.checked) {
+    try {
+      const urlObj = new URL(u);
+      urlObj.searchParams.set('_ts', Date.now());
+      u = urlObj.toString();
+    } catch (e) {}
+  }
+  return applyProxy(u);
 }
 
 function setStatus(txt) { statusText.textContent = txt; }
@@ -243,7 +338,7 @@ function toast(msg) {
   t.textContent = msg;
   t.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2600);
 }
 
 function updatePaneCount(p) { p.countEl.textContent = p.count; }
@@ -251,41 +346,221 @@ function updatePaneCount(p) { p.countEl.textContent = p.count; }
 function updateStatusBar() {
   const limit = Math.max(0, parseInt(limitIn.value, 10) || 0);
   cycleText.innerHTML = `Ciclos: <b>${state.cycles}</b> / ${limit > 0 ? limit : '∞'}`;
-  totalText.innerHTML = `Recargas totales: <b>${state.totalReloads}</b>`;
+  totalText.innerHTML = `Recargas: <b>${state.totalReloads}</b>`;
+  const sc = scrollOn.checked ? 'ON' : 'off';
+  const cl = clickOn.checked ? 'ON' : 'off';
+  activityText.innerHTML = `Scroll: <b>${sc}</b> · Clicks: <b>${cl}</b>`;
   runDot.classList.toggle('on', state.running);
 }
 
 /* =========================================================
-   CARGA DE UN IFRAME (recrear = recarga real garantizada)
+   ==== HISTORIAL DE ENLACES (localStorage) ====
+   ========================================================= */
+function loadHistory() {
+  try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); }
+  catch (e) { return []; }
+}
+function saveHistory(h) {
+  try { localStorage.setItem(HISTORY_KEY, JSON.stringify(h)); } catch (e) {}
+}
+function addToHistory(url) {
+  if (!url) return;
+  let h = loadHistory();
+  h = h.filter(x => x.url !== url);
+  h.unshift({ url, ts: Date.now() });
+  h = h.slice(0, HISTORY_MAX);
+  saveHistory(h);
+  renderHistory();
+}
+function relativeTime(ts) {
+  const s = Math.floor((Date.now() - ts) / 1000);
+  if (s < 60) return 'ahora';
+  if (s < 3600) return Math.floor(s / 60) + 'm';
+  if (s < 86400) return Math.floor(s / 3600) + 'h';
+  return Math.floor(s / 86400) + 'd';
+}
+function renderHistory() {
+  const h = loadHistory();
+  historyChips.innerHTML = '';
+
+  if (!h.length) {
+    historyChips.innerHTML = '<span class="history-empty">(sin enlaces guardados)</span>';
+    return;
+  }
+
+  h.forEach(item => {
+    const chip = document.createElement('button');
+    chip.className = 'chip';
+    chip.title = item.url;
+
+    const label = document.createElement('span');
+    const short = item.url.replace(/^https?:\/\//, '').replace(/\/$/, '');
+    label.textContent = short.length > 34 ? short.slice(0, 34) + '…' : short;
+
+    const meta = document.createElement('span');
+    meta.className = 'chip-meta';
+    meta.textContent = relativeTime(item.ts);
+
+    const del = document.createElement('span');
+    del.className = 'chip-del';
+    del.textContent = '×';
+    del.title = 'Eliminar del historial';
+    del.addEventListener('click', e => {
+      e.stopPropagation();
+      saveHistory(loadHistory().filter(x => x.url !== item.url));
+      renderHistory();
+    });
+
+    chip.appendChild(label);
+    chip.appendChild(meta);
+    chip.appendChild(del);
+
+    chip.addEventListener('click', () => {
+      urlInput.value = item.url;
+      applyToAll();
+    });
+
+    historyChips.appendChild(chip);
+  });
+}
+
+clearHistoryBtn.addEventListener('click', () => {
+  if (!confirm('¿Vaciar todo el historial de enlaces?')) return;
+  saveHistory([]);
+  renderHistory();
+});
+
+renderHistory();
+
+/* =========================================================
+   ==== INTERCEPTOR DE CLICKS (solo same-origin) ====
+   Fuerza que target="_blank" / "_top" / "_parent" se abra
+   dentro del mismo iframe en lugar de abrir una pestaña.
+   ========================================================= */
+function injectInterceptor(iframe) {
+  try {
+    const doc = iframe.contentDocument;
+    if (!doc) return;
+    if (doc.__mwInjected) return;
+    doc.__mwInjected = true;
+
+    /* Interceptar clicks en enlaces */
+    doc.addEventListener('click', e => {
+      let el = e.target;
+      while (el && el.tagName !== 'A') el = el.parentElement;
+      if (!el || !el.href) return;
+
+      const href = el.getAttribute('href') || '';
+      /* Ignorar javascript:, mailto:, tel:, anchors */
+      if (/^(javascript:|mailto:|tel:|#)/i.test(href)) return;
+
+      const target = (el.getAttribute('target') || '').toLowerCase();
+      /* Si el target es distinto de _self, forzar navegación en el iframe */
+      if (target && target !== '_self') {
+        e.preventDefault();
+        e.stopPropagation();
+        try {
+          const abs = el.href;
+          addToHistory(abs);
+          iframe.src = abs;
+        } catch (err) {}
+      } else {
+        /* Navegación normal dentro del iframe, guardar en historial */
+        try { addToHistory(el.href); } catch (err) {}
+      }
+    }, true);
+
+    /* Interceptar envíos de formulario con target problemático */
+    doc.addEventListener('submit', e => {
+      const form = e.target;
+      if (!form) return;
+      const target = (form.getAttribute('target') || '').toLowerCase();
+      if (target && target !== '_self') {
+        form.setAttribute('target', '_self');
+      }
+    }, true);
+
+    /* Interceptar window.open y redirigir a navegar en el propio iframe */
+    try {
+      const win = iframe.contentWindow;
+      const origOpen = win.open;
+      win.open = function(url, name, features) {
+        if (url) {
+          try {
+            addToHistory(url);
+            iframe.src = url;
+          } catch (err) {}
+        }
+        return null;
+      };
+      /* Guardar referencia para no perder el original por si acaso */
+      win.__mwOrigOpen = origOpen;
+    } catch (err) {}
+
+  } catch (e) {
+    /* cross-origin: no podemos interceptar. El sandbox se encarga. */
+  }
+}
+
+/* =========================================================
+   Cargar URL en una ventana
    ========================================================= */
 function setPaneUrl(pane, url) {
   const old = pane.wrap.querySelector('iframe');
   const iframe = document.createElement('iframe');
   iframe.setAttribute('referrerpolicy', 'no-referrer');
-  iframe.setAttribute('allow', 'clipboard-write; fullscreen; autoplay');
+  iframe.setAttribute('allow', 'clipboard-write; fullscreen; autoplay; encrypted-media');
+
+  /* Sandbox: evita popups y salir del iframe (XSS/escape protection) */
+  if (sandboxOn.checked) {
+    iframe.setAttribute('sandbox', SANDBOX);
+  }
+
   iframe.src = url;
 
+  pane.wrap.classList.remove('scrollable');
+  pane.wrap.querySelector('.placeholder')?.remove();
   pane.statusEl.textContent = 'cargando';
   pane.statusEl.className = 'badge status load';
+  pane.scrollPause = 0;
 
   iframe.addEventListener('load', () => {
     if (pane.iframe !== iframe) return;
-    pane.statusEl.textContent = 'activa';
-    pane.statusEl.className = 'badge status ok';
+    setTimeout(() => {
+      try {
+        const doc = iframe.contentWindow.document;
+        if (doc && doc.body) {
+          /* Same-origin: control total */
+          iframe.classList.add('same-origin');
+          iframe.classList.remove('cross-origin');
+          pane.wrap.classList.remove('scrollable');
+          pane.statusEl.textContent = 'completa';
+          pane.statusEl.title = 'Scroll + clicks + enlaces internos OK';
+          pane.statusEl.className = 'badge status ok';
+          injectInterceptor(iframe);
+          return;
+        }
+      } catch (e) {}
+
+      /* Cross-origin: scroll wrapper, sandbox bloquea escape */
+      iframe.classList.add('cross-origin');
+      iframe.classList.remove('same-origin');
+      pane.wrap.classList.add('scrollable');
+      pane.statusEl.textContent = sandboxOn.checked ? 'scroll + bloqueado' : 'solo scroll';
+      pane.statusEl.title = sandboxOn.checked
+        ? 'Cross-origin: scroll activo, popups/escape bloqueados'
+        : 'Cross-origin: scroll activo, popups permitidos (riesgo de escape)';
+      pane.statusEl.className = 'badge status warn';
+    }, 300);
   });
 
-  if (old) {
-    pane.wrap.replaceChild(iframe, old);
-  } else {
-    const ph = pane.wrap.querySelector('.placeholder');
-    if (ph) ph.remove();
-    pane.wrap.appendChild(iframe);
-  }
+  if (old) pane.wrap.replaceChild(iframe, old);
+  else pane.wrap.appendChild(iframe);
   pane.iframe = iframe;
 }
 
 /* =========================================================
-   MODO VENTANAS EMERGENTES
+   Modo popups
    ========================================================= */
 function closePopups() {
   state.windows.forEach(w => { try { if (w && !w.closed) w.close(); } catch (e) {} });
@@ -294,43 +569,39 @@ function closePopups() {
 
 function openPopups(url) {
   closePopups();
-  let bloqueadas = 0;
-
+  let blocked = 0;
   for (let i = 0; i < PANE_COUNT; i++) {
     const w = window.open(url, 'mw_win_' + i,
       'width=900,height=650,menubar=yes,toolbar=yes,scrollbars=yes,resizable=yes');
     state.windows[i] = w;
     const p = panes[i];
-
     if (w) {
       p.iframe = null;
       p.wrap.innerHTML = '<div class="placeholder">Abierta en ventana emergente</div>';
       p.statusEl.textContent = 'emergente';
       p.statusEl.className = 'badge status ok';
     } else {
-      bloqueadas++;
+      blocked++;
       p.statusEl.textContent = 'bloqueada';
-      p.statusEl.className = 'badge status';
+      p.statusEl.className = 'badge status warn';
     }
   }
-  if (bloqueadas) toast(`El navegador bloqueó ${bloqueadas} ventana(s). Permite las ventanas emergentes.`);
+  if (blocked) toast(`El navegador bloqueó ${blocked} ventana(s). Permite los popups.`);
 }
 
 /* =========================================================
-   RECARGAR UNA VENTANA
+   Recargar una ventana
    ========================================================= */
 function reloadPane(pane) {
   if (!state.url) return;
-
   if (popupMode.checked) {
     const w = state.windows[pane.index];
-    if (!w || w.closed) return;              // ventana cerrada → no hacer nada
-    try { w.location.href = buildUrl(); } catch (e) { /* cross-origin: se ignora */ }
+    if (!w || w.closed) return;
+    try { w.location.href = buildUrl(); } catch (e) {}
   } else {
     if (!pane.iframe) return;
     setPaneUrl(pane, buildUrl());
   }
-
   pane.count++;
   state.totalReloads++;
   updatePaneCount(pane);
@@ -338,15 +609,14 @@ function reloadPane(pane) {
 }
 
 /* =========================================================
-   CICLO DE RECARGA (refresca las 5 a la vez)
+   Ciclo de recarga
    ========================================================= */
 function cycle(isManual = false) {
   if (!state.url) { if (isManual) toast('Primero aplica un enlace'); return; }
-
   const limit = Math.max(0, parseInt(limitIn.value, 10) || 0);
 
   if (!isManual && limit > 0 && state.cycles >= limit) {
-    stopAuto();
+    stopAll();
     setStatus('Límite de ciclos alcanzado');
     toast('Se alcanzó el límite de recargas');
     return;
@@ -357,38 +627,153 @@ function cycle(isManual = false) {
   updateStatusBar();
 
   if (limit > 0 && state.cycles >= limit) {
-    stopAuto();
+    stopAll();
     setStatus('Límite de ciclos alcanzado');
     toast('Se alcanzó el límite de recargas');
   }
 }
 
 /* =========================================================
-   INICIAR / DETENER
+   Actividad: scroll + clicks aleatorios
    ========================================================= */
-function startAuto() {
+function scrollPane(pane) {
+  const speed = Math.max(1, parseInt(speedIn.value, 10) || 2);
+  const wrap = pane.wrap;
+  const iframe = pane.iframe;
+  if (!iframe) return;
+
+  if (pane.scrollPause > 0) { pane.scrollPause--; return; }
+
+  if (wrap.classList.contains('scrollable')) {
+    wrap.scrollTop += speed;
+    if (wrap.scrollTop + wrap.clientHeight >= wrap.scrollHeight - 2) {
+      wrap.scrollTop = 0;
+      pane.scrollPause = 25;
+    }
+  } else {
+    try {
+      const win = iframe.contentWindow;
+      const doc = iframe.contentDocument;
+      if (!win || !doc) return;
+      win.scrollBy(0, speed);
+      const max = doc.documentElement.scrollHeight - win.innerHeight;
+      if (win.scrollY >= max - 2) {
+        win.scrollTo(0, 0);
+        pane.scrollPause = 25;
+      }
+    } catch (e) {
+      wrap.classList.add('scrollable');
+    }
+  }
+}
+
+function tryRandomClick(pane) {
+  if (!pane.iframe) return false;
+  try {
+    const doc = pane.iframe.contentDocument;
+    if (!doc || !doc.body) return false;
+
+    const sel = 'a, button, [role="button"], input[type="submit"], input[type="button"], input[type="checkbox"], input[type="radio"], [onclick]';
+    const cands = Array.from(doc.querySelectorAll(sel)).filter(el => {
+      const r = el.getBoundingClientRect();
+      return r.width > 0 && r.height > 0;
+    });
+    if (!cands.length) return false;
+
+    const el = cands[Math.floor(Math.random() * cands.length)];
+    if (!el) return false;
+
+    pane.el.classList.remove('flash');
+    void pane.el.offsetWidth;
+    pane.el.classList.add('flash');
+    setTimeout(() => pane.el.classList.remove('flash'), 230);
+
+    const r = el.getBoundingClientRect();
+    const opts = {
+      bubbles: true, cancelable: true,
+      clientX: r.left + r.width / 2,
+      clientY: r.top + r.height / 2,
+      view: pane.iframe.contentWindow
+    };
+    try {
+      el.dispatchEvent(new MouseEvent('mousedown', opts));
+      el.dispatchEvent(new MouseEvent('mouseup', opts));
+    } catch (e) {}
+    try { el.click(); } catch (e) {}
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function activityLoop() {
+  if (!state.running) return;
+  if (scrollOn.checked) panes.forEach(p => scrollPane(p));
+  state.raf = requestAnimationFrame(activityLoop);
+}
+
+function scheduleClickForPane(pane) {
+  if (!state.running) return;
+  const sec = Math.max(1, parseFloat(clickEveryIn.value) || 4);
+  const delay = sec * 1000 * (0.6 + Math.random() * 0.8);
+  const t = setTimeout(() => {
+    if (!state.running) return;
+    if (clickOn.checked && !popupMode.checked) tryRandomClick(pane);
+    scheduleClickForPane(pane);
+  }, delay);
+  state.clickTimers.push(t);
+}
+
+function startActivities() {
+  stopActivities();
+  if (popupMode.checked) {
+    toast('En modo popups no se puede hacer scroll/click automático');
+    return;
+  }
+  if (scrollOn.checked) state.raf = requestAnimationFrame(activityLoop);
+  if (clickOn.checked) panes.forEach(p => scheduleClickForPane(p));
+}
+
+function stopActivities() {
+  if (state.raf) { cancelAnimationFrame(state.raf); state.raf = null; }
+  state.clickTimers.forEach(t => clearTimeout(t));
+  state.clickTimers = [];
+}
+
+/* =========================================================
+   Iniciar / Detener
+   ========================================================= */
+function startAll() {
   if (!state.url) { toast('Aplica un enlace primero'); return; }
-
-  const sec = parseFloat(intervalIn.value);
-  if (!isFinite(sec) || sec < 1) { toast('El intervalo mínimo es 1 segundo'); return; }
-
   const limit = Math.max(0, parseInt(limitIn.value, 10) || 0);
-  if (limit > 0 && state.cycles >= limit) { toast('Reinicia los contadores para continuar'); return; }
+  if (limit > 0 && state.cycles >= limit) {
+    toast('Reinicia los contadores para continuar');
+    return;
+  }
 
-  clearInterval(state.timer);
+  if (!manualOnly.checked) {
+    const sec = parseFloat(intervalIn.value);
+    if (!isFinite(sec) || sec < 1) { toast('Intervalo mínimo 1 segundo'); return; }
+    clearInterval(state.timer);
+    state.timer = setInterval(() => cycle(false), sec * 1000);
+  }
+
   state.running = true;
-  state.timer = setInterval(cycle, sec * 1000);
+  startActivities();
 
   startBtn.disabled = true;
   stopBtn.disabled = false;
-  setStatus(`Auto-recarga cada ${sec}s`);
+  setStatus(manualOnly.checked
+    ? 'Actividad activa (sin auto-recarga)'
+    : `Activo · recarga cada ${intervalIn.value}s`);
   updateStatusBar();
 }
 
-function stopAuto() {
+function stopAll() {
   clearInterval(state.timer);
   state.timer = null;
   state.running = false;
+  stopActivities();
   startBtn.disabled = false;
   stopBtn.disabled = true;
   setStatus('Detenido');
@@ -396,7 +781,7 @@ function stopAuto() {
 }
 
 /* =========================================================
-   APLICAR ENLACE A LAS 5 VENTANAS
+   Aplicar enlace a las 5 ventanas
    ========================================================= */
 function applyToAll() {
   const url = normalizeUrl(urlInput.value);
@@ -406,14 +791,16 @@ function applyToAll() {
   state.url = url;
   state.cycles = 0;
   state.totalReloads = 0;
-
   panes.forEach(p => { p.count = 0; updatePaneCount(p); });
+
+  addToHistory(url);
 
   if (popupMode.checked) {
     openPopups(url);
   } else {
     closePopups();
-    panes.forEach(p => setPaneUrl(p, buildUrl()));
+    /* Carga escalonada para evitar rate-limits */
+    panes.forEach((p, i) => setTimeout(() => setPaneUrl(p, buildUrl()), i * 250));
   }
 
   updateStatusBar();
@@ -422,21 +809,17 @@ function applyToAll() {
 }
 
 /* =========================================================
-   EVENTOS
+   Eventos
    ========================================================= */
 applyBtn.addEventListener('click', applyToAll);
+urlInput.addEventListener('keydown', e => { if (e.key === 'Enter') applyToAll(); });
 
-urlInput.addEventListener('keydown', e => {
-  if (e.key === 'Enter') { applyToAll(); }
-});
-
-startBtn.addEventListener('click', startAuto);
-stopBtn.addEventListener('click', stopAuto);
-
+startBtn.addEventListener('click', startAll);
+stopBtn.addEventListener('click', stopAll);
 reloadAllBtn.addEventListener('click', () => cycle(true));
 
 resetBtn.addEventListener('click', () => {
-  stopAuto();
+  stopAll();
   state.cycles = 0;
   state.totalReloads = 0;
   panes.forEach(p => { p.count = 0; updatePaneCount(p); });
@@ -446,21 +829,47 @@ resetBtn.addEventListener('click', () => {
 
 manualOnly.addEventListener('change', () => {
   intervalIn.disabled = manualOnly.checked;
-  if (manualOnly.checked) stopAuto();
+  if (manualOnly.checked && state.timer) { clearInterval(state.timer); state.timer = null; }
+  else if (!manualOnly.checked && state.running) {
+    const sec = parseFloat(intervalIn.value);
+    if (sec >= 1) state.timer = setInterval(() => cycle(false), sec * 1000);
+  }
 });
 
 popupMode.addEventListener('change', () => {
   if (!popupMode.checked) closePopups();
-  toast(popupMode.checked
-    ? 'Modo ventanas emergentes: pulsa «Aplicar a las 5»'
-    : 'Modo marco integrado (iframe)');
+  toast(popupMode.checked ? 'Modo popups: pulsa «Aplicar a las 5»' : 'Modo iframe');
 });
 
-/* Al cerrar la página, cerrar las ventanas emergentes abiertas */
-window.addEventListener('beforeunload', () => { closePopups(); });
+sandboxOn.addEventListener('change', () => {
+  toast(sandboxOn.checked
+    ? 'Bloqueo activo: se recargarán al aplicar'
+    : 'Bloqueo desactivado: los enlaces _blank podrían abrir fuera');
+});
+
+scrollOn.addEventListener('change', () => {
+  updateStatusBar();
+  if (state.running && scrollOn.checked && !state.raf) {
+    state.raf = requestAnimationFrame(activityLoop);
+  }
+});
+
+clickOn.addEventListener('change', () => {
+  updateStatusBar();
+  if (!state.running) return;
+  if (clickOn.checked) {
+    state.clickTimers.forEach(t => clearTimeout(t));
+    state.clickTimers = [];
+    panes.forEach(p => scheduleClickForPane(p));
+  }
+});
+
+window.addEventListener('beforeunload', () => {
+  closePopups();
+  stopActivities();
+});
 
 /* Estado inicial */
-intervalIn.disabled = false;
 updateStatusBar();
 </script>
 </body>
