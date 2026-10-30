@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" translate="yes">
 <head>
 <meta charset="UTF-8"/>
+<meta http-equiv="content-language" content="es"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 <meta name="color-scheme" content="light"/>
 <title>JEXE Regedit — Planes</title>
@@ -12,63 +13,30 @@
 <style>
 :root{--ink:#0B1729;--ink-2:#33445C;--muted:#7C8CA3;--muted-2:#A2AFC3;--line:#E8EEF7;--line-2:#D6E3F5;--blue-700:#1D4ED8;--blue-600:#2563EB;--blue-500:#3B82F6;--blue-400:#60A5FA;--blue-50:#EFF5FF;--grad:linear-gradient(140deg,#2563EB 0%,#60A5FA 100%);--ease:cubic-bezier(.22,.61,.36,1)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
 html{-webkit-text-size-adjust:100%}
-body{font-family:'Manrope',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--ink);background:#FBFCFE;line-height:1.5;min-height:100dvh;padding:44px 20px 56px;overflow-x:hidden;-webkit-font-smoothing:antialiased;position:relative}
+body{font-family:'Manrope',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--ink);background:#FBFCFE;line-height:1.5;min-height:100dvh;padding:20px 20px 56px;overflow-x:hidden;-webkit-font-smoothing:antialiased;position:relative}
+body.modal-open{overflow:hidden}
 body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(720px 460px at 12% -10%,rgba(96,165,250,.14),rgba(96,165,250,0) 62%),radial-gradient(680px 420px at 108% 110%,rgba(37,99,235,.08),rgba(37,99,235,0) 60%)}
 body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:radial-gradient(circle,rgba(37,99,235,.10) 1px,transparent 1.3px);background-size:24px 24px;-webkit-mask-image:radial-gradient(ellipse 62% 55% at 50% 50%,#000 20%,transparent 78%);mask-image:radial-gradient(ellipse 62% 55% at 50% 50%,#000 20%,transparent 78%);opacity:.7}
+body.has-tbar{padding-top:calc(60px + env(safe-area-inset-top,0px))}
 .ico{width:20px;height:20px;display:block;flex:none}
-.stack{position:relative;z-index:1;width:100%;max-width:480px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+.stack{position:relative;z-index:1;width:100%;max-width:480px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
 .card{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 1px 2px rgba(11,23,41,.03),0 12px 28px -20px rgba(37,99,235,.35);animation:rise .7s var(--ease) both}
 .video-wrap{position:relative;border-radius:20px;overflow:hidden;background:#0B1729;border:1px solid var(--line);box-shadow:0 12px 28px -20px rgba(37,99,235,.35);animation:rise .7s var(--ease) both}
-.video-wrap video{width:100%;display:block;max-height:280px;object-fit:cover}
+.video-wrap video{width:100%;display:block;max-height:170px;object-fit:cover}
 .video-label{position:absolute;bottom:12px;left:12px;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);font-size:.68rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
 .video-label .ico{width:12px;height:12px;color:var(--blue-600)}
-.fast-banner{display:flex;align-items:center;gap:12px;padding:14px 16px;background:linear-gradient(140deg,#F5F9FF 0%,#E7F0FE 100%);border:1px solid #C9DFFB;border-radius:16px;animation:rise .7s .05s var(--ease) both}
-.fb-ico{width:38px;height:38px;flex:none;border-radius:11px;background:var(--grad);display:grid;place-items:center;color:#fff;box-shadow:0 8px 18px -8px rgba(37,99,235,.75)}
-.fb-ico .ico{width:19px;height:19px}
+.fast-banner{display:flex;align-items:center;gap:12px;padding:10px 14px;background:linear-gradient(140deg,#F5F9FF 0%,#E7F0FE 100%);border:1px solid #C9DFFB;border-radius:16px;animation:rise .7s .05s var(--ease) both}
+.fb-ico{width:32px;height:32px;flex:none;border-radius:11px;background:var(--grad);display:grid;place-items:center;color:#fff;box-shadow:0 8px 18px -8px rgba(37,99,235,.75)}
+.fb-ico .ico{width:16px;height:16px}
 .fb-title{font-size:.88rem;font-weight:800;letter-spacing:-.01em;line-height:1.2}
 .fb-sub{font-size:.73rem;color:var(--blue-700);font-weight:600;margin-top:2px}
-.sec-title{text-align:center;margin:10px 0 -4px}
-.sec-title h1{font-size:1.3rem;font-weight:800;letter-spacing:-.025em}
-.sec-title p{font-size:.78rem;color:var(--muted);font-weight:500;margin-top:3px}
-/* PLAN */
-.plan{position:relative;padding:22px 20px;display:flex;flex-direction:column;gap:15px;overflow:hidden}
-.plan-hi{background:linear-gradient(140deg,#F5F9FF 0%,#E7F0FE 100%);border-color:#C9DFFB}
-.plan-top{background:var(--grad);border-color:transparent;color:#fff;box-shadow:0 20px 40px -18px rgba(37,99,235,.7)}
-.plan-top::before{content:'';position:absolute;top:-70px;right:-70px;width:220px;height:220px;background:radial-gradient(circle,rgba(255,255,255,.28),transparent 70%);pointer-events:none}
-.plan-head,.plan-feats,.plan-actions{position:relative;z-index:1}
-.plan-head{display:flex;flex-direction:column;gap:2px}
-.plan-badge{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;padding:5px 11px;border-radius:999px;background:var(--grad);color:#fff;font-size:.6rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase;box-shadow:0 6px 14px -6px rgba(37,99,235,.6);margin-bottom:9px}
-.plan-top .plan-badge{background:#fff;color:var(--blue-700);box-shadow:0 6px 14px -6px rgba(11,23,41,.3)}
-.plan-badge .ico{width:11px;height:11px}
-.plan-name{font-size:1.32rem;font-weight:800;letter-spacing:-.022em;line-height:1.1}
-.plan-tag{font-size:.74rem;font-weight:600;color:var(--muted);margin-top:4px}
-.plan-top .plan-tag{color:rgba(255,255,255,.88)}
-.price-row{display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap}
-.plan-price{display:flex;align-items:baseline;font-size:2.3rem;font-weight:800;letter-spacing:-.03em;line-height:1}
-.plan-price sup{font-size:1rem;font-weight:700;margin-right:2px}
-.plan-price span{font-size:.85rem;font-weight:600;color:var(--muted);margin-left:5px;letter-spacing:0}
-.plan-top .plan-price span{color:rgba(255,255,255,.85)}
-.was{display:flex;flex-direction:column;align-items:flex-start;gap:3px}
-.was s{font-size:.95rem;font-weight:700;color:var(--muted-2);text-decoration-thickness:2px}
-.plan-top .was s{color:rgba(255,255,255,.7)}
-.off{font-size:.6rem;font-weight:800;letter-spacing:.06em;padding:3px 8px;border-radius:999px;background:var(--blue-50);color:var(--blue-700);border:1px solid #C9DFFB}
-.plan-top .off{background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.4)}
-.plan-note{font-size:.73rem;font-weight:500;color:var(--muted);margin-top:7px}
-.plan-top .plan-note{color:rgba(255,255,255,.85)}
-.plan-feats{list-style:none;display:flex;flex-direction:column;gap:8px}
-.plan-feats li{display:flex;align-items:center;gap:9px;font-size:.81rem;font-weight:500;color:var(--ink-2)}
-.plan-feats .ico{width:14px;height:14px;color:var(--blue-600)}
-.plan-feats li.feat-tut{color:var(--blue-700);font-weight:700}
-.plan-top .plan-feats li{color:#fff;font-weight:600}
-.plan-top .plan-feats .ico{color:#fff}
-.plan-actions{display:flex;flex-direction:column;gap:8px;padding-top:4px}
+/* BOTONES */
 .btn{display:flex;align-items:center;justify-content:center;gap:9px;height:50px;padding:0 18px;border:none;border-radius:14px;font-family:inherit;font-size:.87rem;font-weight:800;cursor:pointer;text-decoration:none;transition:transform .35s var(--ease),box-shadow .35s var(--ease),background .35s var(--ease),border-color .35s var(--ease),color .35s var(--ease);width:100%}
 .btn .ico{width:16px;height:16px}
 .btn-primary{background:var(--grad);color:#fff;box-shadow:0 4px 10px -6px rgba(37,99,235,.35)}
 .btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 28px -10px rgba(37,99,235,1)}
-.btn-white{background:#fff;color:var(--blue-700);box-shadow:0 10px 24px -10px rgba(11,23,41,.45)}
-.btn-white:hover{transform:translateY(-2px)}
 .btn-ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line-2);height:46px;font-size:.83rem}
 .btn-ghost:hover{border-color:var(--blue-400);color:var(--blue-700);background:var(--blue-50);transform:translateY(-1px)}
 .btn-ghost .ico{color:var(--blue-600)}
@@ -76,49 +44,75 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;back
 .methods-note{display:flex;align-items:center;justify-content:center;gap:6px;font-size:.68rem;color:var(--muted);font-weight:600;margin-top:-3px}
 .methods-note .ico{width:12px;height:12px;color:var(--blue-500)}
 .methods-note strong{color:var(--blue-700);font-weight:800}
-/* COMPARE */
-.cmp{padding:18px 14px 14px}
-.cmp h2{font-size:1rem;font-weight:800;letter-spacing:-.02em;text-align:center}
-.cmp-sub{font-size:.72rem;color:var(--muted);text-align:center;font-weight:500;margin:2px 0 14px}
-.cmp-grid{display:grid;grid-template-columns:1.15fr 1fr 1fr 1.05fr;gap:0;font-size:.7rem}
-.cmp-grid>div{padding:10px 5px;display:flex;align-items:center;justify-content:center;text-align:center;border-top:1px solid var(--line);font-weight:600;color:var(--ink-2);line-height:1.25}
-.cmp-grid>.l{justify-content:flex-start;text-align:start;color:var(--muted);font-weight:700;font-size:.66rem}
-.cmp-grid>.h{border-top:none;flex-direction:column;gap:2px;font-weight:800;color:var(--ink);font-size:.72rem;padding-bottom:12px}
-.cmp-grid>.h small{font-size:.62rem;color:var(--blue-700);font-weight:700}
-.cmp-grid>.top{background:var(--grad);color:#fff}
-.cmp-grid>.top.h{border-radius:12px 12px 0 0;color:#fff}
-.cmp-grid>.top.h small{color:rgba(255,255,255,.9)}
-.cmp-grid>.top.last{border-radius:0 0 12px 12px}
-.cmp-grid>.top.b{border-top-color:rgba(255,255,255,.25)}
-.cmp-grid .ico{width:15px;height:15px;color:var(--blue-600)}
-.cmp-grid .top .ico{color:#fff}
-.cmp-grid .no{color:var(--muted-2)}
-.verdict{display:flex;flex-direction:column;gap:8px;margin-top:14px}
-.vd{display:flex;gap:10px;align-items:flex-start;padding:11px 12px;background:var(--blue-50);border:1px solid #D5E4FA;border-radius:12px;font-size:.74rem;color:var(--ink-2);font-weight:500;line-height:1.45}
-.vd .ico{width:15px;height:15px;color:var(--blue-600);margin-top:2px}
-.vd strong{color:var(--ink);font-weight:800}
-/* PROOF */
-.proof{padding:20px 18px;display:flex;flex-direction:column;gap:14px;animation-delay:.12s}
-.proof-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.stat{display:flex;flex-direction:column;gap:3px;padding:14px;background:linear-gradient(140deg,#F5F9FF 0%,#E7F0FE 100%);border:1px solid #D5E4FA;border-radius:14px}
-.stat-ico{width:26px;height:26px;border-radius:8px;background:var(--grad);color:#fff;display:grid;place-items:center;margin-bottom:5px}
-.stat-ico .ico{width:14px;height:14px}
-.stat-num{font-size:1.4rem;font-weight:800;letter-spacing:-.025em;line-height:1.1;color:var(--blue-700)}
-.stat-lbl{font-size:.7rem;font-weight:600;color:var(--ink-2);line-height:1.35}
-.proof-link{display:flex;align-items:center;gap:12px;padding:12px 14px;background:#fff;border:1.5px solid var(--line-2);border-radius:14px;text-decoration:none;color:inherit;transition:all .3s var(--ease)}
-.proof-link:hover{border-color:var(--blue-400);background:var(--blue-50)}
-.proof-link-ico{width:36px;height:36px;flex:none;border-radius:10px;background:linear-gradient(150deg,#F2F7FF 0%,#E2EDFE 100%);border:1px solid #D9E7FB;color:var(--blue-600);display:grid;place-items:center}
-.proof-link-body{flex:1;min-width:0}
-.proof-link-title{display:block;font-size:.83rem;font-weight:800;line-height:1.25}
-.proof-link-sub{display:block;font-size:.68rem;font-weight:500;color:var(--muted);margin-top:2px}
-.proof-link-arrow{width:28px;height:28px;flex:none;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:var(--muted-2)}
-.proof-link-arrow .ico{width:13px;height:13px}
-/* MODALS */
+/* CONFIANZA */
+.trust{display:grid;grid-template-columns:1fr 1fr 1.25fr;padding:6px;gap:4px}
+.tr{display:flex;flex-direction:column;align-items:center;gap:1px;padding:9px 4px;text-align:center;border-radius:14px;text-decoration:none;color:inherit}
+.tr .ico{width:16px;height:16px;color:var(--blue-600);margin-bottom:2px}
+.tr b{font-size:1rem;font-weight:800;color:var(--blue-700);letter-spacing:-.02em;line-height:1.1}
+.tr small{font-size:.62rem;font-weight:600;color:var(--ink-2);line-height:1.25}
+.tr.link{background:var(--blue-50);border:1px solid #D5E4FA}
+/* AVISO DE TRADUCCION */
+.trbar{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;background:linear-gradient(140deg,#F5F9FF,#E7F0FE);border:1px solid #C9DFFB}
+.trbar>.ico{color:var(--blue-600);width:22px;height:22px}
+.trb-body{flex:1;min-width:0;display:flex;flex-direction:column}
+.trb-body b{font-size:.8rem;font-weight:800;line-height:1.2}
+.trb-body small{font-size:.66rem;color:var(--ink-2);font-weight:500;line-height:1.35;margin-top:1px}
+.trb-btn{flex:none;display:inline-flex;align-items:center;height:34px;padding:0 13px;border-radius:10px;background:var(--grad);color:#fff;font-size:.74rem;font-weight:800;text-decoration:none}
+.x-btn{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid var(--line-2);background:#fff;color:var(--muted);display:grid;place-items:center;cursor:pointer}
+.x-btn .ico{width:14px;height:14px}
+/* TARJETA DE RULETA */
+.rl-cta{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;text-align:start;font-family:inherit;color:var(--ink);cursor:pointer;background:linear-gradient(140deg,#F5F9FF,#E7F0FE);border-color:#C9DFFB;position:relative;overflow:hidden}
+.rl-cta::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.7) 50%,transparent 65%);transform:translateX(-120%);animation:shine 3.6s ease-in-out infinite}
+@keyframes shine{0%,55%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+.rl-cta-ico{width:38px;height:38px;flex:none;border-radius:11px;background:var(--grad);color:#fff;display:grid;place-items:center;box-shadow:0 8px 18px -8px rgba(37,99,235,.75)}
+.rl-cta-ico .ico{width:19px;height:19px}
+.rl-cta-body{flex:1;min-width:0;display:flex;flex-direction:column}
+.rl-cta-body b{font-size:.88rem;font-weight:800;letter-spacing:-.01em;line-height:1.2}
+.rl-cta-body small{font-size:.72rem;color:var(--blue-700);font-weight:600;margin-top:2px;font-variant-numeric:tabular-nums}
+.rl-cta-go{width:28px;height:28px;flex:none;border-radius:50%;background:#fff;border:1px solid #C9DFFB;color:var(--blue-600);display:grid;place-items:center}
+.rl-cta-go .ico{width:13px;height:13px}
+/* BARRA DE CONTADOR */
+.tbar{position:fixed;top:0;left:0;right:0;z-index:250;display:flex;align-items:center;justify-content:center;gap:10px;padding:calc(8px + env(safe-area-inset-top,0px)) 14px 8px;background:var(--grad);color:#fff;font-size:.8rem;font-weight:700;box-shadow:0 10px 24px -14px rgba(11,23,41,.6)}
+.tbar .ico{width:16px;height:16px}
+.tbar b{font-variant-numeric:tabular-nums;font-size:1rem;font-weight:800;letter-spacing:.02em}
+.tbar button{height:30px;padding:0 14px;border:0;border-radius:9px;background:#fff;color:var(--blue-700);font-family:inherit;font-size:.74rem;font-weight:800;cursor:pointer}
+/* PLANES */
+.pick{padding:14px 10px 10px}
+.pk-h{text-align:center;font-size:1.1rem;font-weight:800;letter-spacing:-.025em;margin-bottom:12px}
+.pk{display:grid;grid-template-columns:.8fr 1fr 1fr 1fr;column-gap:4px;font-size:.68rem}
+.pk .c{padding:9px 3px;display:flex;align-items:center;justify-content:center;text-align:center;border-top:1px solid var(--line);font-weight:600;color:var(--ink-2);line-height:1.25;min-height:38px}
+.pk .c.l{justify-content:flex-start;text-align:start;color:var(--muted);font-weight:700;font-size:.62rem}
+.pk .c.m{background:#F5F9FF}
+.pk .c.top{background:var(--grad);color:#fff;border-top-color:rgba(255,255,255,.25);font-weight:800}
+.pk .c.z{border-radius:0 0 14px 14px}
+.pk .c .ico{width:15px;height:15px;color:var(--blue-600)}.pk .c.top .ico{color:#fff}.pk .c .ico.no{color:var(--muted-2)}
+.tile{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:2px;padding:10px 3px;margin-bottom:6px;border-radius:14px;border:1.5px solid var(--line-2);background:#fff;font-family:inherit;cursor:pointer;color:var(--ink);transition:box-shadow .3s var(--ease),transform .3s var(--ease),background .3s var(--ease)}
+.tile.hi{background:linear-gradient(140deg,#F5F9FF,#E7F0FE);border-color:#C9DFFB}
+.tile.top{background:var(--grad);border-color:transparent;color:#fff}
+.tile.is-promo{border-color:var(--blue-500);background:linear-gradient(140deg,#E7F0FE,#D5E7FD)}
+.tile.is-sel{box-shadow:0 0 0 2.5px var(--blue-600),0 10px 22px -12px rgba(37,99,235,.7);transform:translateY(-1px)}
+.tn{font-size:.72rem;font-weight:800}.tp{font-size:1.2rem;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+.ts{display:flex;gap:5px;align-items:center}.ts s{font-size:.66rem;color:var(--muted-2);font-weight:700}.tile.top .ts s{color:rgba(255,255,255,.7)}
+.ts em{font-style:normal;font-size:.56rem;font-weight:800;padding:2px 6px;border-radius:999px;background:var(--blue-50);color:var(--blue-700);border:1px solid #C9DFFB}
+.tile.top .ts em{background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.4)}
+.tf{display:inline-flex;gap:4px;align-items:center;white-space:nowrap;margin-bottom:5px;padding:3px 9px;border-radius:999px;background:var(--grad);color:#fff;font-size:.52rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 6px 14px -6px rgba(37,99,235,.6)}
+.tile.top .tf{background:#fff;color:var(--blue-700)}.tf .ico{width:9px;height:9px}
+.tf0{visibility:hidden}
+.act{padding:16px 16px 14px}
+.ap{display:none;flex-direction:column;gap:9px}.ap.show{display:flex;animation:rise .35s var(--ease) both}
+.ap-name{font-size:1.1rem;font-weight:800;letter-spacing:-.02em}.ap-note{font-size:.72rem;color:var(--muted);font-weight:500;margin-top:1px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:.68rem;font-weight:700;padding:5px 9px;border-radius:999px;background:var(--blue-50);border:1px solid #D5E4FA;color:var(--blue-700)}
+.chip .ico{width:11px;height:11px}
+.eq{display:flex;align-items:center;gap:7px;font-size:.74rem;font-weight:700;color:var(--blue-700)}.eq .ico{width:13px;height:13px;color:var(--blue-600)}
+.ap-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.ap-row .btn-ghost{font-size:.74rem;padding:0 6px;height:44px;gap:6px}
+/* MODALES */
 .overlay{display:none;position:fixed;inset:0;background:rgba(11,23,41,.55);backdrop-filter:blur(10px);z-index:400;align-items:center;justify-content:center;padding:20px}
 .overlay.show{display:flex}
 .pop{background:#fff;border:1px solid var(--line);border-radius:22px;padding:24px 22px;max-width:420px;width:100%;max-height:calc(100dvh - 40px);overflow-y:auto;box-shadow:0 24px 60px -20px rgba(11,23,41,.35);animation:popIn .35s cubic-bezier(.34,1.4,.64,1) both}
 @keyframes popIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
 .pop-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.pop-hd{flex:1;min-width:0}
 .pop-ico{width:46px;height:46px;border-radius:13px;background:var(--grad);color:#fff;display:grid;place-items:center;flex:none}
 .pop-ico .ico{width:22px;height:22px}
 .pop-title{font-size:1.05rem;font-weight:800;letter-spacing:-.015em;line-height:1.2}
@@ -154,61 +148,39 @@ body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;back
 .pop-actions{display:flex;gap:9px}
 .btn-cancel{flex:0 0 auto;padding:0 20px;height:48px;font-size:.82rem;background:#fff;color:var(--muted);border:1.5px solid var(--line-2);border-radius:13px;font-family:inherit;font-weight:800;cursor:pointer}
 .pop-actions .btn-primary{flex:1;height:48px;font-size:.84rem;border-radius:13px}
-.field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
-.field label{font-size:.66rem;font-weight:800;color:var(--muted);letter-spacing:.13em;text-transform:uppercase}
-.field select{width:100%;height:46px;padding:0 12px;font-family:inherit;font-size:.86rem;font-weight:600;color:var(--ink);background:#fff;border:1.5px solid var(--line-2);border-radius:12px;outline:none}
-.remember{display:flex;align-items:center;gap:10px;padding:11px 12px;background:var(--blue-50);border:1px solid #D5E4FA;border-radius:11px;font-size:.76rem;font-weight:600;color:var(--ink-2);cursor:pointer;margin:4px 0 16px}
-.remember input{width:18px;height:18px;accent-color:var(--blue-600);flex:none}
-.lang-fab{position:fixed;z-index:300;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:46px;height:46px;border-radius:50%;border:1px solid var(--line-2);background:rgba(255,255,255,.95);backdrop-filter:blur(10px);color:var(--blue-600);display:grid;place-items:center;cursor:pointer;box-shadow:0 10px 24px -10px rgba(37,99,235,.5)}
-.lang-fab .ico{width:21px;height:21px}
+/* RULETA */
+.wheel-wrap{position:relative;width:min(100%,284px);aspect-ratio:1/1;margin:2px auto 14px;user-select:none;-webkit-user-select:none}
+.wheel-wrap svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.wheel-rot{transition-property:transform;transition-timing-function:cubic-bezier(.1,.6,.08,1);will-change:transform}
+.wheel-rot.no-anim{transition:none!important}
+.wheel-fix{pointer-events:none}
+.wheel-hub{position:absolute;left:50%;top:50%;width:19%;aspect-ratio:1/1;transform:translate(-50%,-50%);border:0;border-radius:50%;background:var(--grad);color:#fff;font-family:inherit;font-weight:800;font-size:clamp(.58rem,2.5vw,.7rem);letter-spacing:.06em;cursor:pointer;z-index:2;display:grid;place-items:center;padding:0}
+.wheel-hub:not(:disabled){animation:hubPulse 2s ease-in-out infinite}
+.wheel-hub:disabled{opacity:.6;cursor:default;box-shadow:none}
+@keyframes hubPulse{0%,100%{box-shadow:0 8px 18px -6px rgba(37,99,235,.8),0 0 0 0 rgba(96,165,250,.55)}50%{box-shadow:0 8px 18px -6px rgba(37,99,235,.8),0 0 0 9px rgba(96,165,250,0)}}
+.rl-panel{display:flex;flex-direction:column;gap:10px;animation:rise .4s var(--ease) both}
+.rl-hint{font-size:.8rem;color:var(--ink-2);font-weight:500;text-align:center;line-height:1.5}
+.rl-badge{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;padding:5px 11px;border-radius:999px;background:var(--grad);color:#fff;font-size:.6rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase;box-shadow:0 6px 14px -6px rgba(37,99,235,.6)}
+.rl-badge .ico{width:11px;height:11px}
+.rl-prize{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.rl-pname{font-size:1.15rem;font-weight:800;letter-spacing:-.02em}
+.rl-pprice{font-size:2rem;font-weight:800;letter-spacing:-.03em;color:var(--blue-700);line-height:1}
+.rl-pprice small{font-size:.8rem;font-weight:700;color:var(--muted);margin-left:4px;letter-spacing:0}
+.rl-prize s{font-size:.9rem;font-weight:700;color:var(--muted-2)}
+.rl-text{font-size:.78rem;color:var(--ink-2);font-weight:500;line-height:1.55}
+.rl-fine{font-size:.68rem;color:var(--muted);font-weight:600;text-align:center}
+.rl-warn{display:flex;gap:9px;align-items:flex-start;padding:11px 12px;background:var(--blue-50);border:1px solid #D5E4FA;border-radius:11px;font-size:.74rem;color:var(--ink-2);font-weight:600;line-height:1.5}
+.rl-warn .ico{width:15px;height:15px;color:var(--blue-600);margin-top:2px}
+.rl-timer{display:flex;align-items:center;justify-content:center;gap:10px;padding:12px;border-radius:14px;background:linear-gradient(140deg,#F5F9FF,#E7F0FE);border:1px solid #C9DFFB;color:var(--blue-700)}
+.rl-timer .ico{width:22px;height:22px}
+.rl-timer b{font-size:2rem;font-weight:800;letter-spacing:.02em;font-variant-numeric:tabular-nums;line-height:1}
+.rl-timer.urgent b{animation:blink 1s steps(2,start) infinite}
+@keyframes blink{50%{opacity:.35}}
+.rl-bar{height:6px;border-radius:99px;background:var(--line);overflow:hidden}
+.rl-bar i{display:block;height:100%;width:100%;background:var(--grad);border-radius:inherit;transition:width 1s linear}
 @keyframes rise{from{opacity:0;transform:translateY(14px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
-@media (max-width:420px){body{padding:28px 14px 40px}.stack{gap:13px}.plan{padding:19px 17px}.plan-price{font-size:2.05rem}.cmp{padding:16px 10px 12px}.cmp-grid{font-size:.66rem}.cmp-grid>.l{font-size:.62rem}.pop{padding:22px 18px}}
-
-body{padding-top:20px}.stack{gap:12px}
-.video-wrap video{max-height:170px}
-.fast-banner{padding:10px 14px}.fb-ico{width:32px;height:32px}.fb-ico .ico{width:16px;height:16px}
-.trust{display:grid;grid-template-columns:1fr 1fr 1.25fr;padding:6px;gap:4px}
-.tr{display:flex;flex-direction:column;align-items:center;gap:1px;padding:9px 4px;text-align:center;border-radius:14px;text-decoration:none;color:inherit}
-.tr .ico{width:16px;height:16px;color:var(--blue-600);margin-bottom:2px}
-.tr b{font-size:1rem;font-weight:800;color:var(--blue-700);letter-spacing:-.02em;line-height:1.1}
-.tr small{font-size:.62rem;font-weight:600;color:var(--ink-2);line-height:1.25}
-.tr.link{background:var(--blue-50);border:1px solid #D5E4FA}
-.pick{padding:16px 10px 10px}
-.pk-h{text-align:center;font-size:1.1rem;font-weight:800;letter-spacing:-.025em;margin-bottom:16px}
-.pk{display:grid;grid-template-columns:.8fr 1fr 1fr 1fr;column-gap:4px;font-size:.68rem}
-.pk .c{padding:9px 3px;display:flex;align-items:center;justify-content:center;text-align:center;border-top:1px solid var(--line);font-weight:600;color:var(--ink-2);line-height:1.25;min-height:38px}
-.pk .c.l{justify-content:flex-start;text-align:start;color:var(--muted);font-weight:700;font-size:.62rem}
-.pk .c.m{background:#F5F9FF}
-.pk .c.top{background:var(--grad);color:#fff;border-top-color:rgba(255,255,255,.25)}
-.pk .c.z{border-radius:0 0 14px 14px}
-.pk .c .ico{width:15px;height:15px;color:var(--blue-600)}.pk .c.top .ico{color:#fff}.pk .c .ico.no{color:var(--muted-2)}
-.tile{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:2px;padding:16px 3px 10px;margin-bottom:6px;border-radius:14px;border:1.5px solid var(--line-2);background:#fff;font-family:inherit;cursor:pointer;color:var(--ink);transition:box-shadow .3s var(--ease),transform .3s var(--ease)}
-.tile.hi{background:linear-gradient(140deg,#F5F9FF,#E7F0FE);border-color:#C9DFFB}
-.tile.top{background:var(--grad);border-color:transparent;color:#fff}
-.tile.is-sel{box-shadow:0 0 0 2.5px var(--blue-600),0 10px 22px -12px rgba(37,99,235,.7);transform:translateY(-1px)}
-.tn{font-size:.72rem;font-weight:800}.tp{font-size:1.2rem;font-weight:800;letter-spacing:-.03em;line-height:1.1}
-.ts{display:flex;gap:5px;align-items:center}.ts s{font-size:.66rem;color:var(--muted-2);font-weight:700}.tile.top .ts s{color:rgba(255,255,255,.7)}
-.ts em{font-style:normal;font-size:.56rem;font-weight:800;padding:2px 6px;border-radius:999px;background:var(--blue-50);color:var(--blue-700);border:1px solid #C9DFFB}
-.tile.top .ts em{background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.4)}
-.tf{position:absolute;top:-9px;left:50%;transform:translateX(-50%);white-space:nowrap;display:inline-flex;gap:4px;align-items:center;padding:3px 8px;border-radius:999px;background:var(--grad);color:#fff;font-size:.5rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 6px 14px -6px rgba(37,99,235,.6)}
-.tile.top .tf{background:#fff;color:var(--blue-700)}.tf .ico{width:9px;height:9px}
-.act{padding:16px 16px 14px}
-.ap{display:none;flex-direction:column;gap:9px}.ap.show{display:flex;animation:rise .35s var(--ease) both}
-.ap-name{font-size:1.1rem;font-weight:800;letter-spacing:-.02em}.ap-note{font-size:.72rem;color:var(--muted);font-weight:500;margin-top:1px}
-.chips{display:flex;flex-wrap:wrap;gap:6px}
-.chip{display:inline-flex;align-items:center;gap:5px;font-size:.68rem;font-weight:700;padding:5px 9px;border-radius:999px;background:var(--blue-50);border:1px solid #D5E4FA;color:var(--blue-700)}
-.chip .ico{width:11px;height:11px}
-.eq{display:flex;align-items:center;gap:7px;font-size:.74rem;font-weight:700;color:var(--blue-700)}.eq .ico{width:13px;height:13px;color:var(--blue-600)}
-.ap-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.ap-row .btn-ghost{font-size:.74rem;padding:0 6px;height:44px;gap:6px}
-@media (max-width:420px){body{padding:16px 12px 32px}.pk{font-size:.64rem}.tp{font-size:1.08rem}.tn{font-size:.66rem}.tf{font-size:.46rem;padding:3px 6px}}
-
-.pick{padding:14px 10px 10px}.pk-h{margin-bottom:12px}
-.tf{position:static;transform:none;margin-bottom:5px;font-size:.52rem;padding:3px 9px}
-.tf0{visibility:hidden}
-.tile{padding:10px 3px 10px;justify-content:flex-start}
-.pk .c.top{font-weight:800}
-@media (max-width:420px){.tf{font-size:.46rem;padding:3px 7px}}
+@media (max-width:420px){body{padding:16px 12px 32px}.pk{font-size:.64rem}.tp{font-size:1.08rem}.tn{font-size:.66rem}.tf{font-size:.46rem;padding:3px 7px}.pop{padding:22px 18px}}
 </style>
 </head>
 <body>
@@ -228,6 +200,9 @@ body{padding-top:20px}.stack{gap:12px}
 <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></symbol>
 <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20a15 15 0 0 1 0-20z"/></symbol>
 <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h14v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/></symbol>
+<symbol id="i-gift" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/></symbol>
+<symbol id="i-timer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2h4"/><path d="M12 14l3-3"/><circle cx="12" cy="14" r="8"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
 <symbol id="i-whatsapp" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></symbol>
 <symbol id="i-paypal" viewBox="0 0 24 24"><path fill="#003087" d="M8.3 3.5h5.9c2.9 0 4.9 1.8 4.4 4.6-.6 3.3-3 5-6.1 5H10l-1 6H5.7L8.3 3.5z"/><path fill="#009cde" opacity=".85" d="M9.9 6.3h5.7c2.6 0 4.3 1.6 3.9 4.1-.5 3.1-2.8 4.7-5.7 4.7h-2.3l-1 6.1H7.1L9.9 6.3z"/></symbol>
 <symbol id="i-binance" viewBox="0 0 40 24"><rect width="40" height="24" rx="4" fill="#F0B90B"/><text x="20" y="16" font-family="Arial,sans-serif" font-size="8" font-weight="800" fill="#0A0A0A" text-anchor="middle">BINANCE</text></symbol>
@@ -237,109 +212,143 @@ body{padding-top:20px}.stack{gap:12px}
 <symbol id="i-clabe" viewBox="0 0 40 24"><rect width="40" height="24" rx="4" fill="#006341"/><text x="20" y="16" font-family="Arial,sans-serif" font-size="8.5" font-weight="800" fill="#fff" text-anchor="middle">CLABE</text></symbol>
 </svg>
 
+<div class="tbar" id="tbar" hidden>
+  <svg class="ico" aria-hidden="true"><use href="#i-timer"/></svg>
+  <span>Permanente a $20</span><b id="tbClock">10:00</b>
+  <button type="button" id="tbPay">Pagar</button>
+</div>
+
 <main class="stack">
+  <div class="trbar" id="trBar" translate="no" hidden>
+    <svg class="ico" aria-hidden="true"><use href="#i-globe"/></svg>
+    <div class="trb-body"><b id="trbT"></b><small id="trbS"></small></div>
+    <a class="trb-btn" id="trbGo" href="#" rel="noopener"></a>
+    <button type="button" class="x-btn" id="trbX" aria-label="Close"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg></button>
+  </div>
+
   <div class="video-wrap"><video controls preload="metadata" playsinline><source src="producto.mp4" type="video/mp4"/></video>
-    <div class="video-label"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg><span data-i="pv">Vista previa</span></div></div>
-  <div class="fast-banner"><div class="fb-ico"><svg class="ico" aria-hidden="true"><use href="#i-zap"/></svg></div><div><div class="fb-title" data-i="ft">Entrega inmediata</div><div class="fb-sub" data-i="fs">Pago con tarjeta</div></div></div>
+    <div class="video-label"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg><span>Vista previa</span></div></div>
+  <div class="fast-banner"><div class="fb-ico"><svg class="ico" aria-hidden="true"><use href="#i-zap"/></svg></div><div><div class="fb-title">Entrega inmediata</div><div class="fb-sub">Pago con tarjeta de cualquier tipo · Débito o crédito</div></div></div>
   <section class="card trust">
-    <div class="tr"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg><b>+5 <span data-i="yr">años</span></b><small data-i="ts1">de trayectoria</small></div>
-    <div class="tr"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg><b>+5.000</b><small data-i="ts2">ventas entregadas</small></div>
-    <a class="tr link" href="https://t.me/+56Wdh8JANmJjYzZh" target="_blank" rel="noopener noreferrer"><svg class="ico" aria-hidden="true"><use href="#i-star"/></svg><b data-i="ts3">Referencias</b><small data-i="ts4">+5.000 pagos en Telegram</small></a>
+    <div class="tr"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg><b>+5 años</b><small>de trayectoria</small></div>
+    <div class="tr"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg><b>+5.000</b><small>ventas entregadas</small></div>
+    <a class="tr link" href="https://t.me/+56Wdh8JANmJjYzZh" target="_blank" rel="noopener noreferrer"><svg class="ico" aria-hidden="true"><use href="#i-star"/></svg><b>Referencias</b><small>+5.000 pagos en Telegram</small></a>
   </section>
+
+  <button type="button" class="card rl-cta" id="rlCta" hidden>
+    <span class="rl-cta-ico"><svg class="ico" aria-hidden="true"><use href="#i-gift"/></svg></span>
+    <span class="rl-cta-body"><b id="rlCtaT">Ruleta de descuento</b><small id="rlCtaS">Tienes 2 giros para ganar un precio especial</small></span>
+    <span class="rl-cta-go"><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+  </button>
+
   <section class="card pick">
-    <h1 class="pk-h" data-i="h1">◇─◇──◇─◇</h1>
+    <h1 class="pk-h">◇─◇──◇─◇</h1>
     <div class="pk">
       <div></div>
-      <button type="button" class="tile" data-plan="mes"><span class="tf tf0" aria-hidden="true"><span>.</span></span><span class="tn" data-i="m1">1 Mes</span><span class="tp">$14,99</span><span class="ts"><s>$20</s><em>-25%</em></span></button>
-      <button type="button" class="tile hi" data-plan="permanente"><span class="tf"><svg class="ico" aria-hidden="true"><use href="#i-star"/></svg><span data-i="bv">Mejor valor</span></span><span class="tn" data-i="pm">Permanente</span><span class="tp">$29,99</span><span class="ts"><s>$50</s><em>-40%</em></span></button>
-      <button type="button" class="tile top" data-plan="aim"><span class="tf"><svg class="ico" aria-hidden="true"><use href="#i-crown"/></svg><span data-i="bt">Lo más top</span></span><span class="tn">Personal AIM</span><span class="tp">$49,99</span><span class="ts"><s>$80</s><em>-37%</em></span></button>
-      <div class="c l" data-i="r1"></div><div class="c"><span data-i="d1"></span></div><div class="c m"><span data-i="d2"></span></div><div class="c top"><span data-i="d3"></span></div><div class="c l" data-i="r8"></div><div class="c"><span data-i="g1"></span></div><div class="c m"><span data-i="g2"></span></div><div class="c top"><span data-i="g2"></span></div><div class="c l" data-i="r2"></div><div class="c">70%</div><div class="c m">70%</div><div class="c top">80%</div><div class="c l" data-i="r3"></div><div class="c"><span data-i="c1"></span></div><div class="c m"><span data-i="c1"></span></div><div class="c top"><span data-i="c3"></span></div><div class="c l" data-i="r4"></div><div class="c"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div><div class="c m"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div><div class="c top"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div><div class="c l" data-i="r5"></div><div class="c"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div><div class="c m"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div><div class="c top"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div><div class="c l" data-i="r6"></div><div class="c"><svg class="ico no" aria-hidden="true"><use href="#i-minus"/></svg></div><div class="c m"><svg class="ico no" aria-hidden="true"><use href="#i-minus"/></svg></div><div class="c top"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div><div class="c l" data-i="r7"></div><div class="c"><span data-i="e1"></span></div><div class="c m"><span data-i="e1"></span></div><div class="c top z"><span data-i="e3"></span></div>
+      <button type="button" class="tile" data-plan="mes"><span class="tf tf0" aria-hidden="true"><span>.</span></span><span class="tn">1 Mes</span><span class="tp" id="tpMes">$14,99</span><span class="ts"><s id="soMes">$20</s><em id="emMes">-25%</em></span></button>
+      <button type="button" class="tile hi" data-plan="permanente"><span class="tf"><svg class="ico" aria-hidden="true"><use href="#i-star"/></svg><span>Mejor valor</span></span><span class="tn">Permanente</span><span class="tp" id="tpPerm">$29,99</span><span class="ts"><s id="soPerm">$50</s><em id="emPerm">-40%</em></span></button>
+      <button type="button" class="tile top" data-plan="aim"><span class="tf"><svg class="ico" aria-hidden="true"><use href="#i-crown"/></svg><span>Lo más top</span></span><span class="tn" translate="no">Personal AIM</span><span class="tp">$49,99</span><span class="ts"><s>$80</s><em>-37%</em></span></button>
+      <div class="c l">Duración</div><div class="c"><span>30 días</span></div><div class="c m"><span>De por vida</span></div><div class="c top"><span>3 meses</span></div>
+      <div class="c l">Pago</div><div class="c"><span>Mensual</span></div><div class="c m"><span>Único</span></div><div class="c top"><span>Único</span></div>
+      <div class="c l">Aimlock y aim assist</div><div class="c">70%</div><div class="c m">70%</div><div class="c top">80%</div>
+      <div class="c l">Certificados</div><div class="c"><span>Premium</span></div><div class="c m"><span>Premium</span></div><div class="c top"><span>Personales privados</span></div>
+      <div class="c l">Libre de baneo</div><div class="c"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div><div class="c m"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div><div class="c top"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div>
+      <div class="c l">Libre de blacklist</div><div class="c"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div><div class="c m"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div><div class="c top"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div>
+      <div class="c l">Hecho para tu dispositivo</div><div class="c"><svg class="ico no" aria-hidden="true"><use href="#i-minus"/></svg></div><div class="c m"><svg class="ico no" aria-hidden="true"><use href="#i-minus"/></svg></div><div class="c top"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div>
+      <div class="c l">Entrega</div><div class="c"><span>Inmediata</span></div><div class="c m"><span>Inmediata</span></div><div class="c top z"><span>Bajo pedido</span></div>
     </div>
   </section>
+
   <section class="card act">
     <div class="ap" id="ap-mes">
-      <div><div class="ap-name" data-i="m1">1 Mes</div><div class="ap-note" data-i="n1"></div></div>
-      <div class="chips"><span class="chip"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span data-i="f1"></span></span><span class="chip"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg><span data-i="ft2"></span></span></div>
-      <a class="btn btn-primary" id="payMes" href="#" target="_blank" rel="noopener noreferrer"><svg class="ico" aria-hidden="true"><use href="#i-card"/></svg><span><span data-i="cd">Pagar con tarjeta</span> · $14,99 USD</span></a>
-      <p class="methods-note"><svg class="ico" aria-hidden="true"><use href="#i-zap"/></svg>Visa · MC · Amex · <strong data-i="ft">Entrega inmediata</strong></p>
-      <button type="button" class="btn btn-ghost" onclick="openOrder('mes')"><svg class="ico" aria-hidden="true"><use href="#i-wallet"/></svg><span data-i="oth">Otros métodos de pago</span></button>
+      <div><div class="ap-name">1 Mes</div><div class="ap-note">Acceso por 30 días · Android &amp; iOS</div></div>
+      <div class="chips"><span class="chip"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>2 actualizaciones incluidas en el mes</span></span><span class="chip"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg><span>Tutoriales de instalación incluidos</span></span></div>
+      <a class="btn btn-primary" id="payMes" href="#" target="_blank" rel="noopener noreferrer"><svg class="ico" aria-hidden="true"><use href="#i-card"/></svg><span>Pagar con tarjeta · <span id="priceMes">$14,99</span> USD</span></a>
+      <p class="methods-note"><svg class="ico" aria-hidden="true"><use href="#i-zap"/></svg>Visa · MC · Amex · <strong>Entrega inmediata</strong></p>
+      <button type="button" class="btn btn-ghost" onclick="openOrder('mes')"><svg class="ico" aria-hidden="true"><use href="#i-wallet"/></svg><span>Más métodos</span></button>
     </div>
     <div class="ap" id="ap-permanente">
-      <div><div class="ap-name" data-i="pm">Permanente</div><div class="ap-note" data-i="nP"></div></div>
-      <div class="chips"><span class="chip"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span data-i="fP"></span></span><span class="chip"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg><span data-i="ft2"></span></span></div>
-      <p class="eq"><svg class="ico" aria-hidden="true"><use href="#i-star"/></svg><span data-i="eq"></span></p>
-      <a class="btn btn-primary" id="payPerm" href="#" target="_blank" rel="noopener noreferrer"><svg class="ico" aria-hidden="true"><use href="#i-card"/></svg><span><span data-i="cd">Pagar con tarjeta</span> · $29,99 USD</span></a>
-      <p class="methods-note"><svg class="ico" aria-hidden="true"><use href="#i-zap"/></svg>Visa · MC · Amex · <strong data-i="ft">Entrega inmediata</strong></p>
-      <div class="ap-row"><button type="button" class="btn btn-ghost" onclick="openOrder('permanente')"><svg class="ico" aria-hidden="true"><use href="#i-wallet"/></svg><span data-i="oth">Otros métodos de pago</span></button>
-      <button type="button" class="btn btn-ghost" onclick="openPaypal()"><svg class="ico" aria-hidden="true"><use href="#i-paypal"/></svg><span>PayPal · $32,99</span></button></div>
+      <div><div class="ap-name">Permanente</div><div class="ap-note">Acceso de por vida · Android &amp; iOS</div></div>
+      <div class="chips"><span class="chip"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Actualizaciones ilimitadas de por vida</span></span><span class="chip"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg><span>Tutoriales de instalación incluidos</span></span></div>
+      <p class="eq"><svg class="ico" aria-hidden="true"><use href="#i-star"/></svg><span>Pagas 2 meses y es tuyo para siempre</span></p>
+      <a class="btn btn-primary" id="payPerm" href="#" target="_blank" rel="noopener noreferrer"><svg class="ico" aria-hidden="true"><use href="#i-card"/></svg><span>Pagar con tarjeta · <span id="pricePerm">$29,99</span> USD</span></a>
+      <p class="methods-note"><svg class="ico" aria-hidden="true"><use href="#i-zap"/></svg>Visa · MC · Amex · <strong>Entrega inmediata</strong></p>
+      <div class="ap-row"><button type="button" class="btn btn-ghost" onclick="openOrder('permanente')"><svg class="ico" aria-hidden="true"><use href="#i-wallet"/></svg><span>Más métodos</span></button>
+      <button type="button" class="btn btn-ghost" onclick="openPaypal()"><svg class="ico" aria-hidden="true"><use href="#i-paypal"/></svg><span id="paypalLbl" translate="no">PayPal · $32,99</span></button></div>
     </div>
     <div class="ap" id="ap-aim">
-      <div><div class="ap-name">Personal AIM</div><div class="ap-note" data-i="nA"></div></div>
-      <div class="chips"><span class="chip"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span data-i="fA"></span></span><span class="chip"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg><span data-i="fD"></span></span><span class="chip"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg><span data-i="fK"></span></span><span class="chip"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span data-i="fB"></span></span></div>
-      <p class="eq"><svg class="ico" aria-hidden="true"><use href="#i-crown"/></svg><span data-i="tA"></span></p>
-      <a class="btn btn-primary" id="payAim" href="#" target="_blank" rel="noopener noreferrer"><svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg><span data-i="oa">Pedir mi Personal AIM</span></a>
+      <div><div class="ap-name" translate="no">Personal AIM</div><div class="ap-note">3 meses · Solo bajo pedido · Android &amp; iOS</div></div>
+      <div class="chips"><span class="chip"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Aimlock y aim assist al 80%</span></span><span class="chip"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg><span>100% hecho para el dispositivo del cliente</span></span><span class="chip"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg><span>Certificados personales privados</span></span><span class="chip"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Libre de baneo y blacklist</span></span></div>
+      <p class="eq"><svg class="ico" aria-hidden="true"><use href="#i-crown"/></svg><span>Hecho solo para ti. Nadie más lo tiene.</span></p>
+      <a class="btn btn-primary" id="payAim" href="#" target="_blank" rel="noopener noreferrer"><svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg><span>Pedir mi Personal AIM</span></a>
     </div>
   </section>
 </main>
 
-<button type="button" class="lang-fab" aria-label="Language / Idioma" onclick="openLang()"><svg class="ico" aria-hidden="true"><use href="#i-globe"/></svg></button>
-
-<div class="overlay" id="langOverlay" role="dialog" aria-modal="true">
+<!-- RULETA -->
+<div class="overlay" id="rlOverlay" role="dialog" aria-modal="true" aria-labelledby="rlTitle">
   <div class="pop">
-    <div class="pop-head"><div class="pop-ico"><svg class="ico" aria-hidden="true"><use href="#i-globe"/></svg></div><div><h3 class="pop-title" data-i="lt">Bienvenido</h3><p class="pop-sub" data-i="ls">Elige el idioma para ver la página</p></div></div>
-    <div class="field"><label for="selLang" data-i="ll">Idioma</label><select id="selLang"></select></div>
-    <label class="remember"><input type="checkbox" id="chkRemember" checked/><span data-i="lr">Guardar y no volver a mostrar</span></label>
-    <div class="pop-actions"><button type="button" class="btn btn-primary" id="langSave"><span data-i="lv">Continuar</span></button></div>
+    <div class="pop-head">
+      <div class="pop-ico"><svg class="ico" aria-hidden="true"><use href="#i-gift"/></svg></div>
+      <div class="pop-hd"><h3 class="pop-title" id="rlTitle">Ruleta de descuento</h3><p class="pop-sub" id="rlSub"></p></div>
+      <button type="button" class="x-btn" data-close="rlOverlay" aria-label="Cerrar"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="wheel-wrap">
+      <svg class="wheel-rot" id="wheelRot" viewBox="0 0 400 400" aria-hidden="true"></svg>
+      <svg class="wheel-fix" id="wheelFix" viewBox="0 0 400 400" aria-hidden="true"></svg>
+      <button type="button" class="wheel-hub" id="spinBtn">GIRAR</button>
+    </div>
+    <div class="rl-panel" id="rlPanel"></div>
   </div>
 </div>
 
+<!-- OTROS METODOS -->
 <div class="overlay" id="orderOverlay" role="dialog" aria-modal="true">
   <div class="pop">
-    <div class="pop-head"><div class="pop-ico"><svg class="ico" aria-hidden="true"><use href="#i-wallet"/></svg></div><div><h3 class="pop-title" data-i="ot">Pagar con otro método</h3><p class="pop-sub" id="orderPlanInfo"></p></div></div>
-    <p class="order-label" data-i="ol">Selecciona tu método de pago</p>
+    <div class="pop-head"><div class="pop-ico"><svg class="ico" aria-hidden="true"><use href="#i-wallet"/></svg></div><div class="pop-hd"><h3 class="pop-title">Pagar con otro método</h3><p class="pop-sub" id="orderPlanInfo"></p></div></div>
+    <p class="order-label">Selecciona tu método de pago</p>
     <div class="method-list" id="methodList"></div>
     <div class="method-details" id="methodDetails"></div>
-    <div class="order-note"><svg class="ico" aria-hidden="true"><use href="#i-info"/></svg><span data-i="on"></span></div>
+    <div class="order-note"><svg class="ico" aria-hidden="true"><use href="#i-info"/></svg><span>Al enviar el pedido, <strong>JEXE</strong> te confirmará por WhatsApp que los datos estén correctos. <strong>Escríbeme solo si vas a confirmar tu compra</strong> para no saturar el chat.</span></div>
     <div class="pop-actions">
-      <button type="button" class="btn-cancel" onclick="closeModal('orderOverlay')" data-i="cn">Cancelar</button>
-      <a class="btn btn-primary is-disabled" id="orderWa" href="#" target="_blank" rel="noopener noreferrer"><svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg><span data-i="sd">Enviar pedido</span></a>
+      <button type="button" class="btn-cancel" onclick="closeModal('orderOverlay')">Cancelar</button>
+      <a class="btn btn-primary is-disabled" id="orderWa" href="#" target="_blank" rel="noopener noreferrer"><svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg><span>Enviar pedido</span></a>
     </div>
   </div>
 </div>
 
+<!-- PAYPAL -->
 <div class="overlay" id="paypalOverlay" role="dialog" aria-modal="true">
   <div class="pop">
-    <div class="pop-head"><div class="pop-ico"><svg class="ico" aria-hidden="true"><use href="#i-paypal"/></svg></div><div><h3 class="pop-title" data-i="pp">Pagar con PayPal</h3><p class="pop-sub" data-i="ps">Plan Permanente · Android &amp; iOS</p></div></div>
-    <p class="pop-text" data-i="px"></p>
-    <div class="price-box"><span class="price-box-lbl" data-i="tt">Total a pagar</span><span class="price-box-val">$32,99 USD</span></div>
+    <div class="pop-head"><div class="pop-ico"><svg class="ico" aria-hidden="true"><use href="#i-paypal"/></svg></div><div class="pop-hd"><h3 class="pop-title">Pagar con PayPal</h3><p class="pop-sub">Plan Permanente · Android &amp; iOS</p></div></div>
+    <p class="pop-text">El pago con PayPal se hace <strong>personalmente conmigo</strong>. Por las comisiones de envío de la plataforma, el total tiene un <strong>recargo de $3 USD</strong> sobre el precio normal del plan Permanente.</p>
+    <div class="price-box"><span class="price-box-lbl">Total a pagar</span><span class="price-box-val" id="ppTotal">$32,99 USD</span></div>
     <div class="pop-actions">
-      <button type="button" class="btn-cancel" onclick="closeModal('paypalOverlay')" data-i="cn">Cancelar</button>
-      <a class="btn btn-primary" id="paypalWa" href="#" target="_blank" rel="noopener noreferrer"><svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg><span data-i="pc">Contactar</span></a>
+      <button type="button" class="btn-cancel" onclick="closeModal('paypalOverlay')">Cancelar</button>
+      <a class="btn btn-primary" id="paypalWa" href="#" target="_blank" rel="noopener noreferrer"><svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg><span>Contactar</span></a>
     </div>
   </div>
 </div>
+
 <script>
 (function(){
 'use strict';
 /* ── CONFIG ── */
 var WA_OWNER='573115593037', WA_ADVISOR='573115593037';
-var USD_TO_COP=3300, USD_TO_MXN=18, PREF_KEY='jexe_prefs_v1';
-/* IMPORTANTE: pega aquí los links de Bold NUEVOS con los precios $14,99 y $29,99.
-   Mientras diga REEMPLAZAR, el botón de tarjeta queda desactivado para no cobrar el precio viejo. */
-var BOLD_MES='https://checkout.bold.co/payment/LNK_YRXITYHSYO';
-var BOLD_PERM='https://checkout.bold.co/payment/LNK_XBUKYYZVXQ';
-
+var USD_TO_COP=3300, USD_TO_MXN=18, PAYPAL_FEE=3, SPIN_MS=5400, WINDOW_MS=600000, KEY='jexe_rl_v1';
+var B='https://checkout.bold.co/payment/';
 var PLANS={
-  mes:{k:'m1',es:'1 Mes',priceStr:'$14,99 USD',usd:14.99},
-  permanente:{k:'pm',es:'Permanente',priceStr:'$29,99 USD',usd:29.99}
+  mes:{name:'1 Mes',usd:14.99,old:'$20',off:'-25%',bold:B+'LNK_YRXITYHSYO',boldPromo:B+'LNK_E2ISQYJB93',promo:10},
+  permanente:{name:'Permanente',usd:29.99,old:'$50',off:'-40%',bold:B+'LNK_XBUKYYZVXQ',boldPromo:B+'LNK_I7GG5UJOD3',promo:20}
 };
 var METHODS=[
   {id:'binance',name:'Binance Pay',note:'Crypto · USDT',icon:'i-binance'},
-  {id:'skrill',name:'Skrill',note:'wl',icon:'i-skrill'},
+  {id:'skrill',name:'Skrill',note:'Cartera digital',icon:'i-skrill'},
   {id:'nequi',name:'Nequi',note:'Colombia · COP',icon:'i-nequi'},
   {id:'breb',name:'Llave / BRE-B',note:'Colombia · COP',icon:'i-breb'},
   {id:'clabe',name:'CLABE',note:'México · MXN',icon:'i-clabe'}
 ];
+var LBL={a:'Monto',h:'Titular',n:'Número',e:'Entidad',u:'Usuario'};
 function money(n,loc){return '$'+Math.round(n).toLocaleString(loc);}
 var METHOD_DATA={
   binance:function(u){return [['a',u+' USDT'],['Binance ID','538653875'],['u','@jexeregedit']];},
@@ -349,36 +358,244 @@ var METHOD_DATA={
   clabe:function(u){return [['a',money(u*USD_TO_MXN,'es-MX')+' MXN'],['h','Juan Pablo Aguirre Grosso'],['CLABE','646180546701915656'],['e','STP']];}
 };
 
-var LANGS=[['es','Español'],['en','English'],['pt','Português']];
-var T={
-es:{pv:"Vista previa",ts1:"de trayectoria",ts2:"ventas entregadas",ts3:"Referencias",ts4:"+5.000 pagos en Telegram",eq:"Pagas 2 meses y es tuyo para siempre",ft:"Entrega inmediata",fs:"Pago con tarjeta de cualquier tipo · Débito o crédito",h1:"◇─◇──◇─◇",h2:"Precios de lanzamiento · Android & iOS",bv:"Mejor valor",bt:"Lo más top",m1:"1 Mes",pm:"Permanente",t1:"Para probar y empezar hoy",tP:"Pagas una vez y te olvidas",tA:"Hecho solo para ti. Nadie más lo tiene.",n1:"Acceso por 30 días · Android & iOS",nP:"Acceso de por vida · Android & iOS",nA:"3 meses · Solo bajo pedido · Android & iOS",fc:"Certificados premium, libres de baneo",fa:"Aimlock y aim assist al 70%",f1:"2 actualizaciones incluidas en el mes",fP:"Actualizaciones ilimitadas de por vida",ft2:"Tutoriales de instalación incluidos",fA:"Aimlock y aim assist al 80%",fD:"100% hecho para el dispositivo del cliente",fK:"Certificados personales privados",fB:"Libre de baneo y blacklist",oa:"Pedir mi Personal AIM",cd:"Pagar con tarjeta",oth:"Más métodos",pp:"Pagar con PayPal",ch:"Compara y decide",cs:"Lo que incluye cada plan, lado a lado",r1:"Duración",r8:"Pago",g1:"Mensual",g2:"Único",r2:"Aimlock y aim assist",r3:"Certificados",r4:"Libre de baneo",r5:"Libre de blacklist",r6:"Hecho para tu dispositivo",r7:"Entrega",d1:"30 días",d2:"De por vida",d3:"3 meses",c1:"Premium",c3:"Personales privados",e1:"Inmediata",e3:"Bajo pedido",v1:"<strong>1 Mes:</strong> ideal si solo quieres probar. Cuesta menos hoy, pero lo renuevas cada mes.",v2:"<strong>Permanente:</strong> por el precio de 2 meses lo tienes para siempre, con actualizaciones ilimitadas. La opción más elegida.",v3:"<strong>Personal AIM:</strong> el máximo nivel. 80%, certificados privados y hecho a la medida de tu dispositivo, libre de baneo y blacklist.",yr:"años",s1:"de trayectoria verificada en el mercado",s2:"ventas entregadas con éxito",rt:"Ver referencias y comprobantes",rs:"+5.000 pagos verificables en Telegram",ot:"Pagar con otro método",ol:"Selecciona tu método de pago",od:"Datos para pagar",on:"Al enviar el pedido, <strong>JEXE</strong> te confirmará por WhatsApp que los datos estén correctos. <strong>Escríbeme solo si vas a confirmar tu compra</strong> para no saturar el chat.",cn:"Cancelar",sd:"Enviar pedido",ps:"Plan Permanente · Android & iOS",px:"El pago con PayPal se hace <strong>personalmente conmigo</strong>. Por las comisiones de envío de la plataforma, el total tiene un <strong>recargo de $3 USD</strong> sobre el precio normal del plan Permanente.",tt:"Total a pagar",pc:"Contactar",lt:"Bienvenido",ls:"Elige el idioma para ver la página",ll:"Idioma",lr:"Guardar y no volver a mostrar",lv:"Continuar",a:"Monto",h:"Titular",n:"Número",e:"Entidad",u:"Usuario",pl:"Plan",wl:"Cartera digital"},
-en:{pv:"Preview",ts1:"of track record",ts2:"deliveries",ts3:"References",ts4:"+5,000 payments on Telegram",eq:"Pay for 2 months, keep it forever",ft:"Instant delivery",fs:"Pay with any card · Debit or credit",h1:"Choose your plan",h2:"Launch prices · Android & iOS",bv:"Best value",bt:"The ultimate",m1:"1 Month",pm:"Lifetime",t1:"To try it and start today",tP:"Pay once and forget it",tA:"Made only for you. Nobody else has it.",n1:"30 days access · Android & iOS",nP:"Lifetime access · Android & iOS",nA:"3 months · Made to order · Android & iOS",fc:"Premium certificates, ban-free",fa:"Aimlock and 70% aim assist",f1:"2 updates included per month",fP:"Unlimited updates for life",ft2:"Installation tutorials included",fA:"Aimlock and 80% aim assist",fD:"100% built for the customer's device",fK:"Private personal certificates",fB:"Ban-free and blacklist-free",oa:"Order my Personal AIM",cd:"Pay by card",oth:"More methods",pp:"Pay with PayPal",ch:"Compare and decide",cs:"What each plan includes, side by side",r1:"Duration",r8:"Payment",g1:"Monthly",g2:"One-time",r2:"Aimlock and aim assist",r3:"Certificates",r4:"Ban-free",r5:"Blacklist-free",r6:"Built for your device",r7:"Delivery",d1:"30 days",d2:"For life",d3:"3 months",c1:"Premium",c3:"Private personal",e1:"Instant",e3:"Made to order",v1:"<strong>1 Month:</strong> ideal if you just want to try it. Costs less today, but you renew every month.",v2:"<strong>Lifetime:</strong> for the price of 2 months it's yours forever, with unlimited updates. The most chosen option.",v3:"<strong>Personal AIM:</strong> the top level. 80%, private certificates and built around your device, ban-free and blacklist-free.",yr:"years",s1:"of verified track record in the market",s2:"successful deliveries",rt:"See references and receipts",rs:"+5,000 verifiable payments on Telegram",ot:"Pay with another method",ol:"Select your payment method",od:"Payment details",on:"After you send the order, <strong>JEXE</strong> will confirm the details on WhatsApp. <strong>Message me only if you are going to confirm your purchase</strong> so the chat isn't overloaded.",cn:"Cancel",sd:"Send order",ps:"Lifetime plan · Android & iOS",px:"PayPal payments are made <strong>directly with me</strong>. Because of the platform's transfer fees, the total has a <strong>$3 USD surcharge</strong> over the regular Lifetime price.",tt:"Total to pay",pc:"Contact",lt:"Welcome",ls:"Choose your language to view the page",ll:"Language",lr:"Save and don't show again",lv:"Continue",a:"Amount",h:"Holder",n:"Number",e:"Entity",u:"User",pl:"Plan",wl:"Digital wallet"},
-pt:{pv:"Prévia",ts1:"de trajetória",ts2:"vendas entregues",ts3:"Referências",ts4:"+5.000 pagamentos no Telegram",eq:"Paga 2 meses e é seu para sempre",ft:"Entrega imediata",fs:"Pague com qualquer cartão · Débito ou crédito",h1:"Escolha seu plano",h2:"Preços de lançamento · Android & iOS",bv:"Melhor valor",bt:"O mais top",m1:"1 Mês",pm:"Permanente",t1:"Para testar e começar hoje",tP:"Paga uma vez e esquece",tA:"Feito só para você. Ninguém mais tem.",n1:"Acesso por 30 dias · Android & iOS",nP:"Acesso vitalício · Android & iOS",nA:"3 meses · Somente sob encomenda · Android & iOS",fc:"Certificados premium, sem banimento",fa:"Aimlock e aim assist a 70%",f1:"2 atualizações incluídas no mês",fP:"Atualizações ilimitadas vitalícias",ft2:"Tutoriais de instalação incluídos",fA:"Aimlock e aim assist a 80%",fD:"100% feito para o dispositivo do cliente",fK:"Certificados pessoais privados",fB:"Sem banimento e sem blacklist",oa:"Pedir meu Personal AIM",cd:"Pagar com cartão",oth:"Mais métodos",pp:"Pagar com PayPal",ch:"Compare e decida",cs:"O que cada plano inclui, lado a lado",r1:"Duração",r8:"Pagamento",g1:"Mensal",g2:"Único",r2:"Aimlock e aim assist",r3:"Certificados",r4:"Sem banimento",r5:"Sem blacklist",r6:"Feito para seu dispositivo",r7:"Entrega",d1:"30 dias",d2:"Vitalício",d3:"3 meses",c1:"Premium",c3:"Pessoais privados",e1:"Imediata",e3:"Sob encomenda",v1:"<strong>1 Mês:</strong> ideal para só testar. Custa menos hoje, mas você renova todo mês.",v2:"<strong>Permanente:</strong> pelo preço de 2 meses é seu para sempre, com atualizações ilimitadas. A opção mais escolhida.",v3:"<strong>Personal AIM:</strong> o nível máximo. 80%, certificados privados e feito sob medida para seu dispositivo, sem banimento e sem blacklist.",yr:"anos",s1:"de trajetória verificada no mercado",s2:"vendas entregues com sucesso",rt:"Ver referências e comprovantes",rs:"+5.000 pagamentos verificáveis no Telegram",ot:"Pagar com outro método",ol:"Selecione seu método de pagamento",od:"Dados para pagar",on:"Ao enviar o pedido, <strong>JEXE</strong> confirmará os dados pelo WhatsApp. <strong>Escreva para mim só se for confirmar sua compra</strong>, para não sobrecarregar o chat.",cn:"Cancelar",sd:"Enviar pedido",ps:"Plano Permanente · Android & iOS",px:"O pagamento via PayPal é feito <strong>diretamente comigo</strong>. Pelas taxas da plataforma, o total tem um <strong>acréscimo de $3 USD</strong> sobre o preço normal do plano Permanente.",tt:"Total a pagar",pc:"Contatar",lt:"Bem-vindo",ls:"Escolha o idioma para ver a página",ll:"Idioma",lr:"Salvar e não mostrar novamente",lv:"Continuar",a:"Valor",h:"Titular",n:"Número",e:"Entidade",u:"Usuário",pl:"Plano",wl:"Carteira digital"}
-};
-
-var cur='es', currentPlan=null, currentMethod=null;
+/* ── UTILIDADES ── */
 function $(id){return document.getElementById(id);}
-function show(id){$(id).classList.add('show');}
-function hide(id){$(id).classList.remove('show');}
-function t(k,l){l=l||cur;return (T[l]&&T[l][k])||T.en[k]||T.es[k]||k;}
-function lbl(k,l){return (T[l]&&T[l][k])||k;}
-function findMethod(id){for(var i=0;i<METHODS.length;i++)if(METHODS[i].id===id)return METHODS[i];return null;}
-function loadPrefs(){try{return JSON.parse(localStorage.getItem(PREF_KEY)||'null');}catch(e){return null;}}
-function savePrefs(p){try{localStorage.setItem(PREF_KEY,JSON.stringify(p));}catch(e){}}
-function clearPrefs(){try{localStorage.removeItem(PREF_KEY);}catch(e){}}
+function ic(n){return '<svg class="ico" aria-hidden="true"><use href="#'+n+'"/></svg>';}
+function fmt(n){return n%1?n.toFixed(2).replace('.',','):String(n);}
+function pad(n){return n<10?'0'+n:''+n;}
+function mmss(ms){var s=Math.max(0,Math.ceil(ms/1000));return pad(Math.floor(s/60))+':'+pad(s%60);}
+function lbl(k){return LBL[k]||k;}
+function lock(){document.body.classList.toggle('modal-open',!!document.querySelector('.overlay.show'));}
+function show(id){$(id).classList.add('show');lock();}
+function hide(id){$(id).classList.remove('show');lock();}
 
-function fillLangs(){var s=$('selLang');s.innerHTML='';LANGS.forEach(function(l){var o=document.createElement('option');o.value=l[0];o.textContent=l[1];s.appendChild(o);});s.value=cur;}
-function applyLang(l){
-  cur=T[l]?l:'es';
-  var h=document.documentElement;h.lang=cur;h.dir='ltr';
-  document.querySelectorAll('[data-i]').forEach(function(el){el.innerHTML=t(el.getAttribute('data-i'));});
-  if(currentPlan){$('orderPlanInfo').textContent=t('pl')+': '+t(PLANS[currentPlan].k)+' — '+PLANS[currentPlan].priceStr;buildMethods();if(currentMethod)selectMethod(currentMethod);}
+/* ── ESTADO PERSISTENTE (localStorage + cookie + IndexedDB) ── */
+var DEF={v:1,rev:0,spins:0,phase:'new',rot:0,deadline:0,seen:0};
+function copy(o){return JSON.parse(JSON.stringify(o));}
+function parse(x){try{var o=typeof x==='string'?JSON.parse(x):x;return o&&o.v===1&&typeof o.rev==='number'?o:null;}catch(e){return null;}}
+function readLS(){try{return parse(localStorage.getItem(KEY));}catch(e){return null;}}
+function readCk(){try{var m=document.cookie.match(new RegExp('(?:^|; )'+KEY+'=([^;]*)'));return m?parse(decodeURIComponent(m[1])):null;}catch(e){return null;}}
+function newer(a,b){return a&&(!b||a.rev>b.rev)?a:b;}
+function idb(op,val){
+  return new Promise(function(res){
+    try{
+      var rq=indexedDB.open('jexe_rl',1);
+      rq.onupgradeneeded=function(){rq.result.createObjectStore('k');};
+      rq.onerror=function(){res(null);};
+      rq.onsuccess=function(){
+        try{
+          var db=rq.result,tx=db.transaction('k',op==='get'?'readonly':'readwrite'),st=tx.objectStore('k');
+          if(op==='get'){var g=st.get(KEY);g.onsuccess=function(){res(g.result||null);db.close();};g.onerror=function(){res(null);db.close();};}
+          else{st.put(val,KEY);tx.oncomplete=function(){res(true);db.close();};tx.onerror=function(){res(false);db.close();};}
+        }catch(e){res(null);}
+      };
+    }catch(e){res(null);}
+  });
 }
+var S=copy(newer(readLS(),readCk())||DEF);
+function save(){
+  S.rev=(S.rev||0)+1;
+  var j=JSON.stringify(S);
+  try{localStorage.setItem(KEY,j);}catch(e){}
+  try{document.cookie=KEY+'='+encodeURIComponent(j)+';max-age=63072000;path=/;SameSite=Lax'+(location.protocol==='https:'?';Secure':'');}catch(e){}
+  idb('put',j);
+}
+
+/* ── RELOJ (resistente a retroceder la hora) ── */
+var clock=Math.max(Date.now(),S.seen||0), mono=performance.now();
+function advance(){var m=performance.now();clock=Math.max(Date.now(),clock+(m-mono));mono=m;return clock;}
+
+/* ── PRECIOS EFECTIVOS ── */
+var spinning=false, confirming=false, currentPlan=null, currentMethod=null, spinTimer=null, saveTick=0;
+function promo(){
+  if(spinning)return null;
+  if(S.phase==='timer20')return {plan:'permanente',usd:20};
+  if(S.phase==='offer10')return {plan:'mes',usd:10};
+  return null;
+}
+function priceOf(plan){var p=promo();return p&&p.plan===plan?p.usd:PLANS[plan].usd;}
+function priceStr(plan){return '$'+fmt(priceOf(plan))+' USD';}
+function leftMs(){return S.phase==='timer20'?S.deadline-advance():0;}
+
+/* ── RENDER PRINCIPAL ── */
+function render(){
+  var p=promo();
+  [['mes','Mes'],['permanente','Perm']].forEach(function(x){
+    var k=x[0],id=x[1],on=!!(p&&p.plan===k),pl=PLANS[k];
+    $('tp'+id).textContent='$'+fmt(priceOf(k));
+    $('so'+id).textContent=on?'$'+fmt(pl.usd):pl.old;
+    $('em'+id).textContent=on?'-'+Math.round((1-p.usd/pl.usd)*100)+'%':pl.off;
+    document.querySelector('.tile[data-plan="'+k+'"]').classList.toggle('is-promo',on);
+    $('price'+id).textContent='$'+fmt(priceOf(k));
+    $(k==='mes'?'payMes':'payPerm').href=on?pl.boldPromo:pl.bold;
+  });
+  var perm=priceOf('permanente'), tot=perm+PAYPAL_FEE;
+  $('paypalLbl').textContent='PayPal · $'+fmt(tot);
+  $('ppTotal').textContent='$'+fmt(tot)+' USD';
+  $('paypalWa').href='https://wa.me/'+WA_OWNER+'?text='+encodeURIComponent('Hola JEXE, quiero pagar el plan Permanente por PayPal.\n\n• Total: $'+fmt(tot)+' USD ($'+fmt(perm)+' + $'+PAYPAL_FEE+' de comisión de envío)\n\nPor favor confírmame los datos para realizar el pago y darme la entrega inmediata.');
+
+  var ph=spinning?'new':S.phase, t1='Ruleta de descuento', t2='Tienes 2 giros para ganar un precio especial';
+  if(ph==='offer1'){t1='Tu premio te espera';t2='Permanente a $20 USD · Actívalo ahora';}
+  else if(ph==='timer20'){t1='Permanente a $20 USD activado';t2='Tiempo restante '+mmss(leftMs());}
+  else if(ph==='offer10'){t1='Tu premio: 1 Mes a $10 USD';t2='Toca para pagar';}
+  $('rlCta').hidden=(S.phase==='expired');
+  $('rlCtaT').textContent=t1;$('rlCtaS').textContent=t2;
+  var tb=S.phase==='timer20';
+  $('tbar').hidden=!tb;document.body.classList.toggle('has-tbar',tb);
+}
+
+/* ── RULETA: construccion ── */
+function pt(r,a){var t=a*Math.PI/180;return (200+r*Math.sin(t)).toFixed(2)+' '+(200-r*Math.cos(t)).toFixed(2);}
+function buildWheel(){
+  var h='',i;
+  var SEG=[{k:'n',c:'#EAF2FF'},{k:'p',c:'#1D4ED8'},{k:'m',c:'#3B82F6'},{k:'n',c:'#EAF2FF'},{k:'n',c:'#DCE8FA'}];
+  for(i=0;i<5;i++){
+    var sg=SEG[i], txt='';
+    h+='<path d="M200 200L'+pt(170,i*72-36)+'A170 170 0 0 1 '+pt(170,i*72+36)+'Z" fill="'+sg.c+'" stroke="#fff" stroke-width="3.5" stroke-linejoin="round"/>';
+    if(sg.k==='n')txt='<text x="200" y="118" font-size="18" letter-spacing="1.5" fill="#7C8CA3">NADA</text>';
+    else txt='<text x="200" y="84" font-size="12" letter-spacing=".8" fill="#fff">'+(sg.k==='p'?'PERMANENTE':'1 MES')+'</text><text x="200" y="124" font-size="32" letter-spacing="-.5" fill="#fff">'+(sg.k==='p'?'$20':'$10')+'</text>';
+    h+='<g transform="rotate('+(i*72)+' 200 200)" text-anchor="middle" font-family="Manrope,system-ui,sans-serif" font-weight="800">'+txt+'</g>';
+  }
+  for(i=0;i<5;i++){
+    var q=pt(160,i*72+36).split(' ');
+    h+='<circle cx="'+q[0]+'" cy="'+q[1]+'" r="5" fill="#fff" stroke="#1D4ED8" stroke-width="2"/>';
+  }
+  $('wheelRot').innerHTML=h;
+  var f='<defs><linearGradient id="rimG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1D4ED8"/><stop offset="1" stop-color="#60A5FA"/></linearGradient></defs>'
+    +'<circle cx="200" cy="200" r="179" fill="none" stroke="url(#rimG)" stroke-width="18"/>'
+    +'<circle cx="200" cy="200" r="170" fill="none" stroke="#fff" stroke-width="3"/>';
+  for(i=0;i<24;i++){var a=i*15*Math.PI/180;f+='<circle cx="'+(200+179.5*Math.sin(a)).toFixed(2)+'" cy="'+(200-179.5*Math.cos(a)).toFixed(2)+'" r="3.2" fill="#fff" opacity=".92"/>';}
+  f+='<circle cx="200" cy="200" r="46" fill="#fff"/>'
+    +'<g id="ptr"><path d="M200 62L183 31A19 19 0 1 1 217 31Z" fill="#0B1729" stroke="#fff" stroke-width="3" stroke-linejoin="round"/>'
+    +'<circle cx="200" cy="22.5" r="5" fill="#fff"/></g>';
+  $('wheelFix').innerHTML=f;
+}
+var wheel=$('wheelRot');
+function setWheel(deg){wheel.classList.add('no-anim');wheel.style.transform='rotate('+deg+'deg)';void wheel.offsetWidth;wheel.classList.remove('no-anim');}
+
+/* ── RULETA: indicador que rebota al pasar cada sector ── */
+var ptrAng=0, ptrRaf=0;
+function wheelRaw(){
+  var m=getComputedStyle(wheel).transform;
+  if(!m||m==='none')return 0;
+  var v=m.match(/matrix\(([^)]+)\)/);
+  if(!v)return 0;
+  var p=v[1].split(',');
+  return Math.atan2(parseFloat(p[1]),parseFloat(p[0]))*180/Math.PI;
+}
+function segUnder(acc){var f=(((-acc)%360)+360)%360;return Math.floor(((f+36)%360)/72);}
+function setPtr(a){var g=$('ptr');if(g)g.setAttribute('transform','rotate('+a.toFixed(2)+' 200 22.5)');}
+function startPointer(cur){
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  var prev=wheelRaw(),acc=cur,last=segUnder(acc);
+  cancelAnimationFrame(ptrRaf);
+  (function loop(){
+    var raw=wheelRaw(),d=raw-prev;
+    if(d<-180)d+=360;
+    if(d>180)d-=360;
+    prev=raw;acc+=d;
+    var s=segUnder(acc);
+    if(s!==last){last=s;ptrAng=-24;}
+    ptrAng*=0.82;
+    if(Math.abs(ptrAng)<.15)ptrAng=0;
+    setPtr(ptrAng);
+    if(spinning||ptrAng!==0)ptrRaf=requestAnimationFrame(loop);else setPtr(0);
+  })();
+}
+
+/* ── RULETA: panel segun fase ── */
+function renderPanel(){
+  var p=$('rlPanel'),ph=S.phase,h='';
+  var promoP=PLANS.permanente,promoM=PLANS.mes;
+  $('spinBtn').disabled=spinning||!(ph==='new'||ph==='offer1');
+  $('rlSub').textContent=ph==='new'?'Tienes 2 giros disponibles':ph==='offer1'?'Te queda 1 giro':ph==='timer20'?'Precio activado':'Sin giros disponibles';
+  if(spinning){
+    h='<p class="rl-hint">Girando...</p>';
+  }else if(ph==='new'){
+    h='<p class="rl-hint">Toca <strong>GIRAR</strong> en el centro de la ruleta y descubre tu precio especial.</p>';
+  }else if(ph==='offer1'&&!confirming){
+    h='<span class="rl-badge">'+ic('i-crown')+'<span>Mejor precio posible</span></span>'
+     +'<div class="rl-prize"><span class="rl-pname">Permanente</span><span class="rl-pprice">$20<small>USD</small></span><s>$'+fmt(promoP.usd)+'</s></div>'
+     +'<p class="rl-text">Pagas una sola vez y es tuyo de por vida, con actualizaciones ilimitadas. Ahorras <strong>$'+fmt(+(promoP.usd-20).toFixed(2))+' USD</strong>. Es el mejor precio que puedes conseguir y aplica con cualquier método de pago.</p>'
+     +'<button type="button" class="btn btn-primary" data-act="accept">'+ic('i-zap')+'<span>Aceptar y activar mi precio</span></button>'
+     +'<button type="button" class="btn btn-ghost" data-act="respin"><span>Girar de nuevo</span></button>'
+     +'<p class="rl-fine">Al aceptar tendrás 10 minutos para completar el pago.</p>';
+  }else if(ph==='offer1'&&confirming){
+    h='<div class="rl-warn">'+ic('i-info')+'<span>Si giras de nuevo perderás los <strong>$20</strong> de forma definitiva. Ese precio no volverá a aparecer en este dispositivo.</span></div>'
+     +'<button type="button" class="btn btn-primary" data-act="keep"><span>Quedarme con los $20</span></button>'
+     +'<button type="button" class="btn btn-ghost" data-act="spin2"><span>Girar de todos modos</span></button>';
+  }else if(ph==='timer20'){
+    h='<span class="rl-badge">'+ic('i-check')+'<span>Precio activado</span></span>'
+     +'<div class="rl-prize"><span class="rl-pname">Permanente</span><span class="rl-pprice">$20<small>USD</small></span><s>$'+fmt(promoP.usd)+'</s></div>'
+     +'<div class="rl-timer" id="rlTimer">'+ic('i-timer')+'<b id="rlClock">10:00</b></div><div class="rl-bar"><i id="rlBar"></i></div>'
+     +'<p class="rl-text">Completa el pago antes de que el contador llegue a cero. Si se agota, este precio se bloquea y no volverá a salir en este dispositivo.</p>'
+     +'<a class="btn btn-primary" href="'+promoP.boldPromo+'" target="_blank" rel="noopener noreferrer">'+ic('i-card')+'<span>Pagar con tarjeta · $20 USD</span></a>'
+     +'<div class="ap-row"><button type="button" class="btn btn-ghost" data-act="other">'+ic('i-wallet')+'<span>Más métodos</span></button>'
+     +'<button type="button" class="btn btn-ghost" data-act="paypal">'+ic('i-paypal')+'<span translate="no">PayPal · $'+fmt(20+PAYPAL_FEE)+'</span></button></div>';
+  }else if(ph==='offer10'){
+    h='<span class="rl-badge">'+ic('i-gift')+'<span>Tu premio</span></span>'
+     +'<div class="rl-prize"><span class="rl-pname">1 Mes</span><span class="rl-pprice">$10<small>USD</small></span><s>$'+fmt(promoM.usd)+'</s></div>'
+     +'<p class="rl-text">Este fue tu último giro. Acceso por 30 días en Android e iOS, con 2 actualizaciones incluidas en el mes.</p>'
+     +'<a class="btn btn-primary" href="'+promoM.boldPromo+'" target="_blank" rel="noopener noreferrer">'+ic('i-card')+'<span>Pagar con tarjeta · $10 USD</span></a>'
+     +'<button type="button" class="btn btn-ghost" data-act="other">'+ic('i-wallet')+'<span>Más métodos</span></button>';
+  }else{
+    h='<div class="rl-warn">'+ic('i-clock')+'<span>Se acabó el tiempo. El precio de $20 ya no está disponible en este dispositivo.</span></div>'
+     +'<button type="button" class="btn btn-ghost" data-act="close"><span>Cerrar</span></button>';
+  }
+  p.innerHTML=h;
+  tick();
+}
+
+/* ── RULETA: giro (resultado predefinido, se guarda al iniciar) ── */
+function doSpin(n){
+  if(spinning)return;
+  var idx=n===1?1:2;
+  var theta=idx*72+(Math.random()*36-18);
+  var cur=S.rot||0;
+  var delta=(((-theta-cur)%360)+360)%360;
+  var target=cur+360*(5+Math.floor(Math.random()*3))+delta;
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var dur=reduce?300:SPIN_MS;
+  S.spins=n;S.phase=n===1?'offer1':'offer10';S.rot=target;save();
+  spinning=true;confirming=false;renderPanel();render();
+  startPointer(cur);
+  wheel.style.transitionDuration=dur+'ms';
+  wheel.style.transform='rotate('+target+'deg)';
+  clearTimeout(spinTimer);
+  spinTimer=setTimeout(function(){spinning=false;renderPanel();render();},dur+250);
+}
+function doAccept(){
+  var n=advance();
+  S.phase='timer20';S.deadline=n+WINDOW_MS;S.seen=n;confirming=false;save();
+  render();renderPanel();
+}
+function expire(){
+  S.phase='expired';save();
+  hide('orderOverlay');hide('paypalOverlay');currentPlan=null;
+  render();renderPanel();
+}
+function checkExpiry(){if(S.phase==='timer20'&&advance()>=S.deadline){S.phase='expired';save();}}
+function tick(){
+  if(S.phase!=='timer20')return;
+  var n=advance(),left=S.deadline-n;
+  if(left<=0){expire();return;}
+  var c=mmss(left),e;
+  if((e=$('rlClock')))e.textContent=c;
+  if((e=$('tbClock')))e.textContent=c;
+  if((e=$('rlCtaS')))e.textContent='Tiempo restante '+c;
+  if((e=$('rlBar')))e.style.width=(left/WINDOW_MS*100)+'%';
+  if((e=$('rlTimer')))e.classList.toggle('urgent',left<=60000);
+  if(++saveTick%5===0){S.seen=n;save();}
+}
+function openRoulette(){
+  setWheel(S.rot||0);confirming=false;renderPanel();show('rlOverlay');
+}
+
+/* ── OTROS METODOS ── */
 function buildMethods(){
   var list=$('methodList');
   list.innerHTML=METHODS.map(function(m){
-    var note=m.note==='wl'?t('wl'):m.note;
-    return '<button type="button" class="method" data-method="'+m.id+'"><span class="method-ico"><svg aria-hidden="true"><use href="#'+m.icon+'"/></svg></span><span class="method-body"><span class="method-name">'+m.name+'</span><span class="method-note">'+note+'</span></span><span class="method-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></button>';
+    return '<button type="button" class="method" data-method="'+m.id+'"><span class="method-ico"><svg aria-hidden="true"><use href="#'+m.icon+'"/></svg></span><span class="method-body"><span class="method-name" translate="no">'+m.name+'</span><span class="method-note">'+m.note+'</span></span><span class="method-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></button>';
   }).join('');
   list.querySelectorAll('.method').forEach(function(b){b.addEventListener('click',function(){selectMethod(b.dataset.method);});});
 }
@@ -390,47 +607,109 @@ function selectMethod(id){
 function renderDetails(){
   var box=$('methodDetails');
   if(!currentPlan||!currentMethod){box.classList.remove('show');box.innerHTML='';return;}
-  var data=METHOD_DATA[currentMethod](PLANS[currentPlan].usd);
-  var html='<div class="md-title"><svg class="ico" aria-hidden="true"><use href="#i-info"/></svg>'+t('od')+'</div>';
-  data.forEach(function(r){html+='<div class="md-row"><span class="md-lbl">'+lbl(r[0],cur)+'</span><span class="md-val">'+r[1]+'</span></div>';});
+  var data=METHOD_DATA[currentMethod](priceOf(currentPlan));
+  var html='<div class="md-title">'+ic('i-info')+'<span>Datos para pagar</span></div>';
+  data.forEach(function(r){html+='<div class="md-row"><span class="md-lbl">'+lbl(r[0])+'</span><span class="md-val" translate="no">'+r[1]+'</span></div>';});
   box.innerHTML=html;box.classList.add('show');
 }
 function updateWaLink(){
   var btn=$('orderWa');
   if(!currentPlan||!currentMethod){btn.classList.add('is-disabled');btn.setAttribute('href','#');return;}
-  var plan=PLANS[currentPlan],method=findMethod(currentMethod),data=METHOD_DATA[currentMethod](plan.usd);
-  var msg='Hola JEXE, quiero confirmar una compra de JEXE Regedit:\n\n• Plan: '+plan.es+' — '+plan.priceStr+'\n• Método de pago: '+method.name+'\n\nDatos del método:\n';
-  data.forEach(function(r){msg+='• '+lbl(r[0],'es')+': '+r[1]+'\n';});
+  var plan=PLANS[currentPlan],method=null,data=METHOD_DATA[currentMethod](priceOf(currentPlan));
+  METHODS.forEach(function(m){if(m.id===currentMethod)method=m;});
+  var msg='Hola JEXE, quiero confirmar una compra de JEXE Regedit:\n\n• Plan: '+plan.name+' — '+priceStr(currentPlan)+'\n• Método de pago: '+method.name+'\n\nDatos del método:\n';
+  data.forEach(function(r){msg+='• '+lbl(r[0])+': '+r[1]+'\n';});
   msg+='\n¿Me confirmas si estos datos están correctos para realizar el pago y darme la entrega inmediata?';
   btn.href='https://wa.me/'+WA_ADVISOR+'?text='+encodeURIComponent(msg);
   btn.classList.remove('is-disabled');
 }
 window.openOrder=function(plan){
   currentPlan=plan;currentMethod=null;
-  $('orderPlanInfo').textContent=t('pl')+': '+t(PLANS[plan].k)+' — '+PLANS[plan].priceStr;
-  buildMethods();renderDetails();updateWaLink();show('orderOverlay');
+  $('orderPlanInfo').textContent='Plan: '+PLANS[plan].name+' — '+priceStr(plan);
+  buildMethods();renderDetails();updateWaLink();hide('rlOverlay');show('orderOverlay');
 };
-window.openPaypal=function(){show('paypalOverlay');};
+window.openPaypal=function(){hide('rlOverlay');show('paypalOverlay');};
 window.closeModal=function(id){hide(id);};
-window.openLang=function(){fillLangs();$('chkRemember').checked=true;show('langOverlay');};
 
-/* Botones de pago */
-function setCard(id,url){var a=$(id);if(url&&url.indexOf('REEMPLAZAR')<0){a.href=url;}else{a.classList.add('is-disabled');a.setAttribute('href','#');}}
-setCard('payMes',BOLD_MES);setCard('payPerm',BOLD_PERM);
+/* ── TRADUCCION POR NAVEGADOR ── */
+var TR={
+  en:{t:'Translate this page',s:'This page is in Spanish. Tap Translate, or use your browser menu and choose Translate.',b:'Translate'},
+  pt:{t:'Traduzir esta página',s:'Esta página está em espanhol. Toque em Traduzir ou use o menu do navegador e escolha Traduzir.',b:'Traduzir'},
+  fr:{t:'Traduire cette page',s:'Cette page est en espagnol. Appuyez sur Traduire ou utilisez le menu du navigateur.',b:'Traduire'},
+  de:{t:'Diese Seite übersetzen',s:'Diese Seite ist auf Spanisch. Tippen Sie auf Übersetzen oder nutzen Sie das Browsermenü.',b:'Übersetzen'},
+  it:{t:'Traduci questa pagina',s:'Questa pagina è in spagnolo. Tocca Traduci o usa il menu del browser.',b:'Traduci'}
+};
+var ES_TZ=/^(America\/(Bogota|Mexico_City|Monterrey|Merida|Cancun|Chihuahua|Hermosillo|Mazatlan|Tijuana|Lima|Santiago|Caracas|Guayaquil|La_Paz|Montevideo|Asuncion|Panama|Costa_Rica|Guatemala|El_Salvador|Tegucigalpa|Managua|Havana|Santo_Domingo|Puerto_Rico|Argentina\/.+)|Europe\/Madrid|Atlantic\/Canary|Africa\/Ceuta)$/;
+function initTranslate(){
+  try{
+    var langs=(navigator.languages&&navigator.languages.length)?navigator.languages:[navigator.language||'es'];
+    var hasEs=langs.some(function(l){return /^es(-|$)/i.test(String(l));});
+    var tz='';try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'';}catch(e){}
+    if(hasEs||ES_TZ.test(tz))return;
+    try{if(localStorage.getItem('jexe_tr_x')==='1')return;}catch(e){}
+    var base=String(langs[0]).toLowerCase().split('-')[0], d=TR[base]||TR.en, tl=base==='zh'?'zh-CN':base;
+    $('trbT').textContent=d.t;$('trbS').textContent=d.s;$('trbGo').textContent=d.b;
+    $('trbGo').href='https://translate.google.com/translate?sl=es&tl='+encodeURIComponent(tl)+'&u='+encodeURIComponent(location.href);
+    $('trBar').hidden=false;
+    $('trbX').addEventListener('click',function(){$('trBar').hidden=true;try{localStorage.setItem('jexe_tr_x','1');}catch(e){}});
+  }catch(e){}
+}
+
+/* ── EVENTOS ── */
 $('payAim').href='https://wa.me/'+WA_OWNER+'?text='+encodeURIComponent('Hola JEXE, quiero pedir el servicio Personal AIM ($49,99 USD, 3 meses, hecho para mi dispositivo).\n\nMi dispositivo es:\n• Marca y modelo:\n• Sistema (Android / iOS):\n\nPor favor confírmame los pasos para realizar el pago y comenzar mi pedido.');
-$('paypalWa').href='https://wa.me/'+WA_OWNER+'?text='+encodeURIComponent('Hola JEXE, quiero pagar el plan Permanente por PayPal.\n\n• Total: $32,99 USD ($29,99 + $3 de comisión de envío)\n\nPor favor confírmame los datos para realizar el pago y darme la entrega inmediata.');
-
-$('selLang').addEventListener('change',function(){applyLang(this.value);});
-$('langSave').addEventListener('click',function(){if($('chkRemember').checked)savePrefs({l:cur});else clearPrefs();hide('langOverlay');});
+$('rlCta').addEventListener('click',openRoulette);
+$('tbPay').addEventListener('click',openRoulette);
+$('spinBtn').addEventListener('click',function(){
+  if(spinning)return;
+  if(S.phase==='new')doSpin(1);
+  else if(S.phase==='offer1'){confirming=true;renderPanel();}
+});
+$('rlPanel').addEventListener('click',function(e){
+  var b=e.target.closest('[data-act]');if(!b)return;
+  var a=b.getAttribute('data-act');
+  if(a==='accept')doAccept();
+  else if(a==='respin'){confirming=true;renderPanel();}
+  else if(a==='keep'){confirming=false;renderPanel();}
+  else if(a==='spin2')doSpin(2);
+  else if(a==='other')openOrder(S.phase==='timer20'?'permanente':'mes');
+  else if(a==='paypal')openPaypal();
+  else if(a==='close')hide('rlOverlay');
+});
+document.querySelectorAll('[data-close]').forEach(function(b){b.addEventListener('click',function(){hide(b.getAttribute('data-close'));});});
 document.querySelectorAll('.overlay').forEach(function(ov){ov.addEventListener('click',function(e){if(e.target===ov)hide(ov.id);});});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')document.querySelectorAll('.overlay.show').forEach(function(o){hide(o.id);});});
-
 function pick(p){document.querySelectorAll('.tile').forEach(function(b){b.classList.toggle('is-sel',b.dataset.plan===p);});document.querySelectorAll('.ap').forEach(function(x){x.classList.toggle('show',x.id==='ap-'+p);});}
 document.querySelectorAll('.tile').forEach(function(b){b.addEventListener('click',function(){pick(b.dataset.plan);});});
+
+/* ── SINCRONIZACION DE ESTADO ── */
+function adopt(o){
+  if(!o||o.rev<=S.rev)return;
+  S=copy(o);clock=Math.max(clock,S.seen||0);checkExpiry();render();renderPanel();
+}
+window.addEventListener('storage',function(e){if(e.key===KEY)adopt(parse(e.newValue));});
+document.addEventListener('visibilitychange',function(){if(!document.hidden)adopt(newer(readLS(),readCk()));});
+
+/* ── ARRANQUE ── */
+buildWheel();
 pick('permanente');
-var saved=loadPrefs();
-if(saved&&saved.l&&T[saved.l]){applyLang(saved.l);}
-else{var l0=(navigator.language||'es').split('-')[0].toLowerCase();applyLang(T[l0]?l0:'es');fillLangs();show('langOverlay');}
+checkExpiry();
+render();
+renderPanel();
+setWheel(S.rot||0);
+setInterval(tick,1000);
+idb('get').then(function(v){
+  var o=parse(v);
+  if(o&&o.rev>S.rev)adopt(o);
+  else if(!o||o.rev<S.rev)idb('put',JSON.stringify(S));
+});
+save();
+initTranslate();
+try{
+  if(S.phase==='new'&&!sessionStorage.getItem('jexe_rl_s')){
+    sessionStorage.setItem('jexe_rl_s','1');
+    setTimeout(function(){if(S.phase==='new'&&!document.querySelector('.overlay.show'))openRoulette();},1500);
+  }
+}catch(e){}
 })();
 </script>
 </body>
