@@ -2,561 +2,674 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FirtsBuy — Diamond Recharge</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0A1320">
+<title>FirtsBuy — Recarga directa de diamantes Free Fire</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 <style>
-  :root {
-    --d1: #0A1628;
-    --d2: #0D1F3C;
-    --blue: #1E6FFF;
-    --blue-light: #6AADFF;
-    --cyan: #00D4FF;
-    --gold: #FFD166;
-    --red: #FF4560;
-    --white: #F0F6FF;
-    --muted: #7B9CC4;
-    --glass: rgba(14,36,72,0.55);
-    --border: rgba(110,170,255,0.15);
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: var(--d1);
-    color: var(--white);
-    font-family: 'DM Sans', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-  .bg {
-    position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background:
-      radial-gradient(ellipse 70% 50% at 15% 20%, rgba(30,111,255,0.18) 0%, transparent 60%),
-      radial-gradient(ellipse 50% 40% at 85% 75%, rgba(0,212,255,0.12) 0%, transparent 55%),
-      var(--d1);
-  }
-  .bg::after {
-    content: '';
-    position: absolute; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='1' cy='1' r='0.6' fill='rgba(110,170,255,0.22)'/%3E%3C/svg%3E");
-    background-size: 60px 60px; opacity: 0.5;
-  }
-  .shell {
-    position: relative; z-index: 1;
-    max-width: 980px; margin: 0 auto; padding: 0 20px 60px;
-  }
-  nav {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 26px 0 22px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 40px;
-  }
-  .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem; letter-spacing: -0.03em; color: var(--white); }
-  .logo span { color: var(--cyan); }
-  .badge {
-    font-size: 0.68rem; font-weight: 500;
-    background: rgba(0,212,255,0.12); border: 1px solid rgba(0,212,255,0.3);
-    color: var(--cyan); padding: 4px 10px; border-radius: 20px;
-    letter-spacing: 0.05em; text-transform: uppercase;
-  }
-  .hero { text-align: center; margin-bottom: 30px; }
-  .hero-tag {
-    display: inline-block; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.12em;
-    text-transform: uppercase; color: var(--cyan);
-    background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.2);
-    padding: 4px 14px; border-radius: 20px; margin-bottom: 14px;
-  }
-  h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(1.8rem, 5.5vw, 3rem);
-    font-weight: 800; line-height: 1.06;
-    letter-spacing: -0.04em; margin-bottom: 10px;
-  }
-  h1 em {
-    font-style: normal;
-    background: linear-gradient(135deg, var(--blue-light), var(--cyan));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  }
-  .hero-sub { font-size: 0.92rem; color: var(--muted); font-weight: 300; max-width: 420px; margin: 0 auto; line-height: 1.6; }
+:root{
+  --bg:#0A1320; --s1:#0F1B2D; --s2:#14243A; --line:rgba(226,234,245,.10); --line2:rgba(226,234,245,.18);
+  --tx:#E9EEF6; --mut:#8C9BB0; --acc:#5AA9E6; --acc-d:#2F7CC0; --ok:#4CC38A; --gold:#D8B368; --red:#E4745F;
+  --ease:cubic-bezier(.2,.8,.2,1); --spring:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0}
+html{background:#070E18}
+/* Zoom bloqueado en navegadores táctiles */
+html,body{
+  touch-action:pan-x pan-y;
+  -ms-touch-action:pan-x pan-y;
+  -webkit-text-size-adjust:100%;
+  -moz-text-size-adjust:100%;
+  text-size-adjust:100%;
+  overscroll-behavior:none;
+}
+body{font-family:'Hanken Grotesk',system-ui,sans-serif;color:var(--tx);background:#070E18;display:flex;justify-content:center;min-height:100vh;font-size:14px}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+svg.i,.i{display:inline-block}
+.display{font-family:'Bricolage Grotesque',sans-serif;letter-spacing:-.02em}
+.num{font-family:'DM Mono',monospace;font-feature-settings:"tnum"}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 
-  /* ONCE BANNER */
-  .once-banner {
-    display: flex; align-items: center; gap: 14px;
-    background: linear-gradient(135deg, rgba(255,69,96,0.13), rgba(255,69,96,0.05));
-    border: 1px solid rgba(255,69,96,0.38);
-    border-radius: 12px; padding: 14px 20px; margin-bottom: 28px;
-  }
-  .once-icon {
-    width: 34px; height: 34px; flex-shrink: 0;
-    background: rgba(255,69,96,0.18); border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1rem; color: var(--red);
-  }
-  .once-main {
-    font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--white); line-height: 1.3;
-  }
-  .once-main span { color: var(--red); }
-  .once-sub { font-size: 0.73rem; color: var(--muted); margin-top: 3px; }
+main{
+  width:100%;max-width:460px;min-height:100vh;
+  background:linear-gradient(180deg,#0D1A2C 0,#0A1320 260px);
+  border-inline:1px solid var(--line);
+  padding:calc(14px + env(safe-area-inset-top)) 14px calc(176px + env(safe-area-inset-bottom));
+  display:flex;flex-direction:column;gap:14px;
+  transition:padding-bottom .4s var(--ease);
+}
+main.dock-hidden{padding-bottom:calc(28px + env(safe-area-inset-bottom))}
 
-  /* COUNTRY BAR */
-  .country-bar {
-    display: flex; align-items: center; justify-content: center; gap: 7px;
-    margin-bottom: 24px; flex-wrap: wrap;
-  }
-  .country-label { font-size: 0.73rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-right: 2px; }
-  .country-btn {
-    font-family: 'DM Sans', sans-serif; font-size: 0.78rem; font-weight: 500;
-    background: var(--glass); border: 1px solid var(--border); color: var(--muted);
-    cursor: pointer; padding: 6px 14px; border-radius: 7px;
-    transition: all 0.2s; backdrop-filter: blur(8px);
-  }
-  .country-btn:hover { border-color: var(--blue); color: var(--white); }
-  .country-btn.active { background: rgba(30,111,255,0.2); border-color: var(--blue); color: var(--white); }
+/* entrada orquestada: solo los bloques, una vez */
+.rise{animation:rise .6s var(--ease) both;animation-delay:calc(var(--d,0)*70ms)}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
-  /* PACKAGES */
-  .packages { display: grid; grid-template-columns: repeat(3,1fr); gap: 13px; margin-bottom: 24px; }
-  @media(max-width:640px){ .packages { grid-template-columns: 1fr; } }
+/* header */
+header{display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:11px}
+.logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(150deg,#1A3556,#0F2038);border:1px solid var(--line2);display:grid;place-items:center;position:relative;overflow:hidden}
+.logo svg{width:22px;height:22px;color:var(--acc)}
+.logo::after{content:"";position:absolute;top:-30%;left:-60%;width:40%;height:160%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);transform:rotate(18deg);animation:glint 5.5s var(--ease) infinite}
+@keyframes glint{0%,70%{left:-60%}100%{left:140%}}
+.brand b{font-size:20px;font-weight:800;line-height:1}
+.brand b em{font-style:normal;color:var(--acc)}
+.sub{display:flex;align-items:center;gap:6px;margin-top:4px;font-size:11.5px;color:var(--mut)}
+.live{width:7px;height:7px;border-radius:50%;background:var(--ok);position:relative}
+.live::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--ok);animation:ping 2.2s ease-out infinite}
+@keyframes ping{0%{transform:scale(1);opacity:.7}100%{transform:scale(3.2);opacity:0}}
+.save-btn{display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:12px;border:1px solid rgba(216,179,104,.4);background:rgba(216,179,104,.09);color:var(--gold);font-weight:700;font-size:12px;transition:transform .2s var(--spring),background .2s}
+.save-btn:active{transform:scale(.94)}
+.save-btn svg{width:15px;height:15px;transition:transform .5s var(--spring)}
+.save-btn:hover svg,.save-btn:active svg{transform:rotate(180deg) scale(1.15)}
 
-  .pkg {
-    position: relative;
-    background: var(--glass); border: 1px solid var(--border);
-    border-radius: 15px; padding: 18px 16px 16px;
-    backdrop-filter: blur(16px); cursor: pointer;
-    transition: border-color 0.22s, transform 0.22s; overflow: hidden;
-  }
-  .pkg::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, transparent, var(--blue), transparent);
-    opacity: 0; transition: opacity 0.22s;
-  }
-  .pkg:hover, .pkg.selected { border-color: var(--blue); transform: translateY(-2px); }
-  .pkg:hover::before, .pkg.selected::before { opacity: 1; }
-  .pkg.popular  { border-color: rgba(30,111,255,0.32); }
-  .pkg.elite    { border-color: rgba(0,212,255,0.22); }
+/* aviso */
+.notice{display:flex;gap:11px;align-items:center;padding:11px 12px;border-radius:14px;background:var(--s1);border:1px solid var(--line);border-left:3px solid var(--gold);font-size:12.5px;line-height:1.4;color:#C9D3E2}
+.notice .ic{width:30px;height:30px;border-radius:9px;background:rgba(216,179,104,.12);color:var(--gold);display:grid;place-items:center;flex:none;position:relative}
+.notice .ic::after{content:"";position:absolute;inset:0;border-radius:9px;border:1.5px solid var(--gold);animation:ring 3s ease-out infinite}
+@keyframes ring{0%,60%{transform:scale(1);opacity:0}65%{opacity:.7}100%{transform:scale(1.55);opacity:0}}
+.notice .ic svg{width:16px;height:16px}
+.notice strong{color:var(--tx)}
 
-  .pkg-badge {
-    position: absolute; top: 11px; right: 11px;
-    font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.07em; padding: 3px 7px; border-radius: 5px; color: #fff;
-  }
-  .pkg-badge.pop   { background: linear-gradient(135deg, var(--blue), var(--cyan)); }
-  .pkg-badge.elite-tag { background: linear-gradient(135deg, #009fc4, var(--cyan)); }
+/* secciones */
+.sec-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding-inline:2px}
+.sec-h h2{font-size:13px;font-weight:700;color:#C9D3E2}
+.sec-h .hint{font-size:12px;color:var(--mut);display:flex;align-items:center;gap:6px}
+.link{color:var(--gold);font-size:12px;font-weight:600;display:flex;align-items:center;gap:2px}
+.link svg{width:14px;height:14px;transition:transform .25s var(--ease)}
+.link:hover svg{transform:translateX(3px)}
 
-  .pkg-top { display: flex; align-items: center; gap: 9px; margin-bottom: 10px; }
-  .diamond-icon {
-    width: 34px; height: 34px; flex-shrink: 0;
-    background: linear-gradient(135deg, var(--blue), var(--cyan));
-    border-radius: 7px; display: flex; align-items: center; justify-content: center;
-    font-size: 1rem;
-  }
-  .pkg-qty { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; line-height: 1; }
-  .pkg-qty-label { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
-  .pkg-price { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; line-height: 1; margin-bottom: 2px; }
-  .pkg-conv { font-size: 0.72rem; color: var(--muted); margin-bottom: 9px; min-height: 14px; }
-  .pkg-save {
-    display: inline-flex; align-items: center; gap: 4px;
-    font-size: 0.68rem; font-weight: 500;
-    background: rgba(255,209,102,0.1); border: 1px solid rgba(255,209,102,0.22);
-    color: var(--gold); padding: 3px 8px; border-radius: 5px;
-  }
-  .pkg-bonus {
-    display: inline-flex; align-items: center; gap: 5px;
-    font-size: 0.68rem; font-weight: 700;
-    background: linear-gradient(135deg, rgba(0,212,255,0.13), rgba(30,111,255,0.1));
-    border: 1px solid rgba(0,212,255,0.35);
-    color: var(--cyan); padding: 3px 9px; border-radius: 5px;
-    margin-top: 5px;
-    letter-spacing: 0.02em;
-  }
-  .pkg-bonus-dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--cyan); flex-shrink: 0;
-    box-shadow: 0 0 5px var(--cyan);
-  }
-  .select-dot {
-    position: absolute; bottom: 12px; right: 12px;
-    width: 16px; height: 16px; border-radius: 50%;
-    border: 2px solid var(--border); transition: all 0.2s;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .pkg.selected .select-dot { border-color: var(--cyan); background: var(--cyan); }
-  .select-dot::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--d1); opacity: 0; transition: opacity 0.2s; }
-  .pkg.selected .select-dot::after { opacity: 1; }
+/* paises */
+.cgrid{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding:4px;background:var(--s1);border:1px solid var(--line);border-radius:16px}
+.cind{position:absolute;top:4px;bottom:4px;left:0;border-radius:12px;background:linear-gradient(160deg,#245C94,#1B4573);box-shadow:0 6px 18px -6px rgba(47,124,192,.7);transition:transform .45s var(--spring),width .3s var(--ease);z-index:0}
+.cbtn{position:relative;z-index:1;padding:9px 0 8px;display:flex;flex-direction:column;align-items:center;gap:5px;color:var(--mut);font-size:11px;font-weight:700;transition:color .25s}
+.cbtn.active{color:#fff}
+.flag{width:24px;height:24px;border-radius:50%;box-shadow:0 0 0 1.5px rgba(255,255,255,.14);transition:transform .45s var(--spring)}
+.cbtn.active .flag{transform:scale(1.14) rotate(-6deg)}
+.cbtn:active .flag{transform:scale(.88)}
+.clabel .flag{width:18px;height:18px;transform:none}
 
-  /* SAVINGS */
-  .savings-strip {
-    background: rgba(255,209,102,0.05); border: 1px solid rgba(255,209,102,0.15);
-    border-radius: 13px; padding: 16px 20px; margin-bottom: 24px;
-    display: flex; gap: 13px; align-items: flex-start; flex-wrap: wrap;
-  }
-  .savings-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
-  .savings-text h4 {
-    font-family: 'Syne', sans-serif; font-size: 0.77rem; font-weight: 700;
-    color: var(--gold); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.06em;
-  }
-  .savings-rows { display: flex; gap: 18px; flex-wrap: wrap; }
-  .savings-row { font-size: 0.75rem; color: var(--muted); line-height: 1.65; }
-  .savings-row strong { color: var(--white); }
-  .savings-row .hi { color: var(--gold); font-weight: 600; }
+/* paquetes */
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pkg{position:relative;text-align:left;padding:11px 10px 10px;border-radius:16px;background:var(--s1);border:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between;min-height:158px;overflow:hidden;transition:transform .35s var(--spring),border-color .25s,background .25s,box-shadow .35s}
+.pkg:active{transform:scale(.96)}
+.pkg.selected{transform:translateY(-3px);border-color:var(--acc);background:linear-gradient(170deg,#173254,#0F1E33);box-shadow:0 14px 28px -12px rgba(90,169,230,.55)}
+.pkg .tag{font-size:10.5px;font-weight:700;padding:3px 7px;border-radius:6px;background:rgba(255,255,255,.06);color:var(--mut)}
+.pkg.selected .tag{background:var(--acc);color:#06121F}
+.pkg.elite .tag{color:var(--gold);background:rgba(216,179,104,.12)}
+.pkg.elite.selected .tag{background:var(--gold);color:#1F1604}
+.chk{width:18px;height:18px;border-radius:50%;border:1.5px solid #3A4C66;display:grid;place-items:center;transition:background .25s,border-color .25s,transform .4s var(--spring)}
+.chk svg{width:11px;height:11px;stroke:#06121F;stroke-width:3.5;fill:none;stroke-dasharray:20;stroke-dashoffset:20;transition:stroke-dashoffset .35s .08s var(--ease)}
+.pkg.selected .chk{background:var(--acc);border-color:var(--acc);transform:scale(1.1)}
+.pkg.selected .chk svg{stroke-dashoffset:0}
+.gem{position:relative;width:34px;height:34px;margin:10px 0 6px;color:#6C86A8;overflow:hidden;border-radius:9px;transition:color .3s,transform .5s var(--spring)}
+.gem svg{width:100%;height:100%}
+.pkg.selected .gem{color:var(--acc);transform:scale(1.12) rotate(-4deg)}
+.pkg.elite.selected .gem{color:var(--gold)}
+.pkg.selected .gem::after{content:"";position:absolute;top:-20%;left:-80%;width:45%;height:140%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.75),transparent);transform:rotate(20deg);animation:sweep .9s .1s var(--ease) 1 both}
+@keyframes sweep{to{left:160%}}
+.amt{font-size:23px;font-weight:800;line-height:1}
+.bonus{margin-top:6px;display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;color:var(--ok)}
+.bonus svg{width:11px;height:11px}
+.pf{margin-top:10px;padding-top:8px;border-top:1px dashed var(--line2)}
+.price{font-size:12.5px;font-weight:500;color:#fff;line-height:1.25;white-space:nowrap}
+.conv{font-size:10px;color:var(--mut);height:13px;margin-top:1px}
+.sv{margin-top:3px;font-size:10px;font-weight:700;color:var(--gold);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tick{animation:tick .45s var(--ease)}
+@keyframes tick{0%{opacity:0;transform:translateY(8px);filter:blur(3px)}100%{opacity:1;transform:none;filter:none}}
 
-  /* TRUST */
-  .trust-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 11px; margin-bottom: 24px; }
-  @media(max-width:560px){ .trust-row { grid-template-columns: 1fr; } }
-  .trust-card {
-    background: var(--glass); border: 1px solid var(--border);
-    border-radius: 11px; padding: 14px 13px;
-    backdrop-filter: blur(8px); text-align: center;
-  }
-  .trust-card .t-icon { font-size: 1.2rem; margin-bottom: 7px; }
-  .trust-card h5 {
-    font-family: 'Syne', sans-serif; font-size: 0.74rem; font-weight: 700;
-    color: var(--white); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.04em;
-  }
-  .trust-card p { font-size: 0.7rem; color: var(--muted); line-height: 1.5; }
+/* tarjetas de formulario */
+.card{background:var(--s1);border:1px solid var(--line);border-radius:16px;padding:13px}
+.field{position:relative;display:flex;align-items:center;border-radius:12px;background:#08111D;border:1px solid var(--line2);transition:border-color .25s,box-shadow .25s}
+.field:focus-within{border-color:var(--acc);box-shadow:0 0 0 4px rgba(90,169,230,.14)}
+.field::after{content:"";position:absolute;left:12px;right:12px;bottom:-1px;height:2px;background:var(--acc);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease);border-radius:2px}
+.field:focus-within::after{transform:scaleX(1)}
+.field .pre{padding-left:12px;color:var(--acc);font-size:12px;font-weight:700;font-family:'DM Mono',monospace}
+.field input{flex:1;min-width:0;background:none;border:0;outline:0;color:#fff;padding:12px 8px;font-family:'DM Mono',monospace;font-size:14px;touch-action:pan-x pan-y}
+.field input::placeholder{color:#4E5F78;font-family:'Hanken Grotesk',sans-serif;font-size:13px}
+.okmark{width:22px;height:22px;border-radius:50%;background:var(--ok);color:#06180E;display:grid;place-items:center;margin-right:4px;transform:scale(0);transition:transform .45s var(--spring)}
+.okmark svg{width:13px;height:13px}
+.field.valid .okmark{transform:scale(1)}
+.paste{margin:0 6px;padding:6px 9px;border-radius:9px;background:rgba(255,255,255,.06);font-size:12px;font-weight:600;color:#C9D3E2;display:flex;gap:5px;align-items:center;transition:transform .2s var(--spring),background .2s}
+.paste svg{width:13px;height:13px}
+.paste:active{transform:scale(.9);background:rgba(90,169,230,.2)}
+.field.valid .paste{display:none}
+.shake{animation:shake .45s}
+@keyframes shake{20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.safe{display:flex;align-items:center;gap:5px;color:var(--ok);font-size:11.5px;font-weight:600}
+.safe svg{width:13px;height:13px}
 
-  /* ORDER */
-  .order-section {
-    background: var(--glass); border: 1px solid var(--border);
-    border-radius: 17px; padding: 28px 26px;
-    backdrop-filter: blur(16px);
-  }
-  @media(max-width:500px){ .order-section { padding: 20px 15px; } }
-  .order-title { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 800; margin-bottom: 4px; }
-  .order-sub { font-size: 0.78rem; color: var(--muted); margin-bottom: 20px; }
-  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; margin-bottom: 16px; }
-  @media(max-width:500px){ .form-grid { grid-template-columns: 1fr; } }
-  .form-group { display: flex; flex-direction: column; gap: 5px; }
-  .form-group.full { grid-column: 1/-1; }
-  label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); }
-  input, select {
-    font-family: 'DM Sans', sans-serif; font-size: 0.88rem;
-    background: rgba(10,22,40,0.6); border: 1px solid var(--border);
-    color: var(--white); padding: 10px 12px; border-radius: 8px;
-    outline: none; transition: border-color 0.2s;
-    -webkit-appearance: none; appearance: none;
-  }
-  input::placeholder { color: rgba(123,156,196,0.45); }
-  input:focus, select:focus { border-color: var(--blue); }
-  .select-wrapper { position: relative; }
-  .select-wrapper::after {
-    content: ''; position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
-    width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent;
-    border-top: 5px solid var(--muted); pointer-events: none;
-  }
-  select option { background: var(--d2); color: var(--white); }
-  .methods-section { margin-bottom: 16px; }
-  .methods-label { font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); margin-bottom: 8px; display: block; }
-  .methods-grid { display: flex; flex-wrap: wrap; gap: 6px; }
-  .method-chip {
-    font-size: 0.76rem; font-weight: 500;
-    background: rgba(10,22,40,0.6); border: 1px solid var(--border);
-    color: var(--muted); cursor: pointer; padding: 6px 12px; border-radius: 7px;
-    transition: all 0.18s; user-select: none;
-  }
-  .method-chip:hover { border-color: var(--blue); color: var(--white); }
-  .method-chip.active { background: rgba(30,111,255,0.2); border-color: var(--blue); color: var(--white); }
-  .cta-btn {
-    width: 100%; font-family: 'Syne', sans-serif; font-size: 0.93rem; font-weight: 700; letter-spacing: 0.02em;
-    background: linear-gradient(135deg, var(--blue) 0%, #0A4FCC 100%);
-    color: #fff; border: none; cursor: pointer; padding: 14px 24px; border-radius: 10px;
-    transition: opacity 0.2s, transform 0.2s; position: relative; overflow: hidden;
-  }
-  .cta-btn::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent); }
-  .cta-btn:hover { opacity: 0.92; transform: translateY(-1px); }
-  .cta-btn:active { transform: translateY(0); }
-  .cta-note { text-align: center; font-size: 0.68rem; color: var(--muted); margin-top: 10px; }
+/* medios de pago */
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.mchip{position:relative;display:flex;align-items:center;gap:9px;padding:8px 9px;border-radius:13px;background:#0B1625;border:1px solid var(--line);text-align:left;font-size:12px;font-weight:600;color:#BFCADA;overflow:hidden;transition:transform .25s var(--spring),border-color .25s,background .25s,color .25s;animation:rise .45s var(--ease) both;animation-delay:calc(var(--k)*45ms)}
+.mchip:active{transform:scale(.95)}
+.mchip .pi{width:30px;height:30px;border-radius:9px;flex:none;display:grid;place-items:center;transition:transform .5s var(--spring)}
+.mchip .pi svg{width:30px;height:30px;border-radius:9px;display:block}
+.mchip .nm{flex:1;min-width:0;line-height:1.2}
+.mchip .tk{width:16px;height:16px;border-radius:50%;background:var(--acc);color:#06121F;display:grid;place-items:center;transform:scale(0);transition:transform .4s var(--spring);flex:none}
+.mchip .tk svg{width:10px;height:10px}
+.mchip.active{border-color:var(--acc);background:#112440;color:#fff}
+.mchip.active .tk{transform:scale(1)}
+.mchip.active .pi{transform:rotate(-8deg) scale(1.1)}
+.mchip.active::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--acc);animation:grow .35s var(--ease)}
+@keyframes grow{from{transform:scaleY(0)}}
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  nav { animation: fadeUp 0.4s ease both; }
-  .hero { animation: fadeUp 0.4s 0.07s ease both; }
-  .once-banner { animation: fadeUp 0.4s 0.11s ease both; }
-  .country-bar { animation: fadeUp 0.4s 0.15s ease both; }
-  .packages { animation: fadeUp 0.4s 0.19s ease both; }
-  .savings-strip { animation: fadeUp 0.4s 0.23s ease both; }
-  .trust-row { animation: fadeUp 0.4s 0.27s ease both; }
-  .order-section { animation: fadeUp 0.4s 0.31s ease both; }
+/* dock — centrado real + oculto hasta que el formulario esté completo */
+.dock{
+  position:fixed;
+  left:0;
+  right:0;
+  margin-inline:auto;
+  bottom:calc(12px + env(safe-area-inset-bottom));
+  width:calc(100% - 20px);
+  max-width:440px;
+  z-index:40;
+  background:rgba(14,25,42,.96);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border:1px solid var(--line2);
+  border-radius:24px;
+  padding:14px 14px 12px;
+  box-shadow:0 18px 40px -10px rgba(0,0,0,.75),0 0 0 1px rgba(0,0,0,.3);
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  box-sizing:border-box;
+  /* estado oculto por defecto */
+  opacity:0;
+  transform:translateY(calc(100% + 24px));
+  pointer-events:none;
+  transition:opacity .28s var(--ease),transform .5s var(--spring);
+}
+.dock.visible{
+  opacity:1;
+  transform:translateY(0);
+  pointer-events:auto;
+}
+.dock .top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.dock .lbl{font-size:11.5px;color:var(--mut);font-weight:600}
+.dock .pr{font-size:25px;font-weight:500;line-height:1.1;margin-top:2px;color:#fff;white-space:nowrap}
+.dock .meta{display:flex;align-items:center;gap:7px;margin-top:6px;font-size:12px;color:#B7C4D6;font-weight:600;min-width:0}
+.dock .meta .d{display:flex;align-items:center;gap:4px;color:var(--acc);white-space:nowrap}
+.dock .meta .d svg{width:13px;height:13px}
+.dock .meta .sep{width:3px;height:3px;border-radius:50%;background:#4A5B75;flex:none}
+.dock .meta .mi{display:flex;align-items:center;gap:6px;min-width:0}
+.dock .meta .mi svg{width:16px;height:16px;border-radius:5px;flex:none}
+.dock .meta .mi span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pill{display:flex;align-items:center;gap:5px;padding:7px 10px;border-radius:999px;background:rgba(216,179,104,.12);border:1px solid rgba(216,179,104,.35);color:var(--gold);font-size:12px;font-weight:700;white-space:nowrap;flex:none}
+.pill svg{width:14px;height:14px}
 
-  @keyframes shimmer {
-    0%,100% { box-shadow: 0 0 0 0 rgba(0,212,255,0); }
-    50% { box-shadow: 0 0 12px 3px rgba(0,212,255,0.28); }
-  }
-  .diamond-icon { animation: shimmer 3s infinite; }
+/* CTA — contenido equilibrado, flecha anclada a la derecha */
+.cta{
+  position:relative;
+  overflow:hidden;
+  width:100%;
+  height:56px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:6px 56px 6px 6px;
+  border-radius:18px;
+  background:linear-gradient(160deg,#6BB6F0,#2F7CC0);
+  color:#04101C;
+  font-weight:800;
+  font-size:16px;
+  box-shadow:0 12px 24px -10px rgba(47,124,192,.9);
+  transition:transform .25s var(--spring);
+  box-sizing:border-box;
+}
+.cta > span:first-child{
+  flex:1;
+  text-align:center;
+  white-space:nowrap;
+}
+.cta .go{
+  position:absolute;
+  right:6px;
+  top:50%;
+  transform:translateY(-50%);
+  width:44px;
+  height:44px;
+  border-radius:14px;
+  background:#071626;
+  color:var(--acc);
+  display:grid;
+  place-items:center;
+  transition:transform .4s var(--spring);
+}
+.cta .go svg{width:20px;height:20px;transition:transform .4s var(--spring)}
+.cta:hover .go,
+.cta:active .go{transform:translateY(-50%) scale(1.06)}
+.cta:hover .go svg,
+.cta:active .go svg{transform:translateX(3px)}
+.cta:active{transform:scale(.97)}
+.cta::after{
+  content:"";
+  position:absolute;
+  top:0;left:-70%;
+  width:40%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);
+  transform:skewX(-20deg);
+  pointer-events:none;
+}
+.cta.flash::after{animation:ctasweep .8s var(--ease)}
+@keyframes ctasweep{to{left:140%}}
 
-  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.45; } }
-  .pulse { animation: pulse 1.8s infinite; }
+/* modal */
+#info-modal{position:fixed;inset:0;z-index:50;display:none;align-items:flex-end;justify-content:center;background:rgba(3,8,15,.78);backdrop-filter:blur(4px)}
+#info-modal.open{display:flex;animation:fade .25s}
+@keyframes fade{from{opacity:0}}
+.sheet{width:100%;max-width:460px;background:#0C1829;border-top:1px solid var(--line2);border-radius:24px 24px 0 0;padding:12px 16px calc(24px + env(safe-area-inset-bottom));animation:sheet .5s var(--spring)}
+@keyframes sheet{from{transform:translateY(100%)}}
+.grab{width:40px;height:4px;border-radius:4px;background:var(--line2);margin:0 auto 14px}
+.sheet h3{font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px}
+.sheet h3 svg{width:17px;height:17px;color:var(--gold)}
+.sheet p.s{font-size:12px;color:var(--mut);margin-top:3px}
+.xbtn{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.06);display:grid;place-items:center;color:var(--mut);transition:transform .35s var(--spring)}
+.xbtn:active{transform:rotate(90deg) scale(.9)}
+.xbtn svg{width:16px;height:16px}
+.srow{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:13px;background:var(--s1);border:1px solid var(--line);animation:rise .45s var(--ease) both;animation-delay:calc(var(--k)*80ms + 120ms)}
+.srow .a{font-weight:700;font-size:13px}
+.srow .b{font-size:11.5px;color:var(--mut);margin-top:2px}
+.srow .b s{opacity:.8}
+.srow .r{text-align:right}
+.srow .r .o{font-family:'DM Mono',monospace;color:var(--acc);font-size:13px}
+.srow .r .g{font-size:11.5px;font-weight:700;color:var(--gold);margin-top:2px}
+.trust{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.trust div{padding:11px 6px;border-radius:13px;background:var(--s1);border:1px solid var(--line);text-align:center;animation:rise .45s var(--ease) both;animation-delay:calc(var(--k)*80ms + 420ms)}
+.trust svg{width:19px;height:19px;margin:0 auto 6px;display:block;color:var(--acc)}
+.trust b{display:block;font-size:11.5px}
+.trust small{font-size:10.5px;color:var(--mut)}
+
+/* toast */
+#toast-container{position:fixed;top:calc(10px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);width:100%;max-width:440px;padding:0 14px;z-index:60;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.toast{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;background:#0F1B2D;border:1px solid var(--line2);font-size:13px;font-weight:600;box-shadow:0 12px 30px rgba(0,0,0,.5);animation:tin .5s var(--spring);transition:opacity .25s,transform .25s}
+.toast.err{border-color:rgba(228,116,95,.6)}.toast.err svg{color:var(--red)}
+.toast.ok{border-color:rgba(76,195,138,.6)}.toast.ok svg{color:var(--ok)}
+.toast svg{width:18px;height:18px;flex:none}
+@keyframes tin{from{opacity:0;transform:translateY(-20px) scale(.95)}}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+@media (max-width:360px){.amt{font-size:20px}.price{font-size:11.5px}}
 </style>
 </head>
 <body>
-<div class="bg"></div>
-<div class="shell">
 
-  <nav>
-    <div class="logo">Firts<span>Buy</span></div>
-    <div class="badge">Diamond Recharge</div>
-  </nav>
+<!-- Sprite: diamante -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="dm" viewBox="0 0 32 32">
+    <path d="M9 5h14l6 8-13 15L3 13z" fill="currentColor" fill-opacity=".22" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+    <path d="M3 13h26M12 5l-3 8 7 15 7-15-3-8M9 13l7-8 7 8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" opacity=".85"/>
+  </symbol>
+</svg>
 
-  <div class="hero">
-    <div class="hero-tag">Free Fire — Reseller Oficial</div>
-    <h1>Diamantes al<br><em>precio mas bajo</em></h1>
-    <p class="hero-sub">Hasta 65% de ahorro frente al juego. Entrega inmediata, garantia de por vida.</p>
-  </div>
+<div id="toast-container"></div>
 
-  <div class="once-banner">
-    <div class="once-icon pulse">&#9670;</div>
-    <div>
-      <div class="once-main">Precio especial — <span>1 sola vez por cuenta</span></div>
-      <div class="once-sub">Estos precios son absurdamente bajos y aplican una unica vez por ID de jugador. No se repetiran bajo ninguna circunstancia.</div>
-    </div>
-  </div>
-
-  <div class="country-bar">
-    <span class="country-label">Pais:</span>
-    <button class="country-btn active" data-country="US" onclick="setCountry('US')">Estados Unidos</button>
-    <button class="country-btn" data-country="CO" onclick="setCountry('CO')">Colombia</button>
-    <button class="country-btn" data-country="MX" onclick="setCountry('MX')">Mexico</button>
-    <button class="country-btn" data-country="PE" onclick="setCountry('PE')">Peru</button>
-    <button class="country-btn" data-country="AR" onclick="setCountry('AR')">Argentina</button>
-  </div>
-
-  <div class="packages">
-    <div class="pkg" id="pkg3000" onclick="selectPkg(3000)">
-      <div class="pkg-top">
-        <div class="diamond-icon">&#9670;</div>
-        <div>
-          <div class="pkg-qty">3,000</div>
-          <div class="pkg-qty-label">Diamantes</div>
-        </div>
+<div id="info-modal" onclick="if(event.target===this)toggleModal(false)">
+  <div class="sheet" role="dialog" aria-label="Comparativa y garantía">
+    <div class="grab"></div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
+      <div>
+        <h3 class="display"><i data-lucide="badge-percent"></i>Comparativa oficial y garantía</h3>
+        <p class="s">Todos los paquetes incluyen 100 diamantes de regalo</p>
       </div>
-      <div class="pkg-price" id="price3000">$16.49 USD</div>
-      <div class="pkg-conv" id="conv3000"></div>
-      <div class="pkg-save" id="save3000">&#9651; Ahorro: hasta $13.51 USD</div>
-      <div class="pkg-bonus"><div class="pkg-bonus-dot"></div>+100 diamantes de regalo</div>
-      <div class="select-dot"></div>
+      <button class="xbtn" onclick="toggleModal(false)" aria-label="Cerrar"><i data-lucide="x"></i></button>
     </div>
-
-    <div class="pkg popular" id="pkg6000" onclick="selectPkg(6000)">
-      <div class="pkg-badge pop">Mas popular</div>
-      <div class="pkg-top">
-        <div class="diamond-icon">&#9670;</div>
-        <div>
-          <div class="pkg-qty">6,000</div>
-          <div class="pkg-qty-label">Diamantes</div>
-        </div>
-      </div>
-      <div class="pkg-price" id="price6000">$31.49 USD</div>
-      <div class="pkg-conv" id="conv6000"></div>
-      <div class="pkg-save" id="save6000">&#9651; Ahorro: hasta $48.51 USD</div>
-      <div class="pkg-bonus"><div class="pkg-bonus-dot"></div>+100 diamantes de regalo</div>
-      <div class="select-dot"></div>
-    </div>
-
-    <div class="pkg elite" id="pkg10000" onclick="selectPkg(10000)">
-      <div class="pkg-badge elite-tag">Elite</div>
-      <div class="pkg-top">
-        <div class="diamond-icon">&#9670;</div>
-        <div>
-          <div class="pkg-qty">10,000</div>
-          <div class="pkg-qty-label">Diamantes</div>
-        </div>
-      </div>
-      <div class="pkg-price" id="price10000">$66.49 USD</div>
-      <div class="pkg-conv" id="conv10000"></div>
-      <div class="pkg-save" id="save10000">&#9651; Ahorro: hasta $133.51 USD</div>
-      <div class="pkg-bonus"><div class="pkg-bonus-dot"></div>+100 diamantes de regalo</div>
-      <div class="select-dot"></div>
+    <div id="savings-rows" style="display:grid;gap:9px"></div>
+    <div class="trust">
+      <div style="--k:0"><i data-lucide="shield-check"></i><b>Garantía vitalicia</b><small>Nunca vencen</small></div>
+      <div style="--k:1"><i data-lucide="badge-check"></i><b>Sin reembolsos</b><small>Legal por ID</small></div>
+      <div style="--k:2"><i data-lucide="zap"></i><b>Entrega rápida</b><small>Directo al UID</small></div>
     </div>
   </div>
-
-  <div class="savings-strip">
-    <div class="savings-icon">&#9733;</div>
-    <div class="savings-text">
-      <h4>Juego vs FirtsBuy — Incluye +100 diamantes de regalo</h4>
-      <div class="savings-rows" id="savings-rows"></div>
-    </div>
-  </div>
-
-  <div class="trust-row">
-    <div class="trust-card">
-      <div class="t-icon">&#9670;</div>
-      <h5>Garantia de por vida</h5>
-      <p>Los diamantes nunca desaparecen de tu cuenta. Garantizado permanentemente.</p>
-    </div>
-    <div class="trust-card">
-      <div class="t-icon">&#10003;</div>
-      <h5>Sin reembolsos en rojo</h5>
-      <p>Tu cuenta nunca quedara marcada. Proceso 100% limpio y seguro.</p>
-    </div>
-    <div class="trust-card">
-      <div class="t-icon">&#9670;</div>
-      <h5>Cobertura global</h5>
-      <p>USA, Colombia, Mexico, Peru y Argentina con soporte local en cada pais.</p>
-    </div>
-  </div>
-
-  <div class="order-section">
-    <div class="order-title">Realizar pedido</div>
-    <div class="order-sub">Completa los datos y te contactamos de inmediato por WhatsApp.</div>
-    <div class="form-grid">
-      <div class="form-group full">
-        <label>ID de jugador Free Fire</label>
-        <input type="text" id="playerID" placeholder="Ej. 123456789" inputmode="numeric">
-      </div>
-      <div class="form-group">
-        <label>Paquete</label>
-        <div class="select-wrapper">
-          <select id="pkgSelect" onchange="syncPkgSelect()">
-            <option value="3000">3,000 Diamantes</option>
-            <option value="6000">6,000 Diamantes</option>
-            <option value="10000">10,000 Diamantes</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Pais</label>
-        <div class="select-wrapper">
-          <select id="countrySelect" onchange="setCountry(this.value)">
-            <option value="US" selected>Estados Unidos</option>
-            <option value="CO">Colombia</option>
-            <option value="MX">Mexico</option>
-            <option value="PE">Peru</option>
-            <option value="AR">Argentina</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div class="methods-section">
-      <span class="methods-label">Metodo de pago</span>
-      <div class="methods-grid" id="methods-grid"></div>
-    </div>
-    <button class="cta-btn" onclick="submitOrder()">Enviar pedido por WhatsApp</button>
-    <div class="cta-note">Seras redirigido a WhatsApp con tu informacion precargada.</div>
-  </div>
-
 </div>
+
+<!-- main arranca con dock-hidden para que no parpadee al cargar -->
+<main class="dock-hidden">
+  <header class="rise" style="--d:0">
+    <div class="brand">
+      <div class="logo"><svg class="i"><use href="#dm"/></svg></div>
+      <div>
+        <b class="display">Firts<em>Buy</em></b>
+        <div class="sub"><span class="live"></span>Recarga directa Free Fire · Activo</div>
+      </div>
+    </div>
+    <button class="save-btn" onclick="toggleModal(true)"><i data-lucide="sparkles"></i>Ahorra 65%</button>
+  </header>
+
+  <div class="notice rise" style="--d:1">
+    <div class="ic"><i data-lucide="octagon-alert"></i></div>
+    <div><strong>Una sola vez por ID.</strong> La promoción aplica a tu primera recarga y no se repite.</div>
+  </div>
+
+  <section class="rise" style="--d:2">
+    <div class="sec-h"><h2>Selecciona tu país</h2><span class="hint clabel" id="active-country-label"></span></div>
+    <div class="cgrid" id="cgrid">
+      <div class="cind" id="cind"></div>
+      <button type="button" class="cbtn active" data-country="US" onclick="setCountry('US')"></button>
+      <button type="button" class="cbtn" data-country="CO" onclick="setCountry('CO')"></button>
+      <button type="button" class="cbtn" data-country="MX" onclick="setCountry('MX')"></button>
+      <button type="button" class="cbtn" data-country="PE" onclick="setCountry('PE')"></button>
+      <button type="button" class="cbtn" data-country="AR" onclick="setCountry('AR')"></button>
+    </div>
+  </section>
+
+  <section class="rise" style="--d:3">
+    <div class="sec-h"><h2>Elige tu paquete</h2><button class="link" onclick="toggleModal(true)">Ver tabla de ahorro<i data-lucide="chevron-right"></i></button></div>
+    <div class="pgrid">
+      <button type="button" id="pkg3000" class="pkg" onclick="selectPkg(3000)">
+        <div><div style="display:flex;justify-content:space-between;align-items:center"><span class="tag">Inicial</span><span class="chk"><svg viewBox="0 0 12 12"><path d="M2 6.5l2.6 2.6L10 3.4"/></svg></span></div>
+        <div class="gem"><svg><use href="#dm"/></svg></div>
+        <div class="amt display">3,000</div>
+        <div class="bonus"><i data-lucide="gift"></i>+100 de regalo</div></div>
+        <div class="pf"><div id="price3000" class="price num"></div><div id="conv3000" class="conv num"></div><div id="save3000" class="sv"></div></div>
+      </button>
+      <button type="button" id="pkg6000" class="pkg selected" onclick="selectPkg(6000)">
+        <div><div style="display:flex;justify-content:space-between;align-items:center"><span class="tag">Más elegido</span><span class="chk"><svg viewBox="0 0 12 12"><path d="M2 6.5l2.6 2.6L10 3.4"/></svg></span></div>
+        <div class="gem"><svg><use href="#dm"/></svg></div>
+        <div class="amt display">6,000</div>
+        <div class="bonus"><i data-lucide="gift"></i>+100 de regalo</div></div>
+        <div class="pf"><div id="price6000" class="price num"></div><div id="conv6000" class="conv num"></div><div id="save6000" class="sv"></div></div>
+      </button>
+      <button type="button" id="pkg10000" class="pkg elite" onclick="selectPkg(10000)">
+        <div><div style="display:flex;justify-content:space-between;align-items:center"><span class="tag">Élite</span><span class="chk"><svg viewBox="0 0 12 12"><path d="M2 6.5l2.6 2.6L10 3.4"/></svg></span></div>
+        <div class="gem"><svg><use href="#dm"/></svg></div>
+        <div class="amt display">10,000</div>
+        <div class="bonus"><i data-lucide="gift"></i>+100 de regalo</div></div>
+        <div class="pf"><div id="price10000" class="price num"></div><div id="conv10000" class="conv num"></div><div id="save10000" class="sv"></div></div>
+      </button>
+    </div>
+  </section>
+
+  <section class="card rise" style="--d:4">
+    <div class="sec-h" style="margin-bottom:9px">
+      <h2><label for="playerID">ID del jugador (Free Fire UID) <span style="color:var(--red)">*</span></label></h2>
+      <span class="safe"><i data-lucide="lock-keyhole"></i>Sin contraseña</span>
+    </div>
+    <div class="field" id="uidField">
+      <span class="pre">UID</span>
+      <input type="text" id="playerID" inputmode="numeric" autocomplete="off" placeholder="Ingresa tu ID numérico (ej: 194827361)" oninput="onUid()">
+      <span class="okmark"><i data-lucide="check"></i></span>
+      <button type="button" class="paste" onclick="pasteUID()"><i data-lucide="clipboard-paste"></i>Pegar</button>
+    </div>
+  </section>
+
+  <section class="card rise" style="--d:5">
+    <div class="sec-h" style="margin-bottom:9px"><h2>Método de pago</h2><span id="selected-method-badge" style="font-size:12px;font-weight:700;color:var(--acc)"></span></div>
+    <div id="methods-grid" class="mgrid"></div>
+  </section>
+
+  <select id="pkgSelect" hidden onchange="syncPkgSelect()"><option value="3000">3000</option><option value="6000" selected>6000</option><option value="10000">10000</option></select>
+  <select id="countrySelect" hidden onchange="setCountry(this.value)"><option value="US" selected>US</option><option value="CO">CO</option><option value="MX">MX</option><option value="PE">PE</option><option value="AR">AR</option></select>
+</main>
+
+<div class="dock" id="dock" aria-hidden="true">
+  <div class="top">
+    <div style="min-width:0">
+      <div class="lbl">Total a pagar</div>
+      <div class="pr num" id="dock-price"></div>
+    </div>
+    <div class="pill"><i data-lucide="trending-down"></i><span id="dock-save"></span></div>
+  </div>
+  <div class="meta">
+    <span class="d"><svg class="i"><use href="#dm"/></svg><span id="dock-diamonds">6,100</span>&nbsp;diamantes</span>
+    <span class="sep"></span>
+    <span class="mi" id="dock-method"></span>
+  </div>
+  <button type="button" class="cta" id="cta" onclick="submitOrder()"><span>Pedir ahora</span><span class="go"><i data-lucide="arrow-right"></i></span></button>
+</div>
+
 <script>
 const DATA = {
-  US: {
-    // +$1.49 USD por paquete: 15→16.49 / 30→31.49 / 65→66.49
-    prices: { 3000:'$16.49 USD', 6000:'$31.49 USD', 10000:'$66.49 USD' },
-    conv:   { 3000:'', 6000:'', 10000:'' },
-    saves:  { 3000:'hasta $13.51 USD', 6000:'hasta $48.51 USD', 10000:'hasta $133.51 USD' },
-    methods: ['Tarjeta','Skrill','Binance','Remitly / Zelle','MoneyGram','Boss Money','Ria Money','Otras remesadoras'],
-    savings: [
-      { label:'3,000 + 100 bonus',  ingame:'$28–$30 USD',   ours:'$16.49 USD', save:'~$13.51 USD'  },
-      { label:'6,000 + 100 bonus',  ingame:'$75–$80 USD',   ours:'$31.49 USD', save:'~$48.51 USD'  },
-      { label:'10,000 + 100 bonus', ingame:'$190–$200 USD', ours:'$66.49 USD', save:'~$133.51 USD' }
-    ]
-  },
-  CO: {
-    // +$1.49 USD × ~3.650 COP = +$5.440 COP: 54.000→59.440 / 110.000→115.440 / 245.000→250.440
-    prices: { 3000:'$59.440 COP', 6000:'$115.440 COP', 10000:'$250.440 COP' },
-    conv:   { 3000:'≈ $16.49 USD', 6000:'≈ $31.49 USD', 10000:'≈ $66.49 USD' },
-    saves:  { 3000:'hasta $54.560 COP', 6000:'hasta $194.560 COP', 10000:'hasta $544.560 COP' },
-    methods: ['Nequi','BRE-B (cualquier banco)'],
-    savings: [
-      { label:'3,000 + 100 bonus',  ingame:'$112.000–$120.000 COP', ours:'$59.440 COP',  save:'~$54.560 COP'  },
-      { label:'6,000 + 100 bonus',  ingame:'$300.000–$320.000 COP', ours:'$115.440 COP', save:'~$194.560 COP' },
-      { label:'10,000 + 100 bonus', ingame:'$760.000–$800.000 COP', ours:'$250.440 COP', save:'~$544.560 COP' }
-    ]
-  },
-  MX: {
-    // +$1.49 USD × ~18 MXN = +$27 MXN: 270→297 / 538→565 / 1.170→1.197
-    prices: { 3000:'$297 MXN', 6000:'$565 MXN', 10000:'$1,197 MXN' },
-    conv:   { 3000:'≈ $16.49 USD', 6000:'≈ $31.49 USD', 10000:'≈ $66.49 USD' },
-    saves:  { 3000:'hasta $283 MXN', 6000:'hasta $973 MXN', 10000:'hasta $2,403 MXN' },
-    methods: ['Tarjeta','Transferencia CLABE','Binance','Skrill','AstroPay'],
-    savings: [
-      { label:'3,000 + 100 bonus',  ingame:'$550–$590 MXN',     ours:'$297 MXN',   save:'~$283 MXN'   },
-      { label:'6,000 + 100 bonus',  ingame:'$1,490–$1,600 MXN', ours:'$565 MXN',   save:'~$973 MXN'   },
-      { label:'10,000 + 100 bonus', ingame:'$3,500–$3,600 MXN', ours:'$1,197 MXN', save:'~$2,403 MXN' }
-    ]
-  },
-  PE: {
-    // +$1.49 USD × ~3.7 PEN = +S/5.5: 55→60.5 / 110→115.5 / 225→230.5
-    prices: { 3000:'S/ 60.50', 6000:'S/ 115.50', 10000:'S/ 230.50' },
-    conv:   { 3000:'≈ $16.49 USD', 6000:'≈ $31.49 USD', 10000:'≈ $66.49 USD' },
-    saves:  { 3000:'hasta S/ 49.50', 6000:'hasta S/ 164.50', 10000:'hasta S/ 424.50' },
-    methods: ['Tarjeta','AstroPay','Binance','Skrill','Yape via AstroPay'],
-    savings: [
-      { label:'3,000 + 100 bonus',  ingame:'S/ 100–S/ 110', ours:'S/ 60.50',  save:'~S/ 49.50'  },
-      { label:'6,000 + 100 bonus',  ingame:'S/ 270–S/ 280', ours:'S/ 115.50', save:'~S/ 164.50' },
-      { label:'10,000 + 100 bonus', ingame:'S/ 640–S/ 660', ours:'S/ 230.50', save:'~S/ 424.50' }
-    ]
-  },
-  AR: {
-    // +$1.49 USD × ~1.350 ARS = +$2.010 ARS: 20.200→22.210 / 42.000→44.010 / 90.900→92.910
-    prices: { 3000:'$22.210 ARS', 6000:'$44.010 ARS', 10000:'$92.910 ARS' },
-    conv:   { 3000:'≈ $16.49 USD', 6000:'≈ $31.49 USD', 10000:'≈ $66.49 USD' },
-    saves:  { 3000:'hasta $17.790 ARS', 6000:'hasta $45.990 ARS', 10000:'hasta $107.090 ARS' },
-    methods: ['Tarjeta','AstroPay','Binance','Skrill','Mercado Pago via AstroPay'],
-    savings: [
-      { label:'3,000 + 100 bonus',  ingame:'$38.000–$40.000 ARS',   ours:'$22.210 ARS', save:'~$17.790 ARS'  },
-      { label:'6,000 + 100 bonus',  ingame:'$88.000–$90.000 ARS',   ours:'$44.010 ARS', save:'~$45.990 ARS'  },
-      { label:'10,000 + 100 bonus', ingame:'$195.000–$200.000 ARS', ours:'$92.910 ARS', save:'~$107.090 ARS' }
-    ]
-  }
+  US: { name:'Estados Unidos', shortName:'Estados Unidos', code:'USA',
+    prices:{3000:'$16.49 USD',6000:'$31.49 USD',10000:'$66.49 USD'},
+    conv:{3000:'Pago en USD',6000:'Pago en USD',10000:'Pago en USD'},
+    shortSaves:{3000:'-$13.51 USD',6000:'-$48.51 USD',10000:'-$133.51 USD'},
+    methods:['PayPal','Remitly / Zelle','Binance','Skrill','MoneyGram','Boss Money','Ria Money','Otras remesadoras'],
+    savings:[{label:'3,000 + 100 de regalo',ingame:'$28–$30 USD',ours:'$16.49 USD',save:'~$13.51 USD'},{label:'6,000 + 100 de regalo',ingame:'$75–$80 USD',ours:'$31.49 USD',save:'~$48.51 USD'},{label:'10,000 + 100 de regalo',ingame:'$190–$200 USD',ours:'$66.49 USD',save:'~$133.51 USD'}] },
+  CO: { name:'Colombia', shortName:'Colombia', code:'COL',
+    prices:{3000:'$59.440 COP',6000:'$115.440 COP',10000:'$250.440 COP'},
+    conv:{3000:'≈ $16.49 USD',6000:'≈ $31.49 USD',10000:'≈ $66.49 USD'},
+    shortSaves:{3000:'-$54.560 COP',6000:'-$194.560 COP',10000:'-$544.560 COP'},
+    methods:['Nequi','BRE-B (cualquier banco)','PayPal'],
+    savings:[{label:'3,000 + 100 de regalo',ingame:'$112.000–$120.000 COP',ours:'$59.440 COP',save:'~$54.560 COP'},{label:'6,000 + 100 de regalo',ingame:'$300.000–$320.000 COP',ours:'$115.440 COP',save:'~$194.560 COP'},{label:'10,000 + 100 de regalo',ingame:'$760.000–$800.000 COP',ours:'$250.440 COP',save:'~$544.560 COP'}] },
+  MX: { name:'México', shortName:'México', code:'MEX',
+    prices:{3000:'$297 MXN',6000:'$565 MXN',10000:'$1,197 MXN'},
+    conv:{3000:'≈ $16.49 USD',6000:'≈ $31.49 USD',10000:'≈ $66.49 USD'},
+    shortSaves:{3000:'-$283 MXN',6000:'-$973 MXN',10000:'-$2,403 MXN'},
+    methods:['PayPal','Transferencia CLABE','Binance','Skrill','AstroPay'],
+    savings:[{label:'3,000 + 100 de regalo',ingame:'$550–$590 MXN',ours:'$297 MXN',save:'~$283 MXN'},{label:'6,000 + 100 de regalo',ingame:'$1,490–$1,600 MXN',ours:'$565 MXN',save:'~$973 MXN'},{label:'10,000 + 100 de regalo',ingame:'$3,500–$3,600 MXN',ours:'$1,197 MXN',save:'~$2,403 MXN'}] },
+  PE: { name:'Perú', shortName:'Perú', code:'PER',
+    prices:{3000:'S/ 60.50',6000:'S/ 115.50',10000:'S/ 230.50'},
+    conv:{3000:'≈ $16.49 USD',6000:'≈ $31.49 USD',10000:'≈ $66.49 USD'},
+    shortSaves:{3000:'-S/ 49.50',6000:'-S/ 164.50',10000:'-S/ 424.50'},
+    methods:['PayPal','Yape via AstroPay','AstroPay','Binance','Skrill'],
+    savings:[{label:'3,000 + 100 de regalo',ingame:'S/ 100–S/ 110',ours:'S/ 60.50',save:'~S/ 49.50'},{label:'6,000 + 100 de regalo',ingame:'S/ 270–S/ 280',ours:'S/ 115.50',save:'~S/ 164.50'},{label:'10,000 + 100 de regalo',ingame:'S/ 640–S/ 660',ours:'S/ 230.50',save:'~S/ 424.50'}] },
+  AR: { name:'Argentina', shortName:'Argentina', code:'ARG',
+    prices:{3000:'$22.210 ARS',6000:'$44.010 ARS',10000:'$92.910 ARS'},
+    conv:{3000:'≈ $16.49 USD',6000:'≈ $31.49 USD',10000:'≈ $66.49 USD'},
+    shortSaves:{3000:'-$17.790 ARS',6000:'-$45.990 ARS',10000:'-$107.090 ARS'},
+    methods:['PayPal','Mercado Pago via AstroPay','AstroPay','Binance','Skrill'],
+    savings:[{label:'3,000 + 100 de regalo',ingame:'$38.000–$40.000 ARS',ours:'$22.210 ARS',save:'~$17.790 ARS'},{label:'6,000 + 100 de regalo',ingame:'$88.000–$90.000 ARS',ours:'$44.010 ARS',save:'~$45.990 ARS'},{label:'10,000 + 100 de regalo',ingame:'$195.000–$200.000 ARS',ours:'$92.910 ARS',save:'~$107.090 ARS'}] }
 };
 
-let currentCountry = 'US', currentPkg = null, currentMethod = null;
+/* Banderas vectoriales propias */
+const FLAG = {
+  US:'<rect width="30" height="20" fill="#B22A3A"/><g fill="#fff"><rect y="2.86" width="30" height="2.86"/><rect y="8.57" width="30" height="2.86"/><rect y="14.28" width="30" height="2.86"/></g><rect width="13" height="11.4" fill="#2A3E78"/><g fill="#fff"><circle cx="2.5" cy="2.5" r=".7"/><circle cx="6.5" cy="2.5" r=".7"/><circle cx="10.5" cy="2.5" r=".7"/><circle cx="4.5" cy="5.7" r=".7"/><circle cx="8.5" cy="5.7" r=".7"/><circle cx="2.5" cy="8.9" r=".7"/><circle cx="6.5" cy="8.9" r=".7"/><circle cx="10.5" cy="8.9" r=".7"/></g>',
+  CO:'<rect width="30" height="10" fill="#F2C318"/><rect y="10" width="30" height="5" fill="#1F4E9C"/><rect y="15" width="30" height="5" fill="#C8283C"/>',
+  MX:'<rect width="30" height="20" fill="#fff"/><rect width="10" height="20" fill="#1E7A4C"/><rect x="20" width="10" height="20" fill="#C8283C"/><circle cx="15" cy="10" r="2.4" fill="#9A7B3F"/>',
+  PE:'<rect width="30" height="20" fill="#fff"/><rect width="10" height="20" fill="#C8283C"/><rect x="20" width="10" height="20" fill="#C8283C"/>',
+  AR:'<rect width="30" height="20" fill="#74ACDF"/><rect y="6.67" width="30" height="6.67" fill="#fff"/><circle cx="15" cy="10" r="2.2" fill="#E8B22B"/>'
+};
+const flag = c => `<svg class="flag" viewBox="0 0 30 20" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${FLAG[c]}</svg>`;
 
-function setCountry(c) {
-  currentCountry = c; currentMethod = null;
-  document.querySelectorAll('.country-btn').forEach(b => b.classList.toggle('active', b.dataset.country === c));
-  document.getElementById('countrySelect').value = c;
-  updatePrices(); renderMethods();
+/* Iconos propios de medios de pago (monogramas originales, 32x32) */
+const t = (bg, inner) => `<svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="${bg}"/>${inner}</svg>`;
+const L = (ch, fg='#fff', s=17) => `<text x="16" y="${16+s*.36}" text-anchor="middle" font-family="Bricolage Grotesque,sans-serif" font-weight="800" font-size="${s}" fill="${fg}">${ch}</text>`;
+function payIcon(n){
+  const k = n.toLowerCase();
+  if(k.includes('yape'))     return t('#6B2FB5', L('Y')+'<circle cx="24" cy="8" r="2.4" fill="#2FD1C5"/>');
+  if(k.includes('mercado'))  return t('#2A8FD6', '<path d="M6 21c3-6 7-9 10-9s7 3 10 9" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/><path d="M11 21l5-4 5 4" fill="none" stroke="#FFD43B" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>');
+  if(k.includes('astropay')) return t('#0F2A44', '<path d="M16 6l9 18h-4l-5-11-5 11H7z" fill="#35D0A0"/><circle cx="16" cy="25" r="2" fill="#fff"/>');
+  if(k.includes('paypal'))   return t('#16376B', '<path d="M11 24l2.6-15h6c3 0 4.5 1.5 4 4-.6 3.2-2.8 4.6-5.8 4.6h-2.4L14.6 24z" fill="#5AA9E6"/><path d="M8 22l2.6-15h6c1 0 1.8.2 2.4.6" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>');
+  if(k.includes('binance'))  return t('#15181E', '<g fill="#E9B94A"><rect x="13.3" y="13.3" width="5.4" height="5.4" transform="rotate(45 16 16)"/><rect x="13.5" y="5" width="5" height="5" transform="rotate(45 16 7.5)"/><rect x="13.5" y="21.5" width="5" height="5" transform="rotate(45 16 24)"/><rect x="5" y="13.5" width="5" height="5" transform="rotate(45 7.5 16)"/><rect x="21.5" y="13.5" width="5" height="5" transform="rotate(45 24 16)"/></g>');
+  if(k.includes('skrill'))   return t('#6A2C82', '<path d="M21 10.5c-1-1.6-2.8-2.2-5-2.2-3 0-5 1.4-5 3.6 0 5 10 2.4 10 7.4 0 2.2-2.2 3.6-5.2 3.6-2.3 0-4.3-.8-5.4-2.6" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/>');
+  if(k.includes('remitly'))  return t('#5B3FC4', '<path d="M7 16h14M16 9l7 7-7 7" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>');
+  if(k.includes('moneygram'))return t('#B8312A', L('M','#fff',18)+'<circle cx="16" cy="26" r="1.6" fill="#FFD43B"/>');
+  if(k.includes('boss'))     return t('#0E6F63', L('B','#fff',18)+'<path d="M8 9h16" stroke="#9BE7D6" stroke-width="2" stroke-linecap="round"/>');
+  if(k.includes('ria'))      return t('#D9692A', L('R','#fff',18)+'<circle cx="24" cy="9" r="2.2" fill="#fff"/>');
+  if(k.includes('nequi'))    return t('#1A1030', L('N','#E5359C',19)+'<rect x="7" y="25" width="18" height="2.4" rx="1.2" fill="#E5359C"/>');
+  if(k.includes('bre-b'))    return t('#2352A8', '<path d="M16 6l10 5v2H6v-2z" fill="#fff"/><path d="M9 15v8M14 15v8M18 15v8M23 15v8M7 25h18" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>');
+  if(k.includes('clabe'))    return t('#1F6B58', '<path d="M16 6l10 5v2H6v-2z" fill="#fff"/><path d="M9 15v8M14 15v8M18 15v8M23 15v8M7 25h18" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>');
+  return t('#33495F', '<path d="M24 8L8 15l6 2.5L16.5 24z" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/><path d="M14 17.5L24 8" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>');
 }
 
-function updatePrices() {
+let currentCountry='US', currentPkg=6000, currentMethod=null;
+const $ = id => document.getElementById(id);
+const icons = () => lucide.createIcons();
+const retick = el => { el.classList.remove('tick'); void el.offsetWidth; el.classList.add('tick'); };
+
+/* ---- Anti-zoom global ---- */
+(function lockZoom(){
+  // iOS Safari: gestos de pellizco
+  ['gesturestart','gesturechange','gestureend'].forEach(ev =>
+    document.addEventListener(ev, e => e.preventDefault(), { passive:false })
+  );
+  // iOS Safari: doble tap zoom (solo si el objetivo no es un control interactivo)
+  let lastTouch = 0;
+  document.addEventListener('touchend', e => {
+    const now = Date.now();
+    if (now - lastTouch <= 300 && !e.target.closest('input,textarea,select,button,a')) {
+      e.preventDefault();
+    }
+    lastTouch = now;
+  }, { passive:false });
+  // Desktop: Ctrl/Cmd + rueda
+  document.addEventListener('wheel', e => {
+    if (e.ctrlKey || e.metaKey) e.preventDefault();
+  }, { passive:false });
+  // Desktop: Ctrl/Cmd + +/-
+  document.addEventListener('keydown', e => {
+    if ((e.ctrlKey || e.metaKey) && ['+','-','=','0','_'].includes(e.key)) {
+      e.preventDefault();
+    }
+  }, { passive:false });
+  // Refuerzo: fijar el viewport si el navegador lo ignoró (iOS 10+)
+  document.addEventListener('touchstart', e => {
+    if (e.touches.length > 1) e.preventDefault();
+  }, { passive:false });
+})();
+
+function moveInd(){
+  const a = document.querySelector('.cbtn.active'), i = $('cind');
+  if(!a || !i) return;
+  i.style.width = a.offsetWidth+'px';
+  i.style.transform = `translateX(${a.offsetLeft-4}px)`;
+}
+
+/* ---- Mostrar dock solo cuando todo está listo ---- */
+function isFormComplete(){
+  const id = ($('playerID')?.value || '').trim();
+  return !!currentCountry && !!currentPkg && !!currentMethod && id.length >= 6;
+}
+function checkDockVisibility(){
+  const dock = $('dock');
+  const main = document.querySelector('main');
+  if(!dock || !main) return;
+  const show = isFormComplete();
+  dock.classList.toggle('visible', show);
+  dock.setAttribute('aria-hidden', String(!show));
+  // inert = no focusable, no clickable cuando está oculto
+  if('inert' in dock) dock.inert = !show;
+  main.classList.toggle('dock-hidden', !show);
+}
+
+function setCountry(c){
+  currentCountry = c;
+  document.querySelectorAll('.cbtn').forEach(b => b.classList.toggle('active', b.dataset.country===c));
+  $('countrySelect').value = c;
+  $('active-country-label').innerHTML = flag(c) + DATA[c].name;
+  moveInd();
+  updatePrices(true);
+  renderMethods();      // re-selecciona primer método del país
+  updateDock();
+  checkDockVisibility();
+}
+
+function updatePrices(animate){
   const d = DATA[currentCountry];
-  [3000,6000,10000].forEach(n => {
-    document.getElementById('price'+n).textContent = d.prices[n];
-    document.getElementById('conv'+n).textContent  = d.conv[n];
-    document.getElementById('save'+n).innerHTML    = '&#9651; Ahorro: ' + d.saves[n];
+  [3000,6000,10000].forEach(n=>{
+    const p=$('price'+n), cv=$('conv'+n), s=$('save'+n);
+    p.textContent=d.prices[n]; cv.textContent=d.conv[n]; s.textContent='Ahorro '+d.shortSaves[n];
+    if(animate){ retick(p); retick(cv); retick(s); }
   });
   renderSavings();
 }
 
-function renderSavings() {
-  document.getElementById('savings-rows').innerHTML = DATA[currentCountry].savings.map(r =>
-    `<div class="savings-row"><strong>${r.label}</strong><br>Juego: ${r.ingame}<br>FirtsBuy: ${r.ours}<br><span class="hi">Ahorro: ${r.save}</span></div>`
-  ).join('');
+function renderSavings(){
+  $('savings-rows').innerHTML = DATA[currentCountry].savings.map((r,i)=>`
+    <div class="srow" style="--k:${i}">
+      <div><div class="a display">${r.label}</div><div class="b">En el juego: <s>${r.ingame}</s></div></div>
+      <div class="r"><div class="o">${r.ours}</div><div class="g">Ahorras ${r.save}</div></div>
+    </div>`).join('');
 }
 
-function selectPkg(n) {
+function selectPkg(n){
   currentPkg = n;
-  [3000,6000,10000].forEach(k => document.getElementById('pkg'+k).classList.toggle('selected', k===n));
-  document.getElementById('pkgSelect').value = String(n);
+  [3000,6000,10000].forEach(k=>{
+    const c=$('pkg'+k), on=k===n;
+    if(on && !c.classList.contains('selected')){ const g=c.querySelector('.gem'); g.classList.remove('x'); void g.offsetWidth; }
+    c.classList.toggle('selected', on);
+  });
+  $('pkgSelect').value = String(n);
+  updateDock(true);
+  checkDockVisibility();
 }
+function syncPkgSelect(){ selectPkg(parseInt($('pkgSelect').value,10)); }
 
-function syncPkgSelect() { selectPkg(parseInt(document.getElementById('pkgSelect').value)); }
-
-function renderMethods() {
-  document.getElementById('methods-grid').innerHTML = DATA[currentCountry].methods.map(m =>
-    `<div class="method-chip" onclick="selectMethod(this,'${m}')">${m}</div>`
-  ).join('');
+function renderMethods(){
+  const g=$('methods-grid'), ms=DATA[currentCountry].methods;
+  g.innerHTML = ms.map((m,i)=>`
+    <button type="button" class="mchip" style="--k:${i}" onclick="selectMethod(this,'${m}')">
+      <span class="pi">${payIcon(m)}</span><span class="nm">${m}</span>
+      <span class="tk"><i data-lucide="check"></i></span>
+    </button>`).join('');
+  icons();
+  const first=g.querySelector('.mchip');
+  if(first) selectMethod(first, ms[0]);
 }
-
-function selectMethod(el, m) {
-  currentMethod = m;
-  document.querySelectorAll('.method-chip').forEach(c => c.classList.remove('active'));
+function selectMethod(el,m){
+  currentMethod=m;
+  document.querySelectorAll('.mchip').forEach(c=>c.classList.remove('active'));
   el.classList.add('active');
+  $('selected-method-badge').textContent=m;
+  updateDock(true);
+  checkDockVisibility();
 }
 
-function submitOrder() {
-  const id = document.getElementById('playerID').value.trim();
-  if (!id)            { alert('Por favor ingresa tu ID de jugador Free Fire.'); return; }
-  if (!currentPkg)    { alert('Por favor selecciona un paquete.'); return; }
-  if (!currentMethod) { alert('Por favor selecciona un metodo de pago.'); return; }
-  const price   = DATA[currentCountry].prices[currentPkg];
-  const names   = { US:'Estados Unidos', CO:'Colombia', MX:'Mexico', PE:'Peru', AR:'Argentina' };
-  const msg = `Hola, quiero hacer un pedido en FirtsBuy:%0A%0A*ID Free Fire:* ${id}%0A*Paquete:* ${currentPkg.toLocaleString()} diamantes + 100 de regalo (${price})%0A*Pais:* ${names[currentCountry]}%0A*Metodo de pago:* ${currentMethod}`;
-  window.open(`https://wa.me/573115593037?text=${msg}`, '_blank');
+function updateDock(animate){
+  const d=DATA[currentCountry], pkg=currentPkg||6000;
+  $('dock-diamonds').textContent=(pkg+100).toLocaleString('en-US');
+  $('dock-method').innerHTML=currentMethod?payIcon(currentMethod)+'<span>'+currentMethod+'</span>':'<span>Elige un método</span>';
+  $('dock-price').textContent=d.prices[pkg];
+  $('dock-save').textContent='Ahorras '+d.shortSaves[pkg].replace('-','');
+  if(animate){ retick($('dock-price')); const b=$('cta'); b.classList.remove('flash'); void b.offsetWidth; b.classList.add('flash'); }
 }
 
-updatePrices(); renderMethods();
+function toggleModal(show){
+  $('info-modal').classList.toggle('open', show);
+  if(show){ renderSavings(); icons(); }
+}
+
+function onUid(){
+  const i=$('playerID');
+  i.value=i.value.replace(/\D/g,'');
+  $('uidField').classList.toggle('valid', i.value.length>=6);
+  checkDockVisibility();
+}
+async function pasteUID(){
+  const i=$('playerID');
+  try{
+    const txt=await navigator.clipboard.readText();
+    if(txt){ i.value=txt.replace(/\D/g,''); onUid(); showToast('ID pegado correctamente','success'); }
+  }catch{ i.focus(); }
+}
+
+function showToast(message,type='error'){
+  const c=$('toast-container'), el=document.createElement('div'), err=type==='error';
+  el.className='toast '+(err?'err':'ok');
+  el.innerHTML=`<i data-lucide="${err?'circle-alert':'circle-check'}"></i><span>${message}</span>`;
+  c.appendChild(el); icons();
+  setTimeout(()=>{ el.style.opacity='0'; el.style.transform='translateY(-10px)'; setTimeout(()=>el.remove(),260); },2800);
+}
+
+function submitOrder(){
+  const input=$('playerID'), id=input.value.trim();
+  if(!id){
+    const f=$('uidField'); f.classList.remove('shake'); void f.offsetWidth; f.classList.add('shake');
+    showToast('Ingresa tu ID numérico de Free Fire'); input.focus(); return;
+  }
+  if(!currentPkg){ showToast('Selecciona un paquete de diamantes'); return; }
+  if(!currentMethod){ showToast('Selecciona un método de pago'); return; }
+  const d=DATA[currentCountry], price=d.prices[currentPkg];
+  const msg=`Hola, quiero hacer un pedido en FirtsBuy:%0A%0A*ID Free Fire:* ${encodeURIComponent(id)}%0A*Paquete:* ${currentPkg.toLocaleString('en-US')} diamantes + 100 de regalo (${encodeURIComponent(price)})%0A*Pais:* ${encodeURIComponent(d.shortName)}%0A*Metodo de pago:* ${encodeURIComponent(currentMethod)}`;
+  window.open(`https://wa.me/573115593037?text=${msg}`,'_blank');
+}
+
+window.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('.cbtn').forEach(b=>{ const c=b.dataset.country; b.innerHTML=flag(c)+`<span>${DATA[c].code}</span>`; });
+  $('active-country-label').innerHTML=flag('US')+DATA.US.name;
+  updatePrices(false);
+  renderMethods();   // setea currentMethod al primero del país
+  selectPkg(6000);   // setea currentPkg = 6000
+  icons();
+  requestAnimationFrame(moveInd);
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(moveInd);
+  checkDockVisibility();   // arranca oculto (falta el ID)
+});
+window.addEventListener('resize',moveInd);
 </script>
 </body>
 </html>
