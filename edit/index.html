@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>MobileConfig Studio</title>
+<style>
+  /* ───────────────────────── Tokens ───────────────────────── */
+  :root {
+    --bg:          #08080a;
+    --bg-soft:     #0d0d10;
+    --surface:     #121215;
+    --surface-2:   #17171b;
+    --surface-3:   #1d1d22;
+    --border:       rgba(255,255,255,0.07);
+    --border-strong:rgba(255,255,255,0.14);
+
+    --text:        #e8e6e1;
+    --text-soft:   #a4a4ac;
+    --text-mute:   #5c5c64;
+
+    --accent:      #d4ff4a;
+    --accent-soft: rgba(212,255,74,0.12);
+    --accent-line: rgba(212,255,74,0.35);
+    --accent-glow: rgba(212,255,74,0.22);
+
+    --warning:     #ffb84d;
+    --warning-soft:rgba(255,184,77,0.12);
+    --warning-line:rgba(255,184,77,0.35);
+
+    --error:       #ff5f5f;
+    --error-soft:  rgba(255,95,95,0.10);
+    --error-line:  rgba(255,95,95,0.35);
+
+    --info:        #7cc4ff;
+    --info-soft:   rgba(124,196,255,0.10);
+    --info-line:   rgba(124,196,255,0.35);
+
+    --radius:      12px;
+    --radius-sm:   8px;
+    --radius-xs:   6px;
+
+    --font-sans:   -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+    --font-mono:   "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+    --shadow-lg:   0 24px 60px -20px rgba(0,0,0,0.7), 0 8px 20px -12px rgba(0,0,0,0.5);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    touch-action: pan-x pan-y;
+    overscroll-behavior: none;
+  }
+
+  html, body { min-height: 100%; }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+    padding: 40px 24px 80px;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    touch-action: pan-x pan-y;
+    position: relative;
+  }
+
+  * { -webkit-tap-highlight-color: transparent; }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    background:
+      radial-gradient(70vw 55vw at 15% 0%, rgba(212,255,74,0.06), transparent 60%),
+      radial-gradient(60vw 55vw at 100% 100%, rgba(124,196,255,0.05), transparent 60%),
+      linear-gradient(180deg, #08080a 0%, #0a0a0d 100%);
+  }
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ───────────────────────── Iconos ───────────────────────── */
+  .icon {
+    width: 16px; height: 16px;
+    flex-shrink: 0;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .icon-lg { width: 20px; height: 20px; }
+  .icon-xl { width: 26px; height: 26px; }
+
+  /* ───────────────────────── Layout ───────────────────────── */
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  .hero {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    padding-bottom: 32px;
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+    animation: fadeUp .55s ease both;
+  }
+
+  .hero-mark {
+    flex: 0 0 56px;
+    width: 56px; height: 56px;
+    border-radius: var(--radius-sm);
+    display: grid; place-items: center;
+    background: linear-gradient(145deg, var(--surface-3), var(--surface));
+    border: 1px solid var(--border-strong);
+    color: var(--accent);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-mark::after {
+    content: "";
+    position: absolute;
+    inset: -30%;
+    background: radial-gradient(circle at 70% 20%, var(--accent-glow), transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-text { flex: 1; min-width: 0; }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+  }
+
+  h1 {
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 700;
+    letter-spacing: -0.028em;
+    line-height: 1.08;
+    color: var(--text);
+  }
+  h1 .accent { color: var(--accent); font-weight: 600; }
+
+  .lede {
+    color: var(--text-soft);
+    font-size: 15px;
+    max-width: 620px;
+    margin-top: 12px;
+    line-height: 1.6;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: 24px;
+    align-items: start;
+  }
+
+  .main-col { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
+  .side-col { min-width: 0; }
+
+  /* ───────────────────────── Cards ────────────────────────── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    animation: fadeUp .55s ease both;
+    position: relative;
+  }
+  .card[hidden] { display: none; }
+  .card:nth-child(1) { animation-delay: .05s; }
+  .card:nth-child(2) { animation-delay: .10s; }
+  .side-col .card { animation-delay: .15s; position: sticky; top: 24px; }
+
+  .card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 24px; right: 24px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.16), transparent);
+    pointer-events: none;
+  }
+
+  .card-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 22px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .step-badge {
+    flex: 0 0 auto;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    padding: 6px 10px;
+    border: 1px solid var(--accent-line);
+    border-radius: var(--radius-xs);
+    background: var(--accent-soft);
+    line-height: 1;
+  }
+
+  .card-title {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .card-sub {
+    font-size: 12.5px;
+    color: var(--text-mute);
+    margin-top: 3px;
+    line-height: 1.3;
+  }
+
+  .card-body { padding: 22px 24px 24px; }
+
+  /* ───────────────────────── Labels ───────────────────────── */
+  .field { margin-bottom: 16px; }
+  .field:last-child { margin-bottom: 0; }
+
+  .field-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 8px;
+  }
+  .field-label .icon { color: var(--text-mute); }
+
+  /* ───────────────────────── Inputs ───────────────────────── */
+  input[type="text"], textarea {
+    width: 100%;
+    padding: 12px 14px;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    color: var(--text);
+    font-family: var(--font-sans);
+    transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+    line-height: 1.5;
+  }
+  input[type="text"]:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent-line);
+    background: #0a0a0c;
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+  input::placeholder, textarea::placeholder { color: var(--text-mute); }
+
+  textarea {
+    min-height: 220px;
+    resize: vertical;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.6;
+    color: #cfcfd6;
+    padding: 14px 16px;
+  }
+  textarea.flash { animation: flashAccent 1s ease; }
+  @keyframes flashAccent {
+    0%   { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    100% { border-color: var(--border); box-shadow: none; }
+  }
+
+  .row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 560px) { .row-2 { grid-template-columns: 1fr; } }
+
+  .field-hint {
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--text-mute);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .field-hint .icon { width: 14px; height: 14px; }
+  .field-hint.ok { color: var(--accent); }
+  .field-hint.warn { color: var(--warning); }
+
+  /* ───────────────────────── Dropzone ─────────────────────── */
+  .dropzone {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    background: var(--bg-soft);
+    transition: border-color .18s, background .18s;
+    user-select: none;
+  }
+  .dropzone:hover { border-color: var(--accent-line); background: var(--accent-soft); }
+  .dropzone.dragging {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    box-shadow: inset 0 0 0 1px var(--accent-line);
+  }
+  .dropzone input[type="file"] { display: none; }
+
+  .dropzone-icon {
+    flex: 0 0 44px;
+    width: 44px; height: 44px;
+    display: grid; place-items: center;
+    border-radius: var(--radius-xs);
+    border: 1px solid var(--border-strong);
+    background: var(--surface-2);
+    color: var(--accent);
+  }
+
+  .dropzone-text { flex: 1; min-width: 0; }
+  .dropzone-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .dropzone-sub {
+    font-size: 12.5px;
+    color: var(--text-mute);
+    margin-top: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .dropzone-sub.has-file { color: var(--accent); font-family: var(--font-mono); }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 18px 0;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-mute);
+  }
+  .divider::before, .divider::after {
+    content: "";
+    flex: 1; height: 1px;
+    background: var(--border);
+  }
+
+  /* ───────────────────────── Botones ──────────────────────── */
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 16px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-strong);
+    background: var(--surface-2);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    cursor: pointer;
+    transition: background .15s, border-color .15s, color .15s, transform .08s;
+    white-space: nowrap;
+    line-height: 1;
+  }
+  button:hover:not(:disabled) {
+    background: var(--surface-3);
+    border-color: rgba(255,255,255,0.22);
+  }
+  button:active:not(:disabled) { transform: translateY(1px); }
+  button:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0a0c;
+    border-color: var(--accent);
+    box-shadow: 0 8px 24px -12px var(--accent-glow);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: #e0ff66;
+    border-color: #e0ff66;
+    color: #0a0a0c;
+  }
+
+  .btn-ghost { background: transparent; border-color: var(--border); color: var(--text-soft); }
+  .btn-ghost:hover:not(:disabled) { background: var(--surface-2); color: var(--text); }
+
+  .btn-block { width: 100%; height: 48px; font-size: 14px; }
+
+  .btn-secondary {
+    height: 48px;
+    font-size: 13.5px;
+    background: var(--surface-2);
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    padding: 0 14px;
+    width: 100%;
+  }
+  .btn-secondary:hover:not(:disabled) {
+    background: var(--surface-3);
+    border-color: rgba(255,255,255,0.28);
+    color: var(--text);
+  }
+  .btn-secondary.is-danger:hover:not(:disabled) {
+    border-color: var(--error-line);
+    color: #ffa8a8;
+  }
+
+  .btn-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  button .icon { width: 16px; height: 16px; }
+  .btn-block .icon,
+  .btn-secondary .icon { width: 17px; height: 17px; }
+
+  /* ───────────────────────── Status ───────────────────────── */
+  .status {
+    display: none;
+    gap: 12px;
+    align-items: flex-start;
+    margin-top: 18px;
+    padding: 14px 16px;
+    border-radius: var(--radius-sm);
+    border: 1px solid;
+    font-size: 13.5px;
+    line-height: 1.55;
+    word-break: break-word;
+    animation: popIn .3s cubic-bezier(0.2, 0.9, 0.3, 1.3) both;
+  }
+  .status.show { display: flex; }
+  .status > .icon { margin-top: 1px; }
+
+  .status.success { background: var(--accent-soft);  border-color: var(--accent-line);  color: var(--accent); }
+  .status.warning { background: var(--warning-soft); border-color: var(--warning-line); color: var(--warning); }
+  .status.error   { background: var(--error-soft);   border-color: var(--error-line);   color: #ffa8a8; }
+  .status.info    { background: var(--info-soft);    border-color: var(--info-line);    color: var(--info); }
+
+  .status strong { font-weight: 700; }
+  .status code {
+    font-family: var(--font-mono);
+    background: rgba(0,0,0,0.35);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: inherit;
+  }
+
+  @keyframes popIn {
+    from { opacity: 0; transform: translateY(-3px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ───────────────────── Detector de iconos ─────────────── */
+  .icon-item {
+    display: grid;
+    grid-template-columns: 112px minmax(0, 1fr);
+    gap: 16px;
+    padding: 14px;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+  }
+  .icon-item + .icon-item { margin-top: 12px; }
+
+  .icon-prev {
+    width: 112px; height: 112px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-strong);
+    display: grid; place-items: center;
+    overflow: hidden;
+    background-color: #141418;
+    background-image:
+      linear-gradient(45deg, #1d1d22 25%, transparent 25%, transparent 75%, #1d1d22 75%),
+      linear-gradient(45deg, #1d1d22 25%, transparent 25%, transparent 75%, #1d1d22 75%);
+    background-size: 16px 16px;
+    background-position: 0 0, 8px 8px;
+  }
+  .icon-prev img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+  .icon-prev .broken { color: var(--error); font-size: 11px; text-align: center; padding: 8px; font-family: var(--font-mono); }
+
+  .icon-info { min-width: 0; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+  .chip {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 4px 8px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-xs);
+    color: var(--text-soft);
+    background: var(--surface-2);
+    line-height: 1.2;
+  }
+  .chip.key { color: var(--accent); border-color: var(--accent-line); background: var(--accent-soft); }
+
+  textarea.b64 {
+    min-height: 84px;
+    max-height: 220px;
+    font-size: 11px;
+    word-break: break-all;
+    padding: 10px 12px;
+  }
+
+  .icon-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .icon-actions button { height: 36px; padding: 0 12px; font-size: 12.5px; }
+  .icon-actions .btn-danger:hover:not(:disabled) { border-color: var(--error-line); color: #ffa8a8; }
+
+  @media (max-width: 560px) {
+    .icon-item { grid-template-columns: 1fr; }
+    .icon-prev { width: 100%; height: 140px; }
+  }
+
+  /* ───────────────────────── Stats (sidebar) ──────────────── */
+  .stats {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 6px;
+    margin-bottom: 18px;
+  }
+
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 12px;
+    border-radius: var(--radius-xs);
+    transition: background .2s;
+  }
+  .stat + .stat { border-top: 1px solid var(--border); }
+  .stat.hot { background: var(--accent-soft); }
+
+  .stat-icon {
+    flex: 0 0 30px;
+    width: 30px; height: 30px;
+    display: grid; place-items: center;
+    border-radius: var(--radius-xs);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text-soft);
+  }
+  .stat.hot .stat-icon {
+    color: var(--accent);
+    border-color: var(--accent-line);
+    background: var(--accent-soft);
+  }
+
+  .stat-body { flex: 1; min-width: 0; }
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-mute);
+    margin-bottom: 2px;
+  }
+  .stat-value {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-variant-numeric: tabular-nums;
+    font-family: var(--font-mono);
+  }
+  .stat.hot .stat-value { color: var(--accent); }
+
+  /* ───────────────────── Notas / "Antes de instalar" ─────── */
+  details.notes {
+    margin-top: 20px;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+  details.notes summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    transition: color .15s;
+    user-select: none;
+  }
+  details.notes summary::-webkit-details-marker { display: none; }
+  details.notes summary .summary-icon { color: var(--accent); }
+  details.notes summary:hover { color: var(--accent); }
+  details.notes summary .chev {
+    margin-left: auto;
+    transition: transform .2s;
+    color: var(--text-mute);
+  }
+  details.notes[open] summary .chev { transform: rotate(180deg); }
+
+  .notes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .note {
+    display: flex;
+    gap: 12px;
+    padding: 12px 14px;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+  }
+  .note-icon {
+    flex: 0 0 32px;
+    width: 32px; height: 32px;
+    display: grid; place-items: center;
+    border-radius: var(--radius-xs);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--accent);
+  }
+  .note-icon .icon { width: 16px; height: 16px; }
+  .note-icon.warn  { color: var(--warning); }
+  .note-icon.info  { color: var(--info); }
+
+  .note-body { flex: 1; min-width: 0; }
+  .note-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 3px;
+    letter-spacing: -0.005em;
+  }
+  .note-text {
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--text-soft);
+  }
+  .note-text code {
+    font-family: var(--font-mono);
+    background: rgba(0,0,0,0.4);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 11.5px;
+    color: var(--accent);
+  }
+
+  /* ───────────────────────── Animaciones ──────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ───────────────────────── Responsive ───────────────────── */
+  @media (max-width: 980px) {
+    body { padding: 28px 16px 60px; }
+    .layout { grid-template-columns: 1fr; gap: 20px; }
+    .side-col .card { position: static; top: auto; }
+    .hero { flex-direction: column; gap: 14px; padding-bottom: 24px; margin-bottom: 24px; }
+    .hero-mark { width: 48px; height: 48px; flex-basis: 48px; }
+    h1 { font-size: 30px; }
+    .lede { font-size: 14px; }
+    .card-head { padding: 18px 20px; }
+    .card-body { padding: 20px; }
+    textarea { min-height: 180px; }
+    textarea.b64 { min-height: 84px; }
+  }
+
+  @media (max-width: 480px) {
+    body { padding: 20px 12px 48px; }
+    h1 { font-size: 26px; }
+    .actions { flex-direction: column; }
+    .actions button { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ Sprite de iconos (Lucide) ═══════════════ -->
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-swap" viewBox="0 0 24 24"><path d="m8 3-4 4 4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/></symbol>
+  <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5v0a5.5 5.5 0 0 1-5.5 5.5H11"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-terminal" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></symbol>
+  <symbol id="i-drive" viewBox="0 0 24 24"><line x1="22" x2="2" y1="12" y2="12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/><line x1="6" y1="16" x2="6.01" y2="16"/><line x1="10" y1="16" x2="10.01" y2="16"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></symbol>
+</svg>
+
+<div class="container">
+
+  <header class="hero">
+    <div class="hero-mark">
+      <svg class="icon icon-xl"><use href="#i-terminal"/></svg>
+    </div>
+    <div class="hero-text">
+      <div class="eyebrow">MobileConfig Studio</div>
+      <h1>Edita perfiles <span class="accent">sin romperlos</span></h1>
+      <p class="lede">Modifica valores dentro de un <code style="font-family:var(--font-mono);color:var(--accent);background:var(--bg-soft);padding:1px 6px;border-radius:4px;font-size:13px">.mobileconfig</code> de Apple y verifica el cambio antes de instalarlo. Cien por ciento en tu navegador.</p>
+    </div>
+  </header>
+
+  <div class="layout">
+
+    <main class="main-col">
+
+      <!-- Paso 1 -->
+      <section class="card">
+        <div class="card-head">
+          <span class="step-badge">01</span>
+          <div>
+            <div class="card-title">Cargar archivo</div>
+            <div class="card-sub">Arrastra tu perfil o pega el XML manualmente</div>
+          </div>
+        </div>
+        <div class="card-body">
+
+          <label class="dropzone" id="dropZone">
+            <input type="file" id="fileInput" accept=".mobileconfig,.xml,text/xml,application/xml">
+            <div class="dropzone-icon">
+              <svg class="icon icon-lg"><use href="#i-upload"/></svg>
+            </div>
+            <div class="dropzone-text">
+              <div class="dropzone-title">Selecciona o arrastra tu .mobileconfig</div>
+              <div class="dropzone-sub" id="fileName">Ningún archivo cargado</div>
+            </div>
+          </label>
+
+          <div class="divider">o pega el contenido</div>
+
+          <div class="field">
+            <div class="field-label">
+              <svg class="icon"><use href="#i-file"/></svg>
+              Contenido XML
+            </div>
+            <textarea id="original" spellcheck="false" placeholder="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; ...&gt;&#10;&lt;plist version=&quot;1.0&quot;&gt;&#10;..."></textarea>
+            <div class="field-hint" id="fileInfo"></div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Paso 2 -->
+      <section class="card">
+        <div class="card-head">
+          <span class="step-badge">02</span>
+          <div>
+            <div class="card-title">Reemplazar valor</div>
+            <div class="card-sub">Busca el valor original y define el nuevo</div>
+          </div>
+        </div>
+        <div class="card-body">
+
+          <div class="row-2">
+            <div class="field">
+              <div class="field-label">
+                <svg class="icon"><use href="#i-search"/></svg>
+                Valor original
+              </div>
+              <input type="text" id="find" placeholder="https://servidor-viejo.com" spellcheck="false" autocomplete="off">
+            </div>
+            <div class="field">
+              <div class="field-label">
+                <svg class="icon"><use href="#i-swap"/></svg>
+                Valor nuevo
+              </div>
+              <input type="text" id="replace" placeholder="https://servidor-nuevo.com" spellcheck="false" autocomplete="off">
+            </div>
+          </div>
+
+          <div class="actions">
+            <button id="checkBtn" class="btn-ghost">
+              <svg class="icon"><use href="#i-search"/></svg>
+              Verificar existencia
+            </button>
+            <button id="replaceBtn" class="btn-primary">
+              <svg class="icon"><use href="#i-swap"/></svg>
+              Reemplazar y verificar
+            </button>
+            <button id="undoBtn" class="btn-ghost" disabled>
+              <svg class="icon"><use href="#i-undo"/></svg>
+              Deshacer
+            </button>
+          </div>
+
+          <div id="status" class="status"></div>
+
+        </div>
+      </section>
+
+      <!-- Detector de icono (solo aparece si el perfil trae uno) -->
+      <section class="card" id="iconCard" hidden>
+        <div class="card-head">
+          <span class="step-badge">ICO</span>
+          <div>
+            <div class="card-title">Icono detectado</div>
+            <div class="card-sub" id="iconCount">Imagen en base64 dentro del perfil</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div id="iconList"></div>
+          <input type="file" id="iconFile" accept="image/png,image/jpeg,image/gif,image/webp" style="display:none">
+        </div>
+      </section>
+
+    </main>
+
+    <aside class="side-col">
+      <section class="card">
+        <div class="card-head">
+          <span class="step-badge">03</span>
+          <div>
+            <div class="card-title">Exportar</div>
+            <div class="card-sub">Resumen y descarga del resultado</div>
+          </div>
+        </div>
+        <div class="card-body">
+
+          <div class="stats">
+            <div class="stat" id="statFileRow">
+              <div class="stat-icon"><svg class="icon"><use href="#i-file"/></svg></div>
+              <div class="stat-body">
+                <div class="stat-label">Archivo</div>
+                <div class="stat-value" id="statFileName">—</div>
+              </div>
+            </div>
+            <div class="stat">
+              <div class="stat-icon"><svg class="icon"><use href="#i-drive"/></svg></div>
+              <div class="stat-body">
+                <div class="stat-label">Tamaño</div>
+                <div class="stat-value" id="statFileSize">—</div>
+              </div>
+            </div>
+            <div class="stat" id="statIconRow">
+              <div class="stat-icon"><svg class="icon"><use href="#i-image"/></svg></div>
+              <div class="stat-body">
+                <div class="stat-label">Icono</div>
+                <div class="stat-value" id="statIcon">—</div>
+              </div>
+            </div>
+            <div class="stat" id="statChangesRow">
+              <div class="stat-icon"><svg class="icon"><use href="#i-layers"/></svg></div>
+              <div class="stat-body">
+                <div class="stat-label">Cambios</div>
+                <div class="stat-value" id="statChanges">—</div>
+              </div>
+            </div>
+          </div>
+
+          <button id="downloadBtn" class="btn-primary btn-block" disabled>
+            <svg class="icon"><use href="#i-download"/></svg>
+            Instalar / Descargar
+          </button>
+
+          <div class="btn-pair">
+            <button id="copyBtn" class="btn-secondary" disabled>
+              <svg class="icon"><use href="#i-copy"/></svg>
+              Copiar
+            </button>
+            <button id="resetBtn" class="btn-secondary is-danger">
+              <svg class="icon"><use href="#i-trash"/></svg>
+              Limpiar
+            </button>
+          </div>
+
+          <div class="field-hint" style="margin-top:14px">
+            <svg class="icon"><use href="#i-phone"/></svg>
+            En iPhone/iPad ábrelo desde Archivos para instalar el perfil.
+          </div>
+
+          <details class="notes">
+            <summary>
+              <svg class="icon summary-icon"><use href="#i-book"/></svg>
+              Antes de instalar
+              <svg class="icon chev"><use href="#i-chevron"/></svg>
+            </summary>
+
+            <div class="notes-list">
+
+              <div class="note">
+                <div class="note-icon">
+                  <svg class="icon"><use href="#i-check"/></svg>
+                </div>
+                <div class="note-body">
+                  <div class="note-title">El cambio se confirma de verdad</div>
+                  <div class="note-text">Después de reemplazar, la app vuelve a revisar el archivo para asegurarse de que el valor viejo ya no está. Si ves el mensaje en verde, el cambio sí se aplicó.</div>
+                </div>
+              </div>
+
+              <div class="note">
+                <div class="note-icon info">
+                  <svg class="icon"><use href="#i-shield"/></svg>
+                </div>
+                <div class="note-body">
+                  <div class="note-title">Sobre la firma del perfil</div>
+                  <div class="note-text">Si tu archivo venía firmado por Apple, al editarlo pierde esa firma. No pasa nada: se puede instalar igual en el iPhone, iOS solo te avisará de que el perfil no está firmado.</div>
+                </div>
+              </div>
+
+              <div class="note">
+                <div class="note-icon">
+                  <svg class="icon"><use href="#i-image"/></svg>
+                </div>
+                <div class="note-body">
+                  <div class="note-title">Sobre el icono</div>
+                  <div class="note-text">Si el perfil trae un icono en base64 (por ejemplo la clave <code>Icon</code> de un Web Clip), se muestra en su propia tarjeta. Allí puedes verlo, copiar el código, reemplazarlo o eliminarlo.</div>
+                </div>
+              </div>
+
+              <div class="note">
+                <div class="note-icon warn">
+                  <svg class="icon"><use href="#i-alert"/></svg>
+                </div>
+                <div class="note-body">
+                  <div class="note-title">Solo archivos de texto</div>
+                  <div class="note-text">Esta herramienta trabaja con perfiles en formato <code>XML</code> (texto plano). Si tu archivo es un plist binario, la app te lo indicará y no podrás editarlo aquí.</div>
+                </div>
+              </div>
+
+            </div>
+          </details>
+
+        </div>
+      </section>
+    </aside>
+
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  document.addEventListener('gesturestart', e => e.preventDefault(), { passive: false });
+  document.addEventListener('gesturechange', e => e.preventDefault(), { passive: false });
+  document.addEventListener('gestureend',  e => e.preventDefault(), { passive: false });
+  document.addEventListener('dblclick', e => e.preventDefault(), { passive: false });
+
+  const $ = id => document.getElementById(id);
+  const originalEl   = $('original');
+  const findEl       = $('find');
+  const replaceEl    = $('replace');
+  const checkBtn     = $('checkBtn');
+  const replaceBtn   = $('replaceBtn');
+  const undoBtn      = $('undoBtn');
+  const resetBtn     = $('resetBtn');
+  const downloadBtn  = $('downloadBtn');
+  const copyBtn      = $('copyBtn');
+  const statusEl     = $('status');
+  const fileInfoEl   = $('fileInfo');
+  const fileInput    = $('fileInput');
+  const fileNameEl   = $('fileName');
+  const dropZone     = $('dropZone');
+  const statFileName = $('statFileName');
+  const statFileSize = $('statFileSize');
+  const statChanges  = $('statChanges');
+  const statChangesRow = $('statChangesRow');
+  const statIcon     = $('statIcon');
+  const statIconRow  = $('statIconRow');
+  const iconCard     = $('iconCard');
+  const iconList     = $('iconList');
+  const iconCountEl  = $('iconCount');
+  const iconFile     = $('iconFile');
+
+  const ICONS = {
+    info:    '<svg class="icon"><use href="#i-info"/></svg>',
+    success: '<svg class="icon"><use href="#i-check"/></svg>',
+    warning: '<svg class="icon"><use href="#i-alert"/></svg>',
+    error:   '<svg class="icon"><use href="#i-x"/></svg>'
+  };
+  const svgUse = id => '<svg class="icon"><use href="#' + id + '"/></svg>';
+
+  let modifiedContent = null;
+  let previousContent = null;
+  let suppressInput   = false;
+  let icons           = [];
+  let pendingIconIdx  = -1;
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, c =>
+      ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+  function count(text, search) {
+    if (!search) return 0;
+    return text.split(search).length - 1;
+  }
+  function showStatus(type, html) {
+    statusEl.className = 'status show ' + type;
+    statusEl.innerHTML = ICONS[type] + '<div>' + html + '</div>';
+  }
+  function hideStatus() {
+    statusEl.className = 'status';
+    statusEl.innerHTML = '';
+  }
+  function fmtBytes(n) {
+    if (!n) return '—';
+    if (n < 1024) return n + ' B';
+    if (n < 1024 * 1024) return (n / 1024).toFixed(1) + ' KB';
+    return (n / (1024 * 1024)).toFixed(2) + ' MB';
+  }
+
+  /* ═════════════ Detector de iconos base64 ═════════════ */
+
+  function sniffMime(b64) {
+    try {
+      const bin = atob(b64.slice(0, 24));
+      const b = bin.split('').map(c => c.charCodeAt(0));
+      if (b[0] === 0x89 && b[1] === 0x50 && b[2] === 0x4E && b[3] === 0x47) return 'image/png';
+      if (b[0] === 0xFF && b[1] === 0xD8 && b[2] === 0xFF) return 'image/jpeg';
+      if (b[0] === 0x47 && b[1] === 0x49 && b[2] === 0x46) return 'image/gif';
+      if (bin.slice(0, 4) === 'RIFF' && bin.slice(8, 12) === 'WEBP') return 'image/webp';
+    } catch (e) {}
+    return null;
+  }
+
+  function b64Bytes(b64) {
+    const pad = (b64.match(/=+$/) || [''])[0].length;
+    return Math.floor(b64.length * 3 / 4) - pad;
+  }
+
+  function extFor(mime) {
+    return ({'image/png':'png','image/jpeg':'jpg','image/gif':'gif','image/webp':'webp'})[mime] || 'img';
+  }
+
+  // Busca pares <key>X</key><data>...</data> y <key>X</key><string>data:image/...;base64,...</string>
+  function detectIcons(text) {
+    const found = [];
+    if (!text || text.length < 40) return found;
+    const re = /([ \t]*)<key>\s*([^<]*?)\s*<\/key>\s*<(data|string)>\s*([\s\S]*?)\s*<\/\3>/g;
+    let m;
+    while ((m = re.exec(text)) !== null) {
+      const tag = m[3];
+      const val = m[4];
+      let b64 = null, mime = null;
+
+      if (tag === 'data') {
+        const clean = val.replace(/\s+/g, '');
+        if (clean.length >= 16 && /^[A-Za-z0-9+/]+=*$/.test(clean)) {
+          const mm = sniffMime(clean);
+          if (mm) { b64 = clean; mime = mm; }
+        }
+      } else {
+        const u = val.match(/^data:(image\/[a-z0-9.+-]+);base64,([\s\S]+)$/i);
+        if (u) {
+          const clean = u[2].replace(/\s+/g, '');
+          if (/^[A-Za-z0-9+/]+=*$/.test(clean)) { b64 = clean; mime = u[1].toLowerCase(); }
+        }
+      }
+      if (!b64) continue;
+
+      const keyEnd  = m[0].indexOf('</key>');
+      const tagPos  = m[0].indexOf('<' + tag + '>', keyEnd);
+      const innerS  = m.index + tagPos + tag.length + 2;
+      const innerE  = m.index + m[0].lastIndexOf('</' + tag + '>');
+
+      found.push({
+        key: m[2] || '(sin clave)',
+        tag: tag,
+        indent: m[1],
+        b64: b64,
+        mime: mime,
+        bytes: b64Bytes(b64),
+        start: m.index,
+        end: m.index + m[0].length,
+        innerStart: innerS,
+        innerEnd: innerE
+      });
+    }
+    return found;
+  }
+
+  function renderIcons() {
+    icons = detectIcons(originalEl.value);
+    if (!icons.length) {
+      iconCard.hidden = true;
+      iconList.innerHTML = '';
+      statIcon.textContent = '—';
+      statIconRow.classList.remove('hot');
+      return;
+    }
+    iconCard.hidden = false;
+    iconCountEl.textContent = icons.length === 1
+      ? 'Se encontró 1 imagen en base64 dentro del perfil'
+      : 'Se encontraron ' + icons.length + ' imágenes en base64 dentro del perfil';
+    statIcon.textContent = icons.length === 1 ? 'Detectado' : icons.length + ' detectados';
+    statIconRow.classList.add('hot');
+
+    iconList.innerHTML = icons.map((ic, i) => (
+      '<div class="icon-item">' +
+        '<div class="icon-prev" id="iprev' + i + '"></div>' +
+        '<div class="icon-info">' +
+          '<div class="chips">' +
+            '<span class="chip key">' + esc(ic.key) + '</span>' +
+            '<span class="chip">' + esc(ic.mime.replace('image/', '').toUpperCase()) + '</span>' +
+            '<span class="chip" id="idim' + i + '">...</span>' +
+            '<span class="chip">' + fmtBytes(ic.bytes) + '</span>' +
+            '<span class="chip">' + (ic.tag === 'data' ? '&lt;data&gt;' : 'data URI') + '</span>' +
+          '</div>' +
+          '<div class="field-label">' + svgUse('i-file') + 'Código base64</div>' +
+          '<textarea class="b64" id="ib64' + i + '" spellcheck="false">' + esc(ic.b64) + '</textarea>' +
+          '<div class="icon-actions">' +
+            '<button class="btn-primary" data-act="replace" data-i="' + i + '">' + svgUse('i-swap') + 'Reemplazar imagen</button>' +
+            '<button data-act="apply" data-i="' + i + '">' + svgUse('i-check') + 'Aplicar base64</button>' +
+            '<button class="btn-ghost" data-act="copy" data-i="' + i + '">' + svgUse('i-copy') + 'Copiar</button>' +
+            '<button class="btn-ghost" data-act="download" data-i="' + i + '">' + svgUse('i-download') + 'Descargar</button>' +
+            '<button class="btn-ghost btn-danger" data-act="remove" data-i="' + i + '">' + svgUse('i-trash') + 'Eliminar</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>'
+    )).join('');
+
+    icons.forEach((ic, i) => {
+      const box = $('iprev' + i);
+      const img = new Image();
+      img.alt = 'Icono ' + ic.key;
+      img.onload = () => {
+        const d = $('idim' + i);
+        if (d) d.textContent = img.naturalWidth + ' x ' + img.naturalHeight + ' px';
+      };
+      img.onerror = () => {
+        box.innerHTML = '<div class="broken">No se pudo decodificar la imagen</div>';
+        const d = $('idim' + i);
+        if (d) d.textContent = 'ilegible';
+      };
+      img.src = 'data:' + ic.mime + ';base64,' + ic.b64;
+      box.appendChild(img);
+    });
+  }
+
+  function commitEdit(newText, label, statusHtml) {
+    previousContent = originalEl.value;
+    suppressInput = true;
+    originalEl.value = newText;
+    suppressInput = false;
+    originalEl.classList.remove('flash');
+    void originalEl.offsetWidth;
+    originalEl.classList.add('flash');
+    modifiedContent = newText;
+    statChanges.textContent = label;
+    undoBtn.disabled = false;
+    setButtonsState();
+    updateFileInfo();
+    updateStats();
+    showStatus('success', statusHtml);
+  }
+
+  function wrapB64(b64, indent) {
+    return (b64.match(/.{1,68}/g) || []).join('\n' + indent + '\t');
+  }
+
+  function buildInner(ic, b64, mime) {
+    if (ic.tag === 'data') {
+      return '\n' + ic.indent + '\t' + wrapB64(b64, ic.indent) + '\n' + ic.indent;
+    }
+    return 'data:' + mime + ';base64,' + b64;
+  }
+
+  function applyIcon(i, b64, mime, verb) {
+    const ic = icons[i];
+    if (!ic) return;
+    const text = originalEl.value;
+    const out = text.slice(0, ic.innerStart) + buildInner(ic, b64, mime) + text.slice(ic.innerEnd);
+    commitEdit(out, 'Icono ' + verb,
+      '<strong>Icono ' + verb + '.</strong> La clave <code>' + esc(ic.key) + '</code> ahora contiene la nueva imagen.');
+  }
+
+  function removeIcon(i) {
+    const ic = icons[i];
+    if (!ic) return;
+    const text = originalEl.value;
+    let end = ic.end;
+    const tail = text.slice(end).match(/^[ \t]*\r?\n/);
+    if (tail) end += tail[0].length;
+    const out = text.slice(0, ic.start) + text.slice(end);
+    commitEdit(out, 'Icono eliminado',
+      '<strong>Icono eliminado.</strong> Se quitó la clave <code>' + esc(ic.key) + '</code> y su código base64 del perfil.');
+  }
+
+  function readFileAsDataURL(file) {
+    return new Promise((res, rej) => {
+      const r = new FileReader();
+      r.onload = () => res(String(r.result));
+      r.onerror = () => rej(new Error('lectura'));
+      r.readAsDataURL(file);
+    });
+  }
+  function loadImage(src) {
+    return new Promise((res, rej) => {
+      const im = new Image();
+      im.onload = () => res(im);
+      im.onerror = () => rej(new Error('imagen'));
+      im.src = src;
+    });
+  }
+
+  iconFile.addEventListener('change', async () => {
+    const file = iconFile.files && iconFile.files[0];
+    const i = pendingIconIdx;
+    iconFile.value = '';
+    if (!file || i < 0 || !icons[i]) return;
+    try {
+      let dataUrl = await readFileAsDataURL(file);
+      let mime = (dataUrl.match(/^data:([^;]+);/) || [])[1] || file.type;
+      const im = await loadImage(dataUrl);
+      // En <data> (Web Clip) Apple espera PNG: se convierte si hace falta
+      if (icons[i].tag === 'data' && mime !== 'image/png') {
+        const c = document.createElement('canvas');
+        c.width = im.naturalWidth; c.height = im.naturalHeight;
+        c.getContext('2d').drawImage(im, 0, 0);
+        dataUrl = c.toDataURL('image/png');
+        mime = 'image/png';
+      }
+      const b64 = dataUrl.split(',')[1];
+      applyIcon(i, b64, mime, 'reemplazado');
+    } catch (e) {
+      showStatus('error', 'No se pudo leer esa imagen. Usa un archivo PNG, JPG, GIF o WEBP válido.');
+    }
+  });
+
+  iconList.addEventListener('click', async e => {
+    const btn = e.target.closest('button[data-act]');
+    if (!btn) return;
+    const i = parseInt(btn.dataset.i, 10);
+    const ic = icons[i];
+    if (!ic) return;
+    const act = btn.dataset.act;
+
+    if (act === 'replace') {
+      pendingIconIdx = i;
+      iconFile.click();
+    } else if (act === 'apply') {
+      let raw = ($('ib64' + i).value || '').trim();
+      const u = raw.match(/^data:(image\/[a-z0-9.+-]+);base64,([\s\S]+)$/i);
+      if (u) raw = u[2];
+      raw = raw.replace(/\s+/g, '');
+      if (!raw || !/^[A-Za-z0-9+/]+=*$/.test(raw)) {
+        showStatus('error', 'El texto no es un base64 válido.'); return;
+      }
+      const mime = sniffMime(raw);
+      if (!mime) {
+        showStatus('error', 'Ese base64 no corresponde a una imagen PNG, JPG, GIF o WEBP.'); return;
+      }
+      if (raw === ic.b64) {
+        showStatus('warning', 'El código base64 es igual al actual. No hay nada que cambiar.'); return;
+      }
+      applyIcon(i, raw, mime, 'actualizado');
+    } else if (act === 'copy') {
+      try {
+        await navigator.clipboard.writeText(ic.b64);
+        showStatus('success', 'Código base64 del icono copiado al portapapeles.');
+      } catch {
+        showStatus('error', 'No se pudo copiar. Selecciona el código y cópialo manualmente.');
+      }
+    } else if (act === 'download') {
+      const bin = atob(ic.b64);
+      const arr = new Uint8Array(bin.length);
+      for (let k = 0; k < bin.length; k++) arr[k] = bin.charCodeAt(k);
+      const url = URL.createObjectURL(new Blob([arr], { type: ic.mime }));
+      const a = document.createElement('a');
+      a.href = url; a.download = 'icono.' + extFor(ic.mime); a.rel = 'noopener';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 15000);
+    } else if (act === 'remove') {
+      removeIcon(i);
+    }
+  });
+
+  /* ═════════════ Lógica original ═════════════ */
+
+  function updateFileInfo() {
+    renderIcons();
+    const val = originalEl.value;
+    if (!val.trim()) {
+      fileInfoEl.innerHTML = '';
+      statFileSize.textContent = '—';
+      return;
+    }
+    const bytes = new Blob([val]).size;
+    const looksXml = /^\s*<\?xml/i.test(val) || val.includes('<plist');
+    fileInfoEl.innerHTML = looksXml
+      ? '<svg class="icon"><use href="#i-check"/></svg> XML plist detectado · ' + fmtBytes(bytes)
+      : '<svg class="icon"><use href="#i-alert"/></svg> No parece un XML plist válido';
+    fileInfoEl.className = 'field-hint ' + (looksXml ? 'ok' : 'warn');
+    statFileSize.textContent = fmtBytes(bytes);
+  }
+
+  function updateStats() {
+    statFileName.textContent = (fileNameEl.dataset.name || '—');
+    statChangesRow.classList.toggle('hot', !!modifiedContent);
+  }
+
+  function setButtonsState() {
+    const ready = !!modifiedContent;
+    downloadBtn.disabled = !ready;
+    copyBtn.disabled     = !ready;
+  }
+
+  function resetAll(clearTextarea) {
+    if (clearTextarea) {
+      suppressInput = true;
+      originalEl.value = '';
+      suppressInput = false;
+    }
+    findEl.value = '';
+    replaceEl.value = '';
+    modifiedContent = null;
+    previousContent = null;
+    undoBtn.disabled = true;
+    fileInput.value = '';
+    fileNameEl.textContent = 'Ningún archivo cargado';
+    fileNameEl.classList.remove('has-file');
+    fileNameEl.dataset.name = '';
+    statChanges.textContent = '—';
+    hideStatus();
+    setButtonsState();
+    updateFileInfo();
+    updateStats();
+  }
+
+  function countResidual(result, find, repl) {
+    if (!find) return 0;
+    if (!repl) return count(result, find);
+    const MASK = '\u0000__MC_MASK__\u0000';
+    const masked = result.split(repl).join(MASK);
+    return count(masked, find);
+  }
+
+  fileInput.addEventListener('change', () => {
+    const file = fileInput.files && fileInput.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      suppressInput = true;
+      originalEl.value = String(reader.result || '');
+      suppressInput = false;
+      modifiedContent = null;
+      previousContent = null;
+      undoBtn.disabled = true;
+      fileNameEl.textContent = file.name;
+      fileNameEl.classList.add('has-file');
+      fileNameEl.dataset.name = file.name;
+      statChanges.textContent = '—';
+      hideStatus();
+      setButtonsState();
+      updateFileInfo();
+      updateStats();
+    };
+    reader.readAsText(file);
+  });
+
+  ['dragenter','dragover'].forEach(ev =>
+    dropZone.addEventListener(ev, e => { e.preventDefault(); dropZone.classList.add('dragging'); }));
+  ['dragleave','drop'].forEach(ev =>
+    dropZone.addEventListener(ev, e => { e.preventDefault(); dropZone.classList.remove('dragging'); }));
+  dropZone.addEventListener('drop', e => {
+    const file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    if (!file) return;
+    const dt = new DataTransfer();
+    dt.items.add(file);
+    fileInput.files = dt.files;
+    fileInput.dispatchEvent(new Event('change'));
+  });
+
+  originalEl.addEventListener('input', () => {
+    if (suppressInput) return;
+    modifiedContent = null;
+    previousContent = null;
+    undoBtn.disabled = true;
+    hideStatus();
+    setButtonsState();
+    updateFileInfo();
+    updateStats();
+  });
+
+  checkBtn.addEventListener('click', () => {
+    const text = originalEl.value;
+    const find = findEl.value;
+
+    if (!text.trim()) { showStatus('error', 'Primero carga o pega el contenido del archivo <code>.mobileconfig</code>.'); return; }
+    if (!find)        { showStatus('error', 'Escribe el valor que quieres buscar.'); return; }
+
+    const n = count(text, find);
+    if (n === 0) {
+      showStatus('error', 'El valor <code>' + esc(find) + '</code> <strong>no existe</strong> en el archivo. Revisa mayúsculas, espacios y símbolos.');
+    } else {
+      showStatus('success', 'El valor <code>' + esc(find) + '</code> existe <strong>' + n + ' vez' + (n > 1 ? 'es' : '') + '</strong> en el archivo.');
+    }
+  });
+
+  replaceBtn.addEventListener('click', () => {
+    const text = originalEl.value;
+    const find = findEl.value;
+    const repl = replaceEl.value;
+
+    if (!text.trim()) { showStatus('error', 'Primero carga o pega el contenido del archivo <code>.mobileconfig</code>.'); return; }
+    if (!find)        { showStatus('error', 'Escribe el valor original que quieres modificar.'); return; }
+    if (find === repl) { showStatus('warning', 'El valor original y el nuevo son iguales. No hay nada que cambiar.'); return; }
+
+    const before = count(text, find);
+    if (before === 0) {
+      showStatus('error', 'No se puede reemplazar: el valor <code>' + esc(find) + '</code> no existe en el archivo.');
+      return;
+    }
+
+    const result   = text.split(find).join(repl);
+    const residual = countResidual(result, find, repl);
+    const newCount = count(result, repl);
+
+    if (result === text) {
+      showStatus('error', 'El archivo no cambió. Revisa los valores ingresados.');
+      return;
+    }
+
+    previousContent = text;
+    suppressInput = true;
+    originalEl.value = result;
+    suppressInput = false;
+
+    originalEl.classList.remove('flash');
+    void originalEl.offsetWidth;
+    originalEl.classList.add('flash');
+
+    statChanges.textContent = String(before) + (before === 1 ? ' reemplazo' : ' reemplazos');
+    modifiedContent = result;
+
+    if (residual === 0) {
+      showStatus('success',
+        '<strong>Cambio verificado.</strong> Se reemplazaron <strong>' + before + '</strong> aparición' + (before > 1 ? 'es' : '') + '. ' +
+        'El valor original ya <strong>no aparece</strong> en el archivo. ' +
+        'El valor nuevo aparece <strong>' + newCount + '</strong> vez' + (newCount > 1 ? 'es' : '') + '.');
+    } else {
+      showStatus('warning',
+        'Reemplazo aplicado (' + before + ' aparición' + (before > 1 ? 'es' : '') + '), pero <strong>quedan ' + residual + ' coincidencia' + (residual > 1 ? 's' : '') + '</strong> del valor original. ' +
+        'Puede ocurrir si el valor viejo aparece en otra parte del archivo o dentro del valor nuevo.');
+    }
+
+    undoBtn.disabled = false;
+    setButtonsState();
+    updateFileInfo();
+    updateStats();
+  });
+
+  undoBtn.addEventListener('click', () => {
+    if (previousContent === null) return;
+    suppressInput = true;
+    originalEl.value = previousContent;
+    suppressInput = false;
+    modifiedContent = null;
+    previousContent = null;
+    undoBtn.disabled = true;
+    statChanges.textContent = '—';
+    setButtonsState();
+    updateFileInfo();
+    updateStats();
+    showStatus('info', 'Cambio deshecho. El contenido volvió al estado anterior.');
+  });
+
+  resetBtn.addEventListener('click', () => resetAll(true));
+
+  downloadBtn.addEventListener('click', () => {
+    if (!modifiedContent) return;
+    const name = getFileName(modifiedContent, fileNameEl.dataset.name);
+    const blob = new Blob([modifiedContent], { type: 'application/x-apple-aspen-config' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href = url;
+    a.download = name;
+    a.rel = 'noopener';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 15000);
+    showStatus('info', 'Archivo <code>' + esc(name) + '</code> descargado. En iPhone/iPad ábrelo desde Archivos para instalar el perfil.');
+  });
+
+  copyBtn.addEventListener('click', async () => {
+    if (!modifiedContent) return;
+    try {
+      await navigator.clipboard.writeText(modifiedContent);
+      showStatus('success', 'Contenido copiado al portapapeles.');
+    } catch {
+      showStatus('error', 'No se pudo copiar. Selecciona y copia manualmente.');
+    }
+  });
+
+  function getFileName(content, originalName) {
+    const m = content.match(/<key>\s*PayloadDisplayName\s*<\/key>\s*<string>([^<]+)<\/string>/i);
+    if (m) {
+      const base = m[1].replace(/[^a-zA-Z0-9\-_ .]/g, '').trim().replace(/\s+/g, '_');
+      if (base) return base + '.mobileconfig';
+    }
+    if (originalName) {
+      const base = originalName.replace(/\.mobileconfig$/i, '');
+      return base + '-modificado.mobileconfig';
+    }
+    return 'perfil-modificado.mobileconfig';
+  }
+
+  setButtonsState();
+  updateStats();
+})();
+</script>
+</body>
+</html>
