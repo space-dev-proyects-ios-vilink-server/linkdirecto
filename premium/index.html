@@ -50,7 +50,9 @@ body.has-tbar{padding-top:calc(60px + env(safe-area-inset-top,0px))}
 .tr .ico{width:16px;height:16px;color:var(--blue-600);margin-bottom:2px}
 .tr b{font-size:1rem;font-weight:800;color:var(--blue-700);letter-spacing:-.02em;line-height:1.1}
 .tr small{font-size:.62rem;font-weight:600;color:var(--ink-2);line-height:1.25}
-.tr.link{background:var(--blue-50);border:1px solid #D5E4FA}
+.tr.link{background:var(--blue-50);border:1px solid #D5E4FA;transition:background .3s var(--ease),border-color .3s var(--ease),transform .3s var(--ease)}
+.tr.link:hover{background:#E4EEFE;border-color:var(--blue-400);transform:translateY(-1px)}
+.tr b .ico.go{display:inline-block;width:11px;height:11px;margin:0 0 0 2px;vertical-align:-1px;color:var(--blue-600)}
 /* AVISO DE TRADUCCION */
 .trbar{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;background:linear-gradient(140deg,#F5F9FF,#E7F0FE);border:1px solid #C9DFFB}
 .trbar>.ico{color:var(--blue-600);width:22px;height:22px}
@@ -76,36 +78,55 @@ body.has-tbar{padding-top:calc(60px + env(safe-area-inset-top,0px))}
 .tbar .ico{width:16px;height:16px}
 .tbar b{font-variant-numeric:tabular-nums;font-size:1rem;font-weight:800;letter-spacing:.02em}
 .tbar button{height:30px;padding:0 14px;border:0;border-radius:9px;background:#fff;color:var(--blue-700);font-family:inherit;font-size:.74rem;font-weight:800;cursor:pointer}
+/* VERSION ESPECIAL */
+.sp{padding:12px 14px;display:flex;flex-direction:column;gap:9px;border:1.5px solid var(--blue-500);background:linear-gradient(160deg,#FFFFFF 0%,#F2F7FF 100%);box-shadow:0 0 0 3px rgba(59,130,246,.07),0 14px 28px -20px rgba(37,99,235,.55)}
+.sp-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.sp-info{min-width:0;display:flex;flex-direction:column;gap:3px}
+.sp-tag{display:inline-flex;align-items:center;gap:5px;align-self:flex-start;font-size:.56rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-700)}
+.sp-tag .ico{width:11px;height:11px;color:var(--blue-600)}
+.sp-name{font-size:1rem;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+.sp-meta{font-size:.66rem;color:var(--ink-2);font-weight:600;line-height:1.4}
+.sp-side{flex:none;text-align:end;display:flex;flex-direction:column;align-items:flex-end}
+.sp-p{font-size:1.7rem;font-weight:800;letter-spacing:-.035em;color:var(--blue-700);line-height:1}
+.sp-side small{font-size:.62rem;font-weight:700;color:var(--muted);margin-top:2px}
+.sp-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 10px;border-radius:10px;background:var(--blue-50);border:1px solid #D5E4FA;font-size:.64rem;font-weight:600;color:var(--ink-2);line-height:1.3}
+.sp-count{display:inline-flex;align-items:center;gap:5px;font-weight:700;color:var(--blue-700);white-space:nowrap}
+.sp-count .ico{width:13px;height:13px}
+.sp-count b{font-size:.78rem;font-weight:800;font-variant-numeric:tabular-nums;color:var(--ink)}
+.sp .btn{height:44px;font-size:.82rem}
 /* PLANES */
 .pick{padding:14px 10px 10px}
-.pk-h{text-align:center;font-size:1.1rem;font-weight:800;letter-spacing:-.025em;margin-bottom:12px}
-.pk{display:grid;grid-template-columns:.8fr 1fr 1fr 1fr;column-gap:4px;font-size:.68rem}
+.pk-h{text-align:center;font-size:1.1rem;font-weight:800;letter-spacing:-.025em;margin-bottom:4px}
+.pk-sub{text-align:center;font-size:.7rem;font-weight:700;color:var(--blue-700);margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:6px}
+.pk-sub .ico{width:13px;height:13px;color:var(--blue-600)}
+.pk{display:grid;grid-template-columns:.8fr 1fr 1fr;column-gap:4px;font-size:.68rem}
 .pk .c{padding:9px 3px;display:flex;align-items:center;justify-content:center;text-align:center;border-top:1px solid var(--line);font-weight:600;color:var(--ink-2);line-height:1.25;min-height:38px}
 .pk .c.l{justify-content:flex-start;text-align:start;color:var(--muted);font-weight:700;font-size:.62rem}
 .pk .c.m{background:#F5F9FF}
-.pk .c.top{background:var(--grad);color:#fff;border-top-color:rgba(255,255,255,.25);font-weight:800}
 .pk .c.z{border-radius:0 0 14px 14px}
-.pk .c .ico{width:15px;height:15px;color:var(--blue-600)}.pk .c.top .ico{color:#fff}.pk .c .ico.no{color:var(--muted-2)}
+.pk .c .ico{width:15px;height:15px;color:var(--blue-600)}.pk .c .ico.no{color:var(--muted-2)}
 .tile{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:2px;padding:10px 3px;margin-bottom:6px;border-radius:14px;border:1.5px solid var(--line-2);background:#fff;font-family:inherit;cursor:pointer;color:var(--ink);transition:box-shadow .3s var(--ease),transform .3s var(--ease),background .3s var(--ease)}
 .tile.hi{background:linear-gradient(140deg,#F5F9FF,#E7F0FE);border-color:#C9DFFB}
-.tile.top{background:var(--grad);border-color:transparent;color:#fff}
 .tile.is-promo{border-color:var(--blue-500);background:linear-gradient(140deg,#E7F0FE,#D5E7FD)}
 .tile.is-sel{box-shadow:0 0 0 2.5px var(--blue-600),0 10px 22px -12px rgba(37,99,235,.7);transform:translateY(-1px)}
 .tn{font-size:.72rem;font-weight:800}.tp{font-size:1.2rem;font-weight:800;letter-spacing:-.03em;line-height:1.1}
-.ts{display:flex;gap:5px;align-items:center}.ts s{font-size:.66rem;color:var(--muted-2);font-weight:700}.tile.top .ts s{color:rgba(255,255,255,.7)}
+.ts{display:flex;gap:5px;align-items:center}.ts s{font-size:.66rem;color:var(--muted-2);font-weight:700}
 .ts em{font-style:normal;font-size:.56rem;font-weight:800;padding:2px 6px;border-radius:999px;background:var(--blue-50);color:var(--blue-700);border:1px solid #C9DFFB}
-.tile.top .ts em{background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.4)}
+.tl{font-size:.62rem;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums;line-height:1.2}
 .tf{display:inline-flex;gap:4px;align-items:center;white-space:nowrap;margin-bottom:5px;padding:3px 9px;border-radius:999px;background:var(--grad);color:#fff;font-size:.52rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 6px 14px -6px rgba(37,99,235,.6)}
-.tile.top .tf{background:#fff;color:var(--blue-700)}.tf .ico{width:9px;height:9px}
+.tf .ico{width:9px;height:9px}
 .tf0{visibility:hidden}
-.act{padding:16px 16px 14px}
+.loc-note{font-size:.62rem;color:var(--muted);font-weight:600;text-align:center;line-height:1.4;padding:4px 6px 2px}
+.act{margin-top:4px;padding:14px 6px 2px;border-top:1px solid var(--line)}
+.pay-row{display:grid;grid-template-columns:1.5fr 1fr;gap:8px}
+.pay-row .btn{height:48px;font-size:.83rem;padding:0 10px}
+.pay-row .btn-ghost{font-size:.78rem}
 .ap{display:none;flex-direction:column;gap:9px}.ap.show{display:flex;animation:rise .35s var(--ease) both}
 .ap-name{font-size:1.1rem;font-weight:800;letter-spacing:-.02em}.ap-note{font-size:.72rem;color:var(--muted);font-weight:500;margin-top:1px}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chip{display:inline-flex;align-items:center;gap:5px;font-size:.68rem;font-weight:700;padding:5px 9px;border-radius:999px;background:var(--blue-50);border:1px solid #D5E4FA;color:var(--blue-700)}
 .chip .ico{width:11px;height:11px}
 .eq{display:flex;align-items:center;gap:7px;font-size:.74rem;font-weight:700;color:var(--blue-700)}.eq .ico{width:13px;height:13px;color:var(--blue-600)}
-.ap-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.ap-row .btn-ghost{font-size:.74rem;padding:0 6px;height:44px;gap:6px}
 /* MODALES */
 .overlay{display:none;position:fixed;inset:0;background:rgba(11,23,41,.55);backdrop-filter:blur(10px);z-index:400;align-items:center;justify-content:center;padding:20px}
 .overlay.show{display:flex}
@@ -131,20 +152,8 @@ body.has-tbar{padding-top:calc(60px + env(safe-area-inset-top,0px))}
 .method.is-sel .method-check{background:var(--blue-600);border-color:var(--blue-600)}
 .method-check svg{width:11px;height:11px;color:#fff;opacity:0;display:block}
 .method.is-sel .method-check svg{opacity:1}
-.method-details{display:none;margin-bottom:12px;padding:14px 15px;background:linear-gradient(140deg,#F5F9FF 0%,#E7F0FE 100%);border:1px solid #C9DFFB;border-radius:13px}
-.method-details.show{display:block}
-.md-title{display:flex;align-items:center;gap:7px;font-size:.65rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-700);margin-bottom:10px}
-.md-title .ico{width:13px;height:13px;color:var(--blue-600)}
-.md-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 0;font-size:.79rem;border-bottom:1px solid rgba(37,99,235,.13)}
-.md-row:last-of-type{border-bottom:none;padding-bottom:0}
-.md-lbl{color:var(--blue-700);font-weight:600;flex:none}
-.md-val{font-weight:700;text-align:end;word-break:break-word;min-width:0}
 .order-note{display:flex;align-items:flex-start;gap:9px;padding:11px 12px;background:var(--blue-50);border:1px solid #D5E4FA;border-radius:11px;font-size:.72rem;color:var(--ink-2);font-weight:500;line-height:1.5;margin-bottom:14px}
 .order-note .ico{width:14px;height:14px;color:var(--blue-600);flex:none;margin-top:2px}
-.pop-text{font-size:.8rem;color:var(--ink-2);line-height:1.6;font-weight:500;margin-bottom:14px}
-.price-box{display:flex;align-items:center;justify-content:space-between;padding:13px 15px;background:var(--blue-50);border:1px solid #D5E4FA;border-radius:12px;margin-bottom:16px}
-.price-box-lbl{font-size:.68rem;color:var(--blue-700);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
-.price-box-val{font-size:1.15rem;font-weight:800;color:var(--blue-700)}
 .pop-actions{display:flex;gap:9px}
 .btn-cancel{flex:0 0 auto;padding:0 20px;height:48px;font-size:.82rem;background:#fff;color:var(--muted);border:1.5px solid var(--line-2);border-radius:13px;font-family:inherit;font-weight:800;cursor:pointer}
 .pop-actions .btn-primary{flex:1;height:48px;font-size:.84rem;border-radius:13px}
@@ -203,13 +212,16 @@ body.has-tbar{padding-top:calc(60px + env(safe-area-inset-top,0px))}
 <symbol id="i-gift" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/></symbol>
 <symbol id="i-timer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2h4"/><path d="M12 14l3-3"/><circle cx="12" cy="14" r="8"/></symbol>
 <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
 <symbol id="i-whatsapp" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></symbol>
-<symbol id="i-paypal" viewBox="0 0 24 24"><path fill="#003087" d="M8.3 3.5h5.9c2.9 0 4.9 1.8 4.4 4.6-.6 3.3-3 5-6.1 5H10l-1 6H5.7L8.3 3.5z"/><path fill="#009cde" opacity=".85" d="M9.9 6.3h5.7c2.6 0 4.3 1.6 3.9 4.1-.5 3.1-2.8 4.7-5.7 4.7h-2.3l-1 6.1H7.1L9.9 6.3z"/></symbol>
 <symbol id="i-binance" viewBox="0 0 40 24"><rect width="40" height="24" rx="4" fill="#F0B90B"/><text x="20" y="16" font-family="Arial,sans-serif" font-size="8" font-weight="800" fill="#0A0A0A" text-anchor="middle">BINANCE</text></symbol>
 <symbol id="i-skrill" viewBox="0 0 40 24"><rect width="40" height="24" rx="4" fill="#862165"/><text x="20" y="16" font-family="Arial,sans-serif" font-size="9" font-weight="800" fill="#fff" text-anchor="middle">skrill</text></symbol>
 <symbol id="i-nequi" viewBox="0 0 40 24"><rect width="40" height="24" rx="4" fill="#DA1884"/><text x="20" y="16" font-family="Arial,sans-serif" font-size="9" font-weight="800" fill="#fff" text-anchor="middle">Nequi</text></symbol>
 <symbol id="i-breb" viewBox="0 0 40 24"><rect width="40" height="24" rx="4" fill="#1C3FAA"/><text x="20" y="16" font-family="Arial,sans-serif" font-size="8.5" font-weight="800" fill="#fff" text-anchor="middle">BRE-B</text></symbol>
 <symbol id="i-clabe" viewBox="0 0 40 24"><rect width="40" height="24" rx="4" fill="#006341"/><text x="20" y="16" font-family="Arial,sans-serif" font-size="8.5" font-weight="800" fill="#fff" text-anchor="middle">CLABE</text></symbol>
+<symbol id="i-astropay" viewBox="0 0 40 24"><rect width="40" height="24" rx="4" fill="#0B1729"/><text x="20" y="15.5" font-family="Arial,sans-serif" font-size="6.6" font-weight="800" fill="#fff" text-anchor="middle">AstroPay</text></symbol>
+<symbol id="i-pix" viewBox="0 0 40 24"><rect width="40" height="24" rx="4" fill="#32BCAD"/><text x="20" y="16.5" font-family="Arial,sans-serif" font-size="10" font-weight="800" fill="#fff" text-anchor="middle">PIX</text></symbol>
+<symbol id="i-yape" viewBox="0 0 40 24"><rect width="40" height="24" rx="4" fill="#742284"/><text x="20" y="16.5" font-family="Arial,sans-serif" font-size="9.5" font-weight="800" fill="#fff" text-anchor="middle">Yape</text></symbol>
 </svg>
 
 <div class="tbar" id="tbar" hidden>
@@ -232,7 +244,7 @@ body.has-tbar{padding-top:calc(60px + env(safe-area-inset-top,0px))}
   <section class="card trust">
     <div class="tr"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg><b>+5 años</b><small>de trayectoria</small></div>
     <div class="tr"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg><b>+5.000</b><small>ventas entregadas</small></div>
-    <a class="tr link" href="https://t.me/+56Wdh8JANmJjYzZh" target="_blank" rel="noopener noreferrer"><svg class="ico" aria-hidden="true"><use href="#i-star"/></svg><b>Referencias</b><small>+5.000 pagos en Telegram</small></a>
+    <a class="tr link" href="https://t.me/+56Wdh8JANmJjYzZh" target="_blank" rel="noopener noreferrer"><svg class="ico" aria-hidden="true"><use href="#i-star"/></svg><b>Referencias<svg class="ico go" aria-hidden="true"><use href="#i-arrow"/></svg></b><small>+5.000 pagos · toca para verlos</small></a>
   </section>
 
   <button type="button" class="card rl-cta" id="rlCta" hidden>
@@ -243,45 +255,56 @@ body.has-tbar{padding-top:calc(60px + env(safe-area-inset-top,0px))}
 
   <section class="card pick">
     <h1 class="pk-h">◇─◇──◇─◇</h1>
+    <p class="pk-sub"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg><span>Todos los planes funcionan en Android e iOS</span></p>
     <div class="pk">
       <div></div>
-      <button type="button" class="tile" data-plan="mes"><span class="tf tf0" aria-hidden="true"><span>.</span></span><span class="tn">1 Mes</span><span class="tp" id="tpMes">$14,99</span><span class="ts"><s id="soMes">$20</s><em id="emMes">-25%</em></span></button>
-      <button type="button" class="tile hi" data-plan="permanente"><span class="tf"><svg class="ico" aria-hidden="true"><use href="#i-star"/></svg><span>Mejor valor</span></span><span class="tn">Permanente</span><span class="tp" id="tpPerm">$29,99</span><span class="ts"><s id="soPerm">$50</s><em id="emPerm">-40%</em></span></button>
-      <button type="button" class="tile top" data-plan="aim"><span class="tf"><svg class="ico" aria-hidden="true"><use href="#i-crown"/></svg><span>Lo más top</span></span><span class="tn" translate="no">Personal AIM</span><span class="tp">$49,99</span><span class="ts"><s>$80</s><em>-37%</em></span></button>
-      <div class="c l">Duración</div><div class="c"><span>30 días</span></div><div class="c m"><span>De por vida</span></div><div class="c top"><span>3 meses</span></div>
-      <div class="c l">Pago</div><div class="c"><span>Mensual</span></div><div class="c m"><span>Único</span></div><div class="c top"><span>Único</span></div>
-      <div class="c l">Aimlock y aim assist</div><div class="c">70%</div><div class="c m">70%</div><div class="c top">80%</div>
-      <div class="c l">Certificados</div><div class="c"><span>Premium</span></div><div class="c m"><span>Premium</span></div><div class="c top"><span>Personales privados</span></div>
-      <div class="c l">Libre de baneo</div><div class="c"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div><div class="c m"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div><div class="c top"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div>
-      <div class="c l">Libre de blacklist</div><div class="c"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div><div class="c m"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div><div class="c top"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div>
-      <div class="c l">Hecho para tu dispositivo</div><div class="c"><svg class="ico no" aria-hidden="true"><use href="#i-minus"/></svg></div><div class="c m"><svg class="ico no" aria-hidden="true"><use href="#i-minus"/></svg></div><div class="c top"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div>
-      <div class="c l">Entrega</div><div class="c"><span>Inmediata</span></div><div class="c m"><span>Inmediata</span></div><div class="c top z"><span>Bajo pedido</span></div>
+      <button type="button" class="tile" data-plan="mes"><span class="tf tf0" aria-hidden="true"><span>.</span></span><span class="tn">1 Mes</span><span class="tp" id="tpMes">$14,99</span><span class="ts"><s id="soMes">$20</s><em id="emMes">-25%</em></span><span class="tl loc" data-plan="mes" hidden></span></button>
+      <button type="button" class="tile hi" data-plan="permanente"><span class="tf"><svg class="ico" aria-hidden="true"><use href="#i-star"/></svg><span>Mejor valor</span></span><span class="tn">Permanente</span><span class="tp" id="tpPerm">$29,99</span><span class="ts"><s id="soPerm">$50</s><em id="emPerm">-40%</em></span><span class="tl loc" data-plan="permanente" hidden></span></button>
+      <div class="c l">Duración</div><div class="c"><span>30 días</span></div><div class="c m"><span>De por vida</span></div>
+      <div class="c l">Pago</div><div class="c"><span>Mensual</span></div><div class="c m"><span>Único</span></div>
+      <div class="c l">Aimlock y aim assist</div><div class="c">70%</div><div class="c m">70%</div>
+      <div class="c l">Certificados</div><div class="c"><span>Premium</span></div><div class="c m"><span>Premium</span></div>
+      <div class="c l">Libre de baneo</div><div class="c"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div><div class="c m"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div>
+      <div class="c l">Libre de blacklist</div><div class="c"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div><div class="c m"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div>
+      <div class="c l">Plataforma</div><div class="c"><span>Android e iOS</span></div><div class="c m"><span>Android e iOS</span></div>
+      <div class="c l">Entrega</div><div class="c"><span>Inmediata</span></div><div class="c m z"><span>Inmediata</span></div>
     </div>
-  </section>
-
-  <section class="card act">
+    <div class="act">
     <div class="ap" id="ap-mes">
       <div><div class="ap-name">1 Mes</div><div class="ap-note">Acceso por 30 días · Android &amp; iOS</div></div>
-      <div class="chips"><span class="chip"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>2 actualizaciones incluidas en el mes</span></span><span class="chip"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg><span>Tutoriales de instalación incluidos</span></span></div>
-      <a class="btn btn-primary" id="payMes" href="#" target="_blank" rel="noopener noreferrer"><svg class="ico" aria-hidden="true"><use href="#i-card"/></svg><span>Pagar con tarjeta · <span id="priceMes">$14,99</span> USD</span></a>
-      <p class="methods-note"><svg class="ico" aria-hidden="true"><use href="#i-zap"/></svg>Visa · MC · Amex · <strong>Entrega inmediata</strong></p>
-      <button type="button" class="btn btn-ghost" onclick="openOrder('mes')"><svg class="ico" aria-hidden="true"><use href="#i-wallet"/></svg><span>Más métodos</span></button>
+      <div class="chips"><span class="chip"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>2 actualizaciones en el mes</span></span><span class="chip"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg><span>Tutoriales incluidos</span></span></div>
+      <div class="pay-row">
+        <a class="btn btn-primary" id="payMes" href="#" target="_blank" rel="noopener noreferrer"><svg class="ico" aria-hidden="true"><use href="#i-card"/></svg><span>Pagar <span id="priceMes">$14,99</span> USD</span></a>
+        <button type="button" class="btn btn-ghost" onclick="openOrder('mes')"><svg class="ico" aria-hidden="true"><use href="#i-wallet"/></svg><span>Más métodos</span></button>
+      </div>
+      <p class="methods-note"><svg class="ico" aria-hidden="true"><use href="#i-zap"/></svg>Tarjeta Visa · MC · Amex · <strong>Entrega inmediata</strong></p>
     </div>
     <div class="ap" id="ap-permanente">
       <div><div class="ap-name">Permanente</div><div class="ap-note">Acceso de por vida · Android &amp; iOS</div></div>
-      <div class="chips"><span class="chip"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Actualizaciones ilimitadas de por vida</span></span><span class="chip"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg><span>Tutoriales de instalación incluidos</span></span></div>
+      <div class="chips"><span class="chip"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Actualizaciones ilimitadas</span></span><span class="chip"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg><span>Tutoriales incluidos</span></span></div>
       <p class="eq"><svg class="ico" aria-hidden="true"><use href="#i-star"/></svg><span>Pagas 2 meses y es tuyo para siempre</span></p>
-      <a class="btn btn-primary" id="payPerm" href="#" target="_blank" rel="noopener noreferrer"><svg class="ico" aria-hidden="true"><use href="#i-card"/></svg><span>Pagar con tarjeta · <span id="pricePerm">$29,99</span> USD</span></a>
-      <p class="methods-note"><svg class="ico" aria-hidden="true"><use href="#i-zap"/></svg>Visa · MC · Amex · <strong>Entrega inmediata</strong></p>
-      <div class="ap-row"><button type="button" class="btn btn-ghost" onclick="openOrder('permanente')"><svg class="ico" aria-hidden="true"><use href="#i-wallet"/></svg><span>Más métodos</span></button>
-      <button type="button" class="btn btn-ghost" onclick="openPaypal()"><svg class="ico" aria-hidden="true"><use href="#i-paypal"/></svg><span id="paypalLbl" translate="no">PayPal · $32,99</span></button></div>
+      <div class="pay-row">
+        <a class="btn btn-primary" id="payPerm" href="#" target="_blank" rel="noopener noreferrer"><svg class="ico" aria-hidden="true"><use href="#i-card"/></svg><span>Pagar <span id="pricePerm">$29,99</span> USD</span></a>
+        <button type="button" class="btn btn-ghost" onclick="openOrder('permanente')"><svg class="ico" aria-hidden="true"><use href="#i-wallet"/></svg><span>Más métodos</span></button>
+      </div>
+      <p class="methods-note"><svg class="ico" aria-hidden="true"><use href="#i-zap"/></svg>Tarjeta Visa · MC · Amex · <strong>Entrega inmediata</strong></p>
     </div>
-    <div class="ap" id="ap-aim">
-      <div><div class="ap-name" translate="no">Personal AIM</div><div class="ap-note">3 meses · Solo bajo pedido · Android &amp; iOS</div></div>
-      <div class="chips"><span class="chip"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Aimlock y aim assist al 80%</span></span><span class="chip"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg><span>100% hecho para el dispositivo del cliente</span></span><span class="chip"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg><span>Certificados personales privados</span></span><span class="chip"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span>Libre de baneo y blacklist</span></span></div>
-      <p class="eq"><svg class="ico" aria-hidden="true"><use href="#i-crown"/></svg><span>Hecho solo para ti. Nadie más lo tiene.</span></p>
-      <a class="btn btn-primary" id="payAim" href="#" target="_blank" rel="noopener noreferrer"><svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg><span>Pedir mi Personal AIM</span></a>
     </div>
+    <p class="loc-note" id="locNote" hidden></p>
+  </section>
+
+  <!-- VERSION ESPECIAL (se elimina sola al vencer la fecha limite) -->
+  <section class="card sp" id="spCard">
+    <div class="sp-row">
+      <div class="sp-info">
+        <span class="sp-tag"><svg class="ico" aria-hidden="true"><use href="#i-crown"/></svg><span>Edición limitada · Solo iOS</span></span>
+        <div class="sp-name">AIMX80K</div>
+        <div class="sp-meta">Solo 10 unidades · Solo por este video · Solo dispositivos iOS · Pago con tarjeta</div>
+      </div>
+      <div class="sp-side"><span class="sp-p">$39,99</span><small>USD</small><span class="tl loc" data-usd="39.99" hidden></span></div>
+    </div>
+    <div class="sp-foot"><span class="sp-count"><svg class="ico" aria-hidden="true"><use href="#i-timer"/></svg><b id="spClock">--:--:--</b></span><span>Hasta agotar existencias o hasta el 23 de nov. a las 12 de la medianoche (hora Colombia)</span></div>
+    <a class="btn btn-primary" id="paySp" href="#" target="_blank" rel="noopener noreferrer"><svg class="ico" aria-hidden="true"><use href="#i-card"/></svg><span>Pagar con tarjeta · $39,99 USD</span></a>
   </section>
 </main>
 
@@ -308,24 +331,10 @@ body.has-tbar{padding-top:calc(60px + env(safe-area-inset-top,0px))}
     <div class="pop-head"><div class="pop-ico"><svg class="ico" aria-hidden="true"><use href="#i-wallet"/></svg></div><div class="pop-hd"><h3 class="pop-title">Pagar con otro método</h3><p class="pop-sub" id="orderPlanInfo"></p></div></div>
     <p class="order-label">Selecciona tu método de pago</p>
     <div class="method-list" id="methodList"></div>
-    <div class="method-details" id="methodDetails"></div>
-    <div class="order-note"><svg class="ico" aria-hidden="true"><use href="#i-info"/></svg><span>Al enviar el pedido, <strong>JEXE</strong> te confirmará por WhatsApp que los datos estén correctos. <strong>Escríbeme solo si vas a confirmar tu compra</strong> para no saturar el chat.</span></div>
+    <div class="order-note"><svg class="ico" aria-hidden="true"><use href="#i-info"/></svg><span>Elige el método y envíame el mensaje por WhatsApp. <strong>JEXE</strong> revisará tu caso y, si está disponible, te enviará personalmente los datos para pagar. <strong>Escríbeme solo si vas a confirmar tu compra</strong> para no saturar el chat.</span></div>
     <div class="pop-actions">
       <button type="button" class="btn-cancel" onclick="closeModal('orderOverlay')">Cancelar</button>
       <a class="btn btn-primary is-disabled" id="orderWa" href="#" target="_blank" rel="noopener noreferrer"><svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg><span>Enviar pedido</span></a>
-    </div>
-  </div>
-</div>
-
-<!-- PAYPAL -->
-<div class="overlay" id="paypalOverlay" role="dialog" aria-modal="true">
-  <div class="pop">
-    <div class="pop-head"><div class="pop-ico"><svg class="ico" aria-hidden="true"><use href="#i-paypal"/></svg></div><div class="pop-hd"><h3 class="pop-title">Pagar con PayPal</h3><p class="pop-sub">Plan Permanente · Android &amp; iOS</p></div></div>
-    <p class="pop-text">El pago con PayPal se hace <strong>personalmente conmigo</strong>. Por las comisiones de envío de la plataforma, el total tiene un <strong>recargo de $3 USD</strong> sobre el precio normal del plan Permanente.</p>
-    <div class="price-box"><span class="price-box-lbl">Total a pagar</span><span class="price-box-val" id="ppTotal">$32,99 USD</span></div>
-    <div class="pop-actions">
-      <button type="button" class="btn-cancel" onclick="closeModal('paypalOverlay')">Cancelar</button>
-      <a class="btn btn-primary" id="paypalWa" href="#" target="_blank" rel="noopener noreferrer"><svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg><span>Contactar</span></a>
     </div>
   </div>
 </div>
@@ -335,7 +344,10 @@ body.has-tbar{padding-top:calc(60px + env(safe-area-inset-top,0px))}
 'use strict';
 /* ── CONFIG ── */
 var WA_OWNER='573115593037', WA_ADVISOR='573115593037';
-var USD_TO_COP=3300, USD_TO_MXN=18, PAYPAL_FEE=3, SPIN_MS=5400, WINDOW_MS=600000, KEY='jexe_rl_v1';
+var SPIN_MS=5400, WINDOW_MS=600000, KEY='jexe_rl_v1';
+/* Version especial: vence el 23 de noviembre a las 12 de la medianoche (hora Colombia, UTC-5), es decir, termina el 23 y desaparece al iniciar el 24 */
+var SP_DEADLINE=new Date('2026-11-24T00:00:00-05:00').getTime();
+var SP_USD=39.99, SP_LINK='https://checkout.bold.co/payment/LNK_R3DHK062II';
 var B='https://checkout.bold.co/payment/';
 var PLANS={
   mes:{name:'1 Mes',usd:14.99,old:'$20',off:'-25%',bold:B+'LNK_YRXITYHSYO',boldPromo:B+'LNK_E2ISQYJB93',promo:10},
@@ -344,19 +356,13 @@ var PLANS={
 var METHODS=[
   {id:'binance',name:'Binance Pay',note:'Crypto · USDT',icon:'i-binance'},
   {id:'skrill',name:'Skrill',note:'Cartera digital',icon:'i-skrill'},
-  {id:'nequi',name:'Nequi',note:'Colombia · COP',icon:'i-nequi'},
-  {id:'breb',name:'Llave / BRE-B',note:'Colombia · COP',icon:'i-breb'},
-  {id:'clabe',name:'CLABE',note:'México · MXN',icon:'i-clabe'}
+  {id:'astropay',name:'AstroPay',note:'Cartera digital · Latinoamérica',icon:'i-astropay'},
+  {id:'nequi',name:'Nequi',note:'Colombia',icon:'i-nequi'},
+  {id:'breb',name:'Llave / BRE-B',note:'Colombia',icon:'i-breb'},
+  {id:'yape',name:'Yape',note:'Perú',icon:'i-yape'},
+  {id:'pix',name:'Pix',note:'Brasil',icon:'i-pix'},
+  {id:'clabe',name:'CLABE',note:'México',icon:'i-clabe'}
 ];
-var LBL={a:'Monto',h:'Titular',n:'Número',e:'Entidad',u:'Usuario'};
-function money(n,loc){return '$'+Math.round(n).toLocaleString(loc);}
-var METHOD_DATA={
-  binance:function(u){return [['a',u+' USDT'],['Binance ID','538653875'],['u','@jexeregedit']];},
-  skrill:function(u){return [['a','$'+u+' USD'],['Email Skrill','juanpabloaguirregrosso@gmail.com']];},
-  nequi:function(u){return [['a',money(u*USD_TO_COP,'es-CO')+' COP'],['n','3115593037'],['h','Juan Aguirre']];},
-  breb:function(u){return [['a',money(u*USD_TO_COP,'es-CO')+' COP'],['e','Bold CF'],['ID','@bold3115593037'],['h','Juan Aguirre']];},
-  clabe:function(u){return [['a',money(u*USD_TO_MXN,'es-MX')+' MXN'],['h','Juan Pablo Aguirre Grosso'],['CLABE','646180546701915656'],['e','STP']];}
-};
 
 /* ── UTILIDADES ── */
 function $(id){return document.getElementById(id);}
@@ -364,7 +370,7 @@ function ic(n){return '<svg class="ico" aria-hidden="true"><use href="#'+n+'"/><
 function fmt(n){return n%1?n.toFixed(2).replace('.',','):String(n);}
 function pad(n){return n<10?'0'+n:''+n;}
 function mmss(ms){var s=Math.max(0,Math.ceil(ms/1000));return pad(Math.floor(s/60))+':'+pad(s%60);}
-function lbl(k){return LBL[k]||k;}
+function hms(ms){var s=Math.max(0,Math.ceil(ms/1000));return pad(Math.floor(s/3600))+':'+pad(Math.floor(s/60)%60)+':'+pad(s%60);}
 function lock(){document.body.classList.toggle('modal-open',!!document.querySelector('.overlay.show'));}
 function show(id){$(id).classList.add('show');lock();}
 function hide(id){$(id).classList.remove('show');lock();}
@@ -417,6 +423,72 @@ function priceOf(plan){var p=promo();return p&&p.plan===plan?p.usd:PLANS[plan].u
 function priceStr(plan){return '$'+fmt(priceOf(plan))+' USD';}
 function leftMs(){return S.phase==='timer20'?S.deadline-advance():0;}
 
+/* ── TASA DE CAMBIO REAL (moneda del pais del visitante) ── */
+var FX={cur:null,rate:null};
+var REGION_CUR={CO:'COP',MX:'MXN',BR:'BRL',PE:'PEN',AR:'ARS',CL:'CLP',UY:'UYU',PY:'PYG',BO:'BOB',VE:'VES',CR:'CRC',GT:'GTQ',HN:'HNL',NI:'NIO',DO:'DOP',CU:'CUP',ES:'EUR',PT:'EUR',FR:'EUR',DE:'EUR',IT:'EUR',NL:'EUR',BE:'EUR',IE:'EUR',AT:'EUR',FI:'EUR',GR:'EUR',GB:'GBP',CA:'CAD',AU:'AUD',NZ:'NZD',JP:'JPY',CN:'CNY',IN:'INR',CH:'CHF',SE:'SEK',NO:'NOK',DK:'DKK',PL:'PLN',TR:'TRY',AE:'AED',SA:'SAR',ZA:'ZAR',KR:'KRW',PH:'PHP',ID:'IDR',TH:'THB',VN:'VND',MY:'MYR',SG:'SGD',US:'USD',EC:'USD',SV:'USD',PA:'USD',PR:'USD'};
+var TZ_CUR={'America/Bogota':'COP','America/Mexico_City':'MXN','America/Sao_Paulo':'BRL','America/Lima':'PEN','America/Argentina/Buenos_Aires':'ARS','America/Santiago':'CLP','America/Montevideo':'UYU','America/Asuncion':'PYG','America/La_Paz':'BOB','America/Caracas':'VES','America/Costa_Rica':'CRC','America/Guatemala':'GTQ','America/Tegucigalpa':'HNL','America/Managua':'NIO','America/Santo_Domingo':'DOP','Europe/Madrid':'EUR'};
+function localeCur(){
+  try{
+    var langs=(navigator.languages&&navigator.languages.length)?navigator.languages:[navigator.language||''],i,m;
+    for(i=0;i<langs.length;i++){m=String(langs[i]).match(/-([A-Za-z]{2})$/);if(m&&REGION_CUR[m[1].toUpperCase()])return REGION_CUR[m[1].toUpperCase()];}
+    var tz=Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if(tz&&TZ_CUR[tz])return TZ_CUR[tz];
+  }catch(e){}
+  return null;
+}
+function jget(u){
+  return new Promise(function(res,rej){
+    var t=setTimeout(function(){rej();},6000);
+    fetch(u,{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(j){clearTimeout(t);res(j);}).catch(function(){clearTimeout(t);rej();});
+  });
+}
+function detectCur(){
+  return jget('https://ipapi.co/json/').then(function(j){return j&&j.currency;}).catch(function(){return null;})
+  .then(function(c){
+    if(c)return c;
+    return jget('https://ipwho.is/').then(function(j){return j&&j.currency&&j.currency.code;}).catch(function(){return null;});
+  })
+  .then(function(c){return c||localeCur();});
+}
+function getRate(cur){
+  return jget('https://open.er-api.com/v6/latest/USD').then(function(j){var r=j&&j.rates&&j.rates[cur];if(!r)throw 0;return r;})
+  .catch(function(){return jget('https://api.frankfurter.app/latest?from=USD&to='+encodeURIComponent(cur)).then(function(j){var r=j&&j.rates&&j.rates[cur];if(!r)throw 0;return r;});});
+}
+function localStr(usd){
+  var v=usd*FX.rate;
+  try{return '≈ '+new Intl.NumberFormat(navigator.language||'es',{style:'currency',currency:FX.cur,currencyDisplay:'code',maximumFractionDigits:v>=100?0:2}).format(v);}
+  catch(e){return '≈ '+Math.round(v).toLocaleString()+' '+FX.cur;}
+}
+function updateLoc(){
+  var ok=!!(FX.cur&&FX.rate);
+  document.querySelectorAll('.loc').forEach(function(el){
+    if(!ok){el.hidden=true;return;}
+    var usd=el.dataset.usd?parseFloat(el.dataset.usd):priceOf(el.dataset.plan);
+    el.textContent=localStr(usd);el.hidden=false;
+  });
+  var n=$('locNote');
+  if(ok){n.textContent='Valores en '+FX.cur+' calculados con la tasa de cambio real del día. Son referenciales; el cobro se hace en USD.';n.hidden=false;}
+  else n.hidden=true;
+}
+function initFx(){
+  detectCur().then(function(c){
+    if(!c||c==='USD')return;
+    return getRate(c).then(function(r){FX.cur=c;FX.rate=r;updateLoc();});
+  }).catch(function(){});
+}
+
+/* ── VERSION ESPECIAL ── */
+function spTick(){
+  var card=$('spCard');if(!card)return;
+  var left=SP_DEADLINE-advance();
+  if(left<=0){card.remove();return;}
+  $('spClock').textContent=hms(left);
+}
+function initSpecial(){
+  $('paySp').href=SP_LINK;
+  spTick();
+}
+
 /* ── RENDER PRINCIPAL ── */
 function render(){
   var p=promo();
@@ -429,10 +501,7 @@ function render(){
     $('price'+id).textContent='$'+fmt(priceOf(k));
     $(k==='mes'?'payMes':'payPerm').href=on?pl.boldPromo:pl.bold;
   });
-  var perm=priceOf('permanente'), tot=perm+PAYPAL_FEE;
-  $('paypalLbl').textContent='PayPal · $'+fmt(tot);
-  $('ppTotal').textContent='$'+fmt(tot)+' USD';
-  $('paypalWa').href='https://wa.me/'+WA_OWNER+'?text='+encodeURIComponent('Hola JEXE, quiero pagar el plan Permanente por PayPal.\n\n• Total: $'+fmt(tot)+' USD ($'+fmt(perm)+' + $'+PAYPAL_FEE+' de comisión de envío)\n\nPor favor confírmame los datos para realizar el pago y darme la entrega inmediata.');
+  updateLoc();
 
   var ph=spinning?'new':S.phase, t1='Ruleta de descuento', t2='Tienes 2 giros para ganar un precio especial';
   if(ph==='offer1'){t1='Tu premio te espera';t2='Permanente a $20 USD · Actívalo ahora';}
@@ -530,8 +599,7 @@ function renderPanel(){
      +'<div class="rl-timer" id="rlTimer">'+ic('i-timer')+'<b id="rlClock">10:00</b></div><div class="rl-bar"><i id="rlBar"></i></div>'
      +'<p class="rl-text">Completa el pago antes de que el contador llegue a cero. Si se agota, este precio se bloquea y no volverá a salir en este dispositivo.</p>'
      +'<a class="btn btn-primary" href="'+promoP.boldPromo+'" target="_blank" rel="noopener noreferrer">'+ic('i-card')+'<span>Pagar con tarjeta · $20 USD</span></a>'
-     +'<div class="ap-row"><button type="button" class="btn btn-ghost" data-act="other">'+ic('i-wallet')+'<span>Más métodos</span></button>'
-     +'<button type="button" class="btn btn-ghost" data-act="paypal">'+ic('i-paypal')+'<span translate="no">PayPal · $'+fmt(20+PAYPAL_FEE)+'</span></button></div>';
+     +'<button type="button" class="btn btn-ghost" data-act="other">'+ic('i-wallet')+'<span>Más métodos</span></button>';
   }else if(ph==='offer10'){
     h='<span class="rl-badge">'+ic('i-gift')+'<span>Tu premio</span></span>'
      +'<div class="rl-prize"><span class="rl-pname">1 Mes</span><span class="rl-pprice">$10<small>USD</small></span><s>$'+fmt(promoM.usd)+'</s></div>'
@@ -571,11 +639,12 @@ function doAccept(){
 }
 function expire(){
   S.phase='expired';save();
-  hide('orderOverlay');hide('paypalOverlay');currentPlan=null;
+  hide('orderOverlay');currentPlan=null;
   render();renderPanel();
 }
 function checkExpiry(){if(S.phase==='timer20'&&advance()>=S.deadline){S.phase='expired';save();}}
 function tick(){
+  spTick();
   if(S.phase!=='timer20')return;
   var n=advance(),left=S.deadline-n;
   if(left<=0){expire();return;}
@@ -591,7 +660,7 @@ function openRoulette(){
   setWheel(S.rot||0);confirming=false;renderPanel();show('rlOverlay');
 }
 
-/* ── OTROS METODOS ── */
+/* ── OTROS METODOS (sin mostrar datos: se envian por WhatsApp) ── */
 function buildMethods(){
   var list=$('methodList');
   list.innerHTML=METHODS.map(function(m){
@@ -602,33 +671,22 @@ function buildMethods(){
 function selectMethod(id){
   currentMethod=id;
   $('methodList').querySelectorAll('.method').forEach(function(b){b.classList.toggle('is-sel',b.dataset.method===id);});
-  renderDetails();updateWaLink();
-}
-function renderDetails(){
-  var box=$('methodDetails');
-  if(!currentPlan||!currentMethod){box.classList.remove('show');box.innerHTML='';return;}
-  var data=METHOD_DATA[currentMethod](priceOf(currentPlan));
-  var html='<div class="md-title">'+ic('i-info')+'<span>Datos para pagar</span></div>';
-  data.forEach(function(r){html+='<div class="md-row"><span class="md-lbl">'+lbl(r[0])+'</span><span class="md-val" translate="no">'+r[1]+'</span></div>';});
-  box.innerHTML=html;box.classList.add('show');
+  updateWaLink();
 }
 function updateWaLink(){
   var btn=$('orderWa');
   if(!currentPlan||!currentMethod){btn.classList.add('is-disabled');btn.setAttribute('href','#');return;}
-  var plan=PLANS[currentPlan],method=null,data=METHOD_DATA[currentMethod](priceOf(currentPlan));
+  var plan=PLANS[currentPlan],method=null;
   METHODS.forEach(function(m){if(m.id===currentMethod)method=m;});
-  var msg='Hola JEXE, quiero confirmar una compra de JEXE Regedit:\n\n• Plan: '+plan.name+' — '+priceStr(currentPlan)+'\n• Método de pago: '+method.name+'\n\nDatos del método:\n';
-  data.forEach(function(r){msg+='• '+lbl(r[0])+': '+r[1]+'\n';});
-  msg+='\n¿Me confirmas si estos datos están correctos para realizar el pago y darme la entrega inmediata?';
+  var msg='Hola JEXE, quiero comprar JEXE Regedit:\n\n• Plan: '+plan.name+' — '+priceStr(currentPlan)+'\n• Método de pago que quiero usar: '+method.name+'\n\n¿Me confirmas si está disponible y me compartes los datos para realizar el pago?';
   btn.href='https://wa.me/'+WA_ADVISOR+'?text='+encodeURIComponent(msg);
   btn.classList.remove('is-disabled');
 }
 window.openOrder=function(plan){
   currentPlan=plan;currentMethod=null;
   $('orderPlanInfo').textContent='Plan: '+PLANS[plan].name+' — '+priceStr(plan);
-  buildMethods();renderDetails();updateWaLink();hide('rlOverlay');show('orderOverlay');
+  buildMethods();updateWaLink();hide('rlOverlay');show('orderOverlay');
 };
-window.openPaypal=function(){hide('rlOverlay');show('paypalOverlay');};
 window.closeModal=function(id){hide(id);};
 
 /* ── TRADUCCION POR NAVEGADOR ── */
@@ -656,7 +714,6 @@ function initTranslate(){
 }
 
 /* ── EVENTOS ── */
-$('payAim').href='https://wa.me/'+WA_OWNER+'?text='+encodeURIComponent('Hola JEXE, quiero pedir el servicio Personal AIM ($49,99 USD, 3 meses, hecho para mi dispositivo).\n\nMi dispositivo es:\n• Marca y modelo:\n• Sistema (Android / iOS):\n\nPor favor confírmame los pasos para realizar el pago y comenzar mi pedido.');
 $('rlCta').addEventListener('click',openRoulette);
 $('tbPay').addEventListener('click',openRoulette);
 $('spinBtn').addEventListener('click',function(){
@@ -672,7 +729,6 @@ $('rlPanel').addEventListener('click',function(e){
   else if(a==='keep'){confirming=false;renderPanel();}
   else if(a==='spin2')doSpin(2);
   else if(a==='other')openOrder(S.phase==='timer20'?'permanente':'mes');
-  else if(a==='paypal')openPaypal();
   else if(a==='close')hide('rlOverlay');
 });
 document.querySelectorAll('[data-close]').forEach(function(b){b.addEventListener('click',function(){hide(b.getAttribute('data-close'));});});
@@ -693,6 +749,7 @@ document.addEventListener('visibilitychange',function(){if(!document.hidden)adop
 buildWheel();
 pick('permanente');
 checkExpiry();
+initSpecial();
 render();
 renderPanel();
 setWheel(S.rot||0);
@@ -704,6 +761,7 @@ idb('get').then(function(v){
 });
 save();
 initTranslate();
+initFx();
 try{
   if(S.phase==='new'&&!sessionStorage.getItem('jexe_rl_s')){
     sessionStorage.setItem('jexe_rl_s','1');
