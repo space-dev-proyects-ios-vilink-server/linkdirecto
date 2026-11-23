@@ -189,6 +189,28 @@
     box-shadow:0 10px 22px -8px rgba(37,99,235,.95);
   }
 
+  /* ── CARRUSEL PROMO ── */
+  .promo{position:relative;display:flex;flex-direction:column;gap:10px;min-width:0}
+  .promo-track{
+    display:flex;gap:12px;
+    overflow-x:auto;overscroll-behavior-x:contain;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    padding:4px 0 18px;margin:-4px 0 -8px;
+  }
+  .promo-track::-webkit-scrollbar{display:none}
+  .promo-slide{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always}
+  .promo-slide:hover{transform:none}
+  .promo-dots{display:flex;justify-content:center;gap:7px}
+  .dot{
+    width:8px;height:8px;border:none;padding:0;cursor:pointer;
+    border-radius:999px;background:var(--line-2);
+    transition:width .35s var(--ease),background .35s var(--ease);
+  }
+  .dot.active{width:22px;background:var(--blue-600)}
+  .dot:focus-visible{outline:2px solid var(--blue-500);outline-offset:2px}
+
   /* ── ITEM ── */
   .item{
     position:relative;
@@ -477,6 +499,7 @@
       animation-iteration-count:1 !important;
       transition-duration:.001ms !important;
     }
+    .promo-track{scroll-behavior:auto}
   }
 
   /* ── RESPONSIVE ── */
@@ -507,6 +530,11 @@
 <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
   <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor">
     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+  </symbol>
+  <symbol id="i-gem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 3h12l4 6-10 13L2 9z"/>
+    <path d="M11 3 8 9l4 13 4-13-3-6"/>
+    <path d="M2 9h20"/>
   </symbol>
   <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
     <path d="M20 6 9 17l-5-5"/>
@@ -544,46 +572,99 @@
 <!-- ══ CONTENIDO ══ -->
 <main class="stack">
 
-  <!-- PREMIUM -->
-  <a class="premium"
-     href="https://www.link-directo.com/premium/" target="_blank" rel="noopener noreferrer">
-    <span class="p-badge">
-      <svg class="ico" aria-hidden="true"><use href="#i-star"/></svg>
-      Premium
-    </span>
+  <!-- PROMO CARRUSEL -->
+  <section class="promo" aria-roledescription="carrusel" aria-label="Promociones">
+    <div class="promo-track" id="promoTrack">
 
-    <h2 class="p-title">REGEDIT VIP</h2>
+      <!-- Slide 1: REGEDIT VIP -->
+      <a class="premium promo-slide"
+         href="https://www.link-directo.com/premium/" target="_blank" rel="noopener noreferrer">
+        <span class="p-badge">
+          <svg class="ico" aria-hidden="true"><use href="#i-star"/></svg>
+          Premium
+        </span>
 
-    <ul class="p-feats">
-      <li>
-        <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
-        <span>Aimlock 70%</span>
-      </li>
-      <li>
-        <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
-        <span>Aim assist 70%</span>
-      </li>
-      <li>
-        <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
-        <span>Sin jailbreak</span>
-      </li>
-      <li>
-        <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
-        <span>Updates</span>
-      </li>
-    </ul>
+        <h2 class="p-title">REGEDIT VIP</h2>
 
-    <div class="p-foot">
-      <div class="p-price">
-        <small>Desde</small>
-        <strong>$14,99 USD</strong>
-      </div>
-      <span class="p-cta">
-        Ver
-        <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg>
-      </span>
+        <ul class="p-feats">
+          <li>
+            <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
+            <span>Aimlock 70%</span>
+          </li>
+          <li>
+            <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
+            <span>Aim assist 70%</span>
+          </li>
+          <li>
+            <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
+            <span>Sin jailbreak</span>
+          </li>
+          <li>
+            <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
+            <span>Updates</span>
+          </li>
+        </ul>
+
+        <div class="p-foot">
+          <div class="p-price">
+            <small>Desde</small>
+            <strong>$9,99 USD</strong>
+          </div>
+          <span class="p-cta">
+            Ver
+            <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <!-- Slide 2: DIAMANTES FREE FIRE -->
+      <a class="premium promo-slide"
+         href="https://www.link-directo.com/recargas-firtsbuy/" target="_blank" rel="noopener noreferrer">
+        <span class="p-badge">
+          <svg class="ico" aria-hidden="true"><use href="#i-gem"/></svg>
+          Recargas
+        </span>
+
+        <h2 class="p-title">DIAMANTES FREE FIRE</h2>
+
+        <ul class="p-feats">
+          <li>
+            <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
+            <span>Ahorra hasta 65%</span>
+          </li>
+          <li>
+            <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
+            <span>Sin contraseña</span>
+          </li>
+          <li>
+            <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
+            <span>Solo con tu ID</span>
+          </li>
+          <li>
+            <svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>
+            <span>Pago en USD</span>
+          </li>
+        </ul>
+
+        <div class="p-foot">
+          <div class="p-price">
+            <small>3000 diamantes</small>
+            <strong>$16,49 USD</strong>
+          </div>
+          <span class="p-cta">
+            Comprar
+            <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </span>
+        </div>
+      </a>
+
     </div>
-  </a>
+
+    <div class="promo-dots" id="promoDots">
+      <button type="button" class="dot active" aria-label="Regedit VIP"></button>
+      <button type="button" class="dot" aria-label="Recarga de diamantes"></button>
+    </div>
+  </section>
 
   <!-- AVISO: SIN ANUNCIOS -->
   <div class="support-note">
@@ -663,7 +744,7 @@
   <div class="pop">
     <div class="big-ico"><svg class="ico" aria-hidden="true"><use href="#i-apple"/></svg></div>
     <h3 class="pop-title">Listo para descargar</h3>
-    <p class="pop-sub">Se descargará <strong>AIMXIT.mobileconfig</strong>. Sigue el tutorial para instalarlo.</p>
+    <p class="pop-sub">Se descargará <strong>AIM69K.mobileconfig</strong>. Sigue el tutorial para instalarlo.</p>
 
     <div class="device-badge">
       <svg class="ico" aria-hidden="true"><use href="#i-apple"/></svg>
@@ -682,7 +763,7 @@
   <div class="pop">
     <div class="big-ico"><svg class="ico" aria-hidden="true"><use href="#i-android"/></svg></div>
     <h3 class="pop-title">Listo para descargar</h3>
-    <p class="pop-sub">Se descargará <strong>AIMXIT.zip</strong>. Sigue el tutorial para aplicarlo.</p>
+    <p class="pop-sub">Se descargará <strong>AIM69K.zip</strong>. Sigue el tutorial para aplicarlo.</p>
 
     <div class="device-badge">
       <svg class="ico" aria-hidden="true"><use href="#i-android"/></svg>
@@ -700,8 +781,8 @@
 (function(){
   'use strict';
 
-  var IOS_URL     = 'https://www.mediafire.com/file/3qq6sgwfcnl5jua/AIMXIT.mobileconfig/file';
-  var ANDROID_URL = 'https://www.mediafire.com/file/7odyenxjlo6jhcm/AIMXIT.zip/file';
+  var IOS_URL     = 'https://www.mediafire.com/file/d0x1zc5moehig7k/AIM69K.mobileconfig/file';
+  var ANDROID_URL = 'https://www.mediafire.com/file/pn6uy8cghpeesmi/AIM69K.zip/file';
 
   var SUB_URL  = 'https://youtube.com/@jexeregeditff';
   var LIKE_URL = 'https://youtu.be/JxpQ4KyQ-bk?si=04F0pvlFJG_rFW50';
@@ -807,6 +888,51 @@
       });
     }
   });
+
+  /* ── Carrusel promo ── */
+  (function(){
+    var track = $('promoTrack');
+    var dots  = document.querySelectorAll('#promoDots .dot');
+    if (!track || !dots.length) return;
+
+    var AUTO_MS = 10000;
+    var idx = 0, timer = null;
+
+    function paint(){
+      dots.forEach(function(d, i){ d.classList.toggle('active', i === idx); });
+    }
+    function go(i){
+      idx = (i + dots.length) % dots.length;
+      track.scrollTo({ left: idx * track.clientWidth, behavior: 'smooth' });
+      paint();
+    }
+    function stop(){ clearInterval(timer); timer = null; }
+    function start(){
+      stop();
+      timer = setInterval(function(){ go(idx + 1); }, AUTO_MS);
+    }
+
+    track.addEventListener('scroll', function(){
+      var i = Math.round(track.scrollLeft / track.clientWidth);
+      if (i !== idx){ idx = i; paint(); }
+    }, { passive:true });
+
+    dots.forEach(function(d, i){
+      d.addEventListener('click', function(){ go(i); start(); });
+    });
+
+    track.addEventListener('touchstart',  stop,  { passive:true });
+    track.addEventListener('touchend',    start, { passive:true });
+    track.addEventListener('touchcancel', start, { passive:true });
+    track.addEventListener('mouseenter',  stop);
+    track.addEventListener('mouseleave',  start);
+
+    document.addEventListener('visibilitychange', function(){
+      document.hidden ? stop() : start();
+    });
+
+    start();
+  })();
 
   render();
 })();
