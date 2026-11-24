@@ -78,22 +78,6 @@ body.has-tbar{padding-top:calc(60px + env(safe-area-inset-top,0px))}
 .tbar .ico{width:16px;height:16px}
 .tbar b{font-variant-numeric:tabular-nums;font-size:1rem;font-weight:800;letter-spacing:.02em}
 .tbar button{height:30px;padding:0 14px;border:0;border-radius:9px;background:#fff;color:var(--blue-700);font-family:inherit;font-size:.74rem;font-weight:800;cursor:pointer}
-/* VERSION ESPECIAL */
-.sp{padding:12px 14px;display:flex;flex-direction:column;gap:9px;border:1.5px solid var(--blue-500);background:linear-gradient(160deg,#FFFFFF 0%,#F2F7FF 100%);box-shadow:0 0 0 3px rgba(59,130,246,.07),0 14px 28px -20px rgba(37,99,235,.55)}
-.sp-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.sp-info{min-width:0;display:flex;flex-direction:column;gap:3px}
-.sp-tag{display:inline-flex;align-items:center;gap:5px;align-self:flex-start;font-size:.56rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-700)}
-.sp-tag .ico{width:11px;height:11px;color:var(--blue-600)}
-.sp-name{font-size:1rem;font-weight:800;letter-spacing:-.02em;line-height:1.15}
-.sp-meta{font-size:.66rem;color:var(--ink-2);font-weight:600;line-height:1.4}
-.sp-side{flex:none;text-align:end;display:flex;flex-direction:column;align-items:flex-end}
-.sp-p{font-size:1.7rem;font-weight:800;letter-spacing:-.035em;color:var(--blue-700);line-height:1}
-.sp-side small{font-size:.62rem;font-weight:700;color:var(--muted);margin-top:2px}
-.sp-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 10px;border-radius:10px;background:var(--blue-50);border:1px solid #D5E4FA;font-size:.64rem;font-weight:600;color:var(--ink-2);line-height:1.3}
-.sp-count{display:inline-flex;align-items:center;gap:5px;font-weight:700;color:var(--blue-700);white-space:nowrap}
-.sp-count .ico{width:13px;height:13px}
-.sp-count b{font-size:.78rem;font-weight:800;font-variant-numeric:tabular-nums;color:var(--ink)}
-.sp .btn{height:44px;font-size:.82rem}
 /* PLANES */
 .pick{padding:14px 10px 10px}
 .pk-h{text-align:center;font-size:1.1rem;font-weight:800;letter-spacing:-.025em;margin-bottom:4px}
@@ -187,6 +171,11 @@ body.has-tbar{padding-top:calc(60px + env(safe-area-inset-top,0px))}
 @keyframes blink{50%{opacity:.35}}
 .rl-bar{height:6px;border-radius:99px;background:var(--line);overflow:hidden}
 .rl-bar i{display:block;height:100%;width:100%;background:var(--grad);border-radius:inherit;transition:width 1s linear}
+/* LISTA DESPLEGABLE DE METODOS (promocion) */
+.acc-toggle{justify-content:flex-start}
+.acc-toggle .ico:last-child{margin-left:auto;transition:transform .3s var(--ease)}
+.acc-toggle.is-open .ico:last-child{transform:rotate(180deg)}
+.acc-list{display:flex;flex-direction:column;gap:7px;max-height:250px;overflow-y:auto;padding:2px}
 @keyframes rise{from{opacity:0;transform:translateY(14px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
 @media (max-width:420px){body{padding:16px 12px 32px}.pk{font-size:.64rem}.tp{font-size:1.08rem}.tn{font-size:.66rem}.tf{font-size:.46rem;padding:3px 7px}.pop{padding:22px 18px}}
@@ -207,6 +196,7 @@ body.has-tbar{padding-top:calc(60px + env(safe-area-inset-top,0px))}
 <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/><path d="m9 12 2 2 4-4"/></symbol>
 <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
 <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></symbol>
+<symbol id="i-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
 <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20a15 15 0 0 1 0-20z"/></symbol>
 <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h14v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/></symbol>
 <symbol id="i-gift" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/></symbol>
@@ -292,20 +282,6 @@ body.has-tbar{padding-top:calc(60px + env(safe-area-inset-top,0px))}
     </div>
     <p class="loc-note" id="locNote" hidden></p>
   </section>
-
-  <!-- VERSION ESPECIAL (se elimina sola al vencer la fecha limite) -->
-  <section class="card sp" id="spCard">
-    <div class="sp-row">
-      <div class="sp-info">
-        <span class="sp-tag"><svg class="ico" aria-hidden="true"><use href="#i-crown"/></svg><span>Edición limitada · Solo iOS</span></span>
-        <div class="sp-name">AIMX80K</div>
-        <div class="sp-meta">Solo 10 unidades · Solo por este video · Solo dispositivos iOS · Pago con tarjeta</div>
-      </div>
-      <div class="sp-side"><span class="sp-p">$39,99</span><small>USD</small><span class="tl loc" data-usd="39.99" hidden></span></div>
-    </div>
-    <div class="sp-foot"><span class="sp-count"><svg class="ico" aria-hidden="true"><use href="#i-timer"/></svg><b id="spClock">--:--:--</b></span><span>Hasta agotar existencias o hasta el 23 de nov. a las 12 de la medianoche (hora Colombia)</span></div>
-    <a class="btn btn-primary" id="paySp" href="#" target="_blank" rel="noopener noreferrer"><svg class="ico" aria-hidden="true"><use href="#i-card"/></svg><span>Pagar con tarjeta · $39,99 USD</span></a>
-  </section>
 </main>
 
 <!-- RULETA -->
@@ -345,9 +321,6 @@ body.has-tbar{padding-top:calc(60px + env(safe-area-inset-top,0px))}
 /* ── CONFIG ── */
 var WA_OWNER='573115593037', WA_ADVISOR='573115593037';
 var SPIN_MS=5400, WINDOW_MS=600000, KEY='jexe_rl_v1';
-/* Version especial: vence el 23 de noviembre a las 12 de la medianoche (hora Colombia, UTC-5), es decir, termina el 23 y desaparece al iniciar el 24 */
-var SP_DEADLINE=new Date('2026-11-24T00:00:00-05:00').getTime();
-var SP_USD=39.99, SP_LINK='https://checkout.bold.co/payment/LNK_R3DHK062II';
 var B='https://checkout.bold.co/payment/';
 var PLANS={
   mes:{name:'1 Mes',usd:14.99,old:'$20',off:'-25%',bold:B+'LNK_YRXITYHSYO',boldPromo:B+'LNK_E2ISQYJB93',promo:10},
@@ -370,7 +343,6 @@ function ic(n){return '<svg class="ico" aria-hidden="true"><use href="#'+n+'"/><
 function fmt(n){return n%1?n.toFixed(2).replace('.',','):String(n);}
 function pad(n){return n<10?'0'+n:''+n;}
 function mmss(ms){var s=Math.max(0,Math.ceil(ms/1000));return pad(Math.floor(s/60))+':'+pad(s%60);}
-function hms(ms){var s=Math.max(0,Math.ceil(ms/1000));return pad(Math.floor(s/3600))+':'+pad(Math.floor(s/60)%60)+':'+pad(s%60);}
 function lock(){document.body.classList.toggle('modal-open',!!document.querySelector('.overlay.show'));}
 function show(id){$(id).classList.add('show');lock();}
 function hide(id){$(id).classList.remove('show');lock();}
@@ -413,6 +385,7 @@ function advance(){var m=performance.now();clock=Math.max(Date.now(),clock+(m-mo
 
 /* ── PRECIOS EFECTIVOS ── */
 var spinning=false, confirming=false, currentPlan=null, currentMethod=null, spinTimer=null, saveTick=0;
+var otherOpen=false, rlMethod=null;
 function promo(){
   if(spinning)return null;
   if(S.phase==='timer20')return {plan:'permanente',usd:20};
@@ -475,18 +448,6 @@ function initFx(){
     if(!c||c==='USD')return;
     return getRate(c).then(function(r){FX.cur=c;FX.rate=r;updateLoc();});
   }).catch(function(){});
-}
-
-/* ── VERSION ESPECIAL ── */
-function spTick(){
-  var card=$('spCard');if(!card)return;
-  var left=SP_DEADLINE-advance();
-  if(left<=0){card.remove();return;}
-  $('spClock').textContent=hms(left);
-}
-function initSpecial(){
-  $('paySp').href=SP_LINK;
-  spTick();
 }
 
 /* ── RENDER PRINCIPAL ── */
@@ -572,6 +533,24 @@ function startPointer(cur){
   })();
 }
 
+/* ── RULETA: lista desplegable "Otros métodos de pago" ── */
+function otherBlock(plan){
+  var h='<button type="button" class="btn btn-ghost acc-toggle'+(otherOpen?' is-open':'')+'" data-act="toggle" aria-expanded="'+otherOpen+'">'+ic('i-wallet')+'<span>Otros métodos de pago</span>'+ic('i-chevron')+'</button>';
+  if(!otherOpen)return h;
+  h+='<div class="acc-list">'+METHODS.map(function(m){
+    return '<button type="button" class="method'+(rlMethod===m.id?' is-sel':'')+'" data-rlm="'+m.id+'"><span class="method-ico"><svg aria-hidden="true"><use href="#'+m.icon+'"/></svg></span><span class="method-body"><span class="method-name" translate="no">'+m.name+'</span><span class="method-note">'+m.note+'</span></span><span class="method-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></button>';
+  }).join('')+'</div>';
+  var href='#',cls=' is-disabled';
+  if(rlMethod){
+    var mm=null;METHODS.forEach(function(m){if(m.id===rlMethod)mm=m;});
+    var msg='Hola JEXE, quiero comprar JEXE Regedit con mi promoción de la ruleta:\n\n• Plan: '+PLANS[plan].name+' — '+priceStr(plan)+'\n• Método de pago que quiero usar: '+mm.name+'\n\n¿Me confirmas si está disponible y me compartes los datos para realizar el pago?';
+    href='https://wa.me/'+WA_ADVISOR+'?text='+encodeURIComponent(msg);cls='';
+  }
+  h+='<a class="btn btn-primary'+cls+'" href="'+href+'" target="_blank" rel="noopener noreferrer">'+ic('i-whatsapp')+'<span>Enviar pedido por WhatsApp</span></a>'
+    +'<p class="rl-fine">JEXE te enviará los datos de pago por WhatsApp. Escribe solo si vas a confirmar tu compra.</p>';
+  return h;
+}
+
 /* ── RULETA: panel segun fase ── */
 function renderPanel(){
   var p=$('rlPanel'),ph=S.phase,h='';
@@ -599,13 +578,13 @@ function renderPanel(){
      +'<div class="rl-timer" id="rlTimer">'+ic('i-timer')+'<b id="rlClock">10:00</b></div><div class="rl-bar"><i id="rlBar"></i></div>'
      +'<p class="rl-text">Completa el pago antes de que el contador llegue a cero. Si se agota, este precio se bloquea y no volverá a salir en este dispositivo.</p>'
      +'<a class="btn btn-primary" href="'+promoP.boldPromo+'" target="_blank" rel="noopener noreferrer">'+ic('i-card')+'<span>Pagar con tarjeta · $20 USD</span></a>'
-     +'<button type="button" class="btn btn-ghost" data-act="other">'+ic('i-wallet')+'<span>Más métodos</span></button>';
+     +otherBlock('permanente');
   }else if(ph==='offer10'){
     h='<span class="rl-badge">'+ic('i-gift')+'<span>Tu premio</span></span>'
      +'<div class="rl-prize"><span class="rl-pname">1 Mes</span><span class="rl-pprice">$10<small>USD</small></span><s>$'+fmt(promoM.usd)+'</s></div>'
      +'<p class="rl-text">Este fue tu último giro. Acceso por 30 días en Android e iOS, con 2 actualizaciones incluidas en el mes.</p>'
      +'<a class="btn btn-primary" href="'+promoM.boldPromo+'" target="_blank" rel="noopener noreferrer">'+ic('i-card')+'<span>Pagar con tarjeta · $10 USD</span></a>'
-     +'<button type="button" class="btn btn-ghost" data-act="other">'+ic('i-wallet')+'<span>Más métodos</span></button>';
+     +otherBlock('mes');
   }else{
     h='<div class="rl-warn">'+ic('i-clock')+'<span>Se acabó el tiempo. El precio de $20 ya no está disponible en este dispositivo.</span></div>'
      +'<button type="button" class="btn btn-ghost" data-act="close"><span>Cerrar</span></button>';
@@ -644,7 +623,6 @@ function expire(){
 }
 function checkExpiry(){if(S.phase==='timer20'&&advance()>=S.deadline){S.phase='expired';save();}}
 function tick(){
-  spTick();
   if(S.phase!=='timer20')return;
   var n=advance(),left=S.deadline-n;
   if(left<=0){expire();return;}
@@ -657,6 +635,7 @@ function tick(){
   if(++saveTick%5===0){S.seen=n;save();}
 }
 function openRoulette(){
+  otherOpen=false;rlMethod=null;
   setWheel(S.rot||0);confirming=false;renderPanel();show('rlOverlay');
 }
 
@@ -722,13 +701,15 @@ $('spinBtn').addEventListener('click',function(){
   else if(S.phase==='offer1'){confirming=true;renderPanel();}
 });
 $('rlPanel').addEventListener('click',function(e){
+  var rm=e.target.closest('[data-rlm]');
+  if(rm){rlMethod=rm.getAttribute('data-rlm');renderPanel();return;}
   var b=e.target.closest('[data-act]');if(!b)return;
   var a=b.getAttribute('data-act');
-  if(a==='accept')doAccept();
+  if(a==='toggle'){otherOpen=!otherOpen;renderPanel();}
+  else if(a==='accept')doAccept();
   else if(a==='respin'){confirming=true;renderPanel();}
   else if(a==='keep'){confirming=false;renderPanel();}
   else if(a==='spin2')doSpin(2);
-  else if(a==='other')openOrder(S.phase==='timer20'?'permanente':'mes');
   else if(a==='close')hide('rlOverlay');
 });
 document.querySelectorAll('[data-close]').forEach(function(b){b.addEventListener('click',function(){hide(b.getAttribute('data-close'));});});
@@ -749,7 +730,6 @@ document.addEventListener('visibilitychange',function(){if(!document.hidden)adop
 buildWheel();
 pick('permanente');
 checkExpiry();
-initSpecial();
 render();
 renderPanel();
 setWheel(S.rot||0);
